@@ -1,7 +1,3 @@
-// Cloudflare Pages Functions: /api/google-indexing/*
-// GET  /api/google-indexing/health
-// POST /api/google-indexing/publish
-
 export async function onRequest(context) {
   const { request, env } = context;
   const url = new URL(request.url);
