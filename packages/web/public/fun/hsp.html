@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高敏感人格测试 HSP - 你是不是 HSP？| 简盒玩点有趣的</title>
+<meta name="description" content="免费高敏感人格（HSP）测试。20 道题测出你是否属于高敏感人群，分析你的敏感特质、优势、应对策略。">
+<meta name="keywords" content="高敏感,HSP,敏感人格,内向,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+  .option {
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: white;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .hsp-emoji { font-size: 80px; margin-bottom: 8px; }
+  .hsp-score {
+    font-size: 56px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 12px 0;
+  }
+  .hsp-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+    line-height: 1.8;
+  }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '💡';
+    position: absolute;
+    left: 0;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-emoji { font-size: 72px; margin: 12px 0; }
+  .poster-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  .poster-score {
+    font-size: 48px;
+    font-weight: 900;
+    margin: 12px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  .poster-trait {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🌸 高敏感人格测试 HSP</h1>
+    <p class="subtitle">你是不是 HSP？一种天赋，不是 bug</p>
+    <ul class="intro-feature-list">
+      <li>📊 20 道题测出你的敏感度</li>
+      <li>🌟 高敏感 = 感受更深 + 共情更强</li>
+      <li>💪 HSP 的独特优势 + 应对策略</li>
+      <li>✨ 专属海报分享</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 4-5 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center; opacity:0.8; margin-bottom:16px; font-size:14px;">问题 <span id="currentQ">1</span> / 20</p>
+    <h3 id="questionText" style="margin-bottom:16px; line-height:1.5;"></h3>
+    <div id="optionsContainer" class="options"></div>
+    <button class="btn" id="prevBtn" onclick="prevQuestion()" style="margin-top:12px;">← 上一题</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="hsp-emoji" id="hspEmoji">🌸</div>
+      <div style="font-size:14px; opacity:0.85;">你的敏感度</div>
+      <div class="hsp-score" id="hspScore">15</div>
+      <div class="hsp-level" id="hspLevel">中等敏感</div>
+    </div>
+
+    <h3 class="section-title">📝 敏感度解读</h3>
+    <div class="info-card" id="hspReading"></div>
+
+    <h3 class="section-title">💪 HSP 的优势</h3>
+    <ul id="strengths" class="feature-list"></ul>
+
+    <h3 class="section-title">⚠️ HSP 的挑战</h3>
+    <ul id="challenges" class="feature-list"></ul>
+
+    <h3 class="section-title">🌱 应对策略</h3>
+    <div class="info-card" id="coping"></div>
+
+    <div class="section-title">📤 分享我的结果</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">高敏感人格测试</div>
+          <div class="poster-emoji" id="posterEmoji">🌸</div>
+          <div class="poster-level" id="posterLevel">中等敏感</div>
+          <div class="poster-score" id="posterScore">15</div>
+          <div class="poster-divider"></div>
+          <div class="poster-trait" id="posterTrait">高敏感是一种天赋</div>
+          <div class="poster-footer">测试你的 HSP → jianhebox.cn/fun/hsp.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 高敏感人格（HSP）是一种正常的人格特质，约占人口 15-20%，不是疾病。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// HSP 测试 20 题 - 选 1 分
+const questions = [
+  { text: "我容易被强烈的感觉（声音、气味等）影响", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我容易被咖啡因影响而感到不适", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我对疼痛敏感，需要较多缓解", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我经常感到饥饿不适，需要规律饮食", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我容易被突然的声音惊到", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "明亮的灯光、强烈的气味让我不舒服", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我对咖啡因敏感，少量就影响睡眠", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我有丰富的内心世界", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我对音乐和艺术有深刻的感受", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我容易被别人的情绪影响", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我经常感到需要独处来恢复", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我对嘈杂的环境感到不适", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我对疼痛、饥饿等感觉特别敏感", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我对细节有敏锐的观察", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我容易被突然的视觉刺激吓到", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我在压力下容易不舒服", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我对艺术品和自然的美有深刻感受", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我有强烈的道德感", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我容易被惊吓（惊吓反射敏感）", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" },
+  { text: "我经常思考生活的深层意义", a: "完全不符合", b: "略不符合", c: "中性", d: "略符合", e: "完全符合" }
+];
+
+let answers = new Array(20).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 20 * 100) + '%';
+  document.getElementById('questionText').textContent = '第 ' + (currentQuestion + 1) + ' 题：' + q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  const labels = [q.a, q.b, q.c, q.d, q.e];
+  labels.forEach((label, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = label;
+    btn.onclick = () => selectOption(idx, btn);
+    container.appendChild(btn);
+  });
+  
+  if (answers[currentQuestion] !== null) {
+    const btns = container.querySelectorAll('.option');
+    btns[answers[currentQuestion]].classList.add('selected');
+  }
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  answers[currentQuestion] = idx;
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  
+  setTimeout(() => {
+    if (currentQuestion < 19) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 250);
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateResult() {
+  let total = 0;
+  let answered = 0;
+  answers.forEach(a => {
+    if (a !== null) {
+      total += a + 1;  // 1-5 分
+      answered++;
+    }
+  });
+  return answered > 0 ? Math.round(total / answered * 20) : 0;  // 0-100
+}
+
+function showResult() {
+  const score = calculateResult();
+  const data = getResultData(score);
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('hspScore').textContent = score;
+  document.getElementById('hspEmoji').textContent = data.emoji;
+  document.getElementById('hspLevel').textContent = data.level;
+  
+  document.getElementById('hspReading').textContent = data.reading;
+  document.getElementById('strengths').innerHTML = data.strengths.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('challenges').innerHTML = data.challenges.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('coping').textContent = data.coping;
+  
+  document.getElementById('posterEmoji').textContent = data.emoji;
+  document.getElementById('posterLevel').textContent = data.level;
+  document.getElementById('posterScore').textContent = score;
+  document.getElementById('posterTrait').textContent = data.trait;
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getResultData(score) {
+  let level, emoji, reading, strengths, challenges, coping, trait;
+  
+  if (score >= 70) {
+    level = '🌸 高敏感 HSP';
+    emoji = '🌸';
+    reading = '你是高敏感人格（HSP）！\\n\\n你感受世界的方式比一般人更深、更细腻。你容易被声音、气味、情绪影响，也因此有更丰富的内心世界。';
+    strengths = ['感受细腻，能体会他人情绪', '有丰富的内心世界', '对艺术美有深刻感受', '强烈的同理心', '善于发现细节'];
+    challenges = ['容易被他人的情绪影响', '对刺激过于敏感', '需要大量独处恢复', '可能过度思考', '可能容易疲劳'];
+    coping = '• 保证充足的独处时间\\n• 创造安静、低刺激的环境\\n• 学会拒绝过载的邀请\\n• 练习正念冥想\\n• 找到能理解你的朋友';
+    trait = '高敏感是天赋 🌸';
+  } else if (score >= 50) {
+    level = '🌼 中等敏感';
+    emoji = '🌼';
+    reading = '你有中等程度的敏感特质。\\n\\n你能感受到一些细微的东西，但不会被过度影响。你在敏感和坚韧之间有较好的平衡。';
+    strengths = ['感受力适中', '理解他人', '有自己空间', '能适应环境'];
+    challenges = ['偶尔会被影响', '需要平衡独处和社交'];
+    coping = '保持当前的平衡：注意独处时间、不过度刺激、保持社交。找到适合自己的节奏。';
+    trait = '中等敏感 · 平衡';
+  } else {
+    level = '🌵 相对坚韧';
+    emoji = '🌵';
+    reading = '你的敏感度较低，更偏坚韧型。\\n\\n你不容易被外界的刺激影响，能保持稳定。这在某些场合是优势。';
+    strengths = ['不容易受影响', '稳定', '适应力强', '抗压性好'];
+    challenges = ['可能忽视他人的细腻感受', '可能需要学会更敏感一些'];
+    coping = '继续保持稳定的同时，尝试更多关注身边人的情绪和细节。共情是可以通过练习提升的。';
+    trait = '相对坚韧 🌵';
+  }
+  
+  return { level, emoji, reading, strengths, challenges, coping, trait };
+}
+
+function copyShareText() {
+  const score = document.getElementById('hspScore').textContent;
+  const level = document.getElementById('hspLevel').textContent;
+  
+  const text = '🌸 我的敏感度：' + score + '\\n' + level + '\\n\\n高敏感是天赋，不是 bug 🌸\\n👉 测试你的 HSP：jianhebox.cn/fun/hsp.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(20).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>视频去水印 5 种方法：从剪映到 AI 智能消除 | 简盒</title>
+<meta name="description" content="5 种视频去水印方法对比 + 抖音/B 站/素材网实战场景。">
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+  pre code { background: none; color: inherit; padding: 0; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  th { background: #f0f0f0; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }
+  a { color: #0099ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }
+  .back-home:hover { text-decoration: none; transform: translateY(-1px); }
+
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style>
+<!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-video-watermark-removal.html#article",
+      "headline": "视频去水印 5 种方法：从剪映到 AI 智能消除完整对比",
+      "description": "视频去水印 5 种方法",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-video-watermark-removal.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["视频去水印 5 种方法", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-video-watermark-removal.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "视频去水印 5 种方法：从剪映到 AI 智能消除完整对比",
+          "item": "https://www.jianhebox.cn/article-video-watermark-removal.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Baidu Tongji (R57.10) -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?deb3c3385c923e6f7cc59e23b4d4d850";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+<!-- R57.9 SEO: 视觉面包屑 -->
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">首页</a>
+  <span class="bc-sep">›</span>
+  <a href="/articles.html">教程</a>
+  <span class="bc-sep">›</span>
+  <span>视频去水印 5 种方法：从剪映到 AI 智能消除完整对比</span>
+</nav>
+<a href="/" class="back-home">← 简盒首页</a>
+<h1>视频去水印 5 种方法：从剪映到 AI 智能消除完整对比</h1>
+<blockquote>最后更新：2026 年 9 月 · 阅读时长：约 6 分钟 · 适用：自媒体、二次创作者、所有想去水印的人</blockquote>
+<hr>
+<h2>📌 这篇教程解决什么问题？</h2>
+<p>下载的素材、搬运的视频、自家平台的水印……<strong>各种水印怎么去掉</strong>？</p>
+<p><strong>⚠️ 法律声明</strong>：</p>
+<ul>
+<li>✅ <strong>自己的素材</strong>：100% 合法</li>
+<li>✅ <strong>授权过的素材</strong>：100% 合法</li>
+<li>❌ <strong>他人版权素材</strong>：可能侵权，本文仅讨论<strong>技术方法</strong>，请遵守法律</li>
+</ul>
+<hr>
+<h2>📖 视频水印的 5 种类型</h2>
+<p>不同水印，去除方法不同：</p>
+<p>| 类型 | 例子 | 难度 |</p>
+<p>|---|---|---|</p>
+<p>| <strong>角落文字 logo</strong> | 优酷右上角、B 站左上角 | ⭐ 简单 |</p>
+<p>| <strong>动态位置水印</strong> | 抖音随人物移动 | ⭐⭐ 中等 |</p>
+<p>| <strong>满屏半透明水印</strong> | 素材网站水印 | ⭐⭐⭐ 较难 |</p>
+<p>| <strong>画中画水印</strong> | TV 频道双窗 | ⭐⭐⭐⭐ 难 |</p>
+<p>| <strong>马赛克/打码</strong> | 故意遮挡 | ❌ <strong>无法去除</strong> |</p>
+<p><strong>好消息</strong>：前 4 种都有解，<strong>马赛克无法还原</strong>（信息已丢失）。</p>
+<hr>
+<h2>🎯 5 种去水印方法</h2>
+<h3>方法 1：剪映裁剪（最简单）</h3>
+<p><strong>适用</strong>：角落水印、不需要全画面</p>
+<p><strong>操作</strong>：</p>
+<ol>
+<li>剪映 → 导入视频</li>
+<li>选中视频 → 「裁剪」</li>
+<li>拖动边框，<strong>裁掉水印区域</strong></li>
+<li>导出</li>
+</ol>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>✅ 简单，3 分钟搞定</li>
+<li>✅ 无损画质</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>❌ 损失画面内容（裁掉一角）</li>
+<li>❌ 大水印无法裁</li>
+</ul>
+<p><strong>推荐</strong>：<strong>70% 场景首选</strong>。</p>
+<hr>
+<h3>方法 2：Pr/FCPX 用纯色覆盖（推荐）</h3>
+<p><strong>适用</strong>：固定位置水印（台标/字幕条）</p>
+<p><strong>操作（Premiere Pro）</strong>：</p>
+<ol>
+<li>导入视频</li>
+<li>在水印位置<strong>新建字幕</strong>/形状图层</li>
+<li>调颜色匹配背景（一般是黑色或纯色）</li>
+<li>覆盖在水印上</li>
+<li>导出</li>
+</ol>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>✅ 简单专业</li>
+<li>✅ 不损失画面</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>❌ 颜色不匹配会露馅</li>
+<li>❌ 动态背景无法用</li>
+</ul>
+<p><strong>简盒替代</strong>：可以用<a href="https://www.jianhebox.cn/#/tools/video">简盒视频工具箱</a> → 视频裁剪 → 用马赛克/模糊盖水印。</p>
+<hr>
+<h3>方法 3：AI 智能水印去除（最强大）</h3>
+<p><strong>适用</strong>：动态水印、复杂水印</p>
+<p><strong>原理</strong>：用 AI 模型识别水印区域 → 用周边像素智能填充</p>
+<p><strong>操作</strong>：</p>
+<ol>
+<li>打开 <a href="https://www.jianhebox.cn/#/tools/video">jianhebox.cn/video</a></li>
+<li>点 <strong>「视频去水印」</strong> tab</li>
+<li>框选水印区域（或自动检测）</li>
+<li>点 AI 移除</li>
+<li>等待处理（1 分钟视频 ~2 分钟）</li>
+<li>下载</li>
+</ol>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>✅ <strong>不动画面内容</strong></li>
+<li>✅ 智能识别，<strong>几乎无痕</strong></li>
+<li>✅ 动态水印也能去</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>❌ 处理时间较长</li>
+<li>❌ 复杂背景可能残留痕迹</li>
+<li>❌ 需要较强的 AI 模型（简盒用浏览器内 WASM 运行，隐私安全）</li>
+</ul>
+<p><strong>推荐</strong>：<strong>专业场景首选</strong>。</p>
+<hr>
+<h3>方法 4：用模糊/马赛克盖水印</h3>
+<p><strong>适用</strong>：不能裁剪、不能 AI 修复的复杂场景</p>
+<p><strong>操作</strong>：</p>
+<ol>
+<li>剪映 → 导入视频</li>
+<li>在水印位置加<strong>模糊滤镜</strong>或<strong>马赛克效果</strong></li>
+<li>调整时长（覆盖整个视频）</li>
+<li>导出</li>
+</ol>
+<p><strong>优点</strong>：</p>
+<ul>
+<li>✅ 任何水印都能处理</li>
+<li>✅ 不会"伪造"内容（马赛克明确告知）</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>❌ 画面有马赛克明显</li>
+<li>❌ 不专业感</li>
+</ul>
+<p><strong>适用</strong>：教程中标注"敏感信息"用马赛克。</p>
+<hr>
+<h3>方法 5：网站/工具去除（不推荐）</h3>
+<p><strong>常见在线工具</strong>：</p>
+<ul>
+<li>apowersoft 在线 watermark remover</li>
+<li>各种"去水印小程序"</li>
+<li>抖音快手去水印解析</li>
+</ul>
+<p><strong>⚠️ 风险</strong>：</p>
+<ul>
+<li>❌ <strong>上传你的视频到第三方服务器</strong>（隐私泄漏）</li>
+<li>❌ 很多是骗子/付费陷阱</li>
+<li>❌ 效果差（基本是裁剪）</li>
+<li>❌ 可能有病毒</li>
+</ul>
+<p><strong>强烈不推荐</strong>。简盒视频工具箱<strong>本地处理</strong>，文件<strong>不上传</strong>，是最安全的方案。</p>
+<hr>
+<h2>🎯 实战场景：抖音水印去除</h2>
+<h3>场景描述</h3>
+<p>下载的抖音视频，右下角有抖动 logo。</p>
+<h3>推荐方案</h3>
+<p><strong>方案 A（最简单）</strong>：裁剪右下角</p>
+<pre><code>剪映 → 裁剪 → 拖掉右下 1/8 画面</code></pre>
+<p><strong>方案 B（不损失画面）</strong>：AI 智能去除</p>
+<p><a href="https://www.jianhebox.cn/#/tools/video">简盒视频工具箱</a> → 去水印 → 自动识别抖音水印 → 一键移除</p>
+<p><strong>效果对比</strong>：</p>
+<p>| 方案 | 画质损失 | 操作难度 | 推荐度 |</p>
+<p>|---|---|---|---|</p>
+<p>| 裁剪 | 损失约 10% 画面 | ⭐ | ⭐⭐⭐ |</p>
+<p>| AI 去除 | 无损 | ⭐⭐ | ⭐⭐⭐⭐⭐ |</p>
+<p>| 模糊盖 | 明显马赛克 | ⭐⭐ | ⭐⭐ |</p>
+<hr>
+<h2>🎯 实战场景：B 站片头水印</h2>
+<h3>场景描述</h3>
+<p>下载的 B 站视频，<strong>开头 3 秒</strong>有"哔哩哔哩"水印。</p>
+<h3>推荐方案</h3>
+<p><strong>方案 A</strong>：剪掉开头 3 秒</p>
+<pre><code>剪映 → 拖动视频 → 选中前 3 秒 → 删除</code></pre>
+<p><strong>优点</strong>：3 秒损失对内容没影响。</p>
+<p><strong>方案 B</strong>：AI 移除（如果中间穿插也有）</p>
+<p><a href="https://www.jianhebox.cn/#/tools/video">简盒视频工具箱</a> → 去水印 → 框选水印 → 智能填充。</p>
+<hr>
+<h2>🎯 实战场景：素材网站满屏水印</h2>
+<h3>场景描述</h3>
+<p>下载的素材，<strong>整个画面</strong>有半透明水印（"envato elements"等）。</p>
+<h3>推荐方案</h3>
+<p><strong>方案 A（不推荐）</strong>：调透明度 → 水印看不见但素材也变淡</p>
+<p><strong>方案 B（推荐）</strong>：AI 智能修复</p>
+<p><a href="https://www.jianhebox.cn/#/tools/video">简盒视频工具箱</a> → AI 去水印 → 整段处理 → 用 AI 重建像素</p>
+<p><strong>效果</strong>：80-90% 修复率，<strong>剩下的痕迹</strong>不影响观看。</p>
+<p><strong>方案 C（最暴力）</strong>：付费买正版</p>
+<p>水印素材<strong>通常不贵</strong>（$5-30/月），<strong>合法使用</strong>最安心。</p>
+<hr>
+<h2>⚠️ 常见误区</h2>
+<h3>误区 1：马赛克可以反向</h3>
+<p><strong>错</strong>！</p>
+<ul>
+<li>马赛克是<strong>像素平均</strong>，原始信息<strong>已丢失</strong></li>
+<li>没有 AI 能"还原"马赛克（科幻电影骗人）</li>
+<li>唯一办法：<strong>别打码，找原图</strong></li>
+</ul>
+<h3>误区 2：AI 去水印 100% 完美</h3>
+<p><strong>不一定</strong>：</p>
+<ul>
+<li>简单水印（角落 logo）：95%+ 完美</li>
+<li>动态水印：80-90% 完美</li>
+<li>满屏水印：50-70% 完美（<strong>总有痕迹</strong>）</li>
+</ul>
+<p><strong>建议</strong>：<strong>重要场景</strong>（商业视频）多花时间人工修复，<strong>一般场景</strong>用 AI 够用。</p>
+<h3>误区 3：去水印 = 合法</h3>
+<p><strong>错</strong>！</p>
+<ul>
+<li><strong>版权水印</strong> 是版权声明，<strong>强行去除可能侵权</strong></li>
+<li><strong>个人素材</strong> 去水印 OK</li>
+<li><strong>商业使用</strong>未授权素材 = 侵权</li>
+<li>本文<strong>仅讨论技术</strong>，请遵守法律</li>
+</ul>
+<hr>
+<h2>🔧 进阶：批量去水印</h2>
+<p>如果需要处理<strong>几十个视频</strong>：</p>
+<p><a href="https://www.jianhebox.cn/#/tools/video">简盒视频工具箱</a> 支持：</p>
+<ol>
+<li><strong>批量上传</strong>（一次最多 50 个视频）</li>
+<li><strong>统一框选水印</strong>（同位置）</li>
+<li><strong>批量 AI 处理</strong></li>
+<li><strong>统一导出</strong></li>
+</ol>
+<p>节省 90% 时间。</p>
+<hr>
+<h2>🚀 开始去水印</h2>
+<p><a href="https://www.jianhebox.cn/#/tools/video">👉 打开简盒视频工具箱</a></p>
+<p>特点：</p>
+<ul>
+<li>✅ <strong>AI 智能去水印</strong></li>
+<li>✅ <strong>本地处理，不上传</strong></li>
+<li>✅ <strong>批量处理</strong></li>
+<li>✅ <strong>多种方法集成</strong>（裁剪 / 覆盖 / AI / 模糊）</li>
+</ul>
+<hr>
+<h2>📚 相关教程</h2>
+<ul>
+<li><a href="/article-video-compress.html">视频压缩完全指南</a></li>
+<li><a href="/article-mp4-to-gif.html">MP4 转 GIF 完整教程</a></li>
+<li><a href="/article-ai-video-script.html">AI 写短视频脚本</a></li>
+</ul>
+<hr>
+<h2>💬 反馈</h2>
+<ul>
+<li>📧 <a href="mailto:hi@jianhebox.cn">hi@jianhebox.cn</a></li>
+</ul>
+<blockquote>本文由 <a href="https://www.jianhebox.cn/">简盒 JianHeBox</a> 编辑整理。</blockquote>
+<!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-video-watermark-removal.html&title=%E8%A7%86%E9%A2%91%E5%8E%BB%E6%B0%B4%E5%8D%B0%205%20%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%9A%E4%BB%8E%E5%89%AA%E6%98%A0%E5%88%B0%20AI%20%E6%99%BA%E8%83%BD%E6%B6%88%E9%99%A4%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-video-watermark-removal.html&title=%E8%A7%86%E9%A2%91%E5%8E%BB%E6%B0%B4%E5%8D%B0%205%20%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%9A%E4%BB%8E%E5%89%AA%E6%98%A0%E5%88%B0%20AI%20%E6%99%BA%E8%83%BD%E6%B6%88%E9%99%A4%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-video-watermark-removal.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-video-watermark-removal.html&text=%E8%A7%86%E9%A2%91%E5%8E%BB%E6%B0%B4%E5%8D%B0%205%20%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%9A%E4%BB%8E%E5%89%AA%E6%98%A0%E5%88%B0%20AI%20%E6%99%BA%E8%83%BD%E6%B6%88%E9%99%A4%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-video-compress.html" class="related-item"><span>视频压缩完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-mp4-to-gif.html" class="related-item"><span>MP4 转 GIF 完整教程</span><span class="arrow">→</span></a>
+    <a href="/article-fcpxml-guide.html" class="related-item"><span>FCPXML 字幕转换完全教程</span><span class="arrow">→</span></a>
+    <a href="/article-ai-image-cutout.html" class="related-item"><span>AI 一键抠图完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-free-ai-tools-2026.html" class="related-item"><span>2026 免费 AI 工具清单</span><span class="arrow">→</span></a>
+    </div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body>
+</html>

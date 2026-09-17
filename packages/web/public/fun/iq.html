@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IQ 智商测试 - 20 题专业版 | 简盒玩点有趣的</title>
+<meta meta="description" content="免费 IQ 智商测试。20 道推理题（图形 + 数字 + 逻辑），测你的智商等级。专业量表，结果仅供参考。">
+<meta name="keywords" content="IQ,智商,测试,推理,智力,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.85; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #00d4ff, #5b86e5);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  }
+
+  .card, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00d4ff, #5b86e5);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+
+  .question-display {
+    padding: 24px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+    text-align: center;
+  }
+  .question-type {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(0,212,255,0.3);
+    border-radius: 12px;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  .question-prompt {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 16px;
+  }
+  .question-figure {
+    font-size: 36px;
+    margin: 16px 0;
+    letter-spacing: 8px;
+    padding: 16px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+    font-family: 'Courier New', monospace;
+  }
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .option {
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    width: 100%;
+    font-family: inherit;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateY(-2px);
+    border-color: #00d4ff;
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #00d4ff, #5b86e5) !important;
+    border-color: #00d4ff;
+    font-weight: bold;
+  }
+  .option.correct {
+    background: linear-gradient(135deg, #2ecc71, #27ae60) !important;
+    border-color: #2ecc71;
+  }
+  .option.wrong {
+    background: linear-gradient(135deg, #e74c3c, #c0392b) !important;
+    border-color: #e74c3c;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .iq-emoji {
+    font-size: 80px;
+    margin-bottom: 8px;
+  }
+  .iq-score {
+    font-size: 80px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #00d4ff, #5b86e5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 12px 0;
+  }
+  .iq-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #00d4ff, #5b86e5);
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .score-display {
+    display: flex;
+    justify-content: space-around;
+    margin: 16px 0;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .score-item {
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 10px;
+    text-align: center;
+    flex: 1;
+    min-width: 100px;
+  }
+  .score-item-label {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  .score-item-value {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+    line-height: 1.8;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    color: white;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(0,212,255,0.3);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(91,134,229,0.3);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(0,212,255,0.3);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    border: 1px solid rgba(0,212,255,0.5);
+  }
+  .poster-emoji { font-size: 64px; margin: 12px 0; }
+  .poster-score {
+    font-size: 72px;
+    font-weight: 900;
+    margin: 12px 0;
+    background: linear-gradient(135deg, #00d4ff, #5b86e5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 20px rgba(0,212,255,0.5);
+  }
+  .poster-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(0,212,255,0.2);
+    border: 1px solid rgba(0,212,255,0.5);
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+    margin: 16px auto;
+    border-radius: 2px;
+  }
+  .poster-tip {
+    background: rgba(0,212,255,0.15);
+    border: 1px solid rgba(0,212,255,0.3);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.7;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🧠 IQ 智商测试</h1>
+    <p class="subtitle">20 道推理题 · 专业量表改编</p>
+    <ul class="intro-feature-list">
+      <li>🔢 数字推理 + 图形规律 + 逻辑判断</li>
+      <li>⏱️ 每题 30 秒，无时间限制</li>
+      <li>📊 完整评分 + 智力分析</li>
+      <li>✨ 专属海报分享</li>
+    </ul>
+    <div class="disclaimer-box" style="margin-top:16px;">
+      ⚠️ 本测试为<strong>娱乐性</strong>推理题，不是专业智力测评。
+      真正的 IQ 测试需要专业施测，时间长且严格。
+    </div>
+    <button class="btn-primary" onclick="startTest()" style="width:100%; margin-top:16px;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 8-12 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center; opacity:0.85; margin-bottom:16px; font-size:14px;">问题 <span id="currentQ">1</span> / 20</p>
+    
+    <div class="question-display">
+      <div class="question-type" id="questionType">🔢 数字推理</div>
+      <div class="question-prompt" id="questionPrompt"></div>
+      <div class="question-figure" id="questionFigure"></div>
+      <div class="options-grid" id="optionsContainer"></div>
+    </div>
+    
+    <div style="display:flex; gap:10px; margin-top:16px;">
+      <button class="btn" onclick="clearAnswer()">清除</button>
+      <button class="btn" onclick="prevQuestion()" style="flex:1;">← 上一题</button>
+      <button class="btn" onclick="skipQuestion()" style="flex:1;">跳过 →</button>
+    </div>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="iq-emoji" id="iqEmoji">🧠</div>
+      <div style="font-size:14px; opacity:0.85;">你的 IQ 分数</div>
+      <div class="iq-score" id="iqScore">120</div>
+      <div class="iq-level" id="iqLevel">优秀</div>
+    </div>
+
+    <div class="score-display">
+      <div class="score-item">
+        <div class="score-item-label">答对</div>
+        <div class="score-item-value" id="correctNum">15</div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-label">答错</div>
+        <div class="score-item-value" id="wrongNum">3</div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-label">跳过</div>
+        <div class="score-item-value" id="skippedNum">2</div>
+      </div>
+    </div>
+
+    <h3 class="section-title">📊 IQ 解读</h3>
+    <div class="info-card" id="iqReading"></div>
+
+    <h3 class="section-title">🧠 智力分析</h3>
+    <div class="info-card" id="intelligenceAnalysis"></div>
+
+    <h3 class="section-title">🌱 提升建议</h3>
+    <div class="info-card" id="improvementTips"></div>
+
+    <div class="section-title">📤 晒晒我的 IQ</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">IQ 智商测试</div>
+          <div class="poster-emoji" id="posterEmoji">🧠</div>
+          <div class="poster-score" id="posterScore">120</div>
+          <div class="poster-level" id="posterLevel">优秀</div>
+          <div class="poster-divider"></div>
+          <div class="poster-tip" id="posterTip">聪明的大脑也需要持续锻炼</div>
+          <div class="poster-footer">测试你的 IQ → jianhebox.cn/fun/iq.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ <strong>重要声明</strong>：本工具是娱乐性测试，结果不构成专业智力评估。<br>
+    IQ 受多种因素影响，包括文化背景、教育、情绪状态等。智力是多维度的，不能仅靠一个测试定义一个人。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 20 道推理题 - 每题有正确答案索引 0-3
+const questions = [
+  {
+    type: '数字推理',
+    prompt: '下一个数字是什么？',
+    figure: '2, 4, 8, 16, ?',
+    options: ['20', '24', '32', '64'],
+    correct: 2,
+    explanation: '每项是前一项的 2 倍（2×2=4, 4×2=8, 8×2=16, 16×2=32）'
+  },
+  {
+    type: '图形推理',
+    prompt: '下一个图形应该是什么？',
+    figure: '○ ● ○ ● ○ ?',
+    options: ['●', '○', '△', '□'],
+    correct: 1,
+    explanation: '交替出现的规律：圆、空心圆、实心圆、空心圆、实心圆、空心圆...'
+  },
+  {
+    type: '数字推理',
+    prompt: '找出规律：',
+    figure: '1, 1, 2, 3, 5, 8, ?',
+    options: ['11', '13', '15', '21'],
+    correct: 1,
+    explanation: '斐波那契数列：每个数是前两个之和（5+8=13）'
+  },
+  {
+    type: '逻辑推理',
+    prompt: '所有 A 都是 B，C 是 A，结论是？',
+    figure: '',
+    options: ['C 是 B', 'C 不是 B', 'C 是 C', '无法判断'],
+    correct: 0,
+    explanation: '三段论：A=B, C=A, 所以 C=B（演绎推理）'
+  },
+  {
+    type: '数字推理',
+    prompt: '找出空格数字：',
+    figure: '3, 6, 11, 18, ?',
+    options: ['25', '27', '29', '31'],
+    correct: 1,
+    explanation: '规律：n²+2（3=1²+2, 6=2²+2, 11=3²+2, 18=4²+2, 27=5²+2）'
+  },
+  {
+    type: '图形推理',
+    prompt: '数三角形有几个？',
+    figure: '△△△△△',
+    options: ['3', '4', '5', '6'],
+    correct: 2,
+    explanation: '直接数 5 个三角形'
+  },
+  {
+    type: '数字推理',
+    prompt: '下一个数字：',
+    figure: '1, 4, 9, 16, ?',
+    options: ['20', '23', '25', '30'],
+    correct: 2,
+    explanation: '平方数：1², 2², 3², 4², 5²=25'
+  },
+  {
+    type: '逻辑推理',
+    prompt: '如果所有 X 都是 Y，没有 Z 是 X，结论是？',
+    figure: '',
+    options: ['有些 Z 是 Y', '没有 Z 是 Y', '所有 Z 都是 Y', '无法判断'],
+    correct: 1,
+    explanation: '所有 X 都是 Y，没有 Z 是 X，所以没有 Z 是 Y（逆否命题）'
+  },
+  {
+    type: '数字推理',
+    prompt: '找出空格：',
+    figure: '2, 6, 12, 20, ?',
+    options: ['28', '30', '32', '36'],
+    correct: 1,
+    explanation: 'n²+n（2=1×2, 6=2×3, 12=3×4, 20=4×5, 30=5×6）'
+  },
+  {
+    type: '图形推理',
+    prompt: '缺失的方块：',
+    figure: '□□■□■□?',
+    options: ['□', '■', '△', '○'],
+    correct: 1,
+    explanation: '规律：□□■□■□■，交替出现'
+  },
+  {
+    type: '数字推理',
+    prompt: '数列规律：',
+    figure: '100, 95, 85, 70, ?',
+    options: ['50', '55', '60', '65'],
+    correct: 0,
+    explanation: '差值为 5, 10, 15, 20...（70-20=50）'
+  },
+  {
+    type: '逻辑推理',
+    prompt: '某个城市的居民只说真话或只说假话。一个人说"我是骗子"，他是什么？',
+    figure: '',
+    options: ['说真话的', '说假话的', '无法判断', '既不是骗子也不是普通人'],
+    correct: 1,
+    explanation: '说"我是骗子"如果是真话，他就是说真话的居民；如果是假话，他就是说假话的居民。但他不能说"我是骗子"是真话，所以他是说假话的'
+  },
+  {
+    type: '数字推理',
+    prompt: '找出空格：',
+    figure: '1, 8, 27, 64, ?',
+    options: ['81', '100', '125', '216'],
+    correct: 2,
+    explanation: '立方数：1³, 2³, 3³, 4³, 5³=125'
+  },
+  {
+    type: '图形推理',
+    prompt: '下一个图形：',
+    figure: '↑ → ↓ ← ?',
+    options: ['↑', '→', '↓', '←'],
+    correct: 0,
+    explanation: '箭头按顺时针循环：上、右、下、左、上...'
+  },
+  {
+    type: '数字推理',
+    prompt: '数列规律：',
+    figure: '2, 12, 36, 80, ?',
+    options: ['150', '156', '162', '168'],
+    correct: 0,
+    explanation: 'n(n+1)² （2=1×2², 12=2×3², 36=3×4², 80=4×5², 150=5×6²）'
+  },
+  {
+    type: '逻辑推理',
+    prompt: '今天是星期几？明天不是星期三。',
+    figure: '',
+    options: ['星期一', '星期二', '星期三', '星期四'],
+    correct: 0,
+    explanation: '如果今天不是星期二，明天就不会是星期三。所以今天是星期一'
+  },
+  {
+    type: '数字推理',
+    prompt: '空格数字：',
+    figure: '4, 9, 16, 25, ?',
+    options: ['30', '34', '36', '49'],
+    correct: 2,
+    explanation: '平方数：2², 3², 4², 5², 6²=36'
+  },
+  {
+    type: '图形推理',
+    prompt: '缺失的：',
+    figure: '★ ☆ ★ ☆ ★ ?',
+    options: ['★', '☆', '◆', '◇'],
+    correct: 1,
+    explanation: '交替出现：实心星、空心星、实心星、空心星、实心星、空心星'
+  },
+  {
+    type: '数字推理',
+    prompt: '空格数字：',
+    figure: '1, 2, 4, 7, 11, ?',
+    options: ['14', '15', '16', '17'],
+    correct: 2,
+    explanation: '差值为 1, 2, 3, 4, 5（11+5=16）'
+  },
+  {
+    type: '逻辑推理',
+    prompt: 'A > B, B > C, C > D，结论？',
+    figure: '',
+    options: ['A > D', 'D > A', 'A = D', '无法判断'],
+    correct: 0,
+    explanation: '传递性：A > B > C > D，所以 A > D'
+  }
+];
+
+let answers = new Array(20).fill(null);
+let correctCount = 0;
+let wrongCount = 0;
+let skippedCount = 0;
+let currentQuestion = 0;
+
+function startTest() {
+  answers = new Array(20).fill(null);
+  correctCount = 0;
+  wrongCount = 0;
+  skippedCount = 0;
+  currentQuestion = 0;
+  
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 20 * 100) + '%';
+  
+  document.getElementById('questionType').textContent = 
+    q.type === '数字推理' ? '🔢 数字推理' : 
+    q.type === '图形推理' ? '🔺 图形推理' : '🧠 逻辑推理';
+  document.getElementById('questionPrompt').textContent = q.prompt;
+  document.getElementById('questionFigure').textContent = q.figure || '';
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  q.options.forEach((text, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = text;
+    btn.dataset.idx = idx;
+    btn.onclick = () => selectOption(idx);
+    container.appendChild(btn);
+  });
+  
+  // 恢复之前的选择
+  if (answers[currentQuestion] !== null) {
+    const selectedIdx = answers[currentQuestion];
+    const btns = container.querySelectorAll('.option');
+    btns[selectedIdx].classList.add('selected');
+  }
+}
+
+function selectOption(idx) {
+  if (answers[currentQuestion] !== null) return; // 已答过
+  
+  const q = questions[currentQuestion];
+  const selectedIdx = idx;
+  
+  answers[currentQuestion] = selectedIdx;
+  
+  const btns = document.querySelectorAll('#optionsContainer .option');
+  
+  if (idx === q.correct) {
+    btns[idx].classList.add('correct');
+    correctCount++;
+  } else {
+    btns[idx].classList.add('wrong');
+    btns[q.correct].classList.add('correct');
+    wrongCount++;
+    skippedCount--;
+  }
+  
+  // 1.5 秒后下一题
+  setTimeout(() => {
+    if (currentQuestion < 19) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 1200);
+}
+
+function clearAnswer() {
+  answers[currentQuestion] = null;
+  showQuestion();
+}
+
+function skipQuestion() {
+  // 跳过的题目记为未答（不算错），用 -1 标记
+  if (answers[currentQuestion] === null) {
+    answers[currentQuestion] = -1; // 跳过标记
+    skippedCount++;
+  }
+  
+  if (currentQuestion < 19) {
+    currentQuestion++;
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateIQ() {
+  // 基于答对数估算 IQ
+  // 假设平均 IQ 100，标准差 15
+  // 答对 N/20 题对应的百分位
+  const correct = answers.filter(a => a !== null && a !== -1).length;
+  const wrong = answers.filter((a, i) => a !== null && a !== -1 && a !== questions[i].correct).length;
+  
+  // 实际答对的题数
+  let actualCorrect = 0;
+  for (let i = 0; i < 20; i++) {
+    if (answers[i] !== null && answers[i] !== -1 && answers[i] === questions[i].correct) {
+      actualCorrect++;
+    }
+  }
+  
+  // 简单线性映射: 0 题 = 75, 20 题 = 145
+  const iq = Math.round(75 + (actualCorrect / 20) * 70);
+  return { iq, correct: actualCorrect, wrong: wrong };
+}
+
+function showResult() {
+  const { iq, correct, wrong } = calculateIQ();
+  const data = getIQData(iq);
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('iqScore').textContent = iq;
+  document.getElementById('iqEmoji').textContent = data.emoji;
+  document.getElementById('iqLevel').textContent = data.level;
+  
+  document.getElementById('correctNum').textContent = correct;
+  document.getElementById('wrongNum').textContent = wrong;
+  document.getElementById('skippedNum').textContent = 20 - correct - wrong;
+  
+  document.getElementById('iqReading').textContent = data.reading;
+  document.getElementById('intelligenceAnalysis').textContent = data.analysis;
+  document.getElementById('improvementTips').textContent = data.tips;
+  
+  document.getElementById('posterEmoji').textContent = data.emoji;
+  document.getElementById('posterScore').textContent = iq;
+  document.getElementById('posterLevel').textContent = data.level;
+  document.getElementById('posterTip').textContent = data.tip;
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getIQData(iq) {
+  let level, emoji, reading, analysis, tips, tip;
+  
+  if (iq >= 140) {
+    level = '🏆 天才';
+    emoji = '🏆';
+    reading = '您的 IQ 达到天才级别（140+）！\\n\\n这在人群中极为罕见（约占 0.5%）。您具有出色的逻辑推理能力、抽象思维能力和问题解决能力。';
+    analysis = '您的大脑具有非凡的处理能力，能够快速识别规律、解决问题。建议保持好奇心，持续学习，为社会贡献您的智慧。';
+    tips = '• 参加数学竞赛或智力比赛\\n• 学习编程或高级数学\\n• 解决更复杂的问题（数独、围棋、象棋）\\n• 教授他人（教学相长）\\n• 保持好奇心，探索新领域';
+    tip = '天才的大脑 · 继续挑战';
+  } else if (iq >= 130) {
+    level = '🌟 非常优秀';
+    emoji = '🌟';
+    reading = '您的 IQ 处于非常优秀水平（130+）！\\n\\n这意味着您具有很强的逻辑思维和分析能力，约占人群的 2-3%。';
+    analysis = '您具有出色的推理能力，能快速学习新知识，善于发现规律。建议继续挑战自己，发挥智力优势。';
+    tips = '• 学习一门新语言\\n• 玩策略游戏（国际象棋、围棋）\\n• 读经典哲学、科学著作\\n• 学习编程或逻辑学\\n• 培养批判性思维';
+    tip = '非常优秀 · 继续前进';
+  } else if (iq >= 120) {
+    level = '✨ 优秀';
+    emoji = '✨';
+    reading = '您的 IQ 在优秀水平（120+）！\\n\\n您比大多数人更聪明，约占人群的 9%。您具有较强的逻辑推理能力。';
+    analysis = '您具备良好的学习能力和问题解决能力。能快速掌握新概念，理解复杂关系。';
+    tips = '• 持续学习，保持好奇心\\n• 玩益智游戏（数独、谜题）\\n• 阅读广泛的书籍\\n• 练习逻辑推理\\n• 培养批判性思维';
+    tip = '优秀水平 · 保持进步';
+  } else if (iq >= 110) {
+    level = '😊 中上';
+    emoji = '😊';
+    reading = '您的 IQ 在中上水平（110-119）！\\n\\n您的智力高于平均水平，约占人群的 25%。';
+    analysis = '您具备不错的逻辑能力，能处理大多数问题。在熟悉领域表现良好，面对新领域也能较快上手。';
+    tips = '• 多做益智题保持大脑活跃\\n• 学习新技能\\n• 玩策略游戏\\n• 阅读提升思考力\\n• 做思维训练';
+    tip = '中上水平 · 继续努力';
+  } else if (iq >= 90) {
+    level = '😐 平均';
+    emoji = '😐';
+    reading = '您的 IQ 在平均水平（90-109）！\\n\\n这是大多数人的水平，约占人群的 50%。';
+    analysis = '您的智力处于正常水平，能处理日常问题。建议通过持续训练提升思维敏捷度。';
+    tips = '• 多做数独、谜题、脑筋急转弯\\n• 学习一门乐器\\n• 玩策略游戏\\n• 多读书、跨领域学习\\n• 保持好奇心';
+    tip = '平均水平 · 可以更好';
+  } else {
+    level = '🌱 需要练习';
+    emoji = '🌱';
+    reading = '您的 IQ 还有提升空间！\\n\\n别担心，IQ 只是智力的一部分，可以通过训练提升。';
+    analysis = '这次表现可能受多种因素影响（疲劳、心情、专注度等）。建议多练习益智活动，慢慢会进步。';
+    tips = '• 每天做 10 分钟益智题\\n• 多玩数独、围棋、象棋\\n• 读推理小说\\n• 学习新知识\\n• 保持充足睡眠和运动';
+    tip = '继续努力 · 进步空间大';
+  }
+  
+  return { level, emoji, reading, analysis, tips, tip };
+}
+
+function copyShareText() {
+  const score = document.getElementById('iqScore').textContent;
+  const level = document.getElementById('iqLevel').textContent;
+  
+  const text = '🧠 我的 IQ 分数：' + score + '\\n' + level + '\\n\\n快来测测你的 IQ！\\n👉 测试 IQ：jianhebox.cn/fun/iq.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

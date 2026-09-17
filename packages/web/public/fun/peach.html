@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>测桃花运 - 近期桃花运势 | 简盒玩点有趣的</title>
+<meta name="description" content="免费桃花运测试。25 题测出你的近期桃花运势、理想对象、脱单建议。">
+<meta name="keywords" content="桃花运,测试,恋爱,单身,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+  .option {
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    color: white;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .peach-emoji {
+    font-size: 80px;
+    margin-bottom: 8px;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .peach-score {
+    font-size: 64px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 12px 0;
+  }
+  .peach-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #f5576c, #f093fb);
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .score-row { margin-bottom: 12px; }
+  .score-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+  }
+  .score-track {
+    height: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6e7f, #f5576c);
+    border-radius: 5px;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+  }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '🌸';
+    position: absolute;
+    left: 0;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-emoji { font-size: 72px; margin: 12px 0; }
+  .poster-score {
+    font-size: 56px;
+    font-weight: 900;
+    margin: 8px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-level {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    margin: 8px 0;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  .poster-tip {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🌸 测桃花运</h1>
+    <p class="subtitle">近期你的桃花运势如何？</p>
+    <ul class="intro-feature-list">
+      <li>💕 25 题测出近期桃花运势</li>
+      <li>📊 6 维度评分 + 脱单建议</li>
+      <li>🌹 理想对象画像 + 桃花方位</li>
+      <li>✨ 专属海报分享</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 4-6 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center; opacity:0.8; margin-bottom:16px; font-size:14px;">问题 <span id="currentQ">1</span> / 25</p>
+    <h3 id="questionText" style="margin-bottom:16px; line-height:1.5;"></h3>
+    <div id="optionsContainer" class="options"></div>
+    <button class="btn" id="prevBtn" onclick="prevQuestion()" style="margin-top:12px;">← 上一题</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="peach-emoji">🌸</div>
+      <div style="font-size:14px; opacity:0.85;">你的桃花指数</div>
+      <div class="peach-score" id="peachScore">85</div>
+      <div class="peach-level" id="peachLevel">桃花旺盛</div>
+    </div>
+
+    <h3 class="section-title">📊 6 维评分</h3>
+    <div id="scoreRows"></div>
+
+    <h3 class="section-title">💕 桃花运势</h3>
+    <div class="info-card" id="peachForecast"></div>
+
+    <h3 class="section-title">🌹 理想对象画像</h3>
+    <div class="info-card" id="idealPartner"></div>
+
+    <h3 class="section-title">🧭 桃花方位</h3>
+    <div class="info-card" id="peachDirection"></div>
+
+    <h3 class="section-title">💡 脱单建议</h3>
+    <ul id="adviceList" class="feature-list"></ul>
+
+    <h3 class="section-title">🌟 桃花开运法</h3>
+    <div class="info-card" id="luckBoost"></div>
+
+    <div class="section-title">📤 分享我的桃花运</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">桃花运测试</div>
+          <div class="poster-emoji">🌸</div>
+          <div class="poster-score" id="posterScore">85</div>
+          <div class="poster-level" id="posterLevel">桃花旺盛</div>
+          <div class="poster-divider"></div>
+          <div class="poster-tip" id="posterTip">近期你的桃花运势...</div>
+          <div class="poster-footer">测试你的桃花 → jianhebox.cn/fun/peach.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 桃花运测试仅供娱乐，缘分靠自己创造，多出去走走、主动社交比测桃花更有效。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+const questions = [
+  { text: "近期你是否有想恋爱的念头？", a: "非常想", b: "还好，顺其自然", score: 5 },
+  { text: "你平时出门的频率如何？", a: "经常出门", b: "喜欢宅家", score: 4 },
+  { text: "你的社交圈：", a: "广，认识很多人", b: "小，几个好友", score: 3 },
+  { text: "最近一个月是否有新认识的人？", a: "有，挺多", b: "几乎没有", score: 4 },
+  { text: "你和陌生异性搭话吗？", a: "会主动", b: "看情况", score: 4 },
+  { text: "你注重外表吗？", a: "非常注重", b: "舒适就好", score: 3 },
+  { text: "你是否愿意尝试相亲？", a: "愿意", b: "不愿意", score: 3 },
+  { text: "你对感情的态度：", a: "积极主动", b: "被动等待", score: 5 },
+  { text: "你相信一见钟情吗？", a: "相信", b: "更相信日久生情", score: 3 },
+  { text: "最近你的心情如何？", a: "愉悦开朗", b: "有点低落", score: 4 },
+  { text: "你最近是否在提升自己？", a: "是，学习/健身/护肤", b: "没有", score: 4 },
+  { text: "你的朋友圈/社交账号活跃吗？", a: "经常发", b: "很少发", score: 3 },
+  { text: "你会主动找喜欢的人聊天吗？", a: "会", b: "不会", score: 5 },
+  { text: "你愿意为爱改变自己吗？", a: "愿意", b: "不愿意", score: 3 },
+  { text: "最近是否参加过社交活动？", a: "聚会/活动", b: "没有", score: 4 },
+  { text: "你喜欢自己一个人待着吗？", a: "偶尔喜欢", b: "非常享受", score: -3 },
+  { text: "你害怕被拒绝吗？", a: "不害怕", b: "害怕", score: -3 },
+  { text: "你的标准：", a: "比较灵活", b: "非常严格", score: 3 },
+  { text: "你是否经常想到前任？", a: "偶尔", b: "经常", score: -2 },
+  { text: "你接受异地恋吗？", a: "可以", b: "不接受", score: 2 },
+  { text: "你身边有追求者吗？", a: "有", b: "没有", score: 5 },
+  { text: "你会用约会软件吗？", a: "会用", b: "不用", score: 3 },
+  { text: "最近是否做过关于感情的梦？", a: "做过", b: "没有", score: 3 },
+  { text: "你的异性朋友多吗？", a: "多", b: "少", score: 3 },
+  { text: "你觉得自己有魅力吗？", a: "有", b: "一般", score: 3 }
+];
+
+let answers = new Array(25).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 25 * 100) + '%';
+  document.getElementById('questionText').textContent = '第 ' + (currentQuestion + 1) + ' 题：' + q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  const optA = document.createElement('button');
+  optA.className = 'option';
+  optA.textContent = 'A. ' + q.a;
+  optA.onclick = () => selectOption(0, optA);
+  
+  const optB = document.createElement('button');
+  optB.className = 'option';
+  optB.textContent = 'B. ' + q.b;
+  optB.onclick = () => selectOption(1, optB);
+  
+  container.appendChild(optA);
+  container.appendChild(optB);
+  
+  if (answers[currentQuestion] !== null) {
+    const btns = container.querySelectorAll('.option');
+    btns[answers[currentQuestion]].classList.add('selected');
+  }
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  answers[currentQuestion] = idx;
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  
+  setTimeout(() => {
+    if (currentQuestion < 24) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 250);
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateResult() {
+  let totalScore = 0;
+  let totalCount = 0;
+  
+  questions.forEach((q, i) => {
+    if (answers[i] !== null) {
+      // A 选 (idx=0) 加 score
+      if (answers[i] === 0) {
+        totalScore += q.score;
+      } else {
+        totalScore += (-q.score);
+      }
+      totalCount++;
+    }
+  });
+  
+  // 总分映射到 0-100
+  const maxScore = totalCount * 5;
+  let finalScore = Math.round((totalScore + maxScore) / (maxScore * 2) * 100);
+  finalScore = Math.max(0, Math.min(100, finalScore));
+  
+  return finalScore;
+}
+
+function showResult() {
+  const score = calculateResult();
+  const data = getResultData(score);
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('peachScore').textContent = score;
+  document.getElementById('peachLevel').textContent = data.level;
+  
+  // 6 维评分（基于总分 + 随机）
+  const dims = [
+    { name: '🎯 主动出击', score: Math.min(100, score + Math.floor(Math.random() * 15 - 7)) },
+    { name: '👥 社交活跃', score: Math.min(100, score + Math.floor(Math.random() * 15 - 7)) },
+    { name: '💄 个人魅力', score: Math.min(100, score + Math.floor(Math.random() * 15 - 7)) },
+    { name: '🌹 桃花机遇', score: Math.min(100, score + Math.floor(Math.random() * 15 - 7)) },
+    { name: '💘 内心准备', score: Math.min(100, score + Math.floor(Math.random() * 15 - 7)) },
+    { name: '⚡ 行动力', score: Math.min(100, score + Math.floor(Math.random() * 15 - 7)) }
+  ];
+  
+  const scoreRows = document.getElementById('scoreRows');
+  scoreRows.innerHTML = '';
+  dims.forEach(d => {
+    const row = document.createElement('div');
+    row.className = 'score-row';
+    row.innerHTML = `
+      <div class="score-labels">
+        <span>${d.name}</span>
+        <span>${d.score}分</span>
+      </div>
+      <div class="score-track">
+        <div class="score-fill" style="width:${d.score}%;"></div>
+      </div>
+    `;
+    scoreRows.appendChild(row);
+  });
+  
+  document.getElementById('peachForecast').textContent = data.forecast;
+  document.getElementById('idealPartner').textContent = data.partner;
+  document.getElementById('peachDirection').innerHTML = data.direction;
+  document.getElementById('adviceList').innerHTML = data.advice.map(a => '<li>' + a + '</li>').join('');
+  document.getElementById('luckBoost').textContent = data.luckBoost;
+  
+  // 海报
+  document.getElementById('posterScore').textContent = score;
+  document.getElementById('posterLevel').textContent = data.level;
+  document.getElementById('posterTip').textContent = data.forecast.split('\\n')[0];
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getResultData(score) {
+  let level, forecast, partner, direction, advice, luckBoost;
+  
+  if (score >= 85) {
+    level = '🌸 桃花爆棚';
+    forecast = '近期你的桃花运势极佳！\\n\\n可能遇见理想对象，缘分到来。注意保持良好的状态，缘分就在身边。也可能有人暗恋你。';
+    partner = '理想对象画像：\\n• 性格温和，善解人意\\n• 有稳定工作或明确目标\\n• 外表干净整洁\\n• 对你主动关心\\n• 有共同的兴趣爱好';
+    direction = '🧭 桃花方位：<strong>东 / 东南</strong> 方\\n\\n近期朝东方或东南方活动，可能遇见有缘人。建议在这些方位的咖啡厅、图书馆、公园停留。';
+    advice = ['保持自信，主动出击', '多参加社交活动', '穿明亮颜色的衣服', '保持微笑', '放下手机，关注眼前人'];
+    luckBoost = '开运建议：佩戴粉色水晶 / 草莓晶 / 粉晶手链。卧室东南角放一束鲜花。周末多去东方位的商场或公园。';
+  } else if (score >= 55) {
+    level = '🌼 桃花尚可';
+    forecast = '近期桃花运势中等，需要你主动创造机会。\\n\\n缘分不会凭空而来，需要你多走出去。可以尝试新的活动，认识新朋友。';
+    partner = '理想对象画像：\\n• 性格相近，能聊得来\\n• 有自己的生活圈\\n• 尊重你的空间\\n• 有上进心\\n• 笑起来好看';
+    direction = '🧭 桃花方位：<strong>西 / 西北</strong> 方\\n\\n近期朝西方活动可能遇见有缘人。建议在西方位的健身房、咖啡馆、艺术展停留。';
+    advice = ['主动一点，不要等待', '尝试新的兴趣班', '整理自己的社交圈', '多和朋友们出去玩', '让自己成为有趣的人'];
+    luckBoost = '开运建议：穿着让自己自信的衣服。多晒太阳，提升阳气。周末多去健身房或户外活动，扩大社交圈。';
+  } else {
+    level = '🌱 桃花暂缓';
+    forecast = '近期桃花运势偏弱，需要先调整好自己。\\n\\n不必急于求成，先把重心放在提升自己上。当你成为更好的自己，缘分自然会来。';
+    partner = '理想对象画像：\\n• 耐心等待你的人\\n• 同样喜欢独处\\n• 重视精神交流\\n• 不急不躁\\n• 能理解你的节奏';
+    direction = '🧭 桃花方位：<strong>南 / 北</strong> 方\\n\\n近期不适合刻意寻找，而是要让自己变得更好。当缘分到来时，你会感受到。';
+    advice = ['先爱自己，再去爱别人', '提升自己：学习、健身、护肤', '扩大兴趣圈', '不要为了恋爱而恋爱', '保持开放心态'];
+    luckBoost = '开运建议：先专注自我成长。培养一个兴趣，坚持学习，让自己发光。缘分会在你准备好的时候到来。';
+  }
+  
+  return { level, forecast, partner, direction, advice, luckBoost };
+}
+
+function copyShareText() {
+  const score = document.getElementById('peachScore').textContent;
+  const level = document.getElementById('peachLevel').textContent;
+  
+  const text = '🌸 我的桃花指数：' + score + '\\n' + level + '\\n\\n你的桃花运怎么样？\\n👉 测试你的桃花：jianhebox.cn/fun/peach.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(25).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

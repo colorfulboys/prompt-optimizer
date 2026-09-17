@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 提示词工程师入门：从一句话到专业输出 | 简盒</title>
+<meta name="description" content="4 周成为提示词工程师。包含 4 大要素、3 个实战案例、4 个进阶技巧。">
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+  pre code { background: none; color: inherit; padding: 0; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  th { background: #f0f0f0; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }
+  a { color: #0099ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }
+  .back-home:hover { text-decoration: none; transform: translateY(-1px); }
+
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style>
+<!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-ai-prompt-engineer.html#article",
+      "headline": "AI 提示词工程师入门：从一句话到专业输出",
+      "description": "4 周成为提示词工程师",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-ai-prompt-engineer.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["4 周成为提示词工程师", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-ai-prompt-engineer.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AI 提示词工程师入门：从一句话到专业输出",
+          "item": "https://www.jianhebox.cn/article-ai-prompt-engineer.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Baidu Tongji (R57.10) -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?deb3c3385c923e6f7cc59e23b4d4d850";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+<!-- R57.9 SEO: 视觉面包屑 -->
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">首页</a>
+  <span class="bc-sep">›</span>
+  <a href="/articles.html">教程</a>
+  <span class="bc-sep">›</span>
+  <span>AI 提示词工程师入门：从一句话到专业输出</span>
+</nav>
+<a href="/" class="back-home">← 简盒首页</a>
+<p><!DOCTYPE html></p>
+<p><html lang="zh-CN"></p>
+<p><head></p>
+<p><meta charset="UTF-8"></p>
+<p><meta name="viewport" content="width=device-width, initial-scale=1.0"></p>
+<p><title>AI 提示词工程师入门：从一句话到专业输出 | 简盒</title></p>
+<p><meta name="description" content="4 周成为提示词工程师。包含 4 大要素、3 个实战案例、4 个进阶技巧、4 周学习路线。"></p>
+<p><style></p>
+<p>body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }</p>
+<p>h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }</p>
+<p>h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }</p>
+<p>h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }</p>
+<p>p { margin: 16px 0; }</p>
+<p>ul, ol { margin: 16px 0; padding-left: 32px; }</p>
+<p>li { margin: 8px 0; }</p>
+<p>code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }</p>
+<p>pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }</p>
+<p>pre code { background: none; color: inherit; padding: 0; }</p>
+<p>blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }</p>
+<p>table { width: 100%; border-collapse: collapse; margin: 20px 0; }</p>
+<p>th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }</p>
+<p>th { background: #f0f0f0; font-weight: 600; }</p>
+<p>tr:nth-child(even) { background: #fafafa; }</p>
+<p>hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }</p>
+<p>a { color: #0099ff; text-decoration: none; }</p>
+<p>a:hover { text-decoration: underline; }</p>
+<p>.back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }</p>
+<p>.back-home:hover { text-decoration: none; transform: translateY(-1px); }</p>
+<p>
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style></p>
+<p><!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-ai-prompt-engineer.html#article",
+      "headline": "AI 提示词工程师入门：从一句话到专业输出",
+      "description": "4 周成为提示词工程师",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-ai-prompt-engineer.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["4 周成为提示词工程师", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-ai-prompt-engineer.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AI 提示词工程师入门：从一句话到专业输出",
+          "item": "https://www.jianhebox.cn/article-ai-prompt-engineer.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head></p>
+<p><body></p>
+<p><a href="/" class="back-home">← 简盒首页</a></p>
+<p><p><!DOCTYPE html></p></p>
+<p><p><html lang="zh-CN"></p></p>
+<p><p><head></p></p>
+<p><p><meta charset="UTF-8"></p></p>
+<p><p><meta name="viewport" content="width=device-width, initial-scale=1.0"></p></p>
+<p><p><title>AI 提示词工程师入门：从一句话到专业输出 | 简盒</title></p></p>
+<p><p><meta name="description" content="4 周成为提示词工程师。包含 4 大要素、3 个实战案例、4 个进阶技巧、4 周学习路线。"></p></p>
+<p><p><style></p></p>
+<p><p>body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }</p></p>
+<p><p>h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }</p></p>
+<p><p>h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }</p></p>
+<p><p>h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }</p></p>
+<p><p>p { margin: 16px 0; }</p></p>
+<p><p>ul, ol { margin: 16px 0; padding-left: 32px; }</p></p>
+<p><p>li { margin: 8px 0; }</p></p>
+<p><p>code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }</p></p>
+<p><p>pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }</p></p>
+<p><p>pre code { background: none; color: inherit; padding: 0; }</p></p>
+<p><p>blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }</p></p>
+<p><p>table { width: 100%; border-collapse: collapse; margin: 20px 0; }</p></p>
+<p><p>th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }</p></p>
+<p><p>th { background: #f0f0f0; font-weight: 600; }</p></p>
+<p><p>tr:nth-child(even) { background: #fafafa; }</p></p>
+<p><p>hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }</p></p>
+<p><p>a { color: #0099ff; text-decoration: none; }</p></p>
+<p><p>a:hover { text-decoration: underline; }</p></p>
+<p><p>.back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }</p></p>
+<p><p>.back-home:hover { text-decoration: none; transform: translateY(-1px); }</p></p>
+<p><p>
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style></p></p>
+<p><p><!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-ai-prompt-engineer.html#article",
+      "headline": "AI 提示词工程师入门：从一句话到专业输出",
+      "description": "4 周成为提示词工程师",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-ai-prompt-engineer.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["4 周成为提示词工程师", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-ai-prompt-engineer.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AI 提示词工程师入门：从一句话到专业输出",
+          "item": "https://www.jianhebox.cn/article-ai-prompt-engineer.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head></p></p>
+<p><p><body></p></p>
+<p><p><a href="/" class="back-home">← 简盒首页</a></p></p>
+<p><p><h1>AI 提示词工程师入门：从一句话到专业输出</h1></p></p>
+<p><p><blockquote>最后更新：2026 年 9 月 · 阅读时长：约 6 分钟 · 适用：所有想用 AI 工具做出更好结果的人</blockquote></p></p>
+<p><p><hr></p></p>
+<p><p><h2>📌 什么是"提示词工程师"？</h2></p></p>
+<p><p><p><strong>提示词工程师</strong> = <strong>Prompt Engineer</strong> = 知道怎么和 AI 对话的人</p></p></p>
+<p><p><p><strong>不是编程</strong>！<strong>不是技术</strong>！只是<strong>会用更好的方式问 AI 问题</strong>。</p></p></p>
+<p><p><h3>举个例子</h3></p></p>
+<p><p><p>普通用户：</p></p></p>
+<p><p><blockquote>"帮我写一篇关于健康的文章"</blockquote></p></p>
+<p><p><p>提示词工程师：</p></p></p>
+<p><p><blockquote>"你是一位资深营养师，给 30-40 岁女性写一篇关于'如何在高压工作下保持健康饮食'的公众号文章，要求：1) 800 字；2) 通俗易懂，不用专业术语；3) 包含 3 个实用 tips；4) 结尾有互动提问"</blockquote></p></p>
+<p><p><p><strong>同样的 AI，结果相差 10 倍。</strong></p></p></p>
+<p><p><hr></p></p>
+<p><p><h2>🎯 为什么你应该学？</h2></p></p>
+<p><p><h3>1. AI 工具越来越重要</h3></p></p>
+<p><p><p>2026 年，<strong>所有主流工具都内置 AI</strong>：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li>写作：Notion AI、飞书 AI</li></p></p>
+<p><p><li>设计：Figma AI、Canva AI</li></p></p>
+<p><p><li>编程：Cursor、GitHub Copilot</li></p></p>
+<p><p><li>视频：剪映 AI、CapCut</li></p></p>
+<p><p></ul></p></p>
+<p><p><p><strong>会用提示词 = 工具使用效率翻倍</strong></p></p></p>
+<p><p><h3>2. 工资高</h3></p></p>
+<p><p><p>国内招聘网站数据（2026）：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li>AI 提示词工程师：<strong>月薪 15K-40K</strong></li></p></p>
+<p><p><li>普通文员：<strong>月薪 5K-8K</strong></li></p></p>
+<p><p></ul></p></p>
+<p><p><h3>3. 0 基础也能学</h3></p></p>
+<p><p><p><strong>不用学编程</strong>！<strong>不用懂技术</strong>！会打字就能学会。</p></p></p>
+<p><p><hr></p></p>
+<p><p><h2>🧱 提示词四大要素</h2></p></p>
+<p><p><p>一个<strong>好提示词</strong>包含这 4 部分：</p></p></p>
+<p><p><h3>1. 角色（Role）</h3></p></p>
+<p><p><p>告诉 AI "你是谁"。</p></p></p>
+<p><p><pre><code>你是一位资深营养师 / 你是一位小红书博主 / 你是一位软件架构师</code></pre></p></p>
+<p><p><h3>2. 任务（Task）</h3></p></p>
+<p><p><p>告诉 AI "做什么"。</p></p></p>
+<p><p><pre><code>写一篇关于...的文章 / 帮我分析...数据 / 翻译这段...</code></pre></p></p>
+<p><p><h3>3. 上下文（Context）</h3></p></p>
+<p><p><p>告诉 AI "为什么做" / "给谁看"。</p></p></p>
+<p><p><pre><code>给 30 岁女性看 / 在小红书发 / 受众是开发者</code></pre></p></p>
+<p><p><h3>4. 格式（Format）</h3></p></p>
+<p><p><p>告诉 AI "输出长什么样"。</p></p></p>
+<p><p><pre><code>800 字 / 3 个 tips / Markdown 格式 / JSON 结构</code></pre></p></p>
+<p><p><hr></p></p>
+<p><p><h2>📝 实战案例</h2></p></p>
+<p><p><h3>案例 1：写小红书文案</h3></p></p>
+<p><p><p><strong>❌ 普通提示词</strong>：</p></p></p>
+<p><p><blockquote>"帮我写一篇关于防晒的小红书"</blockquote></p></p>
+<p><p><p><strong>✅ 优化后</strong>：</p></p></p>
+<p><p><pre><code>你是一位有 10 万粉丝的小红书美妆博主。</p></p>
+<p><p>任务：写一篇关于"通勤防晒"的小红书笔记。</p></p>
+<p><p>要求：</p></p>
+<p><ol></p>
+<p><li>标题要吸引点击（不超过 20 字，可以用 emoji）</li></p>
+<p><li>正文 300-500 字，分 3 段</li></p>
+<p><li>包含 1 个亲身体验故事</li></p>
+<p><li>结尾有互动引导（问读者问题）</li></p>
+<p><li>文末加 3-5 个相关 hashtag</li></p>
+<p></ol></p>
+<p><p>格式：Markdown</code></pre></p></p>
+<p><p><p><strong>AI 输出</strong>会立刻从"普通文章"变成"像真人发的笔记"。</p></p></p>
+<p><p><hr></p></p>
+<p><p><h3>案例 2：翻译专业文档</h3></p></p>
+<p><p><p><strong>❌ 普通提示词</strong>：</p></p></p>
+<p><p><blockquote>"把这段英文翻译成中文"</blockquote></p></p>
+<p><p><p><strong>✅ 优化后</strong>：</p></p></p>
+<p><p><pre><code>你是专业法律翻译，有 10 年法律文书翻译经验。</p></p>
+<p><p>任务：将以下英文合同翻译成中文。</p></p>
+<p><p>要求：</p></p>
+<p><ol></p>
+<p><li>保留所有法律术语的准确性</li></p>
+<p><li>中英文双引号格式："原文" → "译文"</li></p>
+<p><li>文末加注：3 个关键法律术语的英文原文</li></p>
+<p><li>翻译风格：正式书面语，避免口语化</li></p>
+<p></ol></p>
+<p><p>格式：Markdown 表格，左列英文，右列中文</code></pre></p></p>
+<p><p><hr></p></p>
+<p><p><h3>案例 3：生成代码</h3></p></p>
+<p><p><p><strong>❌ 普通提示词</strong>：</p></p></p>
+<p><p><blockquote>"写一个 Python 脚本读取 CSV"</blockquote></p></p>
+<p><p><p><strong>✅ 优化后</strong>：</p></p></p>
+<p><p><pre><code>你是 Python 后端工程师。</p></p>
+<p><p>任务：编写一个 Python 脚本，读取 sales.csv 文件，按地区分组统计销售额。</p></p>
+<p><p>要求：</p></p>
+<p><ol></p>
+<p><li>使用 pandas</li></p>
+<p><li>处理中文编码（UTF-8）</li></p>
+<p><li>异常处理：文件不存在、空文件</li></p>
+<p><li>输出格式：表格（地区、订单数、总销售额）</li></p>
+<p><li>加中文注释</li></p>
+<p><li>函数和类都写 docstring</li></p>
+<p></ol></p>
+<p><p>格式：完整 Python 代码，可直接运行</code></pre></p></p>
+<p><p><hr></p></p>
+<p><p><h2>🚀 进阶技巧</h2></p></p>
+<p><p><h3>1. 链式思考（Chain of Thought）</h3></p></p>
+<p><p><p>让 AI "一步步思考"，结果更准：</p></p></p>
+<p><p><pre><code>请一步步思考：</p></p>
+<p><ol></p>
+<p><li>先分析问题...</li></p>
+<p><li>再列出可能的方案...</li></p>
+<p><li>比较每个方案的优缺点...</li></p>
+<p><li>最后给出推荐方案</code></pre></li></p>
+<p></ol></p>
+<p><p><h3>2. Few-Shot（给示例）</h3></p></p>
+<p><p><p>给 AI 几个例子，让它"模仿"：</p></p></p>
+<p><p><pre><code>参考这两个示例：</p></p>
+<p><p>示例 1：输入 "iPhone 15" → 输出 "苹果 iPhone 15 智能手机"</p></p>
+<p><p>示例 2：输入 "MacBook Pro" → 输出 "苹果 MacBook Pro 笔记本电脑"</p></p>
+<p><p>现在处理：输入 "AirPods Pro" → 输出 "?"</code></pre></p></p>
+<p><p><h3>3. 角色扮演</h3></p></p>
+<p><p><p>让 AI 扮演特定角色，输出更专业：</p></p></p>
+<p><p><pre><code>你是一位严厉的产品经理，会指出任何不合理的细节。</p></p>
+<p><p>我的方案是：[你的方案]</p></p>
+<p><p>请按以下格式批评：</p></p>
+<p><ol></p>
+<p><li>不合理的地方（≥ 3 条）</li></p>
+<p><li>改进建议</li></p>
+<p><li>更好的替代方案</code></pre></li></p>
+<p></ol></p>
+<p><p><h3>4. 自我评估</h3></p></p>
+<p><p><p>让 AI 检查自己的输出：</p></p></p>
+<p><p><pre><code>回答完成后，请自评：</p></p>
+<p><ol></p>
+<p><li>答案是否完整回答了问题？</li></p>
+<p><li>有没有遗漏的关键点？</li></p>
+<p><li>格式是否正确？</li></p>
+<p></ol></p>
+<p><p>如果有遗漏，请重新补充。</code></pre></p></p>
+<p><p><hr></p></p>
+<p><p><h2>🛠️ 实用工具推荐</h2></p></p>
+<p><p><h3>简盒 AI 提示词优化器</h3></p></p>
+<p><p><p><a href="https://www.jianhebox.cn/#/basic/system">👉 jianhebox.cn/ai-prompt</a></p></p></p>
+<p><p><p>特点：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li>✅ <strong>自动优化</strong>：输入烂提示词，自动改成专业提示词</li></p></p>
+<p><p><li>✅ <strong>多模型支持</strong>：DeepSeek / ChatGPT / Claude / 文心一言</li></p></p>
+<p><p><li>✅ <strong>提示词库</strong>：300+ 行业现成模板（写作/编程/营销/翻译）</li></p></p>
+<p><p><li>✅ <strong>变量提示词</strong>：写一次提示词，换个变量复用 100 次</li></p></p>
+<p><p><li>✅ <strong>完全免费</strong></li></p></p>
+<p><p></ul></p></p>
+<p><p><h3>其他工具</h3></p></p>
+<p><p><p>| 工具 | 用途 | 价格 |</p></p></p>
+<p><p><p>|---|---|---|</p></p></p>
+<p><p><p>| ChatGPT | 通用对话 | 免费版 + Plus $20/月 |</p></p></p>
+<p><p><p>| Claude | 长文档分析 | 免费版 + Pro $20/月 |</p></p></p>
+<p><p><p>| DeepSeek | 中文场景最佳 | 完全免费 |</p></p></p>
+<p><p><p>| Notion AI | 文档写作 | $10/月 |</p></p></p>
+<p><p><hr></p></p>
+<p><p><h2>📚 学习路线（4 周速成）</h2></p></p>
+<p><p><h3>第 1 周：基础</h3></p></p>
+<p><p><ul></p></p>
+<p><p><li>学完本文所有内容</li></p></p>
+<p><p><li>每天用 30 分钟<strong>优化你的工作提示词</strong></li></p></p>
+<p><p><li>推荐：<a href="https://www.jianhebox.cn/#/basic/system">简盒 AI 提示词优化器</a> 直接练手</li></p></p>
+<p><p></ul></p></p>
+<p><p><h3>第 2 周：进阶</h3></p></p>
+<p><p><ul></p></p>
+<p><p><li>学 Few-Shot、链式思考</li></p></p>
+<p><p><li>找一个<strong>具体业务场景</strong>（你的工作），写 5 个优化提示词</li></p></p>
+<p><p><li>对比"普通"和"优化"的 AI 输出差异</li></p></p>
+<p><p></ul></p></p>
+<p><p><h3>第 3 周：组合拳</h3></p></p>
+<p><p><ul></p></p>
+<p><p><li>学<strong>链式提示词</strong>（多个提示词配合）</li></p></p>
+<p><p><li>例：先让 AI 写大纲 → 再让 AI 写正文 → 再让 AI 校对</li></p></p>
+<p><p></ul></p></p>
+<p><p><h3>第 4 周：自动化</h3></p></p>
+<p><p><ul></p></p>
+<p><p><li>用变量提示词（一次写好，换变量复用）</li></p></p>
+<p><p><li>用 API 把 AI 集成到你的工作流</li></p></p>
+<p><p></ul></p></p>
+<p><p><hr></p></p>
+<p><p><h2>⚠️ 常见误区</h2></p></p>
+<p><p><h3>误区 1：以为提示词越复杂越好</h3></p></p>
+<p><p><p><strong>错</strong>！<strong>简洁 + 清晰</strong> > 长篇大论。</p></p></p>
+<p><p><pre><code>❌ "我希望你能作为一个非常专业、非常严谨、非常有经验的..."</p></p>
+<p><p>✅ "你是资深营养师"</code></pre></p></p>
+<p><p><h3>误区 2：不告诉 AI 输出格式</h3></p></p>
+<p><p><p><strong>错</strong>！必须指定格式。</p></p></p>
+<p><p><pre><code>❌ "写一些 tips"</p></p>
+<p><p>✅ "写 3 个 tips，每个 1-2 句话，用 Markdown 列表格式"</code></pre></p></p>
+<p><p><h3>误区 3：一次问太多</h3></p></p>
+<p><p><p><strong>错</strong>！<strong>分步骤问</strong>效果更好。</p></p></p>
+<p><p><pre><code>❌ "写文章、配图、翻译、发到 5 个平台"</p></p>
+<p><p>✅ 步骤 1：写文章大纲</p></p>
+<p><p>步骤 2：基于大纲写正文</p></p>
+<p><p>步骤 3：生成配图 prompt</p></p>
+<p><p>步骤 4：翻译成英文</code></pre></p></p>
+<p><p><h3>误区 4：AI 输出不满意就重试</h3></p></p>
+<p><p><p><strong>错</strong>！<strong>调整提示词</strong>比反复重试更有效。</p></p></p>
+<p><p><hr></p></p>
+<p><p><h2>🎯 立即开始</h2></p></p>
+<p><p><p>学完理论还不够，<strong>立刻上手</strong>才是关键：</p></p></p>
+<p><p><p><a href="https://www.jianhebox.cn/#/basic/system">👉 打开简盒 AI 提示词优化器</a></p></p></p>
+<p><p><p>输入你<strong>今天</strong>工作中遇到的一个问题，<strong>用本文教的 4 要素改造你的提示词</strong>，看 AI 输出有什么不同。</p></p></p>
+<p><p><p><strong>30 分钟你就能上手</strong>，1 周就能成为团队最会用 AI 的人。</p></p></p>
+<p><p><hr></p></p>
+<p><p><h2>💬 反馈</h2></p></p>
+<p><p><p>觉得有帮助？欢迎：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li>🔖 收藏本文</li></p></p>
+<p><p><li>📤 分享给同事朋友</li></p></p>
+<p><p><li>💬 <a href="https://www.jianhebox.cn/#/article/ai-prompt-engineer#comments">评论区留言你的优化案例</a></li></p></p>
+<p><p></ul></p></p>
+<p><p><hr></p></p>
+<p><p><blockquote>本文由 <a href="https://www.jianhebox.cn/">简盒 JianHeBox</a> 整理，更多 AI 工具教程见站内文章。</blockquote></p></p>
+<p><p><!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-ai-prompt-engineer.html&title=AI%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%85%A5%E9%97%A8%EF%BC%9A%E4%BB%8E%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%88%B0%E4%B8%93%E4%B8%9A%E8%BE%93%E5%87%BA%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-ai-prompt-engineer.html&title=AI%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%85%A5%E9%97%A8%EF%BC%9A%E4%BB%8E%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%88%B0%E4%B8%93%E4%B8%9A%E8%BE%93%E5%87%BA%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-ai-prompt-engineer.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-ai-prompt-engineer.html&text=AI%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%85%A5%E9%97%A8%EF%BC%9A%E4%BB%8E%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%88%B0%E4%B8%93%E4%B8%9A%E8%BE%93%E5%87%BA%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-deepseek-prompt.html" class="related-item"><span>DeepSeek 提示词实战 9 招</span><span class="arrow">→</span></a>
+    <a href="/article-xiaohongshu-ai.html" class="related-item"><span>AI 写小红书爆款完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-wechat-ai.html" class="related-item"><span>AI 写公众号爆款 7 个秘密</span><span class="arrow">→</span></a>
+    <a href="/article-free-ai-tools-2026.html" class="related-item"><span>2026 免费 AI 工具清单</span><span class="arrow">→</span></a>
+    <a href="/article-fcpxml-guide.html" class="related-item"><span>FCPXML 字幕转换完全教程</span><span class="arrow">→</span></a>
+    </div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body></p></p>
+<p><p></html></p></p>
+<p><!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-ai-prompt-engineer.html&title=AI%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%85%A5%E9%97%A8%EF%BC%9A%E4%BB%8E%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%88%B0%E4%B8%93%E4%B8%9A%E8%BE%93%E5%87%BA%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-ai-prompt-engineer.html&title=AI%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%85%A5%E9%97%A8%EF%BC%9A%E4%BB%8E%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%88%B0%E4%B8%93%E4%B8%9A%E8%BE%93%E5%87%BA%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-ai-prompt-engineer.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-ai-prompt-engineer.html&text=AI%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%85%A5%E9%97%A8%EF%BC%9A%E4%BB%8E%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%88%B0%E4%B8%93%E4%B8%9A%E8%BE%93%E5%87%BA%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-deepseek-prompt.html" class="related-item"><span>DeepSeek 提示词实战 9 招</span><span class="arrow">→</span></a>
+    <a href="/article-xiaohongshu-ai.html" class="related-item"><span>AI 写小红书爆款完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-wechat-ai.html" class="related-item"><span>AI 写公众号爆款 7 个秘密</span><span class="arrow">→</span></a></div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body></p>
+<p></html></p>
+<!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-ai-prompt-engineer.html&title=AI%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%85%A5%E9%97%A8%EF%BC%9A%E4%BB%8E%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%88%B0%E4%B8%93%E4%B8%9A%E8%BE%93%E5%87%BA%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-ai-prompt-engineer.html&title=AI%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%85%A5%E9%97%A8%EF%BC%9A%E4%BB%8E%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%88%B0%E4%B8%93%E4%B8%9A%E8%BE%93%E5%87%BA%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-ai-prompt-engineer.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-ai-prompt-engineer.html&text=AI%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%B8%88%E5%85%A5%E9%97%A8%EF%BC%9A%E4%BB%8E%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%88%B0%E4%B8%93%E4%B8%9A%E8%BE%93%E5%87%BA%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-deepseek-prompt.html" class="related-item"><span>DeepSeek 提示词实战 9 招</span><span class="arrow">→</span></a>
+    <a href="/article-xiaohongshu-ai.html" class="related-item"><span>AI 写小红书爆款完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-wechat-ai.html" class="related-item"><span>AI 写公众号爆款 7 个秘密</span><span class="arrow">→</span></a></div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body>
+</html>

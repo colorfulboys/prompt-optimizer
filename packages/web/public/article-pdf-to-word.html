@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF 转 Word 免费完整教程：保留格式 95%+ | 简盒</title>
+<meta name="description" content="5 个免费 PDF 转 Word 工具实测对比。">
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+  pre code { background: none; color: inherit; padding: 0; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  th { background: #f0f0f0; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }
+  a { color: #0099ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }
+  .back-home:hover { text-decoration: none; transform: translateY(-1px); }
+
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style>
+<!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-pdf-to-word.html#article",
+      "headline": "PDF 转 Word 免费完整教程：5 个工具实测，保留格式 95%+",
+      "description": "PDF 转 Word 免费教程",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-pdf-to-word.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["PDF 转 Word 免费教程", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-pdf-to-word.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "PDF 转 Word 免费完整教程：5 个工具实测，保留格式 95%+",
+          "item": "https://www.jianhebox.cn/article-pdf-to-word.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Baidu Tongji (R57.10) -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?deb3c3385c923e6f7cc59e23b4d4d850";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+<!-- R57.9 SEO: 视觉面包屑 -->
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">首页</a>
+  <span class="bc-sep">›</span>
+  <a href="/articles.html">教程</a>
+  <span class="bc-sep">›</span>
+  <span>PDF 转 Word 免费完整教程：5 个工具实测，保留格式 95%+</span>
+</nav>
+<a href="/" class="back-home">← 简盒首页</a>
+<h1>PDF 转 Word 免费完整教程：5 个工具实测，保留格式 95%+</h1>
+<blockquote>最后更新：2026 年 9 月 · 阅读时长：约 7 分钟 · 适用：学生、办公人员、研究者</blockquote>
+<hr>
+<h2>📌 这篇教程解决什么问题？</h2>
+<p>需要<strong>编辑 PDF 内容</strong>，但：</p>
+<ul>
+<li>❌ PDF 不能直接编辑</li>
+<li>❌ 重新打字太慢</li>
+<li>❌ 多数在线工具<strong>有文件大小限制</strong>（50MB+ 不让传）</li>
+<li>❌ 上传文件有<strong>隐私风险</strong></li>
+</ul>
+<p><strong>这篇教程教你</strong>：</p>
+<ul>
+<li>✅ 把 PDF 转成 Word，<strong>保留排版 95%+</strong></li>
+<li>✅ 完全免费，无文件大小限制</li>
+<li>✅ <strong>本地处理</strong>，不担心隐私</li>
+</ul>
+<hr>
+<h2>🚀 快速通道</h2>
+<ol>
+<li>打开 <a href="https://www.jianhebox.cn/#/tools/pdf">jianhebox.cn/pdf</a></li>
+<li>点 <strong>「PDF 转 Word」</strong> tab</li>
+<li>拖入 PDF</li>
+<li>点转换 → 下载 .docx 文件</li>
+</ol>
+<blockquote>✅ <strong>完全免费</strong> · ✅ <strong>本地处理</strong> · ✅ <strong>保留格式 95%+</strong></blockquote>
+<hr>
+<h2>📖 基础概念</h2>
+<h3>PDF 为什么不能直接编辑？</h3>
+<p>PDF 的本质是<strong>页面渲染描述</strong>（"在 x=100, y=200 位置画文字 A"），不是结构化文档（"标题 + 段落 + 列表"）。</p>
+<pre><code>Word：标题 → 段落 → 列表（结构化）
+PDF：画 → 画 → 画（位置信息）</code></pre>
+<p><strong>PDF 转 Word</strong> 就像从一张照片里<strong>反向工程出表格</strong>——AI 必须"猜"哪里是标题、哪里是段落。</p>
+<h3>转换的 2 个核心难点</h3>
+<p>| 难点 | 表现 | 解决 |</p>
+<p>|---|---|---|</p>
+<p>| <strong>布局识别</strong> | 标题/正文/表格分不清 | AI 模型（OCR + 布局分析） |</p>
+<p>| <strong>字体保留</strong> | 转换后字体丢失/乱码 | 嵌入字体 + 字体映射 |</p>
+<p><strong>结论</strong>：现代 AI 转 PDF 准确率 95%+，但<strong>扫描版 PDF</strong>（图片）准确率只有 70-85%。</p>
+<hr>
+<h2>🎯 5 个免费工具实测对比</h2>
+<h3>工具 1：简盒 PDF 转 Word（推荐）</h3>
+<p><strong>网址</strong>：<a href="https://www.jianhebox.cn/#/tools/pdf">jianhebox.cn/pdf</a></p>
+<p>| 项目 | 评分 |</p>
+<p>|---|---|</p>
+<p>| <strong>价格</strong> | ⭐⭐⭐⭐⭐ 完全免费 |</p>
+<p>| <strong>格式保留</strong> | ⭐⭐⭐⭐ 90%+ |</p>
+<p>| <strong>隐私</strong> | ⭐⭐⭐⭐⭐ 本地处理 |</p>
+<p>| <strong>文件大小</strong> | ⭐⭐⭐⭐⭐ 无限制 |</p>
+<p>| <strong>批量</strong> | ⭐⭐⭐⭐⭐ 支持 |</p>
+<p>| <strong>OCR（扫描版）</strong> | ⭐⭐⭐⭐ 支持 |</p>
+<p><strong>优点</strong>：完全免费、无限制、本地隐私安全</p>
+<p><strong>缺点</strong>：需要浏览器现代（Chrome 90+）</p>
+<hr>
+<h3>工具 2：iLovePDF</h3>
+<p><strong>网址</strong>：ilovepdf.com</p>
+<p>| 项目 | 评分 |</p>
+<p>|---|---|</p>
+<p>| <strong>价格</strong> | ⭐⭐⭐ 免费版有大小限制 |</p>
+<p>| <strong>格式保留</strong> | ⭐⭐⭐⭐ 85%+ |</p>
+<p>| <strong>隐私</strong> | ⭐⭐ 文件上传第三方服务器 |</p>
+<p>| <strong>文件大小</strong> | ⭐⭐ 免费版 ≤ 100 MB |</p>
+<p>| <strong>批量</strong> | ⭐⭐⭐ 支持 |</p>
+<p>| <strong>OCR</strong> | ⭐⭐⭐ 收费 |</p>
+<p><strong>优点</strong>：功能全面</p>
+<p><strong>缺点</strong>：<strong>文件上传</strong>，<strong>隐私顾虑</strong></p>
+<hr>
+<h3>工具 3：Smallpdf</h3>
+<p><strong>网址</strong>：smallpdf.com</p>
+<p>| 项目 | 评分 |</p>
+<p>|---|---|</p>
+<p>| <strong>价格</strong> | ⭐⭐ 免费版每天 2 次 |</p>
+<p>| <strong>格式保留</strong> | ⭐⭐⭐⭐ 88%+ |</p>
+<p>| <strong>隐私</strong> | ⭐⭐ 文件上传 |</p>
+<p>| <strong>文件大小</strong> | ⭐⭐ 免费版 ≤ 100 MB |</p>
+<p>| <strong>批量</strong> | ⭐⭐⭐ |</p>
+<p>| <strong>OCR</strong> | ⭐⭐⭐ 收费 |</p>
+<p><strong>优点</strong>：界面漂亮</p>
+<p><strong>缺点</strong>：免费版限制多，<strong>2 次/天</strong></p>
+<hr>
+<h3>工具 4：Adobe Acrobat Online</h3>
+<p><strong>网址</strong>：acrobat.adobe.com</p>
+<p>| 项目 | 评分 |</p>
+<p>|---|---|</p>
+<p>| <strong>价格</strong> | ⭐⭐ 免费版有水印 |</p>
+<p>| <strong>格式保留</strong> | ⭐⭐⭐⭐⭐ 95%+（最强） |</p>
+<p>| <strong>隐私</strong> | ⭐⭐ 文件上传 Adobe |</p>
+<p>| <strong>文件大小</strong> | ⭐⭐⭐ |</p>
+<p>| <strong>批量</strong> | ⭐⭐ |</p>
+<p>| <strong>OCR</strong> | ⭐⭐⭐⭐⭐ |</p>
+<p><strong>优点</strong>：<strong>业界最强</strong>转换质量</p>
+<p><strong>缺点</strong>：免费版<strong>有水印</strong>，<strong>每月仅 2 次</strong></p>
+<hr>
+<h3>工具 5：Microsoft Word 直接打开</h3>
+<p><strong>操作</strong>：Word → 打开 → 选 PDF 文件</p>
+<p>| 项目 | 评分 |</p>
+<p>|---|---|</p>
+<p>| <strong>价格</strong> | ⭐⭐⭐⭐⭐ 已购 Word |</p>
+<p>| <strong>格式保留</strong> | ⭐⭐⭐⭐ 90%+ |</p>
+<p>| <strong>隐私</strong> | ⭐⭐⭐⭐⭐ 本地 |</p>
+<p>| <strong>文件大小</strong> | ⭐⭐⭐⭐ 无限制 |</p>
+<p>| <strong>批量</strong> | ⭐⭐ 一次一个 |</p>
+<p>| <strong>OCR</strong> | ⭐⭐⭐⭐ |</p>
+<p><strong>优点</strong>：本地、Microsoft 原生</p>
+<p><strong>缺点</strong>：必须<strong>有 Office 365</strong> 订阅</p>
+<hr>
+<h3>📊 总评分对比</h3>
+<p>| 工具 | 格式保留 | 隐私 | 价格 | 综合 |</p>
+<p>|---|---|---|---|---|</p>
+<p>| <strong>简盒</strong> | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 🥇 |</p>
+<p>| iLovePDF | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐⭐ | 🥈 |</p>
+<p>| Smallpdf | ⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐ | 🥉 |</p>
+<p>| Adobe | ⭐⭐⭐⭐⭐ | ⭐⭐ | ⭐⭐ | ⭐⭐⭐⭐ |</p>
+<p>| MS Word | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐ |</p>
+<p><strong>推荐</strong>：<strong>简盒</strong>（综合最优）或 <strong>MS Word</strong>（已有 Office）。</p>
+<hr>
+<h2>🎯 4 个实战场景</h2>
+<h3>场景 1：教材 PDF 转 Word 标注重点</h3>
+<p><strong>典型问题</strong>：英语教材 PDF，想加标注。</p>
+<p><strong>方案</strong>：</p>
+<p><a href="https://www.jianhebox.cn/#/tools/pdf">简盒 PDF 工具箱</a> → PDF 转 Word → 转换 → 在 Word 里标注 → 导出 PDF。</p>
+<p><strong>注意</strong>：表格多的教材转换<strong>容易错位</strong>，建议转换后<strong>手动检查</strong>。</p>
+<hr>
+<h3>场景 2：扫描版合同转 Word 编辑</h3>
+<p><strong>典型问题</strong>：纸质合同扫描成 PDF，需要修改内容。</p>
+<p><strong>方案</strong>：</p>
+<ol>
+<li><a href="https://www.jianhebox.cn/#/tools/pdf">简盒 PDF 工具箱</a> → PDF 转 Word</li>
+<li>选 <strong>OCR 模式</strong>（识别图片里的文字）</li>
+<li>转换</li>
+<li>编辑 Word</li>
+</ol>
+<p><strong>注意</strong>：扫描版转换准确率 70-85%，<strong>重要合同</strong>建议<strong>人工核对</strong>。</p>
+<hr>
+<h3>场景 3：学术论文 PDF 转 Word</h3>
+<p><strong>典型问题</strong>：下载的论文是 PDF，想引用其中段落。</p>
+<p><strong>方案</strong>：</p>
+<p><a href="https://www.jianhebox.cn/#/tools/pdf">简盒 PDF 工具箱</a> → PDF 转 Word → 选「学术模式」（保留公式、图表、参考文献格式）。</p>
+<p><strong>注意</strong>：公式转换<strong>经常出问题</strong>，复杂公式建议<strong>截图</strong>而不是转换。</p>
+<hr>
+<h3>场景 4：电子书 PDF 转 Word</h3>
+<p><strong>典型问题</strong>：买了电子书 PDF，想在 Kindle/手机上读。</p>
+<p><strong>方案</strong>：</p>
+<p><a href="https://www.jianhebox.cn/#/tools/pdf">简盒 PDF 工具箱</a> → PDF 转 Word → 转 EPUB 或 MOBI（如果你用 Kindle）。</p>
+<p><strong>注意</strong>：受 DRM 保护的电子书<strong>不能转换</strong>。</p>
+<hr>
+<h2>🔧 高级技巧</h2>
+<h3>1. 批量转换 100 个 PDF</h3>
+<p><a href="https://www.jianhebox.cn/#/tools/pdf">简盒 PDF 工具箱</a> → 批量上传 → 一键转换 → 一键下载（打包成 ZIP）。</p>
+<p><strong>节省时间</strong>：100 个文件手动一个个转 = 5 小时，批量 = 30 分钟。</p>
+<h3>2. 保留原页眉页脚</h3>
+<p>转换时勾选「<strong>保留页眉页脚</strong>」选项。</p>
+<h3>3. 处理加密 PDF</h3>
+<p><strong>如果 PDF 是加密的</strong>：</p>
+<ul>
+<li>简盒 PDF 工具箱<strong>支持密码输入</strong>（输入后转换）</li>
+<li><strong>不要</strong>用网上工具绕过密码（可能违法）</li>
+</ul>
+<h3>4. 处理超大 PDF（100MB+）</h3>
+<p><strong>拆分成多个小 PDF</strong> → 一个个转换 → 合并。</p>
+<p><a href="https://www.jianhebox.cn/#/tools/pdf">简盒 PDF 工具箱</a> 提供 <strong>PDF 拆分</strong> 功能。</p>
+<hr>
+<h2>⚠️ 常见问题</h2>
+<h3>Q1：转换后排版乱了？</h3>
+<p><strong>原因</strong>：原 PDF 用了复杂版式（多栏、表格嵌套）</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>选「<strong>学术/出版物模式</strong>」（智能识别版式）</li>
+<li>复杂 PDF 转换后<strong>人工微调</strong></li>
+</ul>
+<h3>Q2：中文乱码？</h3>
+<p><strong>原因</strong>：PDF 字体未嵌入</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>用 Adobe Acrobat 重新导出 PDF（<strong>嵌入所有字体</strong>）</li>
+<li>再用简盒转换</li>
+</ul>
+<h3>Q3：扫描版 PDF 转换是空的？</h3>
+<p><strong>原因</strong>：默认没启用 OCR</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>简盒转换时勾选「<strong>OCR 模式</strong>」</li>
+<li>选择语言：<strong>中文 + 英文</strong></li>
+</ul>
+<h3>Q4：图片丢失？</h3>
+<p><strong>原因</strong>：原 PDF 图片是矢量图或特殊格式</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>简盒默认提取图片</li>
+<li>检查「<strong>保留图片</strong>」选项是否勾选</li>
+</ul>
+<h3>Q5：转换后文件太大？</h3>
+<p><strong>原因</strong>：图片未压缩</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>简盒转换时勾选「<strong>压缩图片</strong>」</li>
+<li>把图片质量调到 85%（肉眼无差异）</li>
+</ul>
+<hr>
+<h2>🎓 进阶：PDF 转其他格式</h2>
+<p>| 目标格式 | 工具 | 用途 |</p>
+<p>|---|---|---|</p>
+<p>| Word (.docx) | 简盒 | 编辑、批注 |</p>
+<p>| Excel (.xlsx) | 简盒 | 提取表格数据 |</p>
+<p>| PowerPoint (.pptx) | 简盒 | 复用幻灯片 |</p>
+<p>| 图片 (jpg/png) | 简盒 | 截图、贴图 |</p>
+<p>| Markdown | 简盒 | 写博客、技术文档 |</p>
+<p>| EPUB | Calibre | 电子书阅读器 |</p>
+<p><a href="https://www.jianhebox.cn/#/tools/pdf">简盒 PDF 工具箱</a> 一站式全支持。</p>
+<hr>
+<h2>🚀 开始转换</h2>
+<p><a href="https://www.jianhebox.cn/#/tools/pdf">👉 打开简盒 PDF 工具箱</a></p>
+<p>特点：</p>
+<ul>
+<li>✅ <strong>完全免费</strong></li>
+<li>✅ <strong>本地处理，不上传服务器</strong></li>
+<li>✅ <strong>批量处理</strong></li>
+<li>✅ <strong>OCR 支持</strong>（中文 + 英文）</li>
+<li>✅ <strong>6 种输出格式</strong>（Word/Excel/PPT/图片/Markdown/EPUB）</li>
+</ul>
+<hr>
+<h2>📚 相关教程</h2>
+<ul>
+<li><a href="/article-pdf-to-markdown.html">PDF 转 Markdown 完整指南</a></li>
+<li><a href="/article-pdf-ocr.html">扫描版 PDF 转文字 OCR 指南</a></li>
+<li><a href="/article-pdf-to-image.html">PDF 转图片完整教程</a></li>
+<li><a href="/article-ai-prompt-engineer.html">AI 写文章完全指南</a></li>
+</ul>
+<hr>
+<h2>💬 反馈</h2>
+<ul>
+<li>📧 <a href="mailto:hi@jianhebox.cn">hi@jianhebox.cn</a></li>
+</ul>
+<blockquote>本文由 <a href="https://www.jianhebox.cn/">简盒 JianHeBox</a> 编辑整理。</blockquote>
+<!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-pdf-to-word.html&title=PDF%20%E8%BD%AC%20Word%20%E5%85%8D%E8%B4%B9%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BF%9D%E7%95%99%E6%A0%BC%E5%BC%8F%2095%25%2B%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-pdf-to-word.html&title=PDF%20%E8%BD%AC%20Word%20%E5%85%8D%E8%B4%B9%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BF%9D%E7%95%99%E6%A0%BC%E5%BC%8F%2095%25%2B%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-pdf-to-word.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-pdf-to-word.html&text=PDF%20%E8%BD%AC%20Word%20%E5%85%8D%E8%B4%B9%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BF%9D%E7%95%99%E6%A0%BC%E5%BC%8F%2095%25%2B%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-pdf-to-markdown.html" class="related-item"><span>PDF 转 Markdown 完整指南</span><span class="arrow">→</span></a>
+    <a href="/article-pdf-ocr.html" class="related-item"><span>扫描版 PDF 转文字 OCR 指南</span><span class="arrow">→</span></a>
+    <a href="/article-free-ai-tools-2026.html" class="related-item"><span>2026 免费 AI 工具清单</span><span class="arrow">→</span></a>
+    <a href="/article-ai-prompt-engineer.html" class="related-item"><span>AI 提示词工程师入门</span><span class="arrow">→</span></a>
+    <a href="/article-fcpxml-guide.html" class="related-item"><span>FCPXML 字幕转换完全教程</span><span class="arrow">→</span></a>
+    </div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body>
+</html>

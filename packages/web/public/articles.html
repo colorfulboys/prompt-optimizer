@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>简盒所有教程 · 19 篇实战文章合集 | 简盒 JianHeBox</title>
+<meta name="description" content="简盒全部 19 篇实战教程：FCPXML 字幕转换、PDF 工具、视频压缩、图片处理、AI 提示词、AI 写作、小程序开发等。所有教程完整中文，按关键词搜索。">
+<link rel="canonical" href="https://www.jianhebox.cn/articles.html" />
+<meta property="og:title" content="简盒所有教程 - 19 篇实战文章" />
+<meta property="og:description" content="简盒全部 19 篇实战教程，按关键词搜索" />
+<meta property="og:image" content="https://www.jianhebox.cn/og-image.png" />
+<meta property="og:url" content="https://www.jianhebox.cn/articles.html" />
+<link rel="alternate" hreflang="zh-CN" href="https://www.jianhebox.cn/articles.html" />
+<link rel="alternate" hreflang="en" href="https://www.jianhebox.com/en/articles.html" />
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+    line-height: 1.7;
+    color: #222;
+    background: #fafafa;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .back-home {
+    display: inline-block;
+    color: #0099ff;
+    text-decoration: none;
+    padding: 8px 16px;
+    background: white;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .back-home:hover { background: #f0f7ff; }
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #e0e0e0;
+  }
+  h1 {
+    font-size: 36px;
+    color: #111;
+    margin: 0 0 12px;
+  }
+  .subtitle {
+    color: #666;
+    font-size: 16px;
+    margin: 0;
+  }
+  .search-box {
+    margin: 30px 0;
+    text-align: center;
+  }
+  .search-input {
+    width: 100%;
+    max-width: 500px;
+    padding: 14px 20px;
+    font-size: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 30px;
+    background: white;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus {
+    border-color: #0099ff;
+  }
+  .search-input::placeholder {
+    color: #999;
+  }
+  .filter-tags {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+  .filter-tag {
+    padding: 8px 16px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-tag:hover {
+    border-color: #0099ff;
+    color: #0099ff;
+  }
+  .filter-tag.active {
+    background: #0099ff;
+    color: white;
+    border-color: #0099ff;
+  }
+  .tutorials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  .tutorial-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 24px;
+    text-decoration: none;
+    color: #222;
+    display: block;
+    transition: all 0.2s;
+  }
+  .tutorial-card:hover {
+    border-color: #0099ff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,153,255,0.1);
+  }
+  .tutorial-card .emoji {
+    font-size: 36px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .tutorial-card h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: #111;
+    line-height: 1.4;
+  }
+  .tutorial-card p {
+    font-size: 13px;
+    color: #666;
+    margin: 0 0 12px;
+    line-height: 1.6;
+  }
+  .tutorial-card .read-more {
+    font-size: 13px;
+    color: #0099ff;
+    font-weight: 500;
+  }
+  .group-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #111;
+    margin: 32px 0 16px;
+    padding-left: 12px;
+    border-left: 4px solid #0099ff;
+  }
+  .group-count {
+    font-size: 14px;
+    color: #999;
+    font-weight: 400;
+    margin-left: 8px;
+  }
+  .fun-banner {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 32px;
+    text-align: center;
+    color: white;
+  }
+  .fun-banner h2 { margin: 0 0 8px; font-size: 24px; }
+  .fun-banner p { margin: 0 0 16px; opacity: 0.95; }
+  .fun-banner a {
+    display: inline-block;
+    padding: 10px 24px;
+    background: white;
+    color: #667eea;
+    border-radius: 24px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .footer {
+    text-align: center;
+    padding: 30px 20px;
+    color: #888;
+    font-size: 13px;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 40px;
+  }
+  .footer a { color: #0099ff; text-decoration: none; }
+  .hidden { display: none !important; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "简盒所有教程",
+  "description": "19 篇实战教程合集",
+  "url": "https://www.jianhebox.cn/articles.html",
+  "publisher": {"@type": "Organization", "name": "简盒 JianHeBox"}
+}
+</script>
+</head>
+<body>
+<div class="container">
+  <a href="/" class="back-home">← 简盒首页</a>
+
+  <div class="header">
+    <h1>📚 简盒所有教程</h1>
+    <p class="subtitle">19 篇实战文章 · 按关键词搜索 · 完全免费</p>
+  </div>
+
+  <div class="search-box">
+    <input
+      type="text"
+      id="searchInput"
+      class="search-input"
+      placeholder="🔍 搜索教程关键词（如：PDF、字幕、AI、视频）"
+      oninput="filterArticles()"
+    >
+  </div>
+
+  <div class="filter-tags">
+    <span class="filter-tag active" data-cat="all" onclick="filterByCat('all', this)">全部</span>
+    <span class="filter-tag" data-cat="pdf" onclick="filterByCat('pdf', this)">📄 PDF 工具</span>
+    <span class="filter-tag" data-cat="video" onclick="filterByCat('video', this)">🎬 视频工具</span>
+    <span class="filter-tag" data-cat="audio" onclick="filterByCat('audio', this)">🎵 音频工具</span>
+    <span class="filter-tag" data-cat="image" onclick="filterByCat('image', this)">🖼️ 图片工具</span>
+    <span class="filter-tag" data-cat="ai" onclick="filterByCat('ai', this)">✨ AI 工具</span>
+    <span class="filter-tag" data-cat="writing" onclick="filterByCat('writing', this)">📝 AI 写作</span>
+    <span class="filter-tag" data-cat="seo" onclick="filterByCat('seo', this)">🔍 SEO</span>
+  </div>
+
+  <!-- 玩点有趣的 Banner -->
+  <div class="fun-banner">
+    <h2>🪄 玩点有趣的（新增）</h2>
+    <p>MBTI 人格测试 / 今日运势 / AI 玄学头像 · 28 个超有趣的玄学测试工具</p>
+    <a href="/fun/">进入玩点有趣的 →</a>
+  </div>
+
+  <!-- SEO 教程 -->
+  <h2 class="group-title">🔍 SEO 教程<span class="group-count">(2 篇)</span></h2>
+  <div class="tutorials-grid">
+    <a href="/article-seo-guide.html" class="tutorial-card" data-cat="seo">
+      <span class="emoji">🔍</span>
+      <h3>SEO 入门完全教程 2026</h3>
+      <p>新手站长 30 天学习路线 · 关键词研究 · 站内优化 · 外链建设 · 必备工具</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-fcpxml-guide.html" class="tutorial-card" data-cat="video">
+      <span class="emoji">🎬</span>
+      <h3>FCPXML 字幕转换完全教程</h3>
+      <p>剪映/PR 字幕 → FCPX 工程文件一次搞定 · 4 个实战场景 + 6 类常见问题</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+  </div>
+
+  <!-- AI 工具类 -->
+  <h2 class="group-title">✨ AI 工具教程<span class="group-count">(4 篇)</span></h2>
+  <div class="tutorials-grid">
+    <a href="/article-ai-prompt-engineer.html" class="tutorial-card" data-cat="ai">
+      <span class="emoji">✨</span>
+      <h3>AI 提示词工程师入门</h3>
+      <p>从一句话到专业输出 · 4 元素 + 3 实例 + 4 周上手路径 · 输出质量提升 10 倍</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-deepseek-prompt.html" class="tutorial-card" data-cat="ai">
+      <span class="emoji">🚀</span>
+      <h3>DeepSeek 提示词实战 9 招</h3>
+      <p>让国产最强 AI 听懂你 · 9 个实战技巧 + 6 个场景模板</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-free-ai-tools-2026.html" class="tutorial-card" data-cat="ai">
+      <span class="emoji">🛠️</span>
+      <h3>2026 年最值得收藏的 10 个免费 AI 工具</h3>
+      <p>10 个真正免费 · 无需登录 · 不上传服务器 · 全场景覆盖</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-ai-voiceover.html" class="tutorial-card" data-cat="ai">
+      <span class="emoji">🎙️</span>
+      <h3>AI 配音完全指南 2026</h3>
+      <p>剪映 / 微软 Azure / ElevenLabs 实测 · 多语言 + 声音克隆</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+  </div>
+
+  <!-- PDF 工具类 -->
+  <h2 class="group-title">📄 PDF 工具教程<span class="group-count">(4 篇)</span></h2>
+  <div class="tutorials-grid">
+    <a href="/article-pdf-to-word.html" class="tutorial-card" data-cat="pdf">
+      <span class="emoji">📄</span>
+      <h3>PDF 转 Word 免费完整教程</h3>
+      <p>保留格式 95%+ · 5 种免费工具实测对比 · 扫描 PDF OCR 支持</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-pdf-to-excel.html" class="tutorial-card" data-cat="pdf">
+      <span class="emoji">📊</span>
+      <h3>PDF 转 Excel 完全教程</h3>
+      <p>5 种免费工具实测 · 保留表格 + 公式 + 样式 · 扫描 PDF OCR 支持</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-pdf-to-markdown.html" class="tutorial-card" data-cat="pdf">
+      <span class="emoji">📝</span>
+      <h3>PDF 转 Markdown 完整指南</h3>
+      <p>3 大免费工具横评 · 学术 / 技术文档 4 个场景</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-pdf-ocr.html" class="tutorial-card" data-cat="pdf">
+      <span class="emoji">🔍</span>
+      <h3>扫描版 PDF 转文字 OCR 完整指南</h3>
+      <p>4 种工具实测 · 混合中英文 / 老书 / 手写字识别</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+  </div>
+
+  <!-- 视频工具类 -->
+  <h2 class="group-title">🎬 视频工具教程<span class="group-count">(4 篇)</span></h2>
+  <div class="tutorials-grid">
+    <a href="/article-video-compress.html" class="tutorial-card" data-cat="video">
+      <span class="emoji">🎥</span>
+      <h3>视频压缩完全指南</h3>
+      <p>1GB 视频压到 100MB · 微信 / YouTube / 归档 5 个场景</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-mp4-to-gif.html" class="tutorial-card" data-cat="video">
+      <span class="emoji">🎞️</span>
+      <h3>MP4 转 GIF 完全教程</h3>
+      <p>3 分钟做高清动图 · 5 个场景 · 文件压缩到 1MB 以内</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-video-watermark-removal.html" class="tutorial-card" data-cat="video">
+      <span class="emoji">🚫</span>
+      <h3>视频去水印 5 种方法</h3>
+      <p>从剪映到 AI 智能消除 · 抖音 / B 站 / 素材网站</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-video-remove-subtitle.html" class="tutorial-card" data-cat="video">
+      <span class="emoji">🧹</span>
+      <h3>视频去字幕完全教程</h3>
+      <p>5 种方法对比 · 裁剪 / 模糊 / AI / AE / Topaz</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+  </div>
+
+  <!-- 图片工具类 -->
+  <h2 class="group-title">🖼️ 图片工具教程<span class="group-count">(3 篇)</span></h2>
+  <div class="tutorials-grid">
+    <a href="/article-image-compress.html" class="tutorial-card" data-cat="image">
+      <span class="emoji">🖼️</span>
+      <h3>图片压缩完全指南</h3>
+      <p>JPEG/PNG/WebP/AVIF 对比 · 压缩到 1/10 · 保留质量</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-ai-image-cutout.html" class="tutorial-card" data-cat="image">
+      <span class="emoji">✂️</span>
+      <h3>AI 一键抠图完全指南</h3>
+      <p>从证件照到电商商品图 · 5 种免费工具对比</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-old-photo-restore.html" class="tutorial-card" data-cat="image">
+      <span class="emoji">📸</span>
+      <h3>老照片修复完整教程</h3>
+      <p>AI 让褪色 / 划痕 / 模糊照片重获新生 · 5 类问题</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+  </div>
+
+  <!-- AI 写作类 -->
+  <h2 class="group-title">📝 AI 写作教程<span class="group-count">(3 篇)</span></h2>
+  <div class="tutorials-grid">
+    <a href="/article-xiaohongshu-ai.html" class="tutorial-card" data-cat="writing">
+      <span class="emoji">📕</span>
+      <h3>AI 写小红书爆款完全指南</h3>
+      <p>5 步流程 + 6 套标题公式 · 5 个爆款模板</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-wechat-ai.html" class="tutorial-card" data-cat="writing">
+      <span class="emoji">📱</span>
+      <h3>AI 写公众号爆款 7 个秘密</h3>
+      <p>从选题到排版完整流程 · 数据分析 + 变现</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+    <a href="/article-ai-video-gen.html" class="tutorial-card" data-cat="ai">
+      <span class="emoji">🎬</span>
+      <h3>AI 视频生成工具对比 2026</h3>
+      <p>Sora / Runway / 可灵 / Pika / Vidu 实测 · 5 大工具横评</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+  </div>
+
+  <!-- 开发教程类 -->
+  <h2 class="group-title">💻 开发教程<span class="group-count">(1 篇)</span></h2>
+  <div class="tutorials-grid">
+    <a href="/article-wechat-miniprogram.html" class="tutorial-card" data-cat="ai">
+      <span class="emoji">📱</span>
+      <h3>微信小程序开发入门 2026</h3>
+      <p>零基础 7 天上手 · 必备工具 · 5 个实战项目 · 发布上线全流程</p>
+      <span class="read-more">阅读全文 →</span>
+    </a>
+  </div>
+
+  <div class="footer">
+    <p>📚 共 19 篇实战教程 · 完全免费 · 持续更新</p>
+    <p>© 2026 简盒 JianHeBox · 京ICP备2026058075号 · <a href="/">返回首页</a></p>
+  </div>
+</div>
+
+<script>
+const searchInput = document.getElementById('searchInput');
+
+function filterArticles() {
+  const keyword = searchInput.value.trim().toLowerCase();
+  document.querySelectorAll('.tutorial-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    if (!keyword || text.includes(keyword)) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+  // 隐藏空分类
+  document.querySelectorAll('.group-title').forEach(title => {
+    let next = title.nextElementSibling;
+    let hasVisible = false;
+    while (next && !next.classList.contains('group-title')) {
+      if (next.classList.contains('tutorials-grid')) {
+        const visibleCards = Array.from(next.querySelectorAll('.tutorial-card')).filter(c => !c.classList.contains('hidden'));
+        if (visibleCards.length === 0) {
+          next.classList.add('hidden');
+        } else {
+          next.classList.remove('hidden');
+          hasVisible = true;
+        }
+      }
+      next = next.nextElementSibling;
+    }
+  });
+}
+
+function filterByCat(cat, el) {
+  document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.tutorial-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+  searchInput.value = '';
+  // 隐藏空分类
+  document.querySelectorAll('.tutorials-grid').forEach(g => {
+    const visible = Array.from(g.querySelectorAll('.tutorial-card')).filter(c => !c.classList.contains('hidden'));
+    if (visible.length === 0) {
+      g.classList.add('hidden');
+      if (g.previousElementSibling) g.previousElementSibling.classList.add('hidden');
+    } else {
+      g.classList.remove('hidden');
+      if (g.previousElementSibling) g.previousElementSibling.classList.remove('hidden');
+    }
+  });
+}
+</script>
+</body>
+</html>

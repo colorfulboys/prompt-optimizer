@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JianHeBox · Free AI Tools Collection · No Signup Required</title>
+<meta name="description" content="JianHeBox is a free collection of AI-powered tools: FCPXML subtitle converter, video compressor, image tools, PDF converter, AI prompt optimizer. All tools run in your browser - files never leave your device.">
+<link rel="canonical" href="https://www.jianhebox.com/" />
+<meta property="og:title" content="JianHeBox · Free AI Tools Collection" />
+<meta property="og:description" content="Free AI tools that run in your browser. No signup, no upload, 100% private." />
+<meta property="og:image" content="https://www.jianhebox.com/og-image.png" />
+<meta property="og:url" content="https://www.jianhebox.com/" />
+<link rel="alternate" hreflang="zh-CN" href="https://www.jianhebox.cn/" />
+<link rel="alternate" hreflang="en" href="https://www.jianhebox.com/" />
+<link rel="alternate" hreflang="x-default" href="https://www.jianhebox.cn/" />
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #fafafa;
+    color: #1a1a1a;
+    line-height: 1.6;
+  }
+  a { color: #0099ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  header {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 16px 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(8px);
+  }
+  .logo { font-size: 22px; font-weight: 700; color: #0099ff; }
+  .lang-switch a { color: #666; padding: 6px 12px; border-radius: 8px; font-size: 14px; margin-left: 8px; }
+  .lang-switch a:hover { background: #f5f5f5; }
+  .lang-switch a.active { background: #e8f3ff; color: #0099ff; }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+
+  /* Hero */
+  .hero { text-align: center; padding: 40px 0 60px; }
+  h1 {
+    font-size: 48px;
+    font-weight: 800;
+    margin: 0 0 16px;
+    line-height: 1.1;
+  }
+  h1 .accent { color: #0099ff; }
+  .tagline {
+    font-size: 18px;
+    color: #555;
+    max-width: 700px;
+    margin: 0 auto 32px;
+  }
+  .cta-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .cta {
+    padding: 14px 28px;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .cta-primary { background: #0099ff; color: #fff; }
+  .cta-primary:hover { background: #0080db; transform: translateY(-2px); text-decoration: none; }
+  .cta-secondary { background: #fff; color: #1a1a1a; border: 2px solid #e0e0e0; }
+  .cta-secondary:hover { border-color: #0099ff; color: #0099ff; text-decoration: none; }
+
+  /* Tools section */
+  .section { margin: 60px 0; }
+  .section-title { font-size: 28px; font-weight: 700; margin: 0 0 12px; text-align: center; }
+  .section-subtitle { color: #666; text-align: center; margin: 0 0 32px; }
+
+  .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .tool-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: #1a1a1a;
+    display: block;
+  }
+  .tool-card:hover { border-color: #0099ff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,153,255,0.1); text-decoration: none; }
+  .tool-card .emoji { font-size: 28px; }
+  .tool-card .name { font-size: 16px; font-weight: 600; margin: 8px 0 4px; color: #1a1a1a; }
+  .tool-card .desc { font-size: 13px; color: #666; }
+  .tool-card .arrow { color: #0099ff; font-weight: bold; margin-left: 8px; }
+
+  /* Tools banner */
+  .tools-banner {
+    background: #fff8e1;
+    border: 1px solid #ffd54f;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    text-align: center;
+    font-size: 14px;
+  }
+  .tools-banner strong { color: #f57c00; }
+
+  /* Features */
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin: 48px 0; }
+  .feature { padding: 16px; }
+  .feature h3 { color: #0099ff; font-size: 16px; margin: 0 0 8px; }
+  .feature p { font-size: 14px; color: #666; margin: 0; }
+
+  /* Tutorials */
+  .tutorials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .tutorial-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: #1a1a1a;
+    display: block;
+  }
+  .tutorial-card:hover { border-color: #0099ff; transform: translateY(-2px); text-decoration: none; }
+  .tutorial-card .emoji { font-size: 28px; }
+  .tutorial-card h3 { font-size: 15px; font-weight: 600; margin: 8px 0 4px; color: #1a1a1a; line-height: 1.4; }
+  .tutorial-card p { font-size: 13px; color: #666; margin: 0 0 8px; line-height: 1.5; }
+  .tutorial-card .read-more { color: #0099ff; font-size: 13px; font-weight: 500; }
+
+  footer {
+    text-align: center;
+    padding: 40px 24px 24px;
+    color: #888;
+    font-size: 13px;
+    border-top: 1px solid #eee;
+    margin-top: 80px;
+  }
+  footer a { color: #888; }
+  footer .links { margin-bottom: 12px; }
+  footer .links a { margin: 0 8px; }
+</style>
+</head>
+<body>
+<header>
+  <a href="/" class="logo">JianHeBox</a>
+  <div class="lang-switch">
+    <a href="https://www.jianhebox.cn">中文</a>
+    <a href="/" class="active">English</a>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Free AI Tools<br /><span class="accent">In Your Browser</span></h1>
+    <p class="tagline">No signup. No payment. Files never leave your device. All processing happens locally in your browser.</p>
+    <div class="cta-row">
+      <a href="/articles.html" class="cta cta-primary">Browse 15 Tutorials →</a>
+      <a href="https://www.jianhebox.cn/#/tools/fcpxml" class="cta cta-secondary">Try Tools (中文版) →</a>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="feature">
+      <h3>🎯 100% Free</h3>
+      <p>No hidden fees, no trial periods, no premium tiers. Forever free.</p>
+    </div>
+    <div class="feature">
+      <h3>🔒 Privacy First</h3>
+      <p>All processing in your browser. Files never uploaded to any server.</p>
+    </div>
+    <div class="feature">
+      <h3>⚡ No Signup</h3>
+      <p>Open and use immediately. No email, no account, no registration.</p>
+    </div>
+    <div class="feature">
+      <h3>🌍 Multi-Language</h3>
+      <p>Articles in English. Tools support multi-language content.</p>
+    </div>
+  </section>
+
+  <!-- Tools section -->
+  <section class="section">
+    <h2 class="section-title">🛠 AI Tools</h2>
+    <p class="section-subtitle">Browser-based AI tools for video, image, PDF, and audio processing</p>
+
+    <div class="tools-banner">
+      <strong>⚠️ Note:</strong> Interactive tools are currently in the Chinese version. Click any tool below to open it in a new tab. Tutorials and articles below are fully translated to English.
+    </div>
+
+    <div class="tools-grid">
+      <a href="https://www.jianhebox.cn/#/tools/fcpxml" class="tool-card" target="_blank" rel="noopener">
+        <div class="emoji">🎬</div>
+        <div class="name">FCPXML Subtitle Converter <span class="arrow">→</span></div>
+        <div class="desc">Convert JianYing/PR subtitles to FCPX project files. Browser-based, no upload.</div>
+      </a>
+      <a href="https://www.jianhebox.cn/#/tools/video" class="tool-card" target="_blank" rel="noopener">
+        <div class="emoji">🎥</div>
+        <div class="name">Video Toolbox <span class="arrow">→</span></div>
+        <div class="desc">Compress video, MP4 to GIF, watermark removal, merge, crop.</div>
+      </a>
+      <a href="https://www.jianhebox.cn/#/tools/image" class="tool-card" target="_blank" rel="noopener">
+        <div class="emoji">🖼️</div>
+        <div class="name">Image Toolbox <span class="arrow">→</span></div>
+        <div class="desc">Compress, crop, cutout, restore old photos, ID photo.</div>
+      </a>
+      <a href="https://www.jianhebox.cn/#/tools/pdf" class="tool-card" target="_blank" rel="noopener">
+        <div class="emoji">📄</div>
+        <div class="name">PDF Toolbox <span class="arrow">→</span></div>
+        <div class="desc">PDF to Word / Markdown / Image, OCR, merge.</div>
+      </a>
+      <a href="https://www.jianhebox.cn/#/tools/audio" class="tool-card" target="_blank" rel="noopener">
+        <div class="emoji">🎵</div>
+        <div class="name">Audio Toolbox <span class="arrow">→</span></div>
+        <div class="desc">Transcribe, vocal separation, denoise, format convert.</div>
+      </a>
+      <a href="https://www.jianhebox.cn/#/basic/system" class="tool-card" target="_blank" rel="noopener">
+        <div class="emoji">✨</div>
+        <div class="name">AI Prompt Optimizer <span class="arrow">→</span></div>
+        <div class="desc">300+ templates, multi-model support, DeepSeek / ChatGPT / Claude.</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Tutorials -->
+  <section class="section">
+    <h2 class="section-title">📚 In-Depth Tutorials</h2>
+    <p class="section-subtitle">15 articles covering video/PDF/image processing, AI prompts, viral writing</p>
+
+    <div class="tutorials-grid">
+      <a href="/article-fcpxml-guide.html" class="tutorial-card">
+        <div class="emoji">🎬</div>
+        <h3>FCPXML Subtitle Converter: Complete Guide</h3>
+        <p>JianYing/PR subtitles → FCPX project files in one go · 4 scenarios · 6 FAQs</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-ai-prompt-engineer.html" class="tutorial-card">
+        <div class="emoji">✨</div>
+        <h3>AI Prompt Engineer Introduction</h3>
+        <p>4 elements + 3 examples + 4-week path · Make AI output quality 10x better</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-free-ai-tools-2026.html" class="tutorial-card">
+        <div class="emoji">🛠️</div>
+        <h3>10 Free AI Tools 2026</h3>
+        <p>10 truly free, no signup, no upload tools · All scenarios covered</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-video-compress.html" class="tutorial-card">
+        <div class="emoji">🎥</div>
+        <h3>Video Compression Complete Guide</h3>
+        <p>1GB video to 100MB with no quality loss · WeChat/YouTube/archive 5 scenarios</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-mp4-to-gif.html" class="tutorial-card">
+        <div class="emoji">🎞️</div>
+        <h3>MP4 to GIF Complete Tutorial</h3>
+        <p>3 minutes to make HD GIF · 5 scenarios · file compressed to under 1MB</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-pdf-to-word.html" class="tutorial-card">
+        <div class="emoji">📄</div>
+        <h3>PDF to Word Free Complete Tutorial</h3>
+        <p>5 free tools tested · 95%+ format preservation · OCR support</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-pdf-to-markdown.html" class="tutorial-card">
+        <div class="emoji">📝</div>
+        <h3>PDF to Markdown Complete Guide</h3>
+        <p>3 free tools compared · Academic/tech docs 4 scenarios</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-pdf-ocr.html" class="tutorial-card">
+        <div class="emoji">🔍</div>
+        <h3>Scanned PDF to Text OCR Guide</h3>
+        <p>4 tools tested · Mixed Chinese-English/old books/handwriting</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-image-compress.html" class="tutorial-card">
+        <div class="emoji">🖼️</div>
+        <h3>Image Compression Complete Guide</h3>
+        <p>JPEG/PNG/WebP/AVIF compared · Compress to 1/10</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-old-photo-restore.html" class="tutorial-card">
+        <div class="emoji">📸</div>
+        <h3>Old Photo Restoration Tutorial</h3>
+        <p>AI restores faded/scratched/blurry photos · 5 problems fixed</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-ai-image-cutout.html" class="tutorial-card">
+        <div class="emoji">✂️</div>
+        <h3>AI One-Click Cutout Guide</h3>
+        <p>From ID photo to e-commerce product · 5 free tools compared</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-xiaohongshu-ai.html" class="tutorial-card">
+        <div class="emoji">📕</div>
+        <h3>AI Write Xiaohongshu Viral Content Guide</h3>
+        <p>5-step process + 6 title formulas · 5 viral templates</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-wechat-ai.html" class="tutorial-card">
+        <div class="emoji">📱</div>
+        <h3>AI Write WeChat Public Account 7 Secrets</h3>
+        <p>From topic to formatting · Data analysis + monetization</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-deepseek-prompt.html" class="tutorial-card">
+        <div class="emoji">🚀</div>
+        <h3>DeepSeek Prompt Engineering 9 Tips</h3>
+        <p>Make the strongest Chinese AI understand you · 9 tips + 6 scenarios</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/article-video-watermark-removal.html" class="tutorial-card">
+        <div class="emoji">🚫</div>
+        <h3>Video Watermark Removal 5 Methods</h3>
+        <p>From JianYing to AI smart removal · Douyin/Bilibili/stock sites</p>
+        <span class="read-more">Read More →</span>
+      </a>
+      <a href="/articles.html" class="tutorial-card">
+        <div class="emoji">📋</div>
+        <h3>View All 15 Tutorials</h3>
+        <p>Complete list with search and keyword filtering</p>
+        <span class="read-more">View All →</span>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="links">
+    <a href="https://www.jianhebox.cn">中文</a>
+    <a href="/">Home</a>
+    <a href="/articles.html">All Tutorials</a>
+    <a href="/sitemap.xml">Sitemap</a>
+  </div>
+  © 2026 JianHeBox · Free AI Tools · 京ICP备2026058075号
+</footer>
+
+</body>
+</html>

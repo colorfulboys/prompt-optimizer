@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微信小程序开发入门 2026：零基础 7 天上手完整教程 | 简盒</title>
+<meta name="description" content="微信小程序开发入门教程，从零基础到上线发布。7 天学习路线 + 必备工具 + 5 个实战项目 + 常见问题。">
+<link rel="canonical" href="https://www.jianhebox.cn/article-wechat-miniprogram.html" />
+<meta property="og:title" content="微信小程序开发入门 2026：零基础 7 天上手完整教程" />
+<meta property="og:description" content="7 天学习路线 + 必备工具 + 5 个实战项目" />
+<meta property="og:image" content="https://www.jianhebox.cn/og-image.png" />
+<meta property="og:url" content="https://www.jianhebox.cn/article-wechat-miniprogram.html" />
+<link rel="alternate" hreflang="zh-CN" href="https://www.jianhebox.cn/article-wechat-miniprogram.html" />
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+  pre code { background: none; color: inherit; padding: 0; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  th { background: #f0f0f0; font-weight: 600; }
+  a { color: #0099ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; color: white; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.copy { background: #555; }
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; }
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-wechat-miniprogram.html#article",
+      "headline": "微信小程序开发入门 2026：零基础 7 天上手完整教程",
+      "description": "微信小程序开发从零基础到上线",
+      "author": {"@type": "Organization", "name": "简盒 JianHeBox", "url": "https://www.jianhebox.cn/"},
+      "publisher": {"@type": "Organization", "name": "简盒 JianHeBox", "logo": {"@type": "ImageObject", "url": "https://www.jianhebox.cn/favicon.svg"}},
+      "datePublished": "2026-09-14T15:00:00+08:00",
+      "dateModified": "2026-09-14T15:00:00+08:00",
+      "mainEntityOfPage": {"@type": "WebPage", "@id": "https://www.jianhebox.cn/article-wechat-miniprogram.html"},
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "开发教程",
+      "keywords": ["微信小程序开发", "小程序入门", "小程序教程", "零基础小程序", "小程序云开发"],
+      "inLanguage": "zh-CN"
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">首页</a>
+  <span class="bc-sep">›</span>
+  <a href="/articles.html">教程</a>
+  <span class="bc-sep">›</span>
+  <span>微信小程序开发</span>
+</nav>
+<a href="/" class="back-home">← 简盒首页</a>
+<h1>微信小程序开发入门 2026：零基础 7 天上手完整教程</h1>
+<blockquote>最后更新：2026 年 9 月 · 阅读时长：约 10 分钟 · 适用：零基础、产品经理、前端、想转行开发者</blockquote>
+<hr>
+<h2>📌 这篇教程解决什么问题？</h2>
+<p>2026 年，微信小程序依然是国内最重要的前端生态之一。如果你想：</p>
+<ul>
+<li>💼 <strong>转行做开发</strong> — 小程序是入门最快的栈</li>
+<li>🚀 <strong>创业做 MVP</strong> — 1 周就能上线第一款产品</li>
+<li>📱 <strong>给现有业务加个小程序</strong> — 公众号 / 电商 / 工具类</li>
+<li>💰 <strong>接私活赚钱</strong> — 小程序外包需求量大</li>
+<li>🎓 <strong>学生竞赛 / 毕业设计</strong> — 7 天就能做完</li>
+</ul>
+<p><strong>一个浏览器 + 一周时间，你也能做出自己的小程序</strong>。</p>
+<hr>
+<h2>🚀 7 天学习路线</h2>
+<table>
+<tr><th>天数</th><th>学习内容</th><th>产出</th></tr>
+<tr><td><strong>Day 1</strong></td><td>环境搭建 + 第一个 Hello World</td><td>跑通第一个 demo</td></tr>
+<tr><td><strong>Day 2</strong></td><td>WXML/WXSS/JS 基础语法</td><td>静态页面</td></tr>
+<tr><td><strong>Day 3</strong></td><td>组件 + 数据绑定 + 事件</td><td>交互页面</td></tr>
+<tr><td><strong>Day 4</strong></td><td>云开发（数据库 + 云函数）</td><td>全栈能力</td></tr>
+<tr><td><strong>Day 5</strong></td><td>5 个实战项目（待办/天气/计算器/记账/翻译）</td><td>作品集</td></tr>
+<tr><td><strong>Day 6</strong></td><td>API 调用 + 登录 + 支付</td><td>完整业务</td></tr>
+<tr><td><strong>Day 7</strong></td><td>发布上线 + 优化 + 推广</td><td>真实产品</td></tr>
+</table>
+<hr>
+<h2>🛠 必备工具</h2>
+<h3>1. 微信开发者工具</h3>
+<p>下载：https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html</p>
+<ul>
+<li>✅ Windows / macOS / Linux 全平台</li>
+<li>✅ 模拟器 + 真机调试 + 性能分析</li>
+<li>✅ 免费</li>
+</ul>
+<h3>2. 注册小程序 AppID</h3>
+<p>地址：https://mp.weixin.qq.com/</p>
+<ul>
+<li>个人主体：免费</li>
+<li>企业主体：需要营业执照</li>
+</ul>
+<h3>3. VS Code</h3>
+<p>推荐用 VS Code 写代码（不只是开发者工具的编辑器）。</p>
+<hr>
+<h2>💻 Day 1：第一个 Hello World</h2>
+<h3>步骤</h3>
+<ol>
+<li>打开微信开发者工具</li>
+<li>「小程序」→「+」→ 选目录</li>
+<li>填 AppID（没 AppID 选「测试号」）</li>
+<li>点「确定」</li>
+<li>看默认 demo → 点「编译」→ 看模拟器</li>
+</ol>
+<h3>最小目录结构</h3>
+<pre><code>miniprogram/
+├── app.js          # 小程序逻辑
+├── app.json        # 全局配置
+├── app.wxss        # 全局样式
+├── pages/
+│   └── index/
+│       ├── index.js
+│       ├── index.json
+│       ├── index.wxml
+│       └── index.wxss
+└── sitemap.json    # 搜索引擎收录</code></pre>
+<h3>Hello World 代码</h3>
+<pre><code>// index.js
+Page({
+  data: { msg: 'Hello 小程序' },
+  onLoad() {
+    console.log('页面加载')
+  }
+})
+
+<!-- index.wxml -->
+<view>{{ msg }}</view>
+</code></pre>
+<hr>
+<h2>💻 Day 2-3：基础语法（30 分钟）</h2>
+<h3>WXML（类似 HTML）</h3>
+<pre><code><view class="container">
+  <text>{{ message }}</text>
+  <image src="/images/logo.png" />
+  <button bindtap="onTap">点击</button>
+</view></code></pre>
+<h3>WXSS（类似 CSS）</h3>
+<pre><code>.container {
+  padding: 20rpx;
+  text-align: center;
+}
+
+button {
+  background: #07c160;
+  color: white;
+  border-radius: 8rpx;
+}</code></pre>
+<blockquote>💡 rpx 单位：750rpx = 屏幕宽度，自适应</blockquote>
+<h3>数据绑定 + 事件</h3>
+<pre><code>// JS
+Page({
+  data: {
+    count: 0,
+    name: '简盒'
+  },
+  onTap() {
+    this.setData({ count: this.data.count + 1 })
+  }
+})</code></pre>
+<hr>
+<h2>💻 Day 4：云开发（数据库 + 云函数）</h2>
+<p>微信云开发 = 后端 + 数据库 + 云函数，<strong>不用买服务器</strong>。</p>
+<h3>5 步启用云开发</h3>
+<ol>
+<li>开发者工具 → 点「云开发」</li>
+<li>「开通」</li>
+<li>创建环境（test / prod 各一个）</li>
+<li>等 2 分钟初始化</li>
+<li>获得 envId</li>
+</ol>
+<h3>云数据库示例</h3>
+<pre><code>// 1. 初始化
+wx.cloud.init({ env: 'test-xxxxx' })
+
+// 2. 取数据
+const db = wx.cloud.database()
+db.collection('todos').where({
+  _openid: '{openid}'
+}).get().then(res => {
+  console.log(res.data)
+})</code></pre>
+<hr>
+<h2>💻 Day 5：5 个实战项目</h2>
+<table>
+<tr><th>项目</th><th>难度</th><th>学到什么</th></tr>
+<tr><td>📝 待办清单</td><td>⭐</td><td>增删改查</td></tr>
+<tr><td>🌤 天气查询</td><td>⭐⭐</td><td>API 调用</td></tr>
+<tr><td>🧮 计算器</td><td>⭐</td><td>组件 + 状态</td></tr>
+<tr><td>💰 记账本</td><td>⭐⭐</td><td>云数据库</td></tr>
+<tr><td>🌍 中英翻译</td><td>⭐⭐⭐</td><td>云函数 + 第三方 API</td></tr>
+</table>
+<p>每个项目 1-2 小时，做完就有 5 个作品，足够面试。</p>
+<hr>
+<h2>💻 Day 6：API + 登录 + 支付</h2>
+<h3>登录（2 行代码）</h3>
+<pre><code>wx.login({
+  success: res => {
+    console.log(res.code)  // 发给后端换 session
+  }
+})</code></pre>
+<h3>调用 API</h3>
+<pre><code>wx.request({
+  url: 'https://api.example.com/data',
+  method: 'GET',
+  success: res => console.log(res.data)
+})</code></pre>
+<h3>支付（需要企业主体）</h3>
+<p>个人主体不能开通支付。找有营业执照的同事帮忙。</p>
+<hr>
+<h2>💻 Day 7：发布上线</h2>
+<ol>
+<li>开发者工具 → 「上传」</li>
+<li>填版本号（如 1.0.0）</li>
+<li>登录 mp.weixin.qq.com</li>
+<li>「版本管理」→ 找到刚才上传的版本</li>
+<li>「提交审核」</li>
+<li>等 1-3 天通过</li>
+<li>「发布」→ 上线</li>
+</ol>
+<hr>
+<h2>⚠️ 常见问题</h2>
+<h3>Q1：没 AppID 能不能开发？</h3>
+<p><strong>答</strong>：能。选「测试号」，但不能上线。</p>
+<h3>Q2：个人能上线小程序吗？</h3>
+<p><strong>答</strong>：能，但不能带支付 / 商业功能。工具类、资讯类没问题。</p>
+<h3>Q3：发布需要资质吗？</h3>
+<p><strong>答</strong>：</p>
+<ul>
+<li>个人：身份证 + 微信认证（免费）</li>
+<li>企业：营业执照 + 对公账户认证（300 元/年）</li>
+</ul>
+<h3>Q4：用什么 IDE？</h3>
+<p><strong>答</strong>：</p>
+<ul>
+<li>官方：微信开发者工具（必备）</li>
+<li>第三方：VS Code + 插件（推荐）</li>
+</ul>
+<h3>Q5：多久能学会？</h3>
+<p><strong>答</strong>：</p>
+<ul>
+<li>有 JS 基础：3-5 天</li>
+<li>零基础：7-14 天</li>
+<li>做出第一个完整小程序：7 天</li>
+</ul>
+<h3>Q6：可以接私活吗？</h3>
+<p><strong>答</strong>：可以。简单小程序 1000-5000 元，复杂 1-5 万元。</p>
+<hr>
+<h2>🚀 学习资源</h2>
+<table>
+<tr><th>资源</th><th>网址</th><th>价格</th></tr>
+<tr><td>官方文档</td><td>developers.weixin.qq.com</td><td>免费</td></tr>
+<tr><td>微信开放社区</td><td>developers.weixin.qq.com/community</td><td>免费</td></tr>
+<tr><td>Bilibili 教程</td><td>搜「小程序开发」</td><td>免费</td></tr>
+<tr><td>极客时间《9 小时搞定小程序》</td><td>geekbang.org</td><td>¥99</td></tr>
+<tr><td>慕课网实战课</td><td>imooc.com</td><td>免费-¥199</td></tr>
+</table>
+<hr>
+<h2>💡 给初学者的建议</h2>
+<ol>
+<li>✅ <strong>先抄后改</strong> — 抄 5 个 demo，自己改改</li>
+<li>✅ <strong>边做边学</strong> — 不要先学完再动手</li>
+<li>✅ <strong>看官方文档</strong> — 别的教程可能过时</li>
+<li>✅ <strong>加入社区</strong> — 微信开放社区提问</li>
+<li>✅ <strong>做作品集</strong> — 面试需要 demo</li>
+</ol>
+<hr>
+</body>
+</html>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>真心话大冒险 - 聚会神器 | 简盒玩点有趣的</title>
+<meta name="description" content="免费在线真心话大冒险工具 - 聚会社交神器。150+ 道真心话 + 大冒险问题，4 个难度等级，多人模式。">
+<meta name="keywords" content="真心话,大冒险,聚会,社交,游戏,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .mode-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .mode-tab {
+    flex: 1;
+    min-width: 100px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.1) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+  }
+  .mode-tab.active {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+    font-weight: bold;
+  }
+
+  .level-selector {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .level-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.1) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    color: white;
+    font-family: inherit;
+    font-size: 13px;
+  }
+  .level-btn.active {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+
+  .question-display {
+    text-align: center;
+    padding: 40px 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .question-type {
+    display: inline-block;
+    padding: 6px 16px;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border-radius: 20px;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  .question-text {
+    font-size: 22px;
+    line-height: 1.5;
+    color: white;
+  }
+  .question-counter {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-top: 16px;
+  }
+
+  .control-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .control-buttons button {
+    flex: 1;
+    min-width: 110px;
+  }
+
+  .counter-display {
+    text-align: center;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+  .counter-number {
+    font-size: 32px;
+    font-weight: bold;
+    color: #f5576c;
+  }
+  .counter-label {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-top: 4px;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-emoji { font-size: 80px; margin: 12px 0; }
+  .poster-title {
+    font-size: 20px;
+    margin: 8px 0;
+    opacity: 0.9;
+  }
+  .poster-question {
+    background: rgba(255,255,255,0.2);
+    padding: 12px;
+    border-radius: 10px;
+    margin: 12px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🎲 真心话大冒险</h1>
+    <p class="subtitle">聚会神器 · 150+ 道经典问题</p>
+    <ul class="intro-feature-list">
+      <li>💬 真心话 + 🎯 大冒险 两种模式</li>
+      <li>🌶️ 4 个难度等级：温和 / 普通 / 刺激 / 大胆</li>
+      <li>👥 多人轮流模式</li>
+      <li>✨ 完全免费 · 聚会社交必备</li>
+    </ul>
+    <button class="btn-primary" onclick="showSetup()" style="width:100%;">开始游戏 →</button>
+  </div>
+
+  <div id="setup" class="card hidden">
+    <h2 style="text-align:center; margin-bottom:16px;">⚙️ 游戏设置</h2>
+    <h3 style="margin-bottom:12px;">选择模式：</h3>
+    <div class="mode-tabs">
+      <button class="mode-tab active" onclick="setMode('truth')" id="truthTab">💬 真心话</button>
+      <button class="mode-tab" onclick="setMode('dare')" id="dareTab">🎯 大冒险</button>
+      <button class="mode-tab" onclick="setMode('random')" id="randomTab">🎲 随机</button>
+    </div>
+    
+    <h3 style="margin:20px 0 12px;">选择难度：</h3>
+    <div class="level-selector">
+      <button class="level-btn" onclick="setLevel('warm')" id="warmBtn">🌱 温和</button>
+      <button class="level-btn active" onclick="setLevel('normal')" id="normalBtn">🌶️ 普通</button>
+      <button class="level-btn" onclick="setLevel('spicy')" id="spicyBtn">🔥 刺激</button>
+      <button class="level-btn" onclick="setLevel('bold')" id="boldBtn">💥 大胆</button>
+    </div>
+    
+    <div style="margin-top:24px;">
+      <h3 style="margin-bottom:12px;">👥 游戏人数（选填）：</h3>
+      <input type="number" id="playerCount" min="2" max="20" value="2" style="width:100%; padding:12px; background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.2); border-radius: 12px; color: white; font-size: 16px;">
+    </div>
+    
+    <button class="btn-primary" onclick="startGame()" style="width:100%; margin-top:24px;">🎮 开始游戏</button>
+    <button class="btn" onclick="backToIntro()" style="width:100%; margin-top:12px;">← 返回</button>
+  </div>
+
+  <div id="game" class="card hidden">
+    <div class="counter-display">
+      <div class="counter-number" id="roundNum">1</div>
+      <div class="counter-label">第 <span id="currentPlayer">1</span> 位 / 共 <span id="totalPlayers">2</span> 位</div>
+    </div>
+    
+    <div class="question-display">
+      <div class="question-type" id="questionType">💬 真心话</div>
+      <div class="question-text" id="questionText">点击下方按钮抽取问题</div>
+      <div class="question-counter" id="questionCounter">已抽取 0 题</div>
+    </div>
+    
+    <div class="control-buttons">
+      <button class="btn-primary" onclick="nextQuestion()">🎲 抽下一题</button>
+      <button class="btn" onclick="skipQuestion()">⏭️ 跳过</button>
+    </div>
+    
+    <div style="margin-top:20px; padding:16px; background: rgba(255,255,255,0.08); border-radius: 12px; text-align:center;">
+      <div style="font-size:14px; opacity:0.85; margin-bottom:8px;">📤 当前题目分享</div>
+      <button class="btn" onclick="shareCurrent()" style="width:100%;">📱 生成分享图片</button>
+    </div>
+    
+    <div class="share-card hidden" id="shareSection">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">真心话大冒险</div>
+          <div class="poster-emoji" id="posterEmoji">💬</div>
+          <div class="poster-title" id="posterType">真心话</div>
+          <div class="poster-question" id="posterQuestion">问题...</div>
+          <div class="poster-footer">一起来玩 → jianhebox.cn/fun/truth.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+    
+    <button class="btn" onclick="endGame()" style="width:100%; margin-top:20px;">🚪 结束游戏</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 真心话大冒险仅供娱乐，请适度游戏，照顾好自己和朋友的感受。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 真心话题库（按难度分级）
+const truthQuestions = {
+  warm: [
+    '你最近最开心的事情是什么？',
+    '你最感谢的人是谁？为什么？',
+    '如果可以立刻去世界上任何地方，你想去哪里？',
+    '你最近做的最让自己骄傲的事情是什么？',
+    '你最欣赏朋友身上的什么品质？',
+    '你最难忘的童年记忆是什么？',
+    '你的梦想是什么？',
+    '最近看了什么好书或好电影？'
+  ],
+  normal: [
+    '你最近撒过最大的谎是什么？',
+    '你最后一次哭是什么时候？为什么？',
+    '你最大的遗憾是什么？',
+    '你有没有暗恋过谁？',
+    '你最尴尬的一次经历是什么？',
+    '你的手机里最不想让别人看到的是什么？',
+    '你有没有做过最出格的事？',
+    '你最害怕失去什么？',
+    '你有没有说过最伤人的话？',
+    '你最讨厌朋友的什么行为？'
+  ],
+  spicy: [
+    '你的初恋是谁？发生了什么？',
+    '你最近做的最奇怪的梦是什么？',
+    '你有没有喜欢过朋友的朋友？',
+    '你最后悔的恋爱经历是什么？',
+    '你最丢人的时刻是什么？',
+    '你做过最坏的事是什么？',
+    '你有没有对朋友撒过很大的谎？',
+    '你最嫉妒朋友身上的什么？',
+    '你有没有破坏过朋友的关系？',
+    '你最不想让父母知道的事是什么？'
+  ],
+  bold: [
+    '你最深的秘密是什么？',
+    '你有没有做过违法的边缘行为？',
+    '你谈过几次恋爱？最刺激的一段是什么？',
+    '你做过最疯狂的事是什么？',
+    '你有没有利用过朋友？',
+    '你做过最对不起朋友的事？',
+    '你的性幻想对象是谁？',
+    '你最想和谁发生一夜情？',
+    '你做过最黑暗的事是什么？',
+    '如果只能保留一个秘密，你会保留哪个？'
+  ]
+};
+
+// 大冒险题库
+const dareQuestions = {
+  warm: [
+    '学小狗叫 3 声',
+    '做 10 个深蹲',
+    '对镜子里的自己说一句情话',
+    '学小猫叫 3 声',
+    '分享你最近的一张手机截图',
+    '大声朗读你最近的一条短信',
+    '做一个鬼脸给大家看',
+    '模仿你最喜欢的明星'
+  ],
+  normal: [
+    '给最近联系的人发"我想你了"',
+    '用奇怪的声音唱一首歌',
+    '给前任发一条消息（如果不尴尬）',
+    '说出你暗恋的人的名字',
+    '和你右边的人交换一个秘密',
+    '站起来跳一段舞',
+    '学一种动物的叫声',
+    '分享你手机里最后一张照片',
+    '给你最讨厌的人发"我爱你"',
+    '扮丑 30 秒'
+  ],
+  spicy: [
+    '给列表里第 5 个人表白',
+    '学一种动物的姿势保持 1 分钟',
+    '给你前任打电话说我还爱你',
+    '分享你手机相册最尴尬的一张照片',
+    '说出你做过最出格的事',
+    '向在场的某个人表白',
+    '描述你最尴尬的一次约会',
+    '打电话给随机联系人说我爱你',
+    '让你旁边的人挠你痒痒 30 秒',
+    '说出你做过的最坏的梦'
+  ],
+  bold: [
+    '当众热吻在场的某个人',
+    '脱掉一件衣服',
+    '对在场的某个人说"我想和你上床"',
+    '讲述你最私密的性经历',
+    '让你旁边的人摸你敏感部位',
+    '模仿一种性行为的姿势',
+    '说出你最羞耻的秘密',
+    '给在场的所有人发你的裸照（假的）',
+    '和某个人亲密拥抱 1 分钟',
+    '做出最撩人的姿势'
+  ]
+};
+
+let gameMode = 'truth';
+let gameLevel = 'normal';
+let currentQuestion = '';
+let roundNum = 1;
+let playerCount = 2;
+let questionHistory = [];
+let totalQuestions = 0;
+
+function showSetup() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('setup').classList.remove('hidden');
+}
+
+function backToIntro() {
+  document.getElementById('setup').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+}
+
+function setMode(mode) {
+  gameMode = mode;
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(mode + 'Tab').classList.add('active');
+}
+
+function setLevel(level) {
+  gameLevel = level;
+  document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(level + 'Btn').classList.add('active');
+}
+
+function startGame() {
+  playerCount = parseInt(document.getElementById('playerCount').value) || 2;
+  if (playerCount < 2) playerCount = 2;
+  if (playerCount > 20) playerCount = 20;
+  
+  roundNum = 1;
+  questionHistory = [];
+  totalQuestions = 0;
+  
+  document.getElementById('setup').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  document.getElementById('shareSection').classList.add('hidden');
+  
+  document.getElementById('currentPlayer').textContent = 1;
+  document.getElementById('totalPlayers').textContent = playerCount;
+  document.getElementById('roundNum').textContent = roundNum;
+  document.getElementById('questionCounter').textContent = '已抽取 0 题';
+  
+  // 自动抽第一个问题
+  nextQuestion();
+}
+
+function getQuestion() {
+  let pool;
+  if (gameMode === 'truth') {
+    pool = truthQuestions[gameLevel];
+  } else if (gameMode === 'dare') {
+    pool = dareQuestions[gameLevel];
+  } else {
+    // 随机模式 - 从两种中各 50% 选
+    if (Math.random() < 0.5) {
+      pool = truthQuestions[gameLevel];
+    } else {
+      pool = dareQuestions[gameLevel];
+    }
+  }
+  
+  // 随机选一个不重复的
+  let available = pool.filter(q => !questionHistory.includes(q));
+  if (available.length === 0) {
+    questionHistory = [];
+    available = pool;
+  }
+  
+  const idx = Math.floor(Math.random() * available.length);
+  const q = available[idx];
+  questionHistory.push(q);
+  return q;
+}
+
+function nextQuestion() {
+  currentQuestion = getQuestion();
+  totalQuestions++;
+  
+  document.getElementById('questionText').textContent = currentQuestion;
+  document.getElementById('questionType').textContent = 
+    gameMode === 'truth' ? '💬 真心话' : 
+    gameMode === 'dare' ? '🎯 大冒险' : 
+    (Math.random() < 0.5 ? '💬 真心话' : '🎯 大冒险');
+  document.getElementById('questionCounter').textContent = '已抽取 ' + totalQuestions + ' 题';
+  
+  // 隐藏分享
+  document.getElementById('shareSection').classList.add('hidden');
+}
+
+function skipQuestion() {
+  currentQuestion = getQuestion();
+  totalQuestions++;
+  document.getElementById('questionText').textContent = currentQuestion;
+  document.getElementById('questionCounter').textContent = '已抽取 ' + totalQuestions + ' 题（跳过 1 题）';
+}
+
+function nextPlayer() {
+  roundNum++;
+  document.getElementById('roundNum').textContent = roundNum;
+  
+  const nextIdx = (roundNum - 1) % playerCount + 1;
+  document.getElementById('currentPlayer').textContent = nextIdx;
+  
+  nextQuestion();
+}
+
+function shareCurrent() {
+  document.getElementById('shareSection').classList.remove('hidden');
+  
+  const isTruth = gameMode === 'truth' || (gameMode === 'random' && Math.random() < 0.5);
+  
+  document.getElementById('posterEmoji').textContent = isTruth ? '💬' : '🎯';
+  document.getElementById('posterType').textContent = isTruth ? '真心话' : '大冒险';
+  document.getElementById('posterQuestion').textContent = currentQuestion;
+  
+  document.getElementById('shareSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function copyShareText() {
+  const text = '🎲 真心话大冒险\\n\\n' + currentQuestion + '\\n\\n👉 来玩：jianhebox.cn/fun/truth.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function endGame() {
+  if (confirm('确定结束游戏吗？')) {
+    document.getElementById('game').classList.add('hidden');
+    document.getElementById('intro').classList.remove('hidden');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

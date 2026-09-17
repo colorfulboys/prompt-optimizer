@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>老照片修复完整教程：AI 让褪色/划痕/模糊照片重获新生 | 简盒</title>
+<meta name="description" content="5 大问题修复 + 5 个实战场景 + 扫描技巧。">
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+  pre code { background: none; color: inherit; padding: 0; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  th { background: #f0f0f0; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }
+  a { color: #0099ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }
+  .back-home:hover { text-decoration: none; transform: translateY(-1px); }
+
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style>
+<!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-old-photo-restore.html#article",
+      "headline": "老照片修复完整教程：AI 让褪色/划痕/模糊照片重获新生",
+      "description": "老照片修复教程",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-old-photo-restore.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["老照片修复教程", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-old-photo-restore.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "老照片修复完整教程：AI 让褪色/划痕/模糊照片重获新生",
+          "item": "https://www.jianhebox.cn/article-old-photo-restore.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Baidu Tongji (R57.10) -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?deb3c3385c923e6f7cc59e23b4d4d850";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+<!-- R57.9 SEO: 视觉面包屑 -->
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">首页</a>
+  <span class="bc-sep">›</span>
+  <a href="/articles.html">教程</a>
+  <span class="bc-sep">›</span>
+  <span>老照片修复完整教程：AI 让褪色/划痕/模糊照片重获新生</span>
+</nav>
+<a href="/" class="back-home">← 简盒首页</a>
+<h1>老照片修复完整教程：AI 让褪色/划痕/模糊照片重获新生</h1>
+<blockquote>最后更新：2026 年 9 月 · 阅读时长：约 6 分钟 · 适用：所有想修复老照片的人</blockquote>
+<hr>
+<h2>📌 这篇教程解决什么问题？</h2>
+<p>家里有<strong>褪色、划痕、模糊</strong>的老照片：</p>
+<ul>
+<li>👴 爷爷奶奶的结婚照</li>
+<li>👶 父母小时候</li>
+<li>📷 90 年代家庭合影</li>
+</ul>
+<p><strong>传统修复</strong>需要专业软件（Photoshop）和技术，<strong>普通人做不到</strong>。</p>
+<p><strong>但 AI 改变了这一切</strong>：</p>
+<ul>
+<li>✅ AI 自动识别并修复划痕</li>
+<li>✅ AI 自动上色（黑白照片）</li>
+<li>✅ AI 自动提高清晰度</li>
+<li>✅ 一键完成，无需技术</li>
+</ul>
+<p><strong>这篇教程教你</strong>用 AI 修复老照片。</p>
+<hr>
+<h2>🚀 快速通道</h2>
+<ol>
+<li>打开 <a href="https://www.jianhebox.cn/#/tools/image">jianhebox.cn/image</a></li>
+<li>点 <strong>「老照片修复」</strong> tab</li>
+<li>拖入老照片（扫描或拍照）</li>
+<li>选模式：<strong>修复 / 上色 / 高清化</strong></li>
+<li>点开始 → 下载</li>
+</ol>
+<blockquote>✅ <strong>完全免费</strong> · ✅ <strong>本地处理</strong> · ✅ <strong>AI 模型在浏览器里跑</strong></blockquote>
+<hr>
+<h2>📖 老照片的 5 大常见问题</h2>
+<h3>问题 1：褪色 / 偏色</h3>
+<p><strong>表现</strong>：原本鲜艳的颜色变淡，或整体偏黄/偏蓝。</p>
+<p><strong>AI 修复原理</strong>：用 GAN 模型识别原场景应有的颜色，<strong>重新上色</strong>。</p>
+<p><strong>修复效果</strong>：90%+ 准确（照片类型越常见越准）。</p>
+<hr>
+<h3>问题 2：划痕 / 折痕</h3>
+<p><strong>表现</strong>：照片上有白色/黑色的线条、折痕。</p>
+<p><strong>AI 修复原理</strong>：用 LaMa（Large Mask Inpainting）模型，<strong>用周围像素智能填充</strong>划痕区域。</p>
+<p><strong>修复效果</strong>：<strong>90%+</strong> 划痕可以完全修复。</p>
+<hr>
+<h3>问题 3：模糊 / 像素低</h3>
+<p><strong>表现</strong>：人脸看不清，细节丢失。</p>
+<p><strong>AI 修复原理</strong>：用 Real-ESRGAN 超分辨率模型，<strong>AI 想象细节</strong>填充。</p>
+<p><strong>修复效果</strong>：</p>
+<ul>
+<li>720p → 4K：效果好</li>
+<li>480p → 1080p：效果良好</li>
+<li>240p → 1080p：勉强</li>
+</ul>
+<p><strong>注意</strong>：超分辨率是<strong>AI 想象</strong>的，不是真实细节。</p>
+<hr>
+<h3>问题 4：黑白照片上色</h3>
+<p><strong>AI 修复原理</strong>：用 DeOldify 等模型识别场景，<strong>给黑白照片上色</strong>。</p>
+<p><strong>修复效果</strong>：</p>
+<ul>
+<li>自然风景：85%+ 准确</li>
+<li>人物肖像：80%+ 准确</li>
+<li><strong>注意</strong>：上色结果<strong>不是真实颜色</strong>，是 AI 猜测</li>
+</ul>
+<hr>
+<h3>问题 5：人脸修复</h3>
+<p><strong>表现</strong>：人脸部分破损/模糊/缺失。</p>
+<p><strong>AI 修复原理</strong>：用 GFPGAN 等专门的人脸修复模型。</p>
+<p><strong>修复效果</strong>：<strong>95%+</strong> 的人脸可以恢复。</p>
+<hr>
+<h2>🎯 5 个实战场景</h2>
+<h3>场景 1：爷爷奶奶的老照片修复</h3>
+<p><strong>操作流程</strong>：</p>
+<ol>
+<li><strong>扫描照片</strong>（300 DPI）</li>
+</ol>
+<ul>
+<li>用手机 App：扫描全能王</li>
+<li>或专业扫描仪</li>
+</ul>
+<ol>
+<li><strong>打开简盒</strong>：<a href="https://www.jianhebox.cn/#/tools/image">jianhebox.cn/image</a> → 老照片修复</li>
+<li><strong>选修复模式</strong>（划痕 + 褪色）</li>
+<li><strong>如需要</strong>：再选「上色」（黑白照片）</li>
+<li><strong>下载</strong></li>
+</ol>
+<p><strong>注意</strong>：上色结果<strong>仅供回忆</strong>，不要拿去"复原历史"。</p>
+<hr>
+<h3>场景 2：90 年代家庭合影高清化</h3>
+<p><strong>问题</strong>：480x640 像素（QQ 头像大小），想放大冲洗。</p>
+<p><strong>方案</strong>：</p>
+<ol>
+<li>简盒 → 老照片修复</li>
+<li>选「<strong>高清化 4 倍</strong>」</li>
+<li>输出 1920x2560（可冲洗 5 寸照片）</li>
+</ol>
+<p><strong>效果</strong>：480p → 1080p 效果良好。</p>
+<hr>
+<h3>场景 3：黑白老照片上色</h3>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>上色是 <strong>AI 想象</strong>，不是真实颜色</li>
+<li>上色后<strong>不要</strong>给历史研究者用（误导）</li>
+<li>上色后给<strong>家人看回忆</strong>很棒</li>
+</ul>
+<p><strong>操作</strong>：</p>
+<p>简盒 → 老照片修复 → 上色模式 → 输出。</p>
+<hr>
+<h3>场景 4：破损严重照片修复</h3>
+<p><strong>典型</strong>：照片中间有缺失（被撕掉一角）。</p>
+<p><strong>方案</strong>：</p>
+<ol>
+<li>简盒 → 老照片修复 → 智能填充</li>
+<li>AI 自动用周围像素填充缺失部分</li>
+</ol>
+<p><strong>效果</strong>：</p>
+<ul>
+<li>小缺失（< 20% 区域）：效果好</li>
+<li>大缺失（> 50% 区域）：可能不自然</li>
+</ul>
+<hr>
+<h3>场景 5：老照片批量处理</h3>
+<p><strong>如修复家族相册</strong>（100+ 张）：</p>
+<ol>
+<li>简盒 → 批量上传（一次最多 100 张）</li>
+<li>统一选「修复」模式</li>
+<li>批量处理</li>
+<li>打包下载</li>
+</ol>
+<p><strong>节省时间</strong>：100 张手动 = 5 小时，批量 = 30 分钟。</p>
+<hr>
+<h2>🔧 老照片的"扫描"技巧</h2>
+<p>修复前，<strong>扫描质量</strong> 决定修复上限：</p>
+<h3>推荐扫描参数</h3>
+<p>| 参数 | 推荐值 |</p>
+<p>|---|---|</p>
+<p>| <strong>分辨率</strong> | 600 DPI（专业）/ 300 DPI（够用）|</p>
+<p>| <strong>色彩</strong> | 24-bit 真彩色 |</p>
+<p>| <strong>格式</strong> | TIFF（无损）/ PNG（无损）|</p>
+<p>| <strong>保存</strong> | 不压缩 |</p>
+<h3>用手机 App 扫描（推荐）</h3>
+<p>专业扫描 App：</p>
+<ul>
+<li><strong>扫描全能王</strong>（CamScanner）</li>
+<li><strong>Adobe Scan</strong></li>
+<li><strong>Microsoft Lens</strong></li>
+</ul>
+<p><strong>优点</strong>：自动去阴影、矫正变形、提高清晰度。</p>
+<p><strong>操作</strong>：</p>
+<ol>
+<li>App 拍照</li>
+<li>选「文档」模式</li>
+<li>自动识别边界 + 矫正</li>
+<li>保存</li>
+</ol>
+<hr>
+<h2>🔧 修复前的预处理</h2>
+<h3>用 Photoshop/GIMP 预处理（可选）</h3>
+<p>| 操作 | 工具 |</p>
+<p>|---|---|</p>
+<p>| 裁剪掉白边 | 裁剪工具 |</p>
+<p>| 矫正倾斜 | 变换 → 旋转 |</p>
+<p>| 调亮度/对比度 | 曲线 |</p>
+<p><strong>不预处理</strong>也能直接用简盒，但预处理后效果更好。</p>
+<hr>
+<h2>⚠️ 常见问题</h2>
+<h3>Q1：AI 修复后人脸不像？</h3>
+<p><strong>可能原因</strong>：</p>
+<ul>
+<li>照片太模糊，AI <strong>想象不出真实面孔</strong></li>
+<li>AI 用了其他人脸模板</li>
+</ul>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>接受"修复后像亲戚"的事实</li>
+<li>不要用于法律/医学/身份识别</li>
+</ul>
+<hr>
+<h3>Q2：上色后颜色不真实？</h3>
+<p><strong>确实不真实</strong>。</p>
+<p><strong>上色是 AI 想象</strong>：</p>
+<ul>
+<li>50 年前的衣服是红色还是绿色？<strong>没人知道</strong></li>
+<li>AI 上色<strong>仅供参考</strong></li>
+</ul>
+<p><strong>建议</strong>：</p>
+<ul>
+<li>上色前<strong>保留黑白原版</strong></li>
+<li>上色后<strong>明确标注</strong>「AI 上色」</li>
+</ul>
+<hr>
+<h3>Q3：修复时间很长？</h3>
+<p><strong>原因</strong>：AI 模型运行慢</p>
+<p><strong>预期</strong>：</p>
+<ul>
+<li>1080p 照片修复：5-10 秒</li>
+<li>4K 照片：30-60 秒</li>
+<li>批量 100 张：30 分钟 - 1 小时</li>
+</ul>
+<p><strong>注意</strong>：简盒<strong>完全本地处理</strong>，不上传，<strong>不依赖服务器速度</strong>。</p>
+<hr>
+<h3>Q4：照片损坏太严重修不好？</h3>
+<p><strong>无法修复</strong>的情况：</p>
+<ul>
+<li>严重烧毁</li>
+<li>严重撕裂（> 50% 缺失）</li>
+<li>强烈反光/曝光过度</li>
+</ul>
+<p><strong>能修复</strong>的情况：</p>
+<ul>
+<li>褪色</li>
+<li>划痕</li>
+<li>模糊（轻度）</li>
+<li>折痕</li>
+<li>轻微撕裂</li>
+</ul>
+<hr>
+<h3>Q5：修复后还是不清楚？</h3>
+<p><strong>原因</strong>：原照片本身分辨率太低</p>
+<p><strong>解决方案</strong>：</p>
+<ul>
+<li>找到<strong>原始底片/胶卷</strong>（如有）</li>
+<li>用专业扫描仪扫描底片（6000 DPI）</li>
+<li>找到 <strong>RAW 文件</strong>（数码相机原始格式）</li>
+</ul>
+<hr>
+<h2>🎓 进阶：老照片数字化全流程</h2>
+<h3>推荐流程</h3>
+<pre><code>老照片 → 高清扫描（600 DPI）→ 修图软件预处理
+    ↓
+简盒 AI 修复（划痕 / 高清化 / 上色）
+    ↓
+保存为 TIFF（无损）+ JPEG（分享）
+    ↓
+云端备份（多个硬盘 + 网盘）</code></pre>
+<h3>备份建议</h3>
+<p><strong>3-2-1 备份原则</strong>：</p>
+<ul>
+<li>3 份副本</li>
+<li>2 种介质（硬盘 + 网盘）</li>
+<li>1 份异地（保险柜 / 亲戚家）</li>
+</ul>
+<p><strong>推荐云盘</strong>：</p>
+<ul>
+<li>阿里云盘（国内快）</li>
+<li>Google Drive（量大）</li>
+<li>OneDrive（Windows 集成）</li>
+<li>百度网盘（国内）</li>
+</ul>
+<hr>
+<h2>📚 相关教程</h2>
+<ul>
+<li><a href="/article-image-compress.html">图片压缩完全指南</a></li>
+<li><a href="/article-ai-image-cutout.html">AI 一键抠图完全指南</a></li>
+<li><a href="/article-pdf-to-word.html">PDF 转 Word 免费教程</a></li>
+</ul>
+<hr>
+<h2>🚀 开始修复</h2>
+<p><a href="https://www.jianhebox.cn/#/tools/image">👉 打开简盒图片工具箱</a></p>
+<p>特点：</p>
+<ul>
+<li>✅ <strong>完全免费</strong></li>
+<li>✅ <strong>本地 AI 模型</strong>（隐私安全）</li>
+<li>✅ <strong>5 种修复模式</strong>（划痕/上色/高清化/人脸/褪色）</li>
+<li>✅ <strong>批量处理</strong></li>
+<li>✅ <strong>4 倍超分辨率</strong></li>
+</ul>
+<hr>
+<h2>💬 反馈</h2>
+<ul>
+<li>📧 <a href="mailto:hi@jianhebox.cn">hi@jianhebox.cn</a></li>
+</ul>
+<blockquote>本文由 <a href="https://www.jianhebox.cn/">简盒 JianHeBox</a> 编辑整理。</blockquote>
+<!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-old-photo-restore.html&title=%E8%80%81%E7%85%A7%E7%89%87%E4%BF%AE%E5%A4%8D%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%9AAI%20%E8%AE%A9%E8%A4%AA%E8%89%B2/%E5%88%92%E7%97%95/%E6%A8%A1%E7%B3%8A%E7%85%A7%E7%89%87%E9%87%8D%E8%8E%B7%E6%96%B0%E7%94%9F%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-old-photo-restore.html&title=%E8%80%81%E7%85%A7%E7%89%87%E4%BF%AE%E5%A4%8D%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%9AAI%20%E8%AE%A9%E8%A4%AA%E8%89%B2/%E5%88%92%E7%97%95/%E6%A8%A1%E7%B3%8A%E7%85%A7%E7%89%87%E9%87%8D%E8%8E%B7%E6%96%B0%E7%94%9F%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-old-photo-restore.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-old-photo-restore.html&text=%E8%80%81%E7%85%A7%E7%89%87%E4%BF%AE%E5%A4%8D%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%9AAI%20%E8%AE%A9%E8%A4%AA%E8%89%B2/%E5%88%92%E7%97%95/%E6%A8%A1%E7%B3%8A%E7%85%A7%E7%89%87%E9%87%8D%E8%8E%B7%E6%96%B0%E7%94%9F%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-ai-image-cutout.html" class="related-item"><span>AI 一键抠图完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-image-compress.html" class="related-item"><span>图片压缩完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-pdf-to-word.html" class="related-item"><span>PDF 转 Word 免费完整教程</span><span class="arrow">→</span></a>
+    <a href="/article-free-ai-tools-2026.html" class="related-item"><span>2026 免费 AI 工具清单</span><span class="arrow">→</span></a>
+    <a href="/article-ai-prompt-engineer.html" class="related-item"><span>AI 提示词工程师入门</span><span class="arrow">→</span></a>
+    </div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body>
+</html>

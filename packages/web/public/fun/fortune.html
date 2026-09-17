@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>今日运势查询 - 生肖星座运势 · 爱情事业财运 | 简盒玩点有趣的</title>
+<meta name="description" content="免费今日运势查询：生肖、星座、抽签三大玩法。爱情、事业、财运、健康、学业、社交 6 维度评分。开运指南、幸运色、幸运数字全包含。">
+<meta name="keywords" content="今日运势,生肖运势,星座运势,抽签,占卜,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 {
+    font-size: 28px;
+    margin-bottom: 12px;
+    text-align: center;
+    color: white;
+  }
+  .subtitle {
+    text-align: center;
+    opacity: 0.9;
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: white;
+  }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  /* 强制透明背景 */
+  .card, .fortune-grid, .luck-info, .selector-tabs, .share-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list {
+    list-style: none;
+    margin: 20px 0;
+  }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .selector-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: white;
+  }
+  .tab-btn.active {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+
+  .grid-12 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .grid-item {
+    padding: 14px 8px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: white;
+  }
+  .grid-item:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: scale(1.05);
+  }
+  .grid-item.selected {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+
+  .fortune-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .fortune-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    text-align: center;
+  }
+  .fortune-emoji { font-size: 28px; margin-bottom: 6px; }
+  .fortune-label { font-size: 13px; opacity: 0.85; margin-bottom: 8px; }
+  .fortune-score {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f093fb;
+  }
+  .fortune-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+  }
+  .fortune-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 2px;
+  }
+
+  .section-title {
+    font-size: 18px;
+    margin: 24px 0 12px;
+    color: white;
+  }
+
+  .luck-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .luck-item {
+    padding: 12px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .luck-emoji { font-size: 22px; }
+  .luck-label { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+  .luck-value { font-size: 16px; font-weight: bold; margin-top: 4px; color: white; }
+
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #f5576c;
+    font-weight: bold;
+  }
+
+  /* 分享海报 */
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 40px 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-title {
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin: 12px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-name {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .poster-date {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-bottom: 16px;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 16px auto;
+    border-radius: 2px;
+  }
+  .poster-scores {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 16px 0;
+  }
+  .poster-score {
+    padding: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+  }
+  .poster-score-emoji { font-size: 18px; }
+  .poster-score-value {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 2px;
+  }
+  .poster-tip {
+    background: rgba(255,255,255,0.2);
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 16px 0;
+    font-style: italic;
+  }
+  .poster-footer {
+    margin-top: 24px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link {
+    text-align: center;
+    margin: 20px 0;
+  }
+  .back-link a {
+    color: white;
+    opacity: 0.8;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .lottery-area {
+    text-align: center;
+    padding: 30px 20px;
+  }
+  .lottery-stick {
+    font-size: 64px;
+    margin: 20px 0;
+  }
+  .lottery-result-text {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 16px 0;
+  }
+  .lottery-poem {
+    font-style: italic;
+    opacity: 0.9;
+    line-height: 1.8;
+    margin: 16px 0;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+  }
+
+  @media (max-width: 480px) {
+    .fortune-grid { grid-template-columns: repeat(2, 1fr); }
+    .luck-info { grid-template-columns: repeat(2, 1fr); }
+    .grid-12 { grid-template-columns: repeat(3, 1fr); }
+    .poster-card { padding: 30px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🌟 今日运势</h1>
+    <p class="subtitle">生肖 / 星座 / 抽签 三大玩法 · 仅供娱乐</p>
+    <ul class="intro-feature-list">
+      <li>6 维度全评分：爱情 / 事业 / 财运 / 健康 / 学业 / 社交</li>
+      <li>开运指南：幸运色、幸运数字、宜忌事项全包含</li>
+      <li>专属海报分享卡片，发朋友圈 / 小红书必备</li>
+      <li>✨ 完全免费 · 无需登录 · 一键生成</li>
+    </ul>
+    <button class="btn-primary" onclick="startApp()" style="width:100%;">查看今日运势 →</button>
+  </div>
+
+  <div id="app" class="card hidden">
+    <div class="selector-tabs">
+      <button class="tab-btn active" onclick="switchMode('zodiac')">🐲 生肖</button>
+      <button class="tab-btn" onclick="switchMode('star')">⭐ 星座</button>
+      <button class="tab-btn" onclick="switchMode('lottery')">🎴 抽签</button>
+    </div>
+
+    <div id="zodiacSection">
+      <h3 class="section-title">选择你的生肖</h3>
+      <div class="grid-12" id="zodiacGrid"></div>
+    </div>
+
+    <div id="starSection" class="hidden">
+      <h3 class="section-title">选择你的星座</h3>
+      <div class="grid-12" id="starGrid"></div>
+    </div>
+
+    <div id="lotterySection" class="hidden">
+      <div class="lottery-area">
+        <div class="lottery-stick">🎴</div>
+        <h3>诚心默念您的问题</h3>
+        <p style="opacity:0.8; margin:12px 0;">心诚则灵，点击下方按钮抽一签</p>
+        <button class="btn-primary" onclick="drawLot()" style="margin-top:16px;">抽签</button>
+      </div>
+    </div>
+
+    <div id="result" class="hidden">
+      <h2 style="text-align:center; margin-bottom:20px;" id="resultTitle">今日运势</h2>
+      <div id="fortuneGrid" class="fortune-grid"></div>
+
+      <h3 class="section-title">🍀 开运指南</h3>
+      <div id="luckInfo" class="luck-info"></div>
+
+      <h3 class="section-title">📝 宜忌</h3>
+      <ul id="yiJi" class="feature-list"></ul>
+
+      <h3 class="section-title">💡 今日建议</h3>
+      <p id="advice" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+      <h3 class="section-title">⚠️ 注意事项</h3>
+      <p id="caution" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+      <!-- 分享卡片 -->
+      <h3 class="section-title">📤 分享今日运势</h3>
+      <div class="share-card">
+        <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存下面的专属海报</p>
+        <div id="posterCard" class="poster-card">
+          <div class="poster-bg-circle poster-circle-1"></div>
+          <div class="poster-bg-circle poster-circle-2"></div>
+          <div class="poster-content">
+            <div class="poster-tag">今日运势</div>
+            <div class="poster-title" id="posterTitle">属鼠</div>
+            <div class="poster-date" id="posterDate">2026年9月15日</div>
+            <div class="poster-divider"></div>
+            <div class="poster-scores" id="posterScores"></div>
+            <div class="poster-tip" id="posterTip">心怀美好，万事可期</div>
+            <div class="poster-footer">查询你的今日运势 → jianhebox.cn/fun/fortune.html</div>
+          </div>
+        </div>
+        <div class="share-actions">
+          <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+          <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+        </div>
+        <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+      </div>
+
+      <button class="btn" onclick="restartApp()" style="width:100%; margin-top:12px;">🔄 重新选择</button>
+    </div>
+
+    <div id="lotteryResult" class="hidden">
+      <h2 style="text-align:center; margin-bottom:20px;">🎴 您的签</h2>
+      <div class="lottery-area">
+        <div class="lottery-stick" id="lotteryEmoji">🌸</div>
+        <div class="lottery-result-text" id="lotteryLevel">上上签</div>
+        <div class="lottery-poem" id="lotteryPoem">心诚则灵，心想事成</div>
+      </div>
+
+      <h3 class="section-title">📖 签文解读</h3>
+      <p id="lotteryInterpret" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+      <h3 class="section-title">📤 分享签文</h3>
+      <div class="share-card">
+        <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+        <div id="lotteryPoster" class="poster-card">
+          <div class="poster-bg-circle poster-circle-1"></div>
+          <div class="poster-bg-circle poster-circle-2"></div>
+          <div class="poster-content">
+            <div class="poster-tag">心诚则灵</div>
+            <div class="lottery-stick" style="margin:12px 0 8px;" id="lpEmoji">🌸</div>
+            <div class="lottery-result-text" id="lpLevel">上上签</div>
+            <div class="poster-divider"></div>
+            <div class="lottery-poem" id="lpPoem" style="text-align:center; font-style:italic; padding:0; background:transparent;"></div>
+            <div class="poster-footer" style="margin-top:20px;">诚心求签 → jianhebox.cn/fun/fortune.html</div>
+          </div>
+        </div>
+        <div class="share-actions">
+          <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+          <button class="btn" onclick="copyLotteryText()">📋 复制文字</button>
+        </div>
+        <p id="copyHintLottery" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+      </div>
+
+      <button class="btn" onclick="restartLottery()" style="width:100%; margin-top:12px;">🔄 重新抽签</button>
+    </div>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 运势内容仅供参考娱乐，请勿作为决策依据。<br>
+    真正的好运来自努力和善良。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 12 生肖
+const zodiacs = [
+  {emoji:'🐭', name:'鼠'}, {emoji:'🐮', name:'牛'}, {emoji:'🐯', name:'虎'},
+  {emoji:'🐰', name:'兔'}, {emoji:'🐲', name:'龙'}, {emoji:'🐍', name:'蛇'},
+  {emoji:'🐴', name:'马'}, {emoji:'🐑', name:'羊'}, {emoji:'🐵', name:'猴'},
+  {emoji:'🐔', name:'鸡'}, {emoji:'🐶', name:'狗'}, {emoji:'🐷', name:'猪'}
+];
+
+// 12 星座
+const stars = [
+  {emoji:'♈', name:'白羊'}, {emoji:'♉', name:'金牛'}, {emoji:'♊', name:'双子'},
+  {emoji:'♋', name:'巨蟹'}, {emoji:'♌', name:'狮子'}, {emoji:'♍', name:'处女'},
+  {emoji:'♎', name:'天秤'}, {emoji:'♏', name:'天蝎'}, {emoji:'♐', name:'射手'},
+  {emoji:'♑', name:'摩羯'}, {emoji:'♒', name:'水瓶'}, {emoji:'♓', name:'双鱼'}
+];
+
+// 生肖运势
+const zodiacFortunes = {
+  '鼠':{love:85,career:78,wealth:82,health:88,study:75,social:80,yi:['穿红色', '约朋友', '听音乐'],ji:['熬夜', '争吵', '借钱'],advice:'今日贵人运旺，适合主动出击',caution:'注意休息',color:'红色',number:8,colorEmoji:'🔴'},
+  '牛':{love:75,career:88,wealth:85,health:80,study:82,social:78,yi:['早起', '学习', '冥想'],ji:['急躁', '冒险'],advice:'稳扎稳打，厚积薄发',caution:'不要轻易承诺',color:'绿色',number:6,colorEmoji:'🟢'},
+  '虎':{love:82,career:85,wealth:78,health:82,study:80,social:85,yi:['运动', '领导', '决断'],ji:['犹豫', '逃避'],advice:'勇气可嘉，敢于挑战',caution:'避免冲动',color:'橙色',number:7,colorEmoji:'🟠'},
+  '兔':{love:88,career:75,wealth:80,health:85,study:88,social:82,yi:['阅读', '散步', '绘画'],ji:['剧烈运动', '决策'],advice:'温柔以待，享受当下',caution:'不要太敏感',color:'粉色',number:9,colorEmoji:'🌸'},
+  '龙':{love:80,career:92,wealth:88,health:78,study:85,social:88,yi:['社交', '创业', '表现'],ji:['固执', '独处'],advice:'气场全开，魅力四射',caution:'注意倾听他人',color:'金色',number:8,colorEmoji:'🟡'},
+  '蛇':{love:78,career:85,wealth:88,health:82,study:88,social:72,yi:['分析', '研究', '规划'],ji:['八卦', '冲动消费'],advice:'智慧取胜，深思熟虑',caution:'不要过于神秘',color:'黑色',number:7,colorEmoji:'⚫'},
+  '马':{love:82,career:85,wealth:78,health:88,study:75,social:88,yi:['旅行', '运动', '聚会'],ji:['宅家', '纠结'],advice:'自由奔放，活力无限',caution:'不要三心二意',color:'蓝色',number:5,colorEmoji:'🔵'},
+  '羊':{love:88,career:75,wealth:78,health:82,study:82,social:80,yi:['艺术', '陪伴', '美食'],ji:['冒险', '争执'],advice:'温和亲切，人缘佳',caution:'不要过度牺牲',color:'米色',number:6,colorEmoji:'🟤'},
+  '猴':{love:82,career:85,wealth:85,health:80,study:82,social:92,yi:['社交', '创意', '幽默'],ji:['严肃', '死板'],advice:'机智灵活，魅力十足',caution:'不要过于圆滑',color:'黄色',number:8,colorEmoji:'🟨'},
+  '鸡':{love:80,career:88,wealth:82,health:85,study:85,social:78,yi:['工作', '计划', '早起'],ji:['拖延', '邋遢'],advice:'勤奋有收获',caution:'不要太苛刻',color:'白色',number:9,colorEmoji:'⚪'},
+  '狗':{love:85,career:80,wealth:78,health:82,study:80,social:88,yi:['忠诚', '帮助', '陪伴'],ji:['怀疑', '抱怨'],advice:'忠诚可靠，人缘佳',caution:'不要太操心',color:'棕色',number:4,colorEmoji:'🟫'},
+  '猪':{love:88,career:78,wealth:85,health:82,study:75,social:85,yi:['享乐', '美食', '休息'],ji:['工作', '节俭'],advice:'乐观豁达，福气满满',caution:'不要太懒散',color:'紫色',number:9,colorEmoji:'🟣'}
+};
+
+// 星座运势（简化版，与生肖类似）
+const starFortunes = {
+  '白羊':{love:85,career:82,wealth:78,health:85,study:78,social:85,yi:['运动', '领导', '冒险'],ji:['犹豫', '拖延'],advice:'勇往直前',caution:'别太冲动',color:'红色',number:8,colorEmoji:'🔴'},
+  '金牛':{love:78,career:85,wealth:88,health:82,study:85,social:75,yi:['理财', '美食', '艺术'],ji:['冒险', '冲动'],advice:'稳中求进',caution:'别太固执',color:'绿色',number:6,colorEmoji:'🟢'},
+  '双子':{love:85,career:80,wealth:75,health:80,study:88,social:92,yi:['社交', '学习', '旅行'],ji:['独处', '沉默'],advice:'思维活跃',caution:'别太善变',color:'黄色',number:5,colorEmoji:'🟨'},
+  '巨蟹':{love:90,career:75,wealth:78,health:85,study:80,social:82,yi:['家庭', '陪伴', '做饭'],ji:['社交', '冒险'],advice:'温情满满',caution:'别太敏感',color:'银色',number:2,colorEmoji:'⚪'},
+  '狮子':{love:88,career:90,wealth:85,health:82,study:78,social:88,yi:['领导', '表现', '创意'],ji:['低调', '服从'],advice:'光芒四射',caution:'别太强势',color:'金色',number:1,colorEmoji:'🟡'},
+  '处女':{love:78,career:88,wealth:82,health:85,study:92,social:75,yi:['整理', '计划', '学习'],ji:['混乱', '邋遢'],advice:'细节完美',caution:'别太挑剔',color:'米色',number:6,colorEmoji:'🟤'},
+  '天秤':{love:90,career:82,wealth:80,health:80,study:82,social:88,yi:['社交', '艺术', '决策'],ji:['犹豫', '孤独'],advice:'魅力无限',caution:'别太纠结',color:'粉色',number:7,colorEmoji:'🌸'},
+  '天蝎':{love:88,career:88,wealth:85,health:82,study:85,social:78,yi:['研究', '深度', '专注'],ji:['八卦', '表面'],advice:'洞察一切',caution:'别太猜疑',color:'黑色',number:4,colorEmoji:'⚫'},
+  '射手':{love:85,career:82,wealth:78,health:88,study:80,social:90,yi:['旅行', '探索', '哲学'],ji:['束缚', '细节'],advice:'自由奔放',caution:'别太散漫',color:'蓝色',number:9,colorEmoji:'🔵'},
+  '摩羯':{love:75,career:92,wealth:88,health:82,study:90,social:75,yi:['工作', '目标', '自律'],ji:['享乐', '冲动'],advice:'稳扎稳打',caution:'别太严肃',color:'棕色',number:8,colorEmoji:'🟫'},
+  '水瓶':{love:82,career:85,wealth:78,health:80,study:88,social:85,yi:['创新', '公益', '科技'],ji:['传统', '束缚'],advice:'与众不同',caution:'别太疏离',color:'青色',number:7,colorEmoji:'🩵'},
+  '双鱼':{love:92,career:78,wealth:75,health:85,study:85,social:88,yi:['艺术', '梦境', '浪漫'],ji:['现实', '冷漠'],advice:'浪漫温柔',caution:'别太梦幻',color:'紫色',number:6,colorEmoji:'🟣'}
+};
+
+// 抽签内容
+const lotteryDraws = [
+  {emoji:'🌸', level:'上上签', poem:'春风得意马蹄疾,\n一日看尽长安花。', interpret:'此签大吉,所求皆成。\\n事业有成,财运亨通,姻缘美满。\\n贵人相助,小人远避。\\n宜进取,忌保守。', color:'linear-gradient(135deg, #ff6e7f, #bfe9ff)'},
+  {emoji:'🍀', level:'上签', poem:'好风凭借力,\n送我上青云。', interpret:'此签上吉,顺水行舟。\\n贵人相助,事半功倍。\\n宜主动出击,把握机会。', color:'linear-gradient(135deg, #43e97b, #38f9d7)'},
+  {emoji:'🌟', level:'中上签', poem:'山重水复疑无路,\n柳暗花明又一村。', interpret:'此签中上,先难后易。\\n虽有阻碍,终能化解。\\n宜坚持,不宜放弃。', color:'linear-gradient(135deg, #fa709a, #fee140)'},
+  {emoji:'🌙', level:'中签', poem:'行到水穷处,\n坐看云起时。', interpret:'此签中性,守成为佳。\\n不宜冒进,稳中求进。\\n静待时机,自然有成。', color:'linear-gradient(135deg, #667eea, #764ba2)'},
+  {emoji:'☁️', level:'中签', poem:'云卷云舒天自宽,\n花开花落自有时。', interpret:'此签中性,顺其自然。\\n不必强求,静待佳音。\\n保持平常心,自有福报。', color:'linear-gradient(135deg, #a8edea, #fed6e3)'},
+  {emoji:'🌧️', level:'中下签', poem:'不经历风雨,\n怎么见彩虹。', interpret:'此签中下,需努力。\\n当前运势平平,需加倍付出。\\n但困难是暂时的,坚持就是胜利。', color:'linear-gradient(135deg, #757f9a, #d7dde8)'},
+  {emoji:'⛅', level:'下签', poem:'沉舟侧畔千帆过,\n病树前头万木春。', interpret:'此签下,需谨慎。\\n当前运势低迷,宜守不宜攻。\\n低调行事,养精蓄锐。', color:'linear-gradient(135deg, #4b6cb7, #182848)'},
+  {emoji:'🌈', level:'上签', poem:'长风破浪会有时,\n直挂云帆济沧海。', interpret:'此签上吉,否极泰来。\\n当前困难即将过去,前景光明。\\n宜保持信心,继续努力。', color:'linear-gradient(135deg, #f093fb, #f5576c)'}
+];
+
+let currentMode = 'zodiac';
+let currentSelection = null;
+
+function startApp() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  initGrids();
+}
+
+function initGrids() {
+  const zg = document.getElementById('zodiacGrid');
+  zg.innerHTML = '';
+  zodiacs.forEach(z => {
+    const btn = document.createElement('button');
+    btn.className = 'grid-item';
+    btn.innerHTML = `<div style="font-size:24px;">${z.emoji}</div><div>${z.name}</div>`;
+    btn.onclick = () => selectZodiac(z, btn);
+    zg.appendChild(btn);
+  });
+  
+  const sg = document.getElementById('starGrid');
+  sg.innerHTML = '';
+  stars.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'grid-item';
+    btn.innerHTML = `<div style="font-size:24px;">${s.emoji}</div><div>${s.name}</div>`;
+    btn.onclick = () => selectStar(s, btn);
+    sg.appendChild(btn);
+  });
+}
+
+function switchMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  document.getElementById('zodiacSection').classList.add('hidden');
+  document.getElementById('starSection').classList.add('hidden');
+  document.getElementById('lotterySection').classList.add('hidden');
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('lotteryResult').classList.add('hidden');
+  
+  if (mode === 'zodiac') document.getElementById('zodiacSection').classList.remove('hidden');
+  else if (mode === 'star') document.getElementById('starSection').classList.remove('hidden');
+  else if (mode === 'lottery') document.getElementById('lotterySection').classList.remove('hidden');
+}
+
+function selectZodiac(z, btn) {
+  currentSelection = z.name;
+  document.querySelectorAll('#zodiacGrid .grid-item').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  showZodiacFortune(z);
+}
+
+function selectStar(s, btn) {
+  currentSelection = s.name;
+  document.querySelectorAll('#starGrid .grid-item').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  showStarFortune(s);
+}
+
+function showZodiacFortune(z) {
+  const f = zodiacFortunes[z.name];
+  showFortune(z.emoji, '属' + z.name + '今日运势', f);
+}
+
+function showStarFortune(s) {
+  const f = starFortunes[s.name];
+  showFortune(s.emoji, s.name + '座今日运势', f);
+}
+
+function showFortune(emoji, title, f) {
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('result').classList.remove('hidden');
+  
+  // 6 维度评分
+  const grid = document.getElementById('fortuneGrid');
+  grid.innerHTML = '';
+  const dimensions = [
+    {key:'love', emoji:'💕', label:'爱情'},
+    {key:'career', emoji:'💼', label:'事业'},
+    {key:'wealth', emoji:'💰', label:'财运'},
+    {key:'health', emoji:'💪', label:'健康'},
+    {key:'study', emoji:'📚', label:'学业'},
+    {key:'social', emoji:'👥', label:'社交'}
+  ];
+  dimensions.forEach(d => {
+    const score = f[d.key];
+    const card = document.createElement('div');
+    card.className = 'fortune-card';
+    card.innerHTML = `
+      <div class="fortune-emoji">${d.emoji}</div>
+      <div class="fortune-label">${d.label}</div>
+      <div class="fortune-score">${score}</div>
+      <div class="fortune-bar"><div class="fortune-bar-fill" style="width:${score}%;"></div></div>
+    `;
+    grid.appendChild(card);
+  });
+  
+  // 开运指南
+  const luck = document.getElementById('luckInfo');
+  luck.innerHTML = `
+    <div class="luck-item">
+      <div class="luck-emoji">🎨</div>
+      <div class="luck-label">幸运色</div>
+      <div class="luck-value">${f.colorEmoji} ${f.color}</div>
+    </div>
+    <div class="luck-item">
+      <div class="luck-emoji">🔢</div>
+      <div class="luck-label">幸运数字</div>
+      <div class="luck-value">${f.number}</div>
+    </div>
+  `;
+  
+  // 宜忌
+  document.getElementById('yiJi').innerHTML = 
+    '<li style="color:#90ee90;"><strong>宜：</strong>' + f.yi.join('、') + '</li>' +
+    '<li style="color:#ffb6c1;"><strong>忌：</strong>' + f.ji.join('、') + '</li>';
+  
+  document.getElementById('advice').textContent = f.advice;
+  document.getElementById('caution').textContent = f.caution;
+  
+  // 更新海报
+  updatePoster(emoji, title, f);
+  
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updatePoster(emoji, title, f) {
+  document.getElementById('posterTitle').textContent = emoji + ' ' + title.split('今日')[0];
+  
+  const today = new Date();
+  const dateStr = today.getFullYear() + '年' + (today.getMonth()+1) + '月' + today.getDate() + '日';
+  document.getElementById('posterDate').textContent = dateStr;
+  
+  const scoresContainer = document.getElementById('posterScores');
+  scoresContainer.innerHTML = '';
+  const dimensions = [
+    {emoji:'💕', key:'love'},
+    {emoji:'💼', key:'career'},
+    {emoji:'💰', key:'wealth'},
+    {emoji:'💪', key:'health'},
+    {emoji:'📚', key:'study'},
+    {emoji:'👥', key:'social'}
+  ];
+  dimensions.forEach(d => {
+    const div = document.createElement('div');
+    div.className = 'poster-score';
+    div.innerHTML = `
+      <div class="poster-score-emoji">${d.emoji}</div>
+      <div class="poster-score-value">${f[d.key]}</div>
+    `;
+    scoresContainer.appendChild(div);
+  });
+  
+  // 根据综合评分选 tip
+  const avg = (f.love + f.career + f.wealth + f.health + f.study + f.social) / 6;
+  let tip = '';
+  if (avg >= 85) tip = '✨ 鸿运当头，万事皆宜';
+  else if (avg >= 80) tip = '🌟 运势上扬，把握机会';
+  else if (avg >= 75) tip = '🍀 平稳向好，持续努力';
+  else tip = '💪 稳中有进，守成为佳';
+  document.getElementById('posterTip').textContent = tip;
+}
+
+function copyShareText() {
+  const title = document.getElementById('resultTitle').textContent;
+  const scores = Array.from(document.querySelectorAll('.fortune-score')).map(e => e.textContent).join('/');
+  const advice = document.getElementById('advice').textContent;
+  
+  const text = `🌟 ${title}\n\n` +
+    `爱情: ${document.querySelectorAll('.fortune-score')[0].textContent} | 事业: ${document.querySelectorAll('.fortune-score')[1].textContent} | 财运: ${document.querySelectorAll('.fortune-score')[2].textContent}\n` +
+    `健康: ${document.querySelectorAll('.fortune-score')[3].textContent} | 学业: ${document.querySelectorAll('.fortune-score')[4].textContent} | 社交: ${document.querySelectorAll('.fortune-score')[5].textContent}\n\n` +
+    `💡 ${advice}\n\n` +
+    `👉 查询你的今日运势：jianhebox.cn/fun/fortune.html`;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制到剪贴板！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartApp() {
+  document.getElementById('result').classList.add('hidden');
+  document.querySelectorAll('.grid-item').forEach(b => b.classList.remove('selected'));
+  currentSelection = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 抽签
+function drawLot() {
+  const draw = lotteryDraws[Math.floor(Math.random() * lotteryDraws.length)];
+  
+  document.getElementById('lotterySection').classList.add('hidden');
+  document.getElementById('lotteryResult').classList.remove('hidden');
+  
+  document.getElementById('lotteryEmoji').textContent = draw.emoji;
+  document.getElementById('lotteryLevel').textContent = draw.level;
+  document.getElementById('lotteryPoem').textContent = draw.poem;
+  document.getElementById('lotteryInterpret').textContent = draw.interpret;
+  
+  // 海报
+  document.getElementById('lpEmoji').textContent = draw.emoji;
+  document.getElementById('lpLevel').textContent = draw.level;
+  document.getElementById('lpPoem').textContent = draw.poem;
+  document.getElementById('lotteryPoster').style.background = draw.color;
+  
+  document.getElementById('lotteryResult').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function copyLotteryText() {
+  const level = document.getElementById('lotteryLevel').textContent;
+  const poem = document.getElementById('lotteryPoem').textContent;
+  const interpret = document.getElementById('lotteryInterpret').textContent;
+  
+  const text = `🎴 我抽到了${level}\n\n${poem}\n\n${interpret}\n\n👉 来试试你的运气：jianhebox.cn/fun/fortune.html`;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHintLottery').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHintLottery').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHintLottery').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHintLottery').textContent = '', 3000);
+  });
+}
+
+function restartLottery() {
+  document.getElementById('lotteryResult').classList.add('hidden');
+  document.getElementById('lotterySection').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 隐藏辅助
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

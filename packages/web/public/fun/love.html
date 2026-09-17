@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>爱情测试 - 测你的爱情类型 | 简盒玩点有趣的</title>
+<meta name="description" content="免费爱情测试，30 题测出你的爱情类型。分析恋爱风格、理想伴侣、爱情盲点。">
+<meta name="keywords" content="爱情测试,恋爱类型,感情,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+  .option {
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    color: white;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .love-emoji { font-size: 64px; margin-bottom: 12px; }
+  .love-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .love-nick {
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #f5576c;
+    font-weight: bold;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 40px 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-emoji { font-size: 64px; margin: 16px 0; }
+  .poster-name {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .poster-nick {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 16px auto;
+    border-radius: 2px;
+  }
+  .poster-trait {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .poster-footer {
+    margin-top: 20px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; justify-content: center; }
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    font-size: 13px;
+    color: white;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>💕 爱情类型测试</h1>
+    <p class="subtitle">30 题 · 测你的爱情风格</p>
+    <ul class="intro-feature-list">
+      <li>6 种爱情类型：浪漫型 / 现实型 / 朋友型 / 灵魂型 / 激情型 / 守护型</li>
+      <li>分析恋爱风格、理想伴侣、爱情盲点</li>
+      <li>专属海报分享，发朋友圈必备</li>
+      <li>✨ 完全免费 · 无需登录</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 5-8 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center; opacity:0.8; margin-bottom:16px; font-size:14px;">问题 <span id="currentQ">1</span> / 30</p>
+    <h3 id="questionText" style="margin-bottom:16px; line-height:1.5;"></h3>
+    <div id="optionsContainer" class="options"></div>
+    <button class="btn" id="prevBtn" onclick="prevQuestion()" style="margin-top:12px;">← 上一题</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="love-emoji" id="loveEmoji">💕</div>
+      <div class="love-name" id="loveName">爱情类型</div>
+      <div class="love-nick" id="loveNick">"昵称"</div>
+      <div class="tag-row" id="loveTags"></div>
+    </div>
+
+    <h3 class="section-title">💕 恋爱风格</h3>
+    <p id="loveStyle" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">💪 你的优势</h3>
+    <ul id="strengths" class="feature-list"></ul>
+
+    <h3 class="section-title">⚠️ 你的盲点</h3>
+    <ul id="weaknesses" class="feature-list"></ul>
+
+    <h3 class="section-title">💑 理想伴侣</h3>
+    <p id="partner" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">🌱 爱情建议</h3>
+    <p id="advice" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <div class="section-title">📤 分享我的爱情类型</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存下面的专属海报</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">爱情类型测试</div>
+          <div class="poster-emoji" id="posterEmoji">💕</div>
+          <div class="poster-name" id="posterName">爱情类型</div>
+          <div class="poster-nick" id="posterNick">"昵称"</div>
+          <div class="poster-divider"></div>
+          <div class="poster-trait" id="posterTrait">恋爱风格简述</div>
+          <div class="poster-footer">测试你的爱情类型 → jianhebox.cn/fun/love.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 爱情测试仅供参考娱乐，每个人都是独特的，没有绝对的爱情类型。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 30 题 - 6 种类型各 5 题
+const questions = [
+  // 浪漫型
+  { text: "你更喜欢的约会：", a: "烛光晚餐、看星星", b: "打游戏、看电影", type: "romantic" },
+  { text: "你更喜欢对方：", a: "浪漫、注重仪式感", b: "实在、行动派", type: "romantic" },
+  { text: "你更喜欢的礼物：", a: "手写卡片、鲜花", b: "电子产品、实用物品", type: "romantic" },
+  { text: "你更喜欢：", a: "惊喜、甜蜜的话语", b: "稳定、靠谱的陪伴", type: "romantic" },
+  { text: "你更向往：", a: "偶像剧般的恋爱", b: "平淡温馨的日常", type: "romantic" },
+  // 现实型
+  { text: "你更看重对方：", a: "经济实力、上进心", b: "浪漫、有情趣", type: "practical" },
+  { text: "选择伴侣时：", a: "考虑现实条件", b: "全凭感觉", type: "practical" },
+  { text: "你更喜欢的：", a: "有明确人生规划的人", b: "随性自然的人", type: "practical" },
+  { text: "你更重视：", a: "未来的稳定性", b: "当下的感觉", type: "practical" },
+  { text: "你更讨厌：", a: "没车没房的穷浪漫", b: "有钱但不懂浪漫", type: "practical" },
+  // 朋友型
+  { text: "你和伴侣的关系：", a: "像朋友一样轻松", b: "很有激情", type: "friend" },
+  { text: "你更喜欢的相处：", a: "一起做喜欢的事", b: "深度交流", type: "friend" },
+  { text: "你更喜欢对方：", a: "能一起玩的朋友", b: "能深入交流的灵魂伴侣", type: "friend" },
+  { text: "吵架后你更愿意：", a: "各自冷静再聊", b: "立刻解决", type: "friend" },
+  { text: "你更喜欢的状态：", a: "轻松无压力的关系", b: "充满激情的关系", type: "friend" },
+  // 灵魂型
+  { text: "你更看重：", a: "灵魂的契合", b: "外在的条件", type: "soul" },
+  { text: "你希望对方：", a: "能理解你的内心", b: "能给你物质保障", type: "soul" },
+  { text: "你更喜欢的约会：", a: "深夜长谈、看哲学书", b: "看演出、玩桌游", type: "soul" },
+  { text: "你认为最重要的是：", a: "精神的连接", b: "生活的陪伴", type: "soul" },
+  { text: "你更容易被：", a: "智慧、才华打动", b: "外表、性格打动", type: "soul" },
+  // 激情型
+  { text: "你更喜欢：", a: "轰轰烈烈的爱情", b: "细水长流的感情", type: "passion" },
+  { text: "你更喜欢的节奏：", a: "快速推进", b: "慢慢发展", type: "passion" },
+  { text: "你更享受：", a: "心跳加速的感觉", b: "安心稳定的感觉", type: "passion" },
+  { text: "你更容易：", a: "一见钟情", b: "日久生情", type: "passion" },
+  { text: "你更喜欢的表达：", a: "强烈的情感表达", b: "含蓄温柔的方式", type: "passion" },
+  // 守护型
+  { text: "你更愿意：", a: "为对方付出和牺牲", b: "追求自我成长", type: "guardian" },
+  { text: "你更喜欢的角色：", a: "照顾对方的人", b: "被照顾的人", type: "guardian" },
+  { text: "你更容易：", a: "迁就对方的喜好", b: "坚持自己的想法", type: "guardian" },
+  { text: "你更看重的：", a: "对方的幸福", b: "共同的未来", type: "guardian" },
+  { text: "你更喜欢：", a: "默默守护", b: "轰轰烈烈", type: "guardian" }
+];
+
+const loveTypes = {
+  romantic: {
+    name: "浪漫型", nickname: "爱情至上", emoji: "💕",
+    color: "linear-gradient(135deg, #ff6e7f, #bfe9ff)",
+    tags: ["浪漫", "理想", "敏感", "深情"],
+    style: "你是天生的浪漫主义者，把爱情视为生命中最重要的部分。\\n\\n你喜欢仪式感、惊喜和甜蜜的表达。你对感情抱有美好的期待，希望爱情像童话一样。\\n\\n你愿意为爱付出，也期待对方给你同等的浪漫。",
+    strengths: ["懂得制造浪漫氛围", "感情丰富、真诚", "能给伴侣美好的体验", "对爱情认真投入", "重视细节"],
+    weaknesses: ["可能不切实际", "容易失望", "可能过度依赖爱情", "忽视现实问题"],
+    partner: "理想伴侣：同样浪漫、有仪式感的人。能给你惊喜和甜蜜，会说爱你。\\n\\n需要避免：找一个太务实、不懂浪漫的人会让你很痛苦。",
+    advice: "• 接受爱情不完美的一面\\n• 不要把所有价值寄托在爱情上\\n• 学会爱自己\\n• 现实和浪漫可以平衡"
+  },
+  practical: {
+    name: "现实型", nickname: "务实派", emoji: "💼",
+    color: "linear-gradient(135deg, #2834b6, #45a247)",
+    tags: ["务实", "理性", "规划", "稳定"],
+    style: "你是务实的爱情追求者，把感情建立在现实基础上。\\n\\n你看重对方的经济实力、上进心和未来规划。你相信稳定的关系需要稳固的基石。\\n\\n你不追求表面的浪漫，更看重长期的可靠。",
+    strengths: ["理性、不冲动", "对未来有规划", "能识别可靠的人", "建立稳定关系", "懂得现实"],
+    weaknesses: ["可能显得太功利", "忽视感情的浪漫面", "可能错过真正爱你的人", "过于计算"],
+    partner: "理想伴侣：有经济基础、上进、有明确人生规划的人。\\n\\n需要避免：找一个只追求浪漫、不考虑未来的人会让你失望。",
+    advice: "• 感情中不要只算账\\n• 给浪漫留一些空间\\n• 学会相信感觉\\n• 物质不是爱情的唯一"
+  },
+  friend: {
+    name: "朋友型", nickname: "轻松伴侣", emoji: "🤝",
+    color: "linear-gradient(135deg, #43e97b, #38f9d7)",
+    tags: ["轻松", "朋友", "自在", "陪伴"],
+    style: "你把伴侣当朋友，享受轻松自在的相处。\\n\\n你不喜欢太过沉重的关系，更喜欢一起做喜欢的事。你重视舒适感和共同兴趣。\\n\\n你的爱情像友情一样自然，没有太多负担。",
+    strengths: ["相处轻松不累", "互相理解", "给对方空间", "共同兴趣", "低压力"],
+    weaknesses: ["可能缺少激情", "过于理性", "感情表达不够", "可能被当作朋友"],
+    partner: "理想伴侣：能一起玩、有共同兴趣、相处自在的人。\\n\\n需要避免：找一个太需要激情和浪漫的人会让你很疲惫。",
+    advice: "• 给爱情加点激情\\n• 学会表达情感\\n• 不要只停留在舒适区\\n• 偶尔制造惊喜"
+  },
+  soul: {
+    name: "灵魂型", nickname: "灵魂伴侣", emoji: "🌟",
+    color: "linear-gradient(135deg, #667eea, #764ba2)",
+    tags: ["灵魂", "深度", "理解", "共鸣"],
+    style: "你追求灵魂的契合，把精神连接看得最重。\\n\\n你不满足于表面的关系，希望找到能理解你内心的人。你重视深度的交流和思想的碰撞。\\n\\n你的爱情是灵魂的相遇。",
+    strengths: ["重视精神契合", "深度交流", "理解力强", "追求真实", "有内涵"],
+    weaknesses: ["可能不切实际", "忽视现实", "难以满足", "可能孤僻"],
+    partner: "理想伴侣：有思想深度、能理解你、能与你深入交流的人。\\n\\n需要避免：找一个肤浅、只关注物质的人会让你很痛苦。",
+    advice: "• 接受不完美的人\\n• 现实条件也很重要\\n• 给对方一些耐心\\n• 爱情需要经营的"
+  },
+  passion: {
+    name: "激情型", nickname: "为爱痴狂", emoji: "🔥",
+    color: "linear-gradient(135deg, #f093fb, #f5576c)",
+    tags: ["激情", "热烈", "冲动", "投入"],
+    style: "你是为爱痴狂的人，把爱情视为最强烈的情感体验。\\n\\n你喜欢轰轰烈烈的爱情，讨厌平淡。你倾向于快速推进、强烈表达。你是爱情中的火焰。\\n\\n你的爱情让人羡慕，但也可能让人窒息。",
+    strengths: ["感情强烈、投入", "会给伴侣深刻体验", "勇于表达", "有激情", "懂得浪漫"],
+    weaknesses: ["可能过于冲动", "情绪起伏大", "可能燃烧得快", "让伴侣有压力"],
+    partner: "理想伴侣：能跟上你的节奏、能回应你的热情、不怕激烈的人。\\n\\n需要避免：找一个太冷淡、需要慢慢来的人会让你很难受。",
+    advice: "• 学会持久地爱\\n• 给对方一些空间\\n• 不要把所有感情都压在爱情上\\n• 激情之后是平静"
+  },
+  guardian: {
+    name: "守护型", nickname: "贴心守护者", emoji: "🛡️",
+    color: "linear-gradient(135deg, #c471f5, #fa71cd)",
+    tags: ["守护", "付出", "包容", "牺牲"],
+    style: "你是天生的守护者，愿意为爱情付出和牺牲。\\n\\n你把对方的幸福看得比自己重要，愿意迁就、照顾、包容。你是爱情中的暖阳。\\n\\n但你可能忽视了自己的需求。",
+    strengths: ["愿意为爱付出", "包容理解", "照顾对方", "忠诚稳定", "有耐心"],
+    weaknesses: ["可能过度牺牲", "忽视自己", "可能被利用", "缺乏自我"],
+    partner: "理想伴侣：能珍惜你的付出、也会为你考虑的人。\\n\\n需要避免：找一个只索取、不回报的人会让你很受伤。",
+    advice: "• 学会爱自己\\n• 不要失去自我\\n• 让对方也付出\\n• 健康的爱情需要平衡"
+  }
+};
+
+let answers = new Array(30).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 30 * 100) + '%';
+  document.getElementById('questionText').textContent = '第 ' + (currentQuestion + 1) + ' 题：' + q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  const optA = document.createElement('button');
+  optA.className = 'option';
+  optA.textContent = 'A. ' + q.a;
+  optA.onclick = () => selectOption(0, optA);
+  
+  const optB = document.createElement('button');
+  optB.className = 'option';
+  optB.textContent = 'B. ' + q.b;
+  optB.onclick = () => selectOption(1, optB);
+  
+  container.appendChild(optA);
+  container.appendChild(optB);
+  
+  if (answers[currentQuestion] !== null) {
+    const btns = container.querySelectorAll('.option');
+    btns[answers[currentQuestion]].classList.add('selected');
+  }
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  answers[currentQuestion] = idx;
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  
+  setTimeout(() => {
+    if (currentQuestion < 29) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 250);
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateType() {
+  const scores = { romantic: 0, practical: 0, friend: 0, soul: 0, passion: 0, guardian: 0 };
+  questions.forEach((q, i) => {
+    if (answers[i] === 0) scores[q.type]++;
+  });
+  
+  let topType = 'romantic';
+  for (const k in scores) {
+    if (scores[k] > scores[topType]) topType = k;
+  }
+  
+  return { type: topType, scores };
+}
+
+function showResult() {
+  const { type } = calculateType();
+  const data = loveTypes[type];
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('loveEmoji').textContent = data.emoji;
+  document.getElementById('loveName').textContent = data.name;
+  document.getElementById('loveNick').textContent = '"' + data.nickname + '"';
+  
+  const tagsContainer = document.getElementById('loveTags');
+  tagsContainer.innerHTML = '';
+  data.tags.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'tag';
+    span.textContent = t;
+    tagsContainer.appendChild(span);
+  });
+  
+  document.getElementById('loveStyle').textContent = data.style;
+  document.getElementById('strengths').innerHTML = data.strengths.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('weaknesses').innerHTML = data.weaknesses.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('partner').textContent = data.partner;
+  document.getElementById('advice').textContent = data.advice;
+  
+  // 海报
+  document.getElementById('posterCard').style.background = data.color;
+  document.getElementById('posterEmoji').textContent = data.emoji;
+  document.getElementById('posterName').textContent = data.name;
+  document.getElementById('posterNick').textContent = '"' + data.nickname + '"';
+  document.getElementById('posterTrait').textContent = data.style.split('\\n')[0];
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyShareText() {
+  const { type } = calculateType();
+  const data = loveTypes[type];
+  const text = '💕 我的爱情类型是 ' + data.name + '\\n"' + data.nickname + '"\\n\\n' + data.style.split('\\n')[0] + '\\n\\n👉 测试你的爱情类型：jianhebox.cn/fun/love.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(30).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

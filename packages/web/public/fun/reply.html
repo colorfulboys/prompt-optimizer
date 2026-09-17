@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高情商回复 - 聊天话术大全 | 简盒玩点有趣的</title>
+<meta name="description" content="免费高情商回复工具。日常聊天、职场、亲密关系场景模拟，15+ 场景最佳回复建议。">
+<meta name="keywords" content="高情商,聊天,话术,回复,社交,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .scenario-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .scenario-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .scenario-card:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+    border-color: rgba(255,255,255,0.4);
+  }
+  .scenario-emoji {
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+  .scenario-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  .scenario-desc {
+    font-size: 13px;
+    opacity: 0.85;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .result-scenario {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 8px;
+  }
+  .result-title {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .result-emoji {
+    font-size: 48px;
+    margin: 12px 0;
+  }
+
+  .reply-section {
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+    border-left: 4px solid;
+  }
+  .reply-bad {
+    border-color: #e74c3c;
+  }
+  .reply-normal {
+    border-color: #f39c12;
+  }
+  .reply-good {
+    border-color: #2ecc71;
+  }
+  .reply-best {
+    border-color: #f5576c;
+    background: linear-gradient(135deg, rgba(245,87,108,0.15), rgba(240,147,251,0.15)) !important;
+  }
+  .reply-level {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .reply-level-bad { background: #e74c3c; color: white; }
+  .reply-level-normal { background: #f39c12; color: white; }
+  .reply-level-good { background: #2ecc71; color: white; }
+  .reply-level-best { background: linear-gradient(135deg, #f5576c, #f093fb); color: white; }
+
+  .reply-text {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-top: 6px;
+  }
+  .reply-note {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+    line-height: 1.8;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-emoji { font-size: 64px; margin: 12px 0; }
+  .poster-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  .poster-reply {
+    background: rgba(255,255,255,0.25);
+    padding: 12px;
+    border-radius: 10px;
+    margin: 12px 0;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>💬 高情商回复</h1>
+    <p class="subtitle">聊天话术 · 15+ 场景最佳回复</p>
+    <ul class="intro-feature-list">
+      <li>📱 日常聊天 / 职场 / 亲密关系</li>
+      <li>💡 每个场景提供 4 种回复（差→最佳）</li>
+      <li>🎯 一键学习高情商话术</li>
+      <li>✨ 专属海报分享</li>
+    </ul>
+    <p style="text-align:center; opacity:0.9; margin:20px 0; font-size:15px;">选择你遇到的场景：</p>
+    <div class="scenario-grid" id="scenarioGrid"></div>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="result-emoji" id="resultEmoji">💬</div>
+      <div class="result-scenario">你遇到的场景</div>
+      <div class="result-title" id="resultTitle">场景名</div>
+    </div>
+
+    <h3 class="section-title">💬 4 种回复方式</h3>
+    <div id="repliesContainer"></div>
+
+    <h3 class="section-title">📖 场景分析</h3>
+    <div class="info-card" id="scenarioAnalysis"></div>
+
+    <h3 class="section-title">🌟 高情商原则</h3>
+    <div class="info-card" id="principles"></div>
+
+    <div class="section-title">📤 分享话术</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">高情商回复</div>
+          <div class="poster-emoji" id="posterEmoji">💬</div>
+          <div class="poster-title" id="posterTitle">场景</div>
+          <div class="poster-reply" id="posterReply">最佳回复</div>
+          <div class="poster-divider"></div>
+          <div class="poster-footer">查看更多话术 → jianhebox.cn/fun/reply.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="backToScenarios()" style="width:100%; margin-top:12px;">← 查看其他场景</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 话术仅供参考，真诚最重要 · 模仿话术要结合实际情境
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+const scenarios = [
+  {
+    id: 'praise',
+    emoji: '🎉',
+    title: '别人夸奖你',
+    desc: '同事/朋友对你说"你今天好漂亮/你真厉害"',
+    analysis: '被夸奖时，很多人会谦虚否认或转移话题。其实大方接受并真诚感谢，会让对方也开心。',
+    principles: '大方接受 > 虚伪谦虚\\n感谢对方 > 自我贬低\\n真诚回应 > 转移话题',
+    replies: [
+      { level: 'bad', text: '哪有，你比我好多了', note: '贬低自己抬高别人，让对方尴尬' },
+      { level: 'normal', text: '谢谢，还好吧', note: '礼貌但不够真诚' },
+      { level: 'good', text: '谢谢你的夸奖，听你这么说我很开心', note: '大方接受并表达感受' },
+      { level: 'best', text: '谢谢你！你今天也很好看/你这件衣服很适合你', note: '大方接受 + 真诚回赞，让关系升温' }
+    ]
+  },
+  {
+    id: 'criticism',
+    emoji: '😟',
+    title: '别人指出你的错误',
+    desc: '领导/同事说"这件事你做得不对"',
+    analysis: '被批评时，本能反应是辩解或推卸。但真正的高情商是：先接受，反思，再回应。',
+    principles: '先接受 > 立即辩解\\n真诚道歉 > 找借口\\n提出改进 > 解释原因',
+    replies: [
+      { level: 'bad', text: '这不怪我，是 XX 的问题', note: '推卸责任，没有担当' },
+      { level: 'normal', text: '我下次会注意的', note: '简短接受但不真诚' },
+      { level: 'good', text: '谢谢你指出这个问题，我会马上改进。具体改进方向您能告诉我吗？', note: '接受 + 主动求教' },
+      { level: 'best', text: '你说得对，这个问题确实是我的疏忽。我现在马上处理，之后给您反馈。可以吗？', note: '承认 + 行动 + 求反馈，体现担当' }
+    ]
+  },
+  {
+    id: 'refuse',
+    emoji: '🙅',
+    title: '如何礼貌拒绝',
+    desc: '朋友/同事请求帮忙，但你有事',
+    analysis: '直接拒绝可能伤害关系。但勉强答应又会让自己不舒服。关键是：诚实 + 替代方案。',
+    principles: '诚实 > 勉强答应\\n提供替代 > 一口回绝\\n有边界 > 总做老好人',
+    replies: [
+      { level: 'bad', text: '好的没问题', note: '勉强答应后又做不到' },
+      { level: 'normal', text: '我现在有事', note: '太生硬' },
+      { level: 'good', text: '抱歉，我现在有事，要不你问问 XX？', note: '诚实 + 替代方案' },
+      { level: 'best', text: '谢谢你想到我！但这周我已经排满了。你要不试试问 XX，他更合适。下次有事我一定帮忙。', note: '感谢 + 诚实 + 替代 + 承诺未来' }
+    ]
+  },
+  {
+    id: 'argument',
+    emoji: '💢',
+    title: '与朋友意见不合',
+    desc: '讨论问题时，对方坚持不同看法',
+    analysis: '争论很容易升级为争吵。高情商的关键是：尊重对方，求同存异，不一定要赢。',
+    principles: '尊重对方 > 坚持己见\\n理解差异 > 说服对方\\n寻找共识 > 强调分歧',
+    replies: [
+      { level: 'bad', text: '你错了！就是这样的', note: '直接否定对方，破坏关系' },
+      { level: 'normal', text: '我们看法不一样', note: '陈述事实但不深入' },
+      { level: 'good', text: '我理解你的看法。我是这样想的...', note: '先肯定对方，再表达自己' },
+      { level: 'best', text: '你说的有道理，我从你的角度想想也说得通。我比较在意的是 XX，不过你的想法也给我启发。要不我们再聊聊？', note: '肯定 + 求同存异 + 邀请继续讨论' }
+    ]
+  },
+  {
+    id: 'sad_friend',
+    emoji: '😢',
+    title: '朋友向你倾诉难过',
+    desc: '朋友失恋/被骂/压力大，找你哭诉',
+    analysis: '倾诉者最需要的不是建议，而是被倾听和理解。不要急于"解决问题"。',
+    principles: '倾听 > 建议\\n共情 > 评判\\n陪伴 > 解决',
+    replies: [
+      { level: 'bad', text: '别想太多了，看开点', note: '否定对方的感受' },
+      { level: 'normal', text: '发生什么事了？', note: '询问但没有共情' },
+      { level: 'good', text: '听起来你很不容易，我理解你的感受。想说说吗？', note: '共情 + 邀请倾诉' },
+      { level: 'best', text: '听起来你真的很难过，我能感受到你的痛苦。我不能完全理解，但我在这里，你想说什么都可以，我陪你。', note: '深度共情 + 陪伴承诺' }
+    ]
+  },
+  {
+    id: 'invite_date',
+    emoji: '💕',
+    title: '邀请喜欢的人约会',
+    desc: '想约心仪的人出来，但不知道怎么开口',
+    analysis: '太直接可能吓到对方，太含蓄对方听不懂。关键是：轻松 + 给对方台阶。',
+    principles: '轻松 > 严肃\\n给台阶 > 强迫\\n具体 > 模糊',
+    replies: [
+      { level: 'bad', text: '我喜欢你，跟我在一起吧', note: '太突然，让对方不知所措' },
+      { level: 'normal', text: '这周末有空吗', note: '太模糊，对方可能以为只是普通约' },
+      { level: 'good', text: '我发现一家很不错的咖啡店/餐厅，这周末一起去试试？', note: '具体 + 邀请，但没说破' },
+      { level: 'best', text: '我发现一个特别适合拍照的地方，这周末想一起去吗？如果你有空的话，我们可以慢慢逛。', note: '具体 + 轻松 + 给台阶 + 强调慢慢来' }
+    ]
+  },
+  {
+    id: 'reconcile',
+    emoji: '🤝',
+    title: '与闹翻的朋友和好',
+    desc: '和好朋友吵架后，想主动和好',
+    analysis: '主动和好需要勇气，但措辞不当会让关系更僵。关键是：先承认自己的问题，不指责对方。',
+    principles: '主动 > 等待\\n承认错误 > 指责对方\\n表达重视 > 评判对错',
+    replies: [
+      { level: 'bad', text: '你应该向我道歉', note: '指责对方，无法和好' },
+      { level: 'normal', text: '我们和好吧', note: '太简单，没有诚意' },
+      { level: 'good', text: '上次的事是我做得不好，对不起', note: '承认错误' },
+      { level: 'best', text: '上次的事我认真想了，我有不成熟的地方，让你难过了。这段友谊对我很重要，希望我们能和好。', note: '反思 + 承认 + 表达重视' }
+    ]
+  },
+  {
+    id: 'boss_praise',
+    emoji: '💼',
+    title: '领导在公开场合表扬你',
+    desc: '会议上领导说"这次项目小张做得很好"',
+    analysis: '如何回应公开表扬，既不谄媚又不显得不谦虚。关键是：感谢 + 归功团队 + 表决心。',
+    principles: '感谢 > 谦虚否认\\n归功团队 > 独占功劳\\n表决心 > 表功劳',
+    replies: [
+      { level: 'bad', text: '哪里哪里，这是大家的功劳', note: '过度谦虚显得虚伪' },
+      { level: 'normal', text: '谢谢领导', note: '简短但缺乏诚意' },
+      { level: 'good', text: '谢谢领导，这离不开团队的协作，我会继续努力', note: '感谢 + 归功 + 表态' },
+      { level: 'best', text: '谢谢领导的肯定！这个成果主要归功于 XX 同事的配合和团队的努力。我会继续学习，为团队贡献更多。', note: '感谢 + 具体归功 + 表决心' }
+    ]
+  },
+  {
+    id: 'reject_invite',
+    emoji: '🚪',
+    title: '拒绝不想去的聚会',
+    desc: '朋友邀请聚会，但你不想去',
+    analysis: '硬着头皮去会很累，直接拒绝又怕伤感情。关键是：诚实 + 感谢 + 留余地。',
+    principles: '诚实 > 编借口\\n感谢邀请 > 直接拒绝\\n留余地 > 关死门',
+    replies: [
+      { level: 'bad', text: '不想去', note: '太生硬，伤感情' },
+      { level: 'normal', text: '那天有事', note: '敷衍但没诚意' },
+      { level: 'good', text: '这次去不了，下次吧', note: '诚实 + 留余地' },
+      { level: 'best', text: '谢谢邀请！但这次时间不太方便，下次有机会一定去。祝你们玩得开心！', note: '感谢 + 诚实 + 留余地 + 祝福' }
+    ]
+  },
+  {
+    id: 'borrow_money',
+    emoji: '💰',
+    title: '朋友找你借钱',
+    desc: '朋友说"能借我 5000 吗，下周还"',
+    analysis: '借钱是敏感话题。直接拒绝可能伤感情，勉强借又可能损失。关键是：诚实 + 不评判。',
+    principles: '诚实 > 假装没钱\\n不评判 > 指责\\n给建议 > 一口回绝',
+    replies: [
+      { level: 'bad', text: '我没钱', note: '谎言容易被揭穿' },
+      { level: 'normal', text: '不好意思，手头紧', note: '敷衍但没诚意' },
+      { level: 'good', text: '抱歉，我现在手头也紧，要不你问问其他人？', note: '诚实 + 建议' },
+      { level: 'best', text: '抱歉我现在真的拿不出这么多。但你可以试试 XX 平台借贷 / XX 兼职。我也会帮你想想其他办法，希望你能度过难关。', note: '诚实 + 提供解决方案 + 关心' }
+    ]
+  },
+  {
+    id: 'parent_career',
+    emoji: '👨‍👩‍👧',
+    title: '父母对你的职业选择有意见',
+    desc: '父母说"这份工作不稳定，你应该考公务员"',
+    analysis: '父母是好意，但未必理解你。关键是：尊重 + 表达想法 + 不对抗。',
+    principles: '尊重 > 对抗\\n表达想法 > 沉默\\n寻求理解 > 证明对错',
+    replies: [
+      { level: 'bad', text: '你们不懂，不要管我', note: '伤害父母的感情' },
+      { level: 'normal', text: '我知道，但我有我的想法', note: '冷淡' },
+      { level: 'good', text: '我理解你们的担心，我会认真考虑的', note: '表示会考虑但不表达真实想法' },
+      { level: 'best', text: '我知道你们是为我好，我会认真考虑你们说的。同时也希望你们理解，我选择这个是因为 XX。我相信只要努力，无论什么路都能走出来。', note: '尊重 + 表达想法 + 沟通理解' }
+    ]
+  },
+  {
+    id: 'partner_jealous',
+    emoji: '💔',
+    title: '伴侣吃醋了',
+    desc: '伴侣看到你和异性聊天，语气变冷',
+    analysis: '伴侣吃醋背后是安全感问题。关键是：解释 + 给安全感 + 不嘲笑对方。',
+    principles: '理解对方 > 觉得无理取闹\\n解释清楚 > 回避问题\\n给安全感 > 反指责',
+    replies: [
+      { level: 'bad', text: '你想太多了', note: '否定对方感受' },
+      { level: 'normal', text: '就普通朋友而已', note: '解释但没关心对方感受' },
+      { level: 'good', text: '我跟 XX 只是普通同事，别担心', note: '解释 + 安抚' },
+      { level: 'best', text: '我能理解你的感受。如果是我看到你和异性聊得多，我也会不舒服。她只是同事，谢谢你提醒我以后更注意。你对我很重要。', note: '共情 + 解释 + 承诺 + 表白' }
+    ]
+  },
+  {
+    id: 'wrong_praised',
+    emoji: '🤔',
+    title: '别人误解并夸奖了你',
+    desc: '老板当着大家说"小李这个方案是我见过最好的"（其实你只是部分参与）',
+    analysis: '接受夸赞但又觉得不全是你的功劳。关键是：归功团队 + 不显得虚伪谦虚。',
+    principles: '诚实归功 > 独占功劳\\n主动澄清 > 默默承担\\n感谢 > 虚伪谦虚',
+    replies: [
+      { level: 'bad', text: '谢谢（闷声接受）', note: '默默接受，可能导致期待过高' },
+      { level: 'normal', text: '主要是 XX 帮了很多', note: '归功但稍显客套' },
+      { level: 'good', text: '谢谢！其实 XX 也贡献了很多，我只是做了 XX 部分', note: '澄清 + 归功' },
+      { level: 'best', text: '谢谢您！这个方案是团队的成果，XX 提供了关键想法，XX 完成了主要工作。我负责 XX 部分，主要是执行到位了。', note: '感谢 + 详细归功 + 体现执行力' }
+    ]
+  },
+  {
+    id: 'failure_admit',
+    emoji: '😔',
+    title: '当众承认自己的失败',
+    desc: '项目失败了，团队复盘会上需要你说几句',
+    analysis: '承认失败需要勇气。关键是：承担 + 分析原因 + 改进方案 + 不甩锅。',
+    principles: '主动承担 > 推卸责任\\n分析原因 > 找借口\\n改进方案 > 解释原因',
+    replies: [
+      { level: 'bad', text: '这次失败主要是 XX 的问题', note: '甩锅，破坏团队信任' },
+      { level: 'normal', text: '这次我们做得不好', note: '承认但太笼统' },
+      { level: 'good', text: '这次项目我没做好，主要是 XX 环节出了问题', note: '承认 + 指出原因' },
+      { level: 'best', text: '这次项目失败，我作为负责人有主要责任。复盘下来主要是 XX 决策失误。下次我会 XX 改进，避免类似问题。谢谢大家的辛苦付出。', note: '主动承担 + 复盘 + 改进 + 感谢团队' }
+    ]
+  },
+  {
+    id: 'thankyou_praise',
+    emoji: '🙏',
+    title: '被感谢怎么回复',
+    desc: '帮了别人一个忙，对方说"真的太感谢你了"',
+    analysis: '被感谢时谦虚过度显得疏远，坦然接受又怕自大。关键是：温暖 + 不居功。',
+    principles: '温暖回应 > 冷淡谦虚\\n不居功 > 强调付出\\n关心对方 > 强调自己',
+    replies: [
+      { level: 'bad', text: '不客气，举手之劳', note: '太轻描淡写，显得不够真诚' },
+      { level: 'normal', text: '没事', note: '太简短' },
+      { level: 'good', text: '不客气，能帮到你我也很开心', note: '温暖 + 表达自己也开心' },
+      { level: 'best', text: '不客气！你不用放在心上。看到你解决了问题，我也替你开心。以后有需要随时找我。', note: '温暖 + 不居功 + 替对方开心 + 留余地' }
+    ]
+  }
+];
+
+let currentScenario = null;
+
+function initScenarios() {
+  const grid = document.getElementById('scenarioGrid');
+  grid.innerHTML = '';
+  scenarios.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'scenario-card';
+    card.onclick = () => showScenario(s);
+    card.innerHTML = `
+      <div class="scenario-emoji">${s.emoji}</div>
+      <div class="scenario-title">${s.title}</div>
+      <div class="scenario-desc">${s.desc}</div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function showScenario(s) {
+  currentScenario = s;
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('resultEmoji').textContent = s.emoji;
+  document.getElementById('resultTitle').textContent = s.title;
+  
+  // 4 种回复
+  const container = document.getElementById('repliesContainer');
+  container.innerHTML = '';
+  s.replies.forEach(r => {
+    const section = document.createElement('div');
+    section.className = 'reply-section reply-' + r.level;
+    section.innerHTML = `
+      <div class="reply-level reply-level-${r.level}">${getLevelText(r.level)}</div>
+      <div class="reply-text">"${r.text}"</div>
+      <div class="reply-note">💡 ${r.note}</div>
+    `;
+    container.appendChild(section);
+  });
+  
+  document.getElementById('scenarioAnalysis').textContent = s.analysis;
+  document.getElementById('principles').textContent = s.principles;
+  
+  // 海报：选最佳回复
+  const bestReply = s.replies[s.replies.length - 1];
+  document.getElementById('posterEmoji').textContent = s.emoji;
+  document.getElementById('posterTitle').textContent = s.title;
+  document.getElementById('posterReply').textContent = '"' + bestReply.text + '"';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getLevelText(level) {
+  return { bad: '❌ 不推荐', normal: '😐 一般', good: '✅ 不错', best: '💎 最佳' }[level];
+}
+
+function backToScenarios() {
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyShareText() {
+  if (!currentScenario) return;
+  const bestReply = currentScenario.replies[currentScenario.replies.length - 1];
+  const text = '💬 高情商回复\\n\\n场景：' + currentScenario.title + '\\n最佳回复："' + bestReply.text + '"\\n\\n👉 查看更多话术：jianhebox.cn/fun/reply.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initScenarios();
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>性格色彩测试 - 红蓝黄绿 4 型 | 简盒玩点有趣的</title>
+<meta name="description" content="免费性格色彩测试：红蓝黄绿 4 种性格类型。30 题专业测试，分析你的性格色彩、优势盲点、人际关系。">
+<meta name="keywords" content="性格色彩,红蓝黄绿,性格测试,FPA,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .options {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+    background: transparent;
+  }
+  .option {
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 16px;
+    line-height: 1.5;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 24px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .color-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 0 auto 16px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 56px;
+  }
+  .result-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .result-nick {
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  .score-row { margin-bottom: 14px; }
+  .score-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+  }
+  .score-track {
+    height: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+  }
+  .score-segment {
+    height: 100%;
+    transition: width 0.5s;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #f5576c;
+    font-weight: bold;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 40px 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; text-align: center; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-color {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: 16px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  .poster-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .poster-nick {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 16px auto;
+    border-radius: 2px;
+  }
+  .poster-traits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin: 12px 0;
+  }
+  .poster-trait {
+    padding: 4px 10px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    font-size: 12px;
+  }
+  .poster-footer {
+    margin-top: 20px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; justify-content: center; }
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    font-size: 13px;
+    color: white;
+  }
+
+  @media (max-width: 480px) {
+    .poster-color { width: 100px; height: 100px; font-size: 48px; }
+    .color-circle { width: 100px; height: 100px; font-size: 48px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🎨 性格色彩测试</h1>
+    <p class="subtitle">红蓝黄绿 4 种性格 · 30 题精华版</p>
+    <ul class="intro-feature-list">
+      <li>4 种性格类型：红色行动派 / 蓝色分析派 / 黄色领导派 / 绿色和平派</li>
+      <li>分析你的核心性格、优势盲点、人际关系</li>
+      <li>专属配色海报 + 12 维度详尽解读</li>
+      <li>✨ 完全免费 · 无需登录</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 5-8 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center; opacity:0.8; margin-bottom:16px; font-size:14px;">问题 <span id="currentQ">1</span> / 30</p>
+    <h3 id="questionText" style="margin-bottom:16px; line-height:1.5;"></h3>
+    <div id="optionsContainer" class="options"></div>
+    <div style="display:flex; gap:12px; margin-top:16px;">
+      <button class="btn" id="prevBtn" onclick="prevQuestion()">← 上一题</button>
+    </div>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div id="colorCircle" class="color-circle">🔴</div>
+      <div class="result-name" id="resultName">红色性格</div>
+      <div class="result-nick" id="resultNick">"行动派"</div>
+      <div class="tag-row" id="resultTags"></div>
+    </div>
+
+    <h3 class="section-title">📊 4 色得分</h3>
+    <div id="scoreRows"></div>
+
+    <h3 class="section-title">📝 性格画像</h3>
+    <p id="personality" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">💪 核心优势</h3>
+    <ul id="strengths" class="feature-list"></ul>
+
+    <h3 class="section-title">⚠️ 潜在盲点</h3>
+    <ul id="weaknesses" class="feature-list"></ul>
+
+    <h3 class="section-title">👥 人际关系</h3>
+    <p id="relationships" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">💼 适合的职业</h3>
+    <p id="careers" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">🌱 成长建议</h3>
+    <p id="growth" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <div class="section-title">📤 分享我的性格色彩</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存下面的专属海报</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">性格色彩测试</div>
+          <div id="posterColor" class="poster-color">🔴</div>
+          <div class="poster-name" id="posterName">红色性格</div>
+          <div class="poster-nick" id="posterNick">"行动派"</div>
+          <div class="poster-divider"></div>
+          <div class="poster-traits" id="posterTraits"></div>
+          <div class="poster-footer">测试你的性格色彩 → jianhebox.cn/fun/color.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 性格色彩（FPA）仅供参考娱乐，请勿作为决策依据。<br>
+    人是多面的，色彩只是帮助你了解自己的一个工具。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 30 题 - 4 维 每维 7-8 题
+const questions = [
+  // 红色 vs 蓝色（外向 vs 内向 / 行动 vs 分析）
+  { text: "做决定时，你更倾向于：", a: "快速决定，相信直觉", b: "深思熟虑，分析利弊", type: "RB" },
+  { text: "在聚会上，你更愿意：", a: "主动认识新朋友", b: "和老朋友聊天", type: "RB" },
+  { text: "面对压力时，你会：", a: "立刻行动", b: "先冷静思考", type: "RB" },
+  { text: "你更讨厌的状态：", a: "无聊、被忽视", b: "混乱、失控", type: "RB" },
+  { text: "你喜欢的工作：", a: "变化快、有挑战", b: "稳定、有逻辑", type: "RB" },
+  { text: "遇到困难时：", a: "马上冲上去解决", b: "先研究解决方案", type: "RB" },
+  { text: "你更欣赏的人：", a: "行动派、敢冒险", b: "思考派、谨慎", type: "RB" },
+  { text: "做事时你更看重：", a: "速度和效率", b: "准确和质量", type: "RB" },
+
+  // 黄色 vs 绿色（影响 vs 稳定）
+  { text: "在团队中，你更愿意：", a: "领导大家", b: "配合他人", type: "YG" },
+  { text: "你更喜欢：", a: "掌控局面", b: "和谐氛围", type: "YG" },
+  { text: "做决定时：", a: "果断、有魄力", b: "温和、考虑他人", type: "YG" },
+  { text: "别人评价你时：", a: "果断有力", b: "温和友善", type: "YG" },
+  { text: "你更喜欢的角色：", a: "领导者", b: "协调者", type: "YG" },
+  { text: "面对冲突：", a: "直接面对解决", b: "回避或妥协", type: "YG" },
+  { text: "你更看重：", a: "结果和成就", b: "过程和关系", type: "YG" },
+  { text: "你更喜欢的工作风格：", a: "有挑战、有竞争", b: "稳定、有人情味", type: "YG" },
+
+  // 红色 vs 黄色（情感 vs 逻辑）
+  { text: "你更看重：", a: "人际关系", b: "任务完成", type: "RY" },
+  { text: "面对问题时：", a: "考虑人的感受", b: "考虑事的逻辑", type: "RY" },
+  { text: "别人请你帮忙，你会：", a: "先答应", b: "先评估可行性", type: "RY" },
+  { text: "你更容易被什么打动？", a: "真挚的情感", b: "理性的方案", type: "RY" },
+  { text: "决策时你更依赖：", a: "内心感受", b: "客观数据", type: "RY" },
+  { text: "你喜欢的朋友：", a: "温暖体贴", b: "理性客观", type: "RY" },
+  { text: "你更喜欢的电影：", a: "感人至深", b: "烧脑悬疑", type: "RY" },
+  { text: "被批评时：", a: "在意对方态度", b: "在意内容本身", type: "RY" },
+
+  // 蓝色 vs 绿色（理性 vs 情感）
+  { text: "你更喜欢：", a: "按计划行事", b: "随性自然", type: "BG" },
+  { text: "面对变化：", a: "需要时间适应", b: "灵活应对", type: "BG" },
+  { text: "你更看重：", a: "公平原则", b: "人情世故", type: "BG" },
+  { text: "你更喜欢：", a: "逻辑严谨", b: "人情温暖", type: "BG" },
+  { text: "你更容易相信：", a: "数据和事实", b: "感觉和直觉", type: "BG" },
+  { text: "遇到事情：", a: "先分析原因", b: "先安抚情绪", type: "BG" }
+];
+
+const colorTypes = {
+  red: {
+    name: "红色性格", nickname: "行动派", emoji: "🔴", color: "linear-gradient(135deg, #ff416c, #ff4b2b)",
+    tags: ["热情", "行动", "社交", "乐观"],
+    personality: "你是充满活力的红色性格，天生的行动派和社交明星。\\n\\n你喜欢热闹、关注度强，讨厌无聊和被忽视。你行动迅速，凭借直觉做决定。你乐观积极，能感染周围的人。\\n\\n你重视人际关系，善于表达情感，是朋友圈的开心果。",
+    strengths: ["热情有活力，感染力强", "行动迅速，执行力高", "善于社交，人脉广泛", "乐观积极，正能量", "表达能力强"],
+    weaknesses: ["注意力分散，难以坚持", "容易冲动决定", "可能忽视细节", "不善独处，需要外界刺激", "可能显得浮躁"],
+    relationships: "【人际关系】\\n你是社交明星，人缘极佳。你能让陌生人快速熟络，但可能难以维持深度关系。\\n\\n你欣赏有趣的人，对沉闷的人不耐烦。你需要伴侣能给你新鲜感。",
+    careers: "【适合的职业】\\n销售、公关、营销、活动策划、演讲师、主持人、创业者、演艺人员等需要表现力和社交的工作。",
+    growth: "【成长建议】\\n• 培养耐心和持续性\\n• 学会三思后行\\n• 给独处的时间一些价值\\n• 关注深度而非广度"
+  },
+  blue: {
+    name: "蓝色性格", nickname: "分析派", emoji: "🔵", color: "linear-gradient(135deg, #4b6cb7, #182848)",
+    tags: ["理性", "分析", "精确", "内敛"],
+    personality: "你是冷静理性的蓝色性格，天生的思考者和分析师。\\n\\n你重视逻辑和事实，做事严谨有序。你不喜欢冲动决定，倾向于深思熟虑。你外表冷静，内心有深刻的思考。\\n\\n你重视质量和准确，讨厌错误和低效。",
+    strengths: ["逻辑严谨，分析能力强", "做事精确，注重细节", "冷静理性，不易冲动", "遵守规则，可靠可信", "深度思考"],
+    weaknesses: ["可能过于完美主义", "不善表达情感", "可能显得冷漠", "过度分析导致拖延", "不善社交"],
+    relationships: "【人际关系】\\n你是忠诚的朋友，但可能显得疏离。你重视少数深度关系胜过广泛社交。\\n\\n你欣赏有逻辑的人，对情绪化的人不耐烦。你需要伴侣能给你稳定和理解。",
+    careers: "【适合的职业】\\n程序员、分析师、工程师、会计师、研究员、作家、设计师等需要精确和深度的工作。",
+    growth: "【成长建议】\\n• 学会表达情感，不只是分析\\n• 接受不完美的存在\\n• 适度放松，享受过程\\n• 培养人际关系"
+  },
+  yellow: {
+    name: "黄色性格", nickname: "领导派", emoji: "🟡", color: "linear-gradient(135deg, #f7971e, #ffd200)",
+    tags: ["果断", "领导", "目标", "自信"],
+    personality: "你是果断自信的黄色性格，天生的领导者和决策者。\\n\\n你重视结果和成就，行动力强。你喜欢掌控局面，能在压力下做出决定。你自信果断，能激励他人。\\n\\n你目标明确，不达目的不罢休。你可能显得有些强势。",
+    strengths: ["果断自信，有魄力", "目标明确，执行力强", "善于激励和领导", "在压力下表现好", "决策快"],
+    weaknesses: ["可能显得强硬", "不耐烦他人缓慢", "不善表达柔软", "可能忽视他人感受", "工作狂倾向"],
+    relationships: "【人际关系】\\n你是天生的 leader，在群体中能自然脱颖而出。你欣赏有能力的人，对弱者缺乏耐心。\\n\\n你需要伴侣能与你并肩作战，同时也要学会给对方空间。",
+    careers: "【适合的职业】\\nCEO、总经理、律师、销售总监、创业者、项目经理、咨询顾问等需要领导力和决策力的工作。",
+    growth: "【成长建议】\\n• 学会倾听他人的声音\\n• 接受他人的不完美\\n• 表达柔软的一面\\n• 重视过程而不只是结果"
+  },
+  green: {
+    name: "绿色性格", nickname: "和平派", emoji: "🟢", color: "linear-gradient(135deg, #56ab2f, #a8e063)",
+    tags: ["和谐", "稳定", "包容", "耐心"],
+    personality: "你是温和稳定的绿色性格，天生的和平使者和调解人。\\n\\n你重视和谐与稳定，讨厌冲突和变化。你耐心包容，能理解所有人的立场。你是朋友圈的粘合剂，让对立的人平和相处。\\n\\n你低调不张扬，但内心有自己的坚持。",
+    strengths: ["温和包容，人缘好", "耐心倾听，理解他人", "稳定可靠，值得信任", "善于调解冲突", "低调不争"],
+    weaknesses: ["可能过于迁就", "不善表达需求", "回避冲突导致问题", "可能显得没有主见", "改变让你不安"],
+    relationships: "【人际关系】\\n你是温和的朋友，能接纳所有人。你不善拒绝，可能承受太多。\\n\\n你欣赏平和的人，对强硬的人回避。你需要伴侣给你安全感。",
+    careers: "【适合的职业】\\n教师、咨询师、社工、护士、行政、客户服务、人力资源等需要耐心和同理心的工作。",
+    growth: "【成长建议】\\n• 学会说不\\n• 表达自己的需求\\n• 接受合理的冲突\\n• 培养决断力"
+  }
+};
+
+let answers = new Array(30).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 30 * 100) + '%';
+  document.getElementById('questionText').textContent = '第 ' + (currentQuestion + 1) + ' 题：' + q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  ['A', 'B'].forEach((label, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = q.a;
+    btn.dataset.idx = idx;
+    btn.onclick = () => selectOption(idx, btn);
+    container.appendChild(btn);
+  });
+  
+  // 修正：重新设置文本
+  container.children[0].textContent = q.a;
+  container.children[1].textContent = q.b;
+  
+  if (answers[currentQuestion] !== null) {
+    const btns = container.querySelectorAll('.option');
+    btns[answers[currentQuestion]].classList.add('selected');
+  }
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  answers[currentQuestion] = idx;
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  
+  setTimeout(() => {
+    if (currentQuestion < 29) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 250);
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateType() {
+  // 每题答案映射到颜色得分
+  // RB: A=红, B=蓝
+  // YG: A=黄, B=绿
+  // RY: A=红, B=黄
+  // BG: A=蓝, B=绿
+  const scores = { red: 0, blue: 0, yellow: 0, green: 0 };
+  
+  questions.forEach((q, i) => {
+    if (answers[i] === null) return;
+    if (q.type === 'RB') {
+      if (answers[i] === 0) scores.red++;
+      else scores.blue++;
+    } else if (q.type === 'YG') {
+      if (answers[i] === 0) scores.yellow++;
+      else scores.green++;
+    } else if (q.type === 'RY') {
+      if (answers[i] === 0) scores.red++;
+      else scores.yellow++;
+    } else if (q.type === 'BG') {
+      if (answers[i] === 0) scores.blue++;
+      else scores.green++;
+    }
+  });
+  
+  // 归一化到 0-100
+  const max = Math.max(scores.red, scores.blue, scores.yellow, scores.green);
+  const normalized = {};
+  for (const k in scores) {
+    normalized[k] = Math.round(scores[k] / max * 100);
+  }
+  
+  // 找最高
+  let topColor = 'red';
+  for (const k in scores) {
+    if (scores[k] > scores[topColor]) topColor = k;
+  }
+  
+  return { type: topColor, scores: normalized };
+}
+
+function showResult() {
+  const { type, scores } = calculateType();
+  const data = colorTypes[type];
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  // 颜色圆
+  const circle = document.getElementById('colorCircle');
+  circle.textContent = data.emoji;
+  circle.style.background = data.color;
+  
+  document.getElementById('resultName').textContent = data.name;
+  document.getElementById('resultNick').textContent = '"' + data.nickname + '"';
+  
+  // 标签
+  const tagsContainer = document.getElementById('resultTags');
+  tagsContainer.innerHTML = '';
+  data.tags.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'tag';
+    span.textContent = t;
+    tagsContainer.appendChild(span);
+  });
+  
+  // 4 色得分条
+  const scoreRows = document.getElementById('scoreRows');
+  scoreRows.innerHTML = '';
+  const colors = [
+    { key: 'red', name: '红色', emoji: '🔴', color: 'linear-gradient(90deg, #ff416c, #ff4b2b)' },
+    { key: 'blue', name: '蓝色', emoji: '🔵', color: 'linear-gradient(90deg, #4b6cb7, #182848)' },
+    { key: 'yellow', name: '黄色', emoji: '🟡', color: 'linear-gradient(90deg, #f7971e, #ffd200)' },
+    { key: 'green', name: '绿色', emoji: '🟢', color: 'linear-gradient(90deg, #56ab2f, #a8e063)' }
+  ];
+  colors.forEach(c => {
+    const row = document.createElement('div');
+    row.className = 'score-row';
+    row.innerHTML = `
+      <div class="score-labels">
+        <span>${c.emoji} ${c.name}</span>
+        <span>${scores[c.key]}%</span>
+      </div>
+      <div class="score-track">
+        <div class="score-segment" style="width:${scores[c.key]}%; background:${c.color};"></div>
+      </div>
+    `;
+    scoreRows.appendChild(row);
+  });
+  
+  document.getElementById('personality').textContent = data.personality;
+  document.getElementById('strengths').innerHTML = data.strengths.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('weaknesses').innerHTML = data.weaknesses.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('relationships').textContent = data.relationships;
+  document.getElementById('careers').textContent = data.careers;
+  document.getElementById('growth').textContent = data.growth;
+  
+  // 海报
+  document.getElementById('posterCard').style.background = data.color;
+  const posterColor = document.getElementById('posterColor');
+  posterColor.textContent = data.emoji;
+  posterColor.style.background = 'rgba(255,255,255,0.25)';
+  
+  document.getElementById('posterName').textContent = data.name;
+  document.getElementById('posterNick').textContent = '"' + data.nickname + '"';
+  
+  const traitsContainer = document.getElementById('posterTraits');
+  traitsContainer.innerHTML = '';
+  data.tags.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'poster-trait';
+    span.textContent = t;
+    traitsContainer.appendChild(span);
+  });
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyShareText() {
+  const { type } = calculateType();
+  const data = colorTypes[type];
+  const text = '🎨 我的性格色彩是 ' + data.name + '\\n"' + data.nickname + '"\\n\\n' + data.personality.split('\\n')[0] + '\\n\\n👉 测试你的色彩：jianhebox.cn/fun/color.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(30).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

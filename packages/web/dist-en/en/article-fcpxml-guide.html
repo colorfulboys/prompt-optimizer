@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FCPXML Subtitle Converter: Complete Guide from JianYing/PR to Final Cut Pro | JianHeBox</title>
+<meta name="description" content="Complete guide to FCPXML subtitle conversion: from JianYing/PR/Word drafts to FCPX project files. 4 real scenarios, 6 common issues, FCPXML format explained.">
+<meta name="keywords" content="FCPXML converter, SRT to FCPXML, Final Cut Pro subtitles, JianYing to FCPX, Premiere to FCPX">
+<link rel="canonical" href="https://www.jianhebox.com/en/article-fcpxml-guide.html" />
+<link rel="alternate" hreflang="zh-CN" href="https://www.jianhebox.cn/article-fcpxml-guide.html" />
+<link rel="alternate" hreflang="en" href="https://www.jianhebox.com/en/article-fcpxml-guide.html" />
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }
+  hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }
+  a { color: #0099ff; text-decoration: none; }
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; }
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; margin-bottom: 8px; }
+  .related-item:hover { border-color: #0099ff; }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+</style>
+</head>
+<body>
+<a href="/" class="back-home">← JianHeBox Home</a>
+
+<nav class="breadcrumb">
+  <a href="/">Home</a>
+  <span class="bc-sep">›</span>
+  <a href="/en/">English</a>
+  <span class="bc-sep">›</span>
+  <span>FCPXML Subtitle Converter Guide</span>
+</nav>
+
+<h1>FCPXML Subtitle Converter: Complete Guide from JianYing/PR to Final Cut Pro</h1>
+
+<blockquote>
+📌 <strong>Last updated:</strong> September 2026 · <strong>Reading time:</strong> ~8 min · <strong>For:</strong> Video creators, subtitle editors, Final Cut Pro users
+</blockquote>
+
+<h2>🎯 What This Guide Solves</h2>
+
+<p>If you've finished a video with subtitles and need to convert them between software, this guide is for you:</p>
+
+<ul>
+  <li>🎬 <strong>JianYing (CapCut) subtitles</strong> → <strong>Final Cut Pro / FCPX</strong> (no style loss)</li>
+  <li>🎬 <strong>Premiere Pro (Pr) subtitles</strong> → <strong>FCPX</strong> (no re-timing needed)</li>
+  <li>🎬 <strong>SRT subtitle files</strong> → <strong>FCPXML</strong> (frame-accurate timestamps)</li>
+  <li>🎬 <strong>Word/Excel transcripts</strong> → <strong>FCPXML</strong> (auto-align timestamps)</li>
+  <li>🎬 <strong>Chinese subtitles</strong> → <strong>English</strong> (AI translation + conversion)</li>
+</ul>
+
+<p><strong>One browser webpage, all done</strong>: <a href="https://www.jianhebox.cn/#/tools/fcpxml">JianHeBox → FCPXML Subtitle Converter</a></p>
+
+<h2>🚀 Quick Start (30 seconds)</h2>
+
+<ol>
+  <li>Open <a href="https://www.jianhebox.cn/#/tools/fcpxml">jianhebox.cn/fcpxml</a></li>
+  <li>Drag in your subtitle file (SRT / VTT / FCPXML / DOCX / TXT / MD)</li>
+  <li>Choose input format + output format</li>
+  <li>Click "Convert" → Download file → Drag into FCPX</li>
+</ol>
+
+<p>✅ <strong>100% Free</strong> · ✅ <strong>Files stay local</strong> · ✅ <strong>Supports FCPX 12</strong></p>
+
+<h2>📖 FCPXML Basics</h2>
+
+<h3>What is FCPXML?</h3>
+
+<p><code>FCPXML</code> = <strong>Final Cut Pro XML</strong> = Apple's official subtitle/timeline exchange format.</p>
+
+<ul>
+  <li><strong>Not a video file</strong> — it's XML text (open in any text editor)</li>
+  <li>Contains: timestamps, text, styles, track info</li>
+  <li><strong>Cross-software</strong>: Pr / DaVinci / JianYing Pro all recognize it</li>
+  <li><strong>Lossless</strong>: no frame or subtitle loss in conversion</li>
+</ul>
+
+<h3>FCPXML Structure (simplified)</h3>
+
+<pre><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;fcpxml version="1.11"&gt;
+  &lt;resources&gt;
+    &lt;format id="r1" name="FFVideoFormat1080p25"/&gt;
+  &lt;/resources&gt;
+  &lt;library&gt;
+    &lt;event name="My Video"&gt;
+      &lt;project name="Project 1"&gt;
+        &lt;spine&gt;
+          &lt;title name="Subtitle Track" lane="1"&gt;
+            &lt;text&gt;
+              &lt;text-style ref="ts1"&gt;Hello, welcome to JianHeBox&lt;/text-style&gt;
+            &lt;/text&gt;
+          &lt;/title&gt;
+        &lt;/spine&gt;
+      &lt;/project&gt;
+    &lt;/event&gt;
+  &lt;/library&gt;
+&lt;/fcpxml&gt;</code></pre>
+
+<h2>🎯 4 Real-World Scenarios</h2>
+
+<h3>Scenario 1: JianYing Subtitles → FCPXML</h3>
+
+<p><strong>Background</strong>: Many vloggers create subtitles in JianYing because:</p>
+<ul>
+  <li>JianYing's auto-subtitle recognition is more accurate than Pr/FCPX (especially Chinese)</li>
+  <li>JianYing has more text styles (bubbles, shake, rainbow text)</li>
+</ul>
+
+<p>But JianYing's subtitles can't be used directly in FCPX (incompatible formats).</p>
+
+<h4>Step-by-step:</h4>
+
+<ol>
+  <li><strong>Export from JianYing</strong>:
+    <ul>
+      <li>JianYing → Select video → "Text" → "Recognize Subtitles"</li>
+      <li>After recognition → Click "···" on subtitle track → "Export Subtitles"</li>
+      <li>Choose <strong>SRT format</strong> → Save locally</li>
+    </ul>
+    <em>Tip: Don't export JianYing project files (.draft) — they can't convert to FCPXML</em>
+  </li>
+  <li><strong>Convert with JianHeBox</strong>:
+    <ul>
+      <li>Open <a href="https://www.jianhebox.cn/#/tools/fcpxml">jianhebox.cn/fcpxml</a></li>
+      <li>Drag in the exported SRT file</li>
+      <li>Input: SRT · Output: FCPXML</li>
+      <li>Click "Convert" → Download <code>output.fcpxml</code></li>
+    </ul>
+  </li>
+  <li><strong>Import to FCPX</strong>:
+    <ul>
+      <li>Open Final Cut Pro</li>
+      <li>File → Import → XML (or ⌘⌥I)</li>
+      <li>Select the .fcpxml file</li>
+      <li>Subtitles appear on the timeline with <strong>perfect time alignment</strong></li>
+    </ul>
+  </li>
+</ol>
+
+<h3>Scenario 2: Premiere Pro Subtitles → FCPXML</h3>
+
+<ol>
+  <li>Pr → Captions panel → Select all subtitles</li>
+  <li>Captions → Export Captions → SRT</li>
+  <li>Same conversion steps as Scenario 1</li>
+</ol>
+
+<h3>Scenario 3: Word Transcript → FCPXML</h3>
+
+<p>For interview recorders, podcast editors, course creators with transcripts in Word:</p>
+
+<ol>
+  <li>Prepare a Word document with one sentence per line</li>
+  <li>JianHeBox → FCPXML Converter → Input: DOCX/TXT · Output: FCPXML</li>
+  <li>Set display duration per subtitle (default 3 seconds)</li>
+  <li>Convert → Download</li>
+</ol>
+
+<h3>Scenario 4: Batch Translation (CN → EN)</h3>
+
+<ol>
+  <li>Use <a href="https://www.jianhebox.cn/#/basic/system">JianHeBox AI Prompt Optimizer</a></li>
+  <li>Paste Chinese subtitles → AI translates → English output</li>
+  <li>Use FCPXML converter to generate English FCPXML</li>
+  <li>Import into FCPX → Replace original subtitle track</li>
+</ol>
+
+<h2>🔧 Advanced Features</h2>
+
+<h3>1. Time Code Adjustment</h3>
+
+<ul>
+  <li><strong>Global offset</strong>: shift all subtitles by N seconds</li>
+  <li><strong>Batch extend</strong>: add N seconds to each subtitle (for accessibility)</li>
+  <li><strong>Single edit</strong>: drag time bar in JianHeBox editor</li>
+</ul>
+
+<h3>2. Style Customization</h3>
+
+<p>FCPXML supports custom fonts/colors/sizes/positions. JianHeBox provides 4 presets: <strong>Classic White</strong>, <strong>Black Outline</strong>, <strong>Bottom Center</strong>, <strong>Top Caption Bar</strong>.</p>
+
+<h3>3. Multi-language Output</h3>
+
+<p>One conversion produces multiple FCPXML files:</p>
+<ul>
+  <li><code>video.zh-CN.fcpxml</code> (Chinese)</li>
+  <li><code>video.en.fcpxml</code> (English)</li>
+  <li><code>video.ja.fcpxml</code> (Japanese)</li>
+</ul>
+
+<h2>❓ FAQ</h2>
+
+<h3>Q1: Subtitles look garbled after conversion?</h3>
+<p><strong>Cause</strong>: Original file encoding is not UTF-8 (common for Windows-exported SRT).</p>
+<p><strong>Fix</strong>: JianHeBox auto-converts encoding. If still garbled, use Notepad → "Save As" → Encoding: <strong>UTF-8</strong>.</p>
+
+<h3>Q2: Subtitles positioned wrong after FCPX import?</h3>
+<p><strong>Cause</strong>: FCPXML <code>lane</code> attribute specifies track position.</p>
+<p><strong>Fix</strong>:</p>
+<ul>
+  <li>JianHeBox default: <code>lane="1"</code> (main subtitle track)</li>
+  <li>Want subtitles above video: <code>lane="-1"</code></li>
+  <li>Want double-row subtitles: <code>lane="2"</code></li>
+</ul>
+
+<h3>Q3: Slow conversion?</h3>
+<p>JianHeBox processes in browser. For long subtitle files (5000+ entries), split into batches. Max 3000 subtitles per conversion is stable (2-hour video).</p>
+
+<h3>Q4: Styles lost after conversion?</h3>
+<p><strong>Cause</strong>: Source files (e.g., SRT) don't contain style info.</p>
+<p><strong>Fix</strong>: JianHeBox offers 4 preset styles applied uniformly. Or use JianYing/Pr's "Export with Styles" option.</p>
+
+<h2>🎓 Advanced: FCPXML Versions</h2>
+
+<table>
+<tr><th>FCPX Version</th><th>FCPXML Version</th><th>Notes</th></tr>
+<tr><td>FCPX 10.4</td><td>1.7</td><td>Old version</td></tr>
+<tr><td>FCPX 10.5</td><td>1.9</td><td>Object tags added</td></tr>
+<tr><td>FCPX 10.6</td><td>1.10</td><td>Roles added</td></tr>
+<tr><td>FCPX 11</td><td>1.11</td><td>Caption tags added</td></tr>
+<tr><td><strong>FCPX 12</strong></td><td><strong>1.12</strong></td><td><strong>Latest, supported by JianHeBox</strong></td></tr>
+</table>
+
+<h2>🚀 Start Converting Now</h2>
+
+<p>👉 <a href="https://www.jianhebox.cn/#/tools/fcpxml">Open JianHeBox FCPXML Subtitle Converter</a></p>
+
+<p>Features:</p>
+<ul>
+  <li>✅ 100% Free (unlimited conversions)</li>
+  <li>✅ Files stay local (privacy-safe)</li>
+  <li>✅ Supports FCPX 12 latest format</li>
+  <li>✅ Batch conversion (up to 3000 subtitles)</li>
+  <li>✅ Multi-language (80+ languages)</li>
+</ul>
+
+<hr>
+
+<p><em>This guide is by <a href="https://www.jianhebox.cn">JianHeBox</a> — a free AI toolkit collection. All tools browser-based, files never leave your device.</em></p>
+
+<div class="related-articles">
+  <h3>📚 Related Guides</h3>
+  <a href="/en/article-mp4-to-gif.html" class="related-item"><span>MP4 to GIF Complete Tutorial</span><span class="arrow">→</span></a>
+  <a href="/en/article-video-compress.html" class="related-item"><span>Video Compression Guide</span><span class="arrow">→</span></a>
+  <a href="/en/article-ai-prompt-engineer.html" class="related-item"><span>AI Prompt Engineer Introduction</span><span class="arrow">→</span></a>
+</div>
+
+<div class="cta-box">
+  <h3>🛠 Try JianHeBox Now</h3>
+  <p>All tools 100% free · Browser-based · Privacy-safe</p>
+  <a href="/" class="btn-primary">Open JianHeBox →</a>
+</div>
+
+</body>
+</html>

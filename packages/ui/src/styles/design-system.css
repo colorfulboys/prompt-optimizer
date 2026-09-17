@@ -1,0 +1,268 @@
+/* ============================================================================
+ * 🇨🇳 2026-08-31:简盒 JianHeBox 全站设计系统(design-system)
+ *
+ * 设计原则:
+ * 1. 命名统一:按钮只允许 .btn + 修饰符(.btn-primary / .btn-secondary 等)
+ * 2. 数值统一:所有 padding/间距/字号只能从 --space-* / --font-* / --radius-* 取
+ * 3. 颜色统一:从 --color-* 取,禁止硬编码
+ * 4. 圆角统一:--radius-pill (100px) 用于按钮和胶囊
+ *
+ * 设计目标:全站 UI 视觉一致,代码可维护
+ * ============================================================================ */
+
+:root {
+  /* ====== 颜色系统(简盒品牌色) ====== */
+  --color-bg: #000000;
+  --color-bg-elevated: rgba(255, 255, 255, 0.04);
+  --color-bg-frosted: rgba(255, 255, 255, 0.06);
+  --color-bg-frosted-hover: rgba(255, 255, 255, 0.12);
+
+  --color-text: #ffffff;
+  --color-text-muted: #cccccc;
+  --color-text-subtle: #888888;
+
+  --color-border: rgba(255, 255, 255, 0.18);
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+
+  --color-primary: #ffffff; /* 简盒主按钮用白底黑字 */
+  --color-primary-text: #000000;
+  --color-primary-hover: #f2f2f2;
+
+  --color-accent: #0099ff; /* 蓝色高亮(hover 光晕) */
+  --color-accent-soft: rgba(0, 153, 255, 0.18);
+
+  --color-danger: #ff4d4f;
+  --color-success: #00d68f;
+
+  /* ====== 间距系统(8 倍数体系) ====== */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* ====== 圆角系统 ====== */
+  --radius-sm: 6px; /* 小标签、icon 按钮 */
+  --radius-md: 12px; /* 卡片、弹框 */
+  --radius-lg: 16px;
+  --radius-pill: 100px; /* 按钮、胶囊(标准) */
+
+  /* ====== 字号系统 ====== */
+  --font-xs: 11px;
+  --font-sm: 12px;
+  --font-base: 13px;
+  --font-md: 14px;
+  --font-lg: 16px;
+  --font-xl: 18px;
+  --font-2xl: 22px;
+  --font-3xl: 28px;
+  --font-4xl: 36px;
+
+  /* ====== 字重 ====== */
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* ====== 动效 ====== */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+}
+
+/* ============================================================================
+ * 全站按钮系统(.btn 基础 + 修饰符)
+ * 用法:
+ *   <button class="btn btn-primary">主操作</button>
+ *   <button class="btn btn-secondary">次操作</button>
+ *   <button class="btn btn-ghost">文字按钮</button>
+ *   <button class="btn btn-danger">危险</button>
+ *   <button class="btn btn-primary btn-sm">小号</button>
+ * ============================================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: var(--font-md);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0;  /* ⚠️ 修复:中文不要负字间距,会模糊 */
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: visible;
+  text-decoration: none;
+  transition:
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+  user-select: none;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* 主按钮:白底黑字(简盒品牌) */
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-primary-text);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+  border-color: var(--color-accent);
+  transform: scale(0.97);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* 次按钮:磨砂玻璃 */
+.btn-secondary {
+  background: var(--color-bg-frosted);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-bg-frosted-hover);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+/* 文字按钮(无边框无背景) */
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--color-bg-frosted);
+  color: var(--color-text);
+}
+
+/* 危险 */
+.btn-danger {
+  background: transparent;
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+.btn-danger:hover:not(:disabled) {
+  background: rgba(255, 77, 79, 0.1);
+}
+
+/* 尺寸变体:小一档但仍要够文本呼吸 */
+.btn-sm {
+  padding: var(--space-2) var(--space-5); /* 8px 20px - 跟中等按钮视觉接近 */
+  font-size: var(--font-base);
+  font-weight: var(--weight-medium);
+}
+.btn-lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--font-lg);
+}
+.btn-icon {
+  padding: var(--space-2);
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+/* 块级 */
+.btn-block {
+  width: 100%;
+}
+
+/* ============================================================================
+ * 卡片
+ * ============================================================================ */
+.card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+}
+.card-frosted {
+  background: var(--color-bg-frosted);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ============================================================================
+ * 工具类(快速复用)
+ * ============================================================================ */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+
+/* 🇨🇳 2026-08-31 M3.7:全站输入框/textarea/select 统一样式(避免每页 1080 套输入框样式) */
+.text-input,
+input[type="text"]:not([data-no-style]),
+input[type="email"]:not([data-no-style]),
+input[type="number"]:not([data-no-style]),
+input[type="url"]:not([data-no-style]),
+input[type="search"]:not([data-no-style]),
+input[type="password"]:not([data-no-style]),
+textarea:not([data-no-style]),
+select:not([data-no-style]) {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);  /* 12px 16px */
+  background: var(--color-bg-frosted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--font-base);
+  line-height: 1.5;
+  outline: none;
+  transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+}
+.text-input:hover,
+input[type="text"]:not([data-no-style]):hover,
+input[type="email"]:not([data-no-style]):hover,
+input[type="number"]:not([data-no-style]):hover,
+textarea:not([data-no-style]):hover,
+select:not([data-no-style]):hover {
+  border-color: var(--color-border-strong);
+}
+.text-input:focus,
+input[type="text"]:not([data-no-style]):focus,
+input[type="email"]:not([data-no-style]):focus,
+input[type="number"]:not([data-no-style]):focus,
+textarea:not([data-no-style]):focus,
+select:not([data-no-style]):focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+.text-input::placeholder,
+input[type="text"]:not([data-no-style])::placeholder,
+input[type="email"]:not([data-no-style])::placeholder {
+  color: var(--color-text-tertiary);
+}
+.gap-1 { gap: var(--space-1); }
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-6 { gap: var(--space-6); }
+
+.text-muted { color: var(--color-text-muted); }
+.text-subtle { color: var(--color-text-subtle); }
+.text-sm { font-size: var(--font-sm); }
+.text-base { font-size: var(--font-base); }
+.text-md { font-size: var(--font-md); }
+.text-lg { font-size: var(--font-lg); }
+.text-xl { font-size: var(--font-xl); }

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>视频压缩完全指南：免费把视频压到 1/10 大小 | 简盒</title>
+<meta name="description" content="把 1GB 视频压到 100MB，画质几乎无损。微信、YouTube、归档全覆盖。">
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+  pre code { background: none; color: inherit; padding: 0; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  th { background: #f0f0f0; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }
+  a { color: #0099ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }
+  .back-home:hover { text-decoration: none; transform: translateY(-1px); }
+
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style>
+<!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-video-compress.html#article",
+      "headline": "视频压缩完全指南：免费把视频压到 1/10 大小，画质几乎无损",
+      "description": "视频压缩完全指南",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-video-compress.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["视频压缩完全指南", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-video-compress.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "视频压缩完全指南：免费把视频压到 1/10 大小，画质几乎无损",
+          "item": "https://www.jianhebox.cn/article-video-compress.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Baidu Tongji (R57.10) -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?deb3c3385c923e6f7cc59e23b4d4d850";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+<!-- R57.9 SEO: 视觉面包屑 -->
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">首页</a>
+  <span class="bc-sep">›</span>
+  <a href="/articles.html">教程</a>
+  <span class="bc-sep">›</span>
+  <span>视频压缩完全指南：免费把视频压到 1/10 大小，画质几乎无损</span>
+</nav>
+<a href="/" class="back-home">← 简盒首页</a>
+<h1>视频压缩完全指南：免费把视频压到 1/10 大小，画质几乎无损</h1>
+<blockquote>最后更新：2026 年 9 月 · 阅读时长：约 8 分钟 · 适用：自媒体、短视频作者、所有想把大视频变小的人</blockquote>
+<hr>
+<h2>📌 这篇教程解决什么问题？</h2>
+<p>视频文件太大，<strong>上传/分享/存储</strong>都成问题：</p>
+<ul>
+<li>📱 微信视频限制 25MB</li>
+<li>📺 B 站上传限制 8GB 但<strong>会卡</strong></li>
+<li>💾 硬盘 / 网盘空间不够</li>
+<li>📧 邮件发不出去</li>
+</ul>
+<p><strong>视频压缩</strong>就能解决。</p>
+<p>但压缩有陷阱：</p>
+<ul>
+<li>❌ 压太狠 → 画质糊成马赛克</li>
+<li>❌ 选错格式 → 文件反而更大</li>
+<li>❌ 上传在线工具 → 隐私泄漏</li>
+</ul>
+<p><strong>这篇教程教你</strong>：</p>
+<ul>
+<li>✅ 把 1GB 视频压到 100MB（10 倍），画质几乎无损</li>
+<li>✅ 完全免费、纯浏览器本地处理</li>
+<li>✅ 多种压缩策略，按需选</li>
+</ul>
+<hr>
+<h2>🚀 快速通道（30 秒上手）</h2>
+<p>如果你是熟练用户，跳过原理：</p>
+<ol>
+<li>打开 <a href="https://www.jianhebox.cn/#/tools/video">jianhebox.cn/video</a></li>
+<li>点 <strong>「视频压缩」</strong> tab</li>
+<li>拖入视频（支持 MP4/MOV/MKV/WebM/AVI）</li>
+<li>选压缩档位：<strong>高质量（推荐）/ 中等 / 极致压缩</strong></li>
+<li>点压缩 → 下载</li>
+</ol>
+<blockquote>✅ <strong>完全免费</strong> · ✅ <strong>本地处理，不上传</strong> · ✅ <strong>保留原始画质 95%+</strong></blockquote>
+<hr>
+<h2>📖 基础概念：视频为什么这么大？</h2>
+<h3>一个 1 分钟 1080p 视频有多大？</h3>
+<pre><code>原始未压缩：~150 GB（理论值）
+MP4 (H.264)：~150 MB
+MP4 (H.265)：~80 MB
+WebM (VP9)：~70 MB</code></pre>
+<p><strong>关键是编码格式</strong>：H.264 / H.265 / VP9 / AV1，越新压缩率越高。</p>
+<h3>影响视频大小的 4 个参数</h3>
+<p>| 参数 | 作用 | 影响 |</p>
+<p>|---|---|---|</p>
+<p>| <strong>码率 (bitrate)</strong> | 每秒数据量 | 越大越清晰，越大文件 |</p>
+<p>| <strong>分辨率</strong> | 宽 × 高 | 越大越清晰，越大文件 |</p>
+<p>| <strong>帧率 (FPS)</strong> | 每秒帧数 | 越高越流畅，越大文件 |</p>
+<p>| <strong>编码格式</strong> | 压缩算法 | H.265 比 H.264 压缩率高 50% |</p>
+<h3>压缩的本质</h3>
+<p><strong>码率 + 分辨率 + 帧率 + 编码</strong> 4 个参数动态调整，<strong>目标</strong>：在画质可接受范围内尽量减小文件。</p>
+<hr>
+<h2>🎯 5 个实战场景</h2>
+<h3>场景 1：微信发送视频（25MB 限制）</h3>
+<p><strong>问题</strong>：1 分钟 4K 视频通常 500MB+，发不出去。</p>
+<p><strong>方案</strong>：</p>
+<pre><code>目标：≤ 25 MB（微信上限）
+时长：1 分钟
+分辨率：720p（够看）
+码率：2.5 Mbps
+编码：H.264
+预估大小：~18 MB ✅</code></pre>
+<p><strong>操作</strong>：<a href="https://www.jianhebox.cn/#/tools/video">简盒视频工具箱 → 视频压缩</a> → 选「微信发送」预设 → 自动用上面参数。</p>
+<hr>
+<h3>场景 2：YouTube/B 站上传</h3>
+<p><strong>问题</strong>：YouTube 推荐<strong>码率 8-12 Mbps</strong>，上传 4K 太慢。</p>
+<p><strong>方案</strong>：</p>
+<pre><code>目标：高质量（保留上传后被平台再压缩的余量）
+码率：8 Mbps（1080p）/ 20 Mbps（4K）
+编码：H.264（兼容最好）或 H.265（同画质省 30%）
+帧率：保持原帧率</code></pre>
+<p><strong>操作</strong>：选「YouTube/B 站」预设。</p>
+<hr>
+<h3>场景 3：手机拍摄家庭视频归档</h3>
+<p><strong>问题</strong>：1 小时手机 4K 视频 = 30GB，硬盘不够。</p>
+<p><strong>方案</strong>：</p>
+<pre><code>目标：画质保留 90%+
+分辨率：1080p（4K 缩到 1080p 肉眼无感）
+码率：5 Mbps
+编码：H.265
+预估：1 小时 = ~2.2 GB（节省 90%+）</code></pre>
+<p><strong>操作</strong>：选「家庭归档」预设。</p>
+<hr>
+<h3>场景 4：屏幕录制（教程/会议）</h3>
+<p><strong>问题</strong>：录屏 1 小时动辄 10GB+，没法分享。</p>
+<p><strong>方案</strong>：</p>
+<pre><code>目标：清晰可读文字
+分辨率：1080p（4K 录屏可降到 1080p）
+码率：3 Mbps（屏幕内容码率可以低）
+编码：H.264（兼容性最好）
+帧率：15-24 FPS（屏幕内容不需要 60 FPS）</code></pre>
+<p><strong>操作</strong>：选「屏幕录制」预设。</p>
+<hr>
+<h3>场景 5：朋友圈/小红书短视频</h3>
+<p><strong>问题</strong>：朋友圈视频限制 30 秒，文件限制 100MB。</p>
+<p><strong>方案</strong>：</p>
+<pre><code>目标：≤ 100 MB
+时长：30 秒
+分辨率：1080p（保持竖屏 1080x1920）
+码率：25 Mbps
+编码：H.264
+预估：~90 MB ✅</code></pre>
+<p><strong>操作</strong>：选「短视频」预设。</p>
+<hr>
+<h2>🔧 高级技巧</h2>
+<h3>1. 两遍压缩（更小体积）</h3>
+<p>普通压缩（单遍）：</p>
+<pre><code>原视频 → H.264 编码 → 输出</code></pre>
+<p>两遍压缩（2-pass）：</p>
+<pre><code>原视频 → 第 1 遍分析（找最复杂的场景） → 第 2 遍精准编码 → 输出</code></pre>
+<p><strong>优点</strong>：体积再省 20-30%，画质更好</p>
+<p><strong>缺点</strong>：压缩时间 × 2</p>
+<p><strong>适用</strong>：归档重要视频</p>
+<h3>2. 动态码率（CBR vs VBR）</h3>
+<p>| 模式 | 说明 | 适用 |</p>
+<p>|---|---|---|</p>
+<p>| <strong>CBR（固定码率）</strong> | 整段视频码率相同 | 直播、实时传输 |</p>
+<p>| <strong>VBR（动态码率）</strong> | 简单场景低码率，复杂场景高码率 | <strong>90% 场景</strong>（推荐） |</p>
+<p>简盒默认用 VBR。</p>
+<h3>3. 裁剪掉无用片段</h3>
+<p>录了 30 分钟视频，<strong>核心内容只有 5 分钟</strong>？</p>
+<p><strong>先裁剪 → 再压缩</strong>：文件大小可能减少 80%+。</p>
+<p><a href="https://www.jianhebox.cn/#/tools/video">简盒视频工具箱 → 视频裁剪</a> → 选时间区间 → 导出。</p>
+<h3>4. 音频也压缩</h3>
+<p>视频文件里<strong>音频占 5-15%</strong>：</p>
+<p>| 场景 | 音频码率建议 |</p>
+<p>|---|---|</p>
+<p>| 普通对话 | 64 kbps（人声） |</p>
+<p>| 音乐 MV | 128 kbps（立体声） |</p>
+<p>| 电影 | 192 kbps（环绕声） |</p>
+<p>简盒默认 AAC 128 kbps（适合 90% 场景）。</p>
+<h3>5. 选对容器</h3>
+<p>| 容器 | 兼容性 | 用途 |</p>
+<p>|---|---|---|</p>
+<p>| <strong>MP4</strong> | 全平台 | 通用（首选） |</p>
+<p>| <strong>MOV</strong> | macOS | Apple 设备 |</p>
+<p>| <strong>WebM</strong> | Web | 网站嵌入 |</p>
+<p>| <strong>MKV</strong> | 桌面 | 多音轨/字幕 |</p>
+<p><strong>推荐</strong>：默认选 MP4 + H.264，<strong>兼容性 100%</strong>。</p>
+<hr>
+<h2>⚠️ 常见误区</h2>
+<h3>误区 1：分辨率越高越好</h3>
+<p><strong>错</strong>！</p>
+<ul>
+<li>4K 视频在<strong>手机小屏幕</strong>上看不出区别</li>
+<li>4K 文件是 1080p 的 <strong>4 倍</strong>大小</li>
+<li>拍 1080p 给手机看，是<strong>性价比最高</strong>的选择</li>
+</ul>
+<h3>误区 2：码率越低越好</h3>
+<p><strong>错</strong>！</p>
+<ul>
+<li>码率 < 2 Mbps 1080p → 明显马赛克</li>
+<li>码率 < 5 Mbps 4K → 完全糊掉</li>
+<li>关键：<strong>找到"画质可接受"的最低码率</strong></li>
+</ul>
+<h3>误区 3：H.265 一定比 H.264 好</h3>
+<p><strong>不一定</strong>：</p>
+<ul>
+<li>画质相同：H.265 文件小 30-50%</li>
+<li>但 H.265 <strong>兼容性差</strong>（老设备可能放不出来）</li>
+<li><strong>建议</strong>：新设备选 H.265，老设备选 H.264</li>
+</ul>
+<h3>误区 4：上传在线压缩工具很安全</h3>
+<p><strong>错</strong>！</p>
+<ul>
+<li>你上传的视频可能<strong>永久存储在服务器</strong></li>
+<li>可能被<strong>用于训练 AI</strong></li>
+<li>可能被<strong>第三方访问</strong></li>
+<li><strong>隐私视频</strong>（家庭/会议）一定不要传</li>
+</ul>
+<p><strong>简盒视频工具箱</strong>完全本地处理，<strong>视频文件不会离开你的电脑</strong>。</p>
+<hr>
+<h2>🎓 进阶知识：深入理解编码</h2>
+<h3>H.264 vs H.265 vs VP9 vs AV1</h3>
+<p>| 编码 | 推出 | 压缩率 | 兼容性 |</p>
+<p>|---|---|---|---|</p>
+<p>| H.264 (AVC) | 2003 | 基准 | 100% |</p>
+<p>| H.265 (HEVC) | 2013 | +30% | 70% |</p>
+<p>| VP9 | 2013 | +30% | 80% |</p>
+<p>| AV1 | 2018 | +50% | 30%（最新） |</p>
+<p><strong>结论</strong>：现在用 <strong>H.265</strong>，未来 3 年转向 <strong>AV1</strong>。</p>
+<h3>关键参数：CRF</h3>
+<p><strong>CRF（Constant Rate Factor）</strong> = 恒定质量因子</p>
+<ul>
+<li>范围：0（无损）- 51（最差）</li>
+<li>推荐值：</li>
+<li><strong>18-22</strong>：高质量（肉眼无感）</li>
+<li><strong>23-28</strong>：中等（推荐压缩）</li>
+<li><strong>29+</strong>：明显失真</li>
+</ul>
+<p>简盒默认 CRF 23（推荐平衡点）。</p>
+<h3>关键参数：preset</h3>
+<p>编码速度 vs 压缩率：</p>
+<p>| preset | 速度 | 压缩率 |</p>
+<p>|---|---|---|</p>
+<p>| ultrafast | ⚡⚡⚡⚡⚡ | 差 |</p>
+<p>| fast | ⚡⚡⚡⚡ | 中 |</p>
+<p>| <strong>medium</strong> | ⚡⚡⚡ | <strong>好（推荐）</strong> |</p>
+<p>| slow | ⚡⚡ | 很好 |</p>
+<p>| veryslow | ⚡ | 最好 |</p>
+<p>简盒默认 medium（平衡速度和压缩率）。</p>
+<hr>
+<h2>🚀 开始压缩</h2>
+<p><a href="https://www.jianhebox.cn/#/tools/video">👉 打开简盒视频工具箱</a></p>
+<p>特点：</p>
+<ul>
+<li>✅ <strong>完全免费</strong></li>
+<li>✅ <strong>本地处理，不上传服务器</strong></li>
+<li>✅ <strong>5 个场景预设</strong>（微信 / YouTube / 家庭 / 屏幕录制 / 短视频）</li>
+<li>✅ <strong>高级参数</strong>（CRF / 码率 / 帧率 / 编码）全部可调</li>
+<li>✅ <strong>批量处理</strong>（一次最多 50 个视频）</li>
+</ul>
+<hr>
+<h2>📚 相关教程</h2>
+<ul>
+<li><a href="/article-mp4-to-gif.html">MP4 转 GIF 完整教程</a>（即将上线）</li>
+<li><a href="/article-video-watermark-removal.html">视频去水印 5 种方法</a>（即将上线）</li>
+<li><a href="/article-ai-video-script.html">AI 写短视频脚本完全指南</a></li>
+<li><a href="/article-fcpxml-guide.html">FCPXML 字幕转换完全教程</a></li>
+</ul>
+<hr>
+<h2>💬 反馈</h2>
+<p>遇到问题或有建议？</p>
+<ul>
+<li>🐛 <a href="mailto:hi@jianhebox.cn">提 Bug</a></li>
+<li>💡 <a href="mailto:hi@jianhebox.cn">提需求</a></li>
+<li>📧 hi@jianhebox.cn</li>
+</ul>
+<blockquote>本文由 <a href="https://www.jianhebox.cn/">简盒 JianHeBox</a> 编辑整理，视频压缩工具完全免费。</blockquote>
+<!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-video-compress.html&title=%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A%E5%85%8D%E8%B4%B9%E6%8A%8A%E8%A7%86%E9%A2%91%E5%8E%8B%E5%88%B0%201/10%20%E5%A4%A7%E5%B0%8F%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-video-compress.html&title=%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A%E5%85%8D%E8%B4%B9%E6%8A%8A%E8%A7%86%E9%A2%91%E5%8E%8B%E5%88%B0%201/10%20%E5%A4%A7%E5%B0%8F%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-video-compress.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-video-compress.html&text=%E8%A7%86%E9%A2%91%E5%8E%8B%E7%BC%A9%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A%E5%85%8D%E8%B4%B9%E6%8A%8A%E8%A7%86%E9%A2%91%E5%8E%8B%E5%88%B0%201/10%20%E5%A4%A7%E5%B0%8F%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-mp4-to-gif.html" class="related-item"><span>MP4 转 GIF 完整教程</span><span class="arrow">→</span></a>
+    <a href="/article-video-watermark-removal.html" class="related-item"><span>视频去水印 5 种方法</span><span class="arrow">→</span></a>
+    <a href="/article-fcpxml-guide.html" class="related-item"><span>FCPXML 字幕转换完全教程</span><span class="arrow">→</span></a>
+    <a href="/article-free-ai-tools-2026.html" class="related-item"><span>2026 免费 AI 工具清单</span><span class="arrow">→</span></a>
+    <a href="/article-ai-prompt-engineer.html" class="related-item"><span>AI 提示词工程师入门</span><span class="arrow">→</span></a>
+    </div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>压力知觉量表 (PSS-10) - 免费压力测试 | 简盒 JianHeBox</title>
+<meta name="description" content="免费压力测试,基于 Cohen 1983 PSS-10 (知觉压力量表),国际权威量表,10题专业测评你的压力水平。">
+<meta name="keywords" content="压力测试,PSS,知觉压力量表,心理压力,焦虑测试,简盒">
+<meta name="baidu-icp" content="京ICP备2026058075号-1">
+<link rel="canonical" href="https://www.jianhebox.cn/fun/stress.html">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);min-height:100vh;padding:20px;color:#333}
+.container{max-width:720px;margin:0 auto;background:#fff;border-radius:20px;padding:40px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+h1{font-size:24px;color:#333;margin-bottom:8px;text-align:center}
+.subtitle{color:#888;text-align:center;margin-bottom:30px;font-size:14px}
+.progress{background:#f0f0f0;border-radius:10px;height:8px;margin-bottom:24px;overflow:hidden}
+.progress-bar{background:linear-gradient(90deg,#f5576c,#f093fb);height:100%;transition:width .3s}
+.question{background:#fff5f5;padding:20px;border-radius:12px;margin-bottom:20px;border-left:4px solid #f5576c}
+.q-text{font-size:16px;line-height:1.6;margin-bottom:16px;color:#333}
+.options{display:grid;flex-template-columns:1fr 1fr;gap:8px}
+@media (max-width:600px){.options{grid-template-columns:1fr}}
+.options label{padding:12px;background:#fff;border:2px solid #e0e0e0;border-radius:8px;cursor:pointer;text-align:center;font-size:14px;transition:all .2s}
+.options input[type=radio]{display:none}
+.options label:has(input:checked){border-color:#f5576c;background:#ffe5e8;color:#f5576c;font-weight:600}
+.btn{background:linear-gradient(135deg,#f5576c,#f093fb);color:#fff;border:none;padding:14px 36px;border-radius:30px;font-size:16px;font-weight:600;cursor:pointer;display:block;margin:24px auto;transition:transform .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,87,108,.4)}
+.btn:disabled{background:#ccc;cursor:not-allowed}
+.intro{background:#fff5f5;padding:20px;border-radius:12px;margin-bottom:24px;font-size:14px;line-height:1.8;border-left:4px solid #f5576c}
+.intro strong{color:#f5576c}
+.result{background:linear-gradient(135deg,#fff5f5,#ffe5e8);padding:30px;border-radius:16px;margin-top:24px;text-align:center}
+.result h2{color:#f5576c;margin-bottom:16px}
+.score{font-size:48px;font-weight:700;margin:16px 0}
+.level{padding:12px 24px;border-radius:30px;display:inline-block;color:#fff;font-weight:600;margin-bottom:16px}
+.level-low{background:#10b981}
+.level-mid{background:#f59e0b}
+.level-high{background:#ef4444}
+.tip{text-align:left;background:#fff;padding:16px;border-radius:12px;margin-top:16px;font-size:14px;line-height:1.8}
+.footer{text-align:center;color:#888;font-size:12px;margin-top:30px}
+.footer a{color:#f5576c;text-decoration:none}
+.warning{background:#fff3cd;border-left:4px solid #ffc107;padding:16px;border-radius:8px;margin-top:16px;font-size:14px;color:#856404}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>😓 压力知觉测试 (PSS-10)</h1>
+<p class="subtitle">国际权威量表 · 10 题 · 约 3 分钟</p>
+
+<div id="intro-screen">
+<div class="intro">
+<p><strong>本测试测什么?</strong> PSS-10 (Perceived Stress Scale) 是 1983 年 Cohen 等人编制的国际通用量表,测量你<strong>过去一个月</strong>感受到的压力程度和应对能力。</p>
+<p style="margin-top:12px;color:#888;font-size:13px">⚠️ 本量表仅作自我了解参考,<strong>不能替代专业心理咨询</strong>。如持续高压,建议寻求专业支持。</p>
+</div>
+<button class="btn" onclick="startQuiz()">开始测试 →</button>
+</div>
+
+<div id="quiz-screen" style="display:none">
+<div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+<div id="question-container"></div>
+<button class="btn" id="next-btn" onclick="nextQuestion()" disabled>下一题 →</button>
+</div>
+
+<div id="result-screen" style="display:none">
+<div class="result">
+<h2>📊 你的压力水平</h2>
+<div class="score" id="score-num">-</div>
+<div class="level" id="level-tag">-</div>
+<p id="level-text" style="margin:16px 0"></p>
+<div class="tip" id="tip-content"></div>
+<button class="btn" onclick="location.reload()" style="margin-top:16px;background:#fff;color:#f5576c;border:2px solid #f5576c">重新测试</button>
+</div>
+<div class="warning">
+⚠️ <strong>如果你的压力长期偏高,建议:</strong><br>
+• 规律运动 (每周3次,每次30分钟)<br>
+• 充足睡眠 (7-8小时)<br>
+• 寻求专业心理咨询<br>
+📞 <strong>24小时心理援助热线:</strong> 400-161-9995 / 010-82951332
+</div>
+<div class="footer">
+<a href="/fun/">← 返回玩点有趣的</a> · 简盒 JianHeBox
+</div>
+</div>
+</div>
+
+<script>
+const QUESTIONS = [
+  {text: "过去一个月,你有多少次因为意外发生的事情而感到不安?", options: ["从不", "偶尔", "经常", "很经常"]},
+  {text: "过去一个月,你有多少次感到无法控制生活中重要的事情?", options: ["从不", "偶尔", "经常", "很经常"]},
+  {text: "过去一个月,你有多少次感到紧张和压力?", options: ["从不", "偶尔", "经常", "很经常"]},
+  {text: "过去一个月,你有多少次成功处理恼人的私事?", options: ["从不", "偶尔", "经常", "很经常"]}, // 反向
+  {text: "过去一个月,你有多少次有效地处理生活中发生的重要变化?", options: ["从不", "偶尔", "经常", "很经常"]}, // 反向
+  {text: "过去一个月,你有多少次对个人问题的处理能力有信心?", options: ["从不", "偶尔", "经常", "很经常"]}, // 反向
+  {text: "过去一个月,你有多少次感到事情按你的方式进行?", options: ["从不", "偶尔", "经常", "很经常"]}, // 反向
+  {text: "过去一个月,你有多少次发现无法应付所有必须做的事情?", options: ["从不", "偶尔", "经常", "很经常"]},
+  {text: "过去一个月,你有多少次能够控制生活中恼人的事?", options: ["从不", "偶尔", "经常", "很经常"]}, // 反向
+  {text: "过去一个月,你有多少次感到事情堆积到无法克服的地步?", options: ["从不", "偶尔", "经常", "很经常"]}
+];
+// 反向题索引 (0-9)
+const REVERSE = [3, 4, 5, 6, 8];
+
+let current = 0;
+const answers = new Array(QUESTIONS.length).fill(null);
+
+function startQuiz() {
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[current];
+  const pct = (current / QUESTIONS.length) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('next-btn').disabled = answers[current] === null;
+
+  let html = `<div class="question"><div class="q-text">${current + 1}. ${q.text}</div><div class="options">`;
+  q.options.forEach((label, idx) => {
+    const checked = answers[current] === idx ? 'checked' : '';
+    html += `<label><input type="radio" name="q${current}" value="${idx}" ${checked} onchange="selectAnswer(${idx})">${label}</label>`;
+  });
+  html += `</div></div>`;
+  document.getElementById('question-container').innerHTML = html;
+}
+
+function selectAnswer(val) {
+  answers[current] = val;
+  document.getElementById('next-btn').disabled = false;
+}
+
+function nextQuestion() {
+  if (current < QUESTIONS.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+
+  // 计分: 0-4 索引 → 0-3 分, 反向题 3-x
+  let total = 0;
+  QUESTIONS.forEach((_, i) => {
+    let v = answers[i] || 0;
+    if (REVERSE.includes(i)) v = 3 - v;
+    total += v;
+  });
+
+  document.getElementById('score-num').textContent = total;
+  let level, levelClass, text, tip;
+  if (total <= 13) {
+    level = '低压力';
+    levelClass = 'level-low';
+    text = '你的压力水平较低,整体状态良好。继续保持健康的生活方式和积极心态!';
+    tip = '<strong>建议:</strong> 维持当前的平衡生活。如果遇到突发压力事件,可以用本量表重新评估。';
+  } else if (total <= 20) {
+    level = '中等压力';
+    levelClass = 'level-mid';
+    text = '你感受到了一定程度的压力,这在现代生活中很常见。关注自己的情绪信号。';
+    tip = '<strong>建议:</strong> 尝试规律运动、冥想、深呼吸等放松技巧;确保充足睡眠;与信任的人分享感受。';
+  } else if (total <= 27) {
+    level = '较高压力';
+    levelClass = 'level-mid';
+    text = '你承受了较高的压力,可能会影响日常生活和健康。建议主动采取措施缓解。';
+    tip = '<strong>建议:</strong> 识别主要压力源;学习时间管理;建立支持网络;考虑咨询心理咨询师。';
+  } else {
+    level = '过高压力 ⚠️';
+    levelClass = 'level-high';
+    text = '你的压力水平很高,持续下去会严重影响身心健康。强烈建议寻求专业帮助。';
+    tip = '<strong>建议:</strong> 立即联系心理咨询师或医生;告知家人朋友;暂缓重要决定。';
+  }
+  document.getElementById('level-tag').textContent = level;
+  document.getElementById('level-tag').className = 'level ' + levelClass;
+  document.getElementById('level-text').textContent = text;
+  document.getElementById('tip-content').innerHTML = tip;
+}
+</script>
+</body>
+</html>

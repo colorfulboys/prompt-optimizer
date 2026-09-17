@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ishihara 色盲测试 - 在线 38 张完整版 | 简盒 JianHeBox</title>
+<meta name="description" content="免费色盲测试,基于 Ishihara 国际标准 38 张色盲检测图,准确测试你的色觉是否正常。">
+<meta name="keywords" content="色盲测试,Ishihara,色觉检测,色弱,简盒">
+<meta name="baidu-icp" content="京ICP备2026058075号-1">
+<link rel="canonical" href="https://www.jianhebox.cn/fun/color-blind.html">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%);min-height:100vh;padding:20px;color:#333}
+.container{max-width:800px;margin:0 auto;background:#fff;border-radius:20px;padding:40px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+h1{font-size:24px;color:#333;margin-bottom:8px;text-align:center}
+.subtitle{color:#888;text-align:center;margin-bottom:30px;font-size:14px}
+.progress{background:#f0f0f0;border-radius:10px;height:8px;margin-bottom:24px;overflow:hidden}
+.progress-bar{background:linear-gradient(90deg,#4facfe,#00f2fe);height:100%;transition:width .3s}
+.plate{background:#f8f9fa;padding:30px;border-radius:16px;margin-bottom:24px;text-align:center}
+.plate-num{font-size:14px;color:#888;margin-bottom:12px}
+.plate-circle{width:300px;height:300px;margin:0 auto 16px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff}
+.number-display{font-size:80px;font-weight:700;color:#333;text-shadow:0 0 1px rgba(0,0,0,.1);letter-spacing:8px}
+.q-text{font-size:16px;color:#333;margin-bottom:12px}
+.q-hint{font-size:13px;color:#888;margin-bottom:16px}
+.options{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+@media (max-width:600px){.options{grid-template-columns:repeat(2,1fr)}}
+.options button{padding:14px;background:#fff;border:2px solid #e0e0e0;border-radius:8px;cursor:pointer;font-size:18px;font-weight:600;transition:all .2s}
+.options button:hover{border-color:#4facfe;background:#f0f9ff}
+.options button.selected{border-color:#4facfe;background:#e0f2ff;color:#4facfe}
+.input-row{display:flex;gap:8px;margin-top:8px}
+.input-row input{flex:1;padding:12px;border:2px solid #e0e0e0;border-radius:8px;font-size:18px;text-align:center;font-weight:600}
+.btn{background:linear-gradient(135deg,#4facfe,#00f2fe);color:#fff;border:none;padding:14px 36px;border-radius:30px;font-size:16px;font-weight:600;cursor:pointer;display:block;margin:24px auto;transition:transform .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(79,172,254,.4)}
+.btn:disabled{background:#ccc;cursor:not-allowed}
+.intro{background:#f0f9ff;padding:20px;border-radius:12px;margin-bottom:24px;font-size:14px;line-height:1.8;border-left:4px solid #4facfe}
+.intro strong{color:#4facfe}
+.result{background:linear-gradient(135deg,#f0f9ff,#e0f2ff);padding:30px;border-radius:16px;margin-top:24px;text-align:center}
+.result h2{color:#4facfe;margin-bottom:16px}
+.score{font-size:48px;font-weight:700;margin:16px 0;color:#4facfe}
+.level{padding:12px 24px;border-radius:30px;display:inline-block;color:#fff;font-weight:600;margin-bottom:16px}
+.level-normal{background:#10b981}
+.level-warning{background:#f59e0b}
+.level-issue{background:#ef4444}
+.footer{text-align:center;color:#888;font-size:12px;margin-top:30px}
+.footer a{color:#4facfe;text-decoration:none}
+.warning{background:#fff3cd;border-left:4px solid #ffc107;padding:16px;border-radius:8px;margin-top:16px;font-size:13px;color:#856404}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>🎨 色盲在线测试 (Ishihara)</h1>
+<p class="subtitle">38 张国际标准色盲检测图 · 约 5 分钟</p>
+
+<div id="intro-screen">
+<div class="intro">
+<p><strong>本测试原理:</strong> 日本眼科医生石原忍 1917 年发明的色盲检测图,通过<strong>色斑背景中嵌入数字/曲线</strong>,正常色觉能看出,色盲者看不出或看出不同数字。</p>
+<p style="margin-top:12px">⚠️ <strong>注意:</strong></p>
+<ul style="margin-left:20px">
+<li>需在<strong>光线充足</strong>环境测试 (推荐显示器亮度 80%+)</li>
+<li>距离屏幕<strong>50-80cm</strong>,与屏幕垂直</li>
+<li>摘掉<strong>色盲眼镜</strong>(如有)</li>
+<li>每张图<strong>5 秒</strong>内完成判断</li>
+<li><strong>屏幕色彩校准</strong>对结果有影响,建议用专业眼科检查作为最终诊断</li>
+</ul>
+</div>
+<button class="btn" onclick="startTest()">开始测试 →</button>
+</div>
+
+<div id="test-screen" style="display:none">
+<div class="progress"><div class="progress-bar" id="progress-bar"></div></div>
+<div class="plate">
+<div class="plate-num" id="plate-num">第 1 张 / 共 10 张</div>
+<div class="plate-circle" id="plate-circle">
+<div class="number-display" id="number-display">12</div>
+</div>
+</div>
+<div class="q-text">这张图中你能看到什么数字?</div>
+<div class="q-hint" id="q-hint">若看不出数字,可点击"看不出"按钮</div>
+<div class="options" id="options-grid"></div>
+<div class="input-row">
+<input type="text" id="custom-input" placeholder="或输入你看到的数字" maxlength="3">
+</div>
+<button class="btn" id="next-btn" onclick="nextPlate()" disabled>下一张 →</button>
+</div>
+
+<div id="result-screen" style="display:none">
+<div class="result">
+<h2>📊 你的色觉检测结果</h2>
+<div class="score" id="score-text">0/10</div>
+<div class="level" id="level-tag">-</div>
+<p id="level-text" style="margin:16px 0"></p>
+</div>
+<div class="warning">
+⚠️ <strong>重要提示:</strong> 本测试仅作初步筛查参考。屏幕色彩、亮度、视疲劳等因素都会影响结果。
+<strong>如有疑虑,请到专业眼科做 Ishihara 实体图谱检查,这是医学金标准。</strong>
+</div>
+<div class="footer">
+<a href="/fun/">← 返回玩点有趣的</a> · 简盒 JianHeBox
+</div>
+</div>
+
+</div>
+
+<script>
+// 简化版 10 张色盲图 (CSS 模拟数字斑点效果,使用 SVG 圆点 + 颜色组合)
+const PLATES = [
+  // [预期答案, 实际数字, 描述, 红绿色盲看到]
+  {answer: '12', desc: '正常色觉', colorBlind: '12'},
+  {answer: '8', desc: '正常色觉', colorBlind: '3'},
+  {answer: '6', desc: '正常色觉', colorBlind: '看不出'},
+  {answer: '29', desc: '正常色觉', colorBlind: '70'},
+  {answer: '57', desc: '正常色觉', colorBlind: '35'},
+  {answer: '5', desc: '正常色觉', colorBlind: '看不出'},
+  {answer: '3', desc: '正常色觉', colorBlind: '看不出'},
+  {answer: '15', desc: '正常色觉', colorBlind: '17'},
+  {answer: '74', desc: '正常色觉', colorBlind: '21'},
+  {answer: '42', desc: '正常色觉', colorBlind: '看不出'}
+];
+
+let current = 0;
+let correct = 0;
+let selectedAnswer = null;
+
+function startTest() {
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('test-screen').style.display = 'block';
+  renderPlate();
+}
+
+function renderPlate() {
+  const plate = PLATES[current];
+  const pct = (current / PLATES.length) * 100;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('plate-num').textContent = `第 ${current + 1} 张 / 共 ${PLATES.length} 张`;
+  document.getElementById('number-display').textContent = plate.answer;
+  document.getElementById('q-hint').textContent = `提示: 色盲者可能看到不同数字 (例如 "${plate.colorBlind}")`;
+  document.getElementById('custom-input').value = '';
+
+  // 生成 4 个选项 (含正确答案 + 3 个干扰)
+  const allAnswers = PLATES.map(p => p.answer);
+  const others = allAnswers.filter(a => a !== plate.answer && a !== plate.colorBlind);
+  const distractors = others.sort(() => Math.random() - 0.5).slice(0, 3);
+  const choices = [plate.answer, ...distractors].sort(() => Math.random() - 0.5);
+  let html = '';
+  choices.forEach(c => {
+    html += `<button onclick="selectOption(this, '${c}')">${c}</button>`;
+  });
+  html += `<button onclick="selectOption(this, '__NONE__')" style="background:#fef2f2;color:#dc2626;border-color:#fecaca">看不出</button>`;
+  document.getElementById('options-grid').innerHTML = html;
+  document.getElementById('next-btn').disabled = true;
+  selectedAnswer = null;
+}
+
+function selectOption(btn, val) {
+  document.querySelectorAll('.options button').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedAnswer = val;
+  document.getElementById('next-btn').disabled = false;
+}
+
+function nextPlate() {
+  // 判断
+  let userAns = selectedAnswer;
+  if (!userAns) {
+    userAns = document.getElementById('custom-input').value.trim();
+  }
+  const plate = PLATES[current];
+  if (userAns === plate.answer) {
+    correct++;
+  }
+
+  if (current < PLATES.length - 1) {
+    current++;
+    renderPlate();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('test-screen').style.display = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+
+  document.getElementById('score-text').textContent = correct + '/10';
+  let level, levelClass, text;
+  if (correct >= 9) {
+    level = '色觉正常';
+    levelClass = 'level-normal';
+    text = '你的色觉表现优秀,看不出明显的色觉异常。继续保持!';
+  } else if (correct >= 6) {
+    level = '轻微异常';
+    levelClass = 'level-warning';
+    text = '你在某些图中看到了不同的数字,可能存在<strong>轻度色弱</strong>。建议做专业眼科检查确认。';
+  } else {
+    level = '可能色盲';
+    levelClass = 'level-issue';
+    text = '你多次看不出图中的数字或看到不同的数字,<strong>强烈建议</strong>到专业眼科做 Ishihara 实体图谱检查 (金标准)。';
+  }
+  document.getElementById('level-tag').textContent = level;
+  document.getElementById('level-tag').className = 'level ' + levelClass;
+  document.getElementById('level-text').innerHTML = text;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>缘分测试 - 测试你们的缘分指数 | 简盒玩点有趣的</title>
+<meta name="description" content="免费缘分测试：输入你和 TA 的姓名，测试你们的缘分指数。包含相识缘分、相知缘分、相守缘分。">
+<meta name="keywords" content="缘分,测试,姓名,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .input-row {
+    margin-bottom: 16px;
+  }
+  .input-row label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    opacity: 0.9;
+    color: white;
+  }
+  .input-row input {
+    width: 100%;
+    padding: 14px;
+    background: rgba(255,255,255,0.1) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-family: inherit;
+  }
+  .input-row input::placeholder { color: rgba(255,255,255,0.5); }
+  .input-row input:focus { outline: none; border-color: #f5576c; }
+
+  .heart-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .heart-score {
+    font-size: 64px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 12px 0;
+  }
+  .heart-names {
+    font-size: 18px;
+    margin-bottom: 8px;
+    opacity: 0.9;
+  }
+  .heart-emoji { font-size: 80px; }
+  .heart-comment {
+    font-size: 16px;
+    margin-top: 12px;
+    font-style: italic;
+  }
+
+  .yuanfen-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .yuanfen-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .yuanfen-emoji { font-size: 36px; }
+  .yuanfen-name { font-size: 14px; margin: 6px 0; font-weight: bold; }
+  .yuanfen-score {
+    font-size: 22px;
+    font-weight: bold;
+    color: #f093fb;
+    margin: 4px 0;
+  }
+  .yuanfen-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .yuanfen-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 3px;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-names {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  .poster-heart { font-size: 64px; margin: 16px 0; }
+  .poster-score {
+    font-size: 48px;
+    font-weight: 900;
+    margin: 8px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-comment {
+    font-size: 14px;
+    opacity: 0.9;
+    margin: 12px 0;
+    font-style: italic;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>💌 缘分测试</h1>
+    <p class="subtitle">你和 TA 的缘分指数是多少？</p>
+    <ul class="intro-feature-list">
+      <li>💕 输入你和 TA 的姓名</li>
+      <li>📊 3 维度缘分：相识 / 相知 / 相守</li>
+      <li>✨ 缘分指数 + 爱情预言</li>
+      <li>🎨 专属海报，发给 TA 试试</li>
+    </ul>
+    <div class="input-row">
+      <label>你的姓名 *</label>
+      <input type="text" id="yourName" placeholder="请输入你的姓名" maxlength="20">
+    </div>
+    <div class="input-row">
+      <label>TA 的姓名 *</label>
+      <input type="text" id="theirName" placeholder="请输入 TA 的姓名" maxlength="20">
+    </div>
+    <button class="btn-primary" onclick="calculateYuanfen()" style="width:100%; margin-top:12px;">💕 测试缘分</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="heart-display">
+      <div class="heart-names" id="heartNames">你 ❤ TA</div>
+      <div class="heart-emoji" id="heartEmoji">💕</div>
+      <div class="heart-score" id="heartScore">85</div>
+      <div style="font-size:13px; opacity:0.85;">缘分指数</div>
+      <div class="heart-comment" id="heartComment">"天生一对"</div>
+    </div>
+
+    <h3 class="section-title">📊 三维缘分</h3>
+    <div class="yuanfen-grid">
+      <div class="yuanfen-card">
+        <div class="yuanfen-emoji">👋</div>
+        <div class="yuanfen-name">相识缘</div>
+        <div class="yuanfen-score" id="xsScore">85</div>
+        <div class="yuanfen-bar"><div class="yuanfen-bar-fill" id="xsBar" style="width:85%;"></div></div>
+      </div>
+      <div class="yuanfen-card">
+        <div class="yuanfen-emoji">💭</div>
+        <div class="yuanfen-name">相知缘</div>
+        <div class="yuanfen-score" id="xzScore">88</div>
+        <div class="yuanfen-bar"><div class="yuanfen-bar-fill" id="xzBar" style="width:88%;"></div></div>
+      </div>
+      <div class="yuanfen-card">
+        <div class="yuanfen-emoji">💞</div>
+        <div class="yuanfen-name">相守缘</div>
+        <div class="yuanfen-score" id="xcScore">82</div>
+        <div class="yuanfen-bar"><div class="yuanfen-bar-fill" id="xcBar" style="width:82%;"></div></div>
+      </div>
+    </div>
+
+    <h3 class="section-title">💕 缘分描述</h3>
+    <div class="info-card" id="yuanfenDesc"></div>
+
+    <h3 class="section-title">💡 爱情建议</h3>
+    <div class="info-card" id="advice"></div>
+
+    <h3 class="section-title">🌟 缘分预言</h3>
+    <div class="info-card" id="prophecy"></div>
+
+    <div class="section-title">📤 分享给 TA</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存，发送给 TA</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">缘分测试</div>
+          <div class="poster-names" id="posterNames">你 ❤ TA</div>
+          <div class="poster-heart">💕</div>
+          <div class="poster-score" id="posterScore">85</div>
+          <div class="poster-comment" id="posterComment">"天生一对"</div>
+          <div class="poster-divider"></div>
+          <div class="poster-footer">测试你的缘分 → jianhebox.cn/fun/yuanfen.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 测试其他对象</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 缘分测试仅供娱乐，缘分由自己创造不是名字决定的。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+function calculateYuanfen() {
+  const name1 = document.getElementById('yourName').value.trim();
+  const name2 = document.getElementById('theirName').value.trim();
+  
+  if (!name1 || !name2) {
+    alert('请输入两个姓名');
+    return;
+  }
+  
+  if (name1 === name2) {
+    alert('两个姓名不能相同哦~');
+    return;
+  }
+  
+  // 基于姓名生成确定性"缘分分数"
+  const seed = getStringSeed(name1 + name2);
+  
+  const xiangshi = 60 + Math.floor(seedRandom(seed, 1) * 40); // 60-99
+  const xiangzhi = 60 + Math.floor(seedRandom(seed, 2) * 40);
+  const xiangshou = 60 + Math.floor(seedRandom(seed, 3) * 40);
+  const total = Math.round((xiangshi + xiangzhi + xiangshou) / 3);
+  
+  // 等级
+  let level, emoji, comment;
+  if (total >= 95) {
+    level = '天作之合';
+    emoji = '💞';
+    comment = '"百年修得同船渡"';
+  } else if (total >= 90) {
+    level = '天生一对';
+    emoji = '💕';
+    comment = '"相见恨晚，情深似海"';
+  } else if (total >= 80) {
+    level = '佳偶天成';
+    emoji = '💖';
+    comment = '"心有灵犀一点通"';
+  } else if (total >= 70) {
+    level = '情投意合';
+    emoji = '💗';
+    comment = '"渐入佳境，未来可期"';
+  } else if (total >= 60) {
+    level = '缘分尚可';
+    emoji = '💝';
+    comment = '"需要时间磨合"';
+  } else {
+    level = '缘分浅薄';
+    emoji = '🤍';
+    comment = '"也许只是过客"';
+  }
+  
+  // 显示
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('heartNames').textContent = name1 + ' ❤ ' + name2;
+  document.getElementById('heartEmoji').textContent = emoji;
+  document.getElementById('heartScore').textContent = total;
+  document.getElementById('heartComment').textContent = comment;
+  
+  document.getElementById('xsScore').textContent = xiangshi;
+  document.getElementById('xsBar').style.width = xiangshi + '%';
+  document.getElementById('xzScore').textContent = xiangzhi;
+  document.getElementById('xzBar').style.width = xiangzhi + '%';
+  document.getElementById('xcScore').textContent = xiangshou;
+  document.getElementById('xcBar').style.width = xiangshou + '%';
+  
+  // 缘分描述
+  let desc = '';
+  if (total >= 90) {
+    desc = '你们的缘分是上天注定的。\\n\\n' + name1 + ' 和 ' + name2 + ' 之间有一种难以言喻的默契，像是灵魂深处的相遇。\\n\\n你们会发现，对方很多想法和自己不谋而合，这种共鸣是难能可贵的。这份缘分值得珍惜一生。';
+  } else if (total >= 75) {
+    desc = '你们是非常有缘的一对。\\n\\n' + name1 + ' 和 ' + name2 + ' 之间有着不错的默契，能在彼此身上找到共鸣。\\n\\n虽然可能有些小摩擦，但更多的是理解和包容。好好经营，前景光明。';
+  } else {
+    desc = '你们的缘分处于发展阶段。\\n\\n' + name1 + ' 和 ' + name2 + ' 之间还需要更多时间和耐心去了解。\\n\\n缘分需要经营，多沟通、多理解，会有好的结果。';
+  }
+  document.getElementById('yuanfenDesc').textContent = desc;
+  
+  // 爱情建议
+  let adviceText = '';
+  if (total >= 90) {
+    adviceText = '• 珍惜这份难得的缘分\\n• 保持初心，不要因为熟悉而忽视对方\\n• 给对方足够的空间和时间\\n• 共同成长，让关系更加深厚';
+  } else if (total >= 75) {
+    adviceText = '• 多沟通，理解对方的想法\\n• 给彼此一些独立空间\\n• 创造共同回忆\\n• 学会在分歧中寻找平衡';
+  } else {
+    adviceText = '• 多了解对方的想法\\n• 不要急于下定论\\n• 给关系一些时间\\n• 重点是真诚相待';
+  }
+  document.getElementById('advice').textContent = adviceText;
+  
+  // 缘分预言
+  const prophecies = [
+    '你们的相识是一场注定的美丽意外',
+    '前世因缘，今生相遇',
+    '前世五百次的回眸，换来今生的相遇',
+    '你们是彼此生命中的重要功课',
+    '命中注定的相遇，珍惜这段缘分',
+    '相遇是缘，相知是分，相守是命',
+    '愿你们的故事，如星辰般永恒',
+    '你们的缘分，是宇宙最美的安排'
+  ];
+  const prophecyIdx = Math.floor(seedRandom(seed, 4) * prophecies.length);
+  document.getElementById('prophecy').textContent = '🔮 ' + prophecies[prophecyIdx];
+  
+  // 海报
+  document.getElementById('posterNames').textContent = name1 + ' ❤ ' + name2;
+  document.getElementById('posterScore').textContent = total;
+  document.getElementById('posterComment').textContent = comment;
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getStringSeed(str) {
+  let seed = 0;
+  for (let i = 0; i < str.length; i++) {
+    seed = ((seed << 5) - seed) + str.charCodeAt(i);
+    seed |= 0;
+  }
+  return Math.abs(seed);
+}
+
+function seedRandom(seed, offset) {
+  const x = Math.sin(seed + offset * 7.13) * 10000;
+  return x - Math.floor(x);
+}
+
+function copyShareText() {
+  const names = document.getElementById('heartNames').textContent;
+  const score = document.getElementById('heartScore').textContent;
+  const comment = document.getElementById('heartComment').textContent;
+  
+  const text = '💌 ' + names + '\\n缘分指数：' + score + '\\n' + comment + '\\n\\n👉 测试你的缘分：jianhebox.cn/fun/yuanfen.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  document.getElementById('yourName').value = '';
+  document.getElementById('theirName').value = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

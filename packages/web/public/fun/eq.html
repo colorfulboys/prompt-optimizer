@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高情商聊天测试 - 测你的情商 | 简盒玩点有趣的</title>
+<meta name="description" content="免费高情商聊天测试。20 个场景题测出你的情商水平，分析你的沟通风格、情商盲点、聊天技巧建议。">
+<meta name="keywords" content="情商,聊天,社交,测试,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+
+  .scenario-card {
+    background: rgba(255,255,255,0.1) !important;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-left: 4px solid #f5576c;
+  }
+  .scenario-title {
+    font-size: 13px;
+    color: #f5576c;
+    margin-bottom: 6px;
+  }
+  .scenario-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: white;
+  }
+
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+  .option {
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: white;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+    line-height: 1.5;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .eq-emoji {
+    font-size: 80px;
+    margin-bottom: 8px;
+  }
+  .eq-score {
+    font-size: 64px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 12px 0;
+  }
+  .eq-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .score-row { margin-bottom: 12px; }
+  .score-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+  }
+  .score-track {
+    height: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 5px;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+  }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '💬';
+    position: absolute;
+    left: 0;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-emoji { font-size: 72px; margin: 12px 0; }
+  .poster-score {
+    font-size: 56px;
+    font-weight: 900;
+    margin: 8px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-level {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    margin: 8px 0;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  .poster-trait {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    font-size: 13px;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>💬 高情商聊天测试</h1>
+    <p class="subtitle">20 个场景题 · 测你的情商</p>
+    <ul class="intro-feature-list">
+      <li>🧠 真实场景模拟，测你的沟通风格</li>
+      <li>📊 5 维情商评分：共情/表达/应变/倾听/边界</li>
+      <li>💡 实用聊天技巧 + 情商盲点</li>
+      <li>✨ 专属海报分享</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 4-6 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center; opacity:0.8; margin-bottom:16px; font-size:14px;">场景 <span id="currentQ">1</span> / 20</p>
+    <div class="scenario-card">
+      <div class="scenario-title">📌 场景</div>
+      <div class="scenario-text" id="scenarioText"></div>
+    </div>
+    <h3 style="margin-bottom:12px;">你会怎么回应？</h3>
+    <div id="optionsContainer" class="options"></div>
+    <button class="btn" id="prevBtn" onclick="prevQuestion()" style="margin-top:12px;">← 上一题</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="eq-emoji" id="eqEmoji">💬</div>
+      <div style="font-size:14px; opacity:0.85;">你的情商指数</div>
+      <div class="eq-score" id="eqScore">85</div>
+      <div class="eq-level" id="eqLevel">高情商</div>
+    </div>
+
+    <h3 class="section-title">📊 5 维情商</h3>
+    <div id="scoreRows"></div>
+
+    <h3 class="section-title">💬 沟通风格</h3>
+    <div class="info-card" id="commStyle"></div>
+
+    <h3 class="section-title">💪 你的优势</h3>
+    <ul id="strengths" class="feature-list"></ul>
+
+    <h3 class="section-title">⚠️ 情商盲点</h3>
+    <ul id="blindspots" class="feature-list"></ul>
+
+    <h3 class="section-title">🌟 实用聊天技巧</h3>
+    <div class="info-card" id="tips"></div>
+
+    <div class="section-title">📤 分享我的情商</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">情商测试</div>
+          <div class="poster-emoji" id="posterEmoji">💬</div>
+          <div class="poster-score" id="posterScore">85</div>
+          <div class="poster-level" id="posterLevel">高情商</div>
+          <div class="poster-divider"></div>
+          <div class="poster-trait" id="posterTrait">沟通风格简述</div>
+          <div class="poster-footer">测试你的情商 → jianhebox.cn/fun/eq.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 情商测试仅供娱乐参考，情商可以通过学习和练习提升。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 20 个场景题 - 每个场景 3 个选项
+const scenarios = [
+  {
+    scene: "朋友向你抱怨工作很累，你会说：",
+    options: [
+      { text: "我理解你的感受，要不要说说具体什么事？", score: 5, type: "empathy" },
+      { text: "每个人都这样，忍忍就好了", score: 1, type: "dismiss" },
+      { text: "你最近是不是压力很大？需要我帮什么吗？", score: 4, type: "care" }
+    ]
+  },
+  {
+    scene: "同事在会议上反驳你的观点，你会：",
+    options: [
+      { text: "立刻反驳，坚持自己的看法", score: 1, type: "aggressive" },
+      { text: "倾听对方的理由，然后理性讨论", score: 5, type: "rational" },
+      { text: "私下再沟通，避免当面冲突", score: 3, type: "avoid" }
+    ]
+  },
+  {
+    scene: "你做了一件让朋友不高兴的事，朋友没说什么，你会：",
+    options: [
+      { text: "主动询问，了解哪里做得不好", score: 5, type: "empathy" },
+      { text: "等对方冷静了再说", score: 3, type: "patient" },
+      { text: "既然没说就算了吧", score: 1, type: "ignore" }
+    ]
+  },
+  {
+    scene: "有人向你倾诉感情问题，你会：",
+    options: [
+      { text: "认真倾听，给出建议", score: 4, type: "listen" },
+      { text: "打断，分享自己类似经历", score: 1, type: "selfish" },
+      { text: "耐心听完，问问对方的感受", score: 5, type: "empathy" }
+    ]
+  },
+  {
+    scene: "你不同意某个人的观点，但对方很坚定，你会：",
+    options: [
+      { text: "表达尊重，但坚持自己的看法", score: 5, type: "respect" },
+      { text: "算了，不和他争", score: 2, type: "avoid" },
+      { text: "说服对方接受你的观点", score: 1, type: "aggressive" }
+    ]
+  },
+  {
+    scene: "别人向你借一大笔钱，你不想借，你会：",
+    options: [
+      { text: "委婉拒绝，给出合理解释", score: 5, type: "boundary" },
+      { text: "直接拒绝，不管对方感受", score: 2, type: "harsh" },
+      { text: "勉强答应但心里不舒服", score: 1, type: "people_pleaser" }
+    ]
+  },
+  {
+    scene: "有人批评你的工作，你会：",
+    options: [
+      { text: "感谢批评，反思自己的不足", score: 5, type: "mature" },
+      { text: "感到受伤，心情低落", score: 2, type: "sensitive" },
+      { text: "立刻反驳，维护自己", score: 1, type: "defensive" }
+    ]
+  },
+  {
+    scene: "你在排队，有人想插队，你会：",
+    options: [
+      { text: "礼貌地说请排队", score: 5, type: "assertive" },
+      { text: "假装没看见", score: 1, type: "avoid" },
+      { text: "直接大声指责", score: 2, type: "aggressive" }
+    ]
+  },
+  {
+    scene: "朋友失恋了很难过，你会：",
+    options: [
+      { text: "陪伴在身边，倾听对方", score: 5, type: "empathy" },
+      { text: "告诉对方会好的，过段时间就行", score: 2, type: "dismiss" },
+      { text: "马上介绍新对象", score: 1, type: "insensitive" }
+    ]
+  },
+  {
+    scene: "你发现同事犯了错，导致你被批评，你会：",
+    options: [
+      { text: "私下告知对方，避免对方尴尬", score: 5, type: "tactful" },
+      { text: "公开指出，让对方承担责任", score: 2, type: "blame" },
+      { text: "自己扛下，不告诉对方", score: 3, type: "self_sacrifice" }
+    ]
+  },
+  {
+    scene: "你被误解了，你会：",
+    options: [
+      { text: "找合适时机解释清楚", score: 5, type: "clear" },
+      { text: "算了，误会总会过去", score: 2, type: "passive" },
+      { text: "立即反驳，情绪激动", score: 1, type: "reactive" }
+    ]
+  },
+  {
+    scene: "你想拒绝一个不合理的要求，你会：",
+    options: [
+      { text: "坚定拒绝，态度温和", score: 5, type: "boundary" },
+      { text: "不好意思拒绝，先答应", score: 1, type: "people_pleaser" },
+      { text: "直接拒绝，不管对方感受", score: 2, type: "harsh" }
+    ]
+  },
+  {
+    scene: "有人向你炫耀他的成就，你会：",
+    options: [
+      { text: "真诚地为他高兴", score: 5, type: "generous" },
+      { text: "内心嫉妒，表面上淡淡的", score: 1, type: "jealous" },
+      { text: "也说说自己的成就", score: 3, type: "competitive" }
+    ]
+  },
+  {
+    scene: "你想和陌生人搭讪，你会：",
+    options: [
+      { text: "自然地找话题开始聊天", score: 5, type: "social" },
+      { text: "等对方主动", score: 2, type: "passive" },
+      { text: "直接问一些私人问题", score: 1, type: "rude" }
+    ]
+  },
+  {
+    scene: "你发现一个朋友做了不道德的事，你会：",
+    options: [
+      { text: "私下指出，希望对方改正", score: 5, type: "moral" },
+      { text: "装作没看见", score: 1, type: "ignore" },
+      { text: "告诉其他人", score: 2, type: "gossip" }
+    ]
+  },
+  {
+    scene: "你犯了错，你会：",
+    options: [
+      { text: "承认并道歉", score: 5, type: "mature" },
+      { text: "找借口解释", score: 1, type: "defensive" },
+      { text: "假装什么都没发生", score: 1, type: "avoid" }
+    ]
+  },
+  {
+    scene: "有人向你求助，但你自己也很忙，你会：",
+    options: [
+      { text: "说明情况，建议其他资源", score: 5, type: "boundary" },
+      { text: "放下自己的事全力帮忙", score: 2, type: "self_sacrifice" },
+      { text: "直接拒绝", score: 1, type: "harsh" }
+    ]
+  },
+  {
+    scene: "你想赞美一个人，你会：",
+    options: [
+      { text: "具体真诚地说出他的优点", score: 5, type: "sincere" },
+      { text: "泛泛地说一些赞美", score: 3, type: "generic" },
+      { text: "不知道怎么说", score: 1, type: "awkward" }
+    ]
+  },
+  {
+    scene: "你和一个不喜欢的人共事，你会：",
+    options: [
+      { text: "保持专业和礼貌", score: 5, type: "professional" },
+      { text: "尽量避免接触", score: 3, type: "avoid" },
+      { text: "明显表现不喜欢", score: 1, type: "rude" }
+    ]
+  },
+  {
+    scene: "你听到一个笑话，但有人不觉得好笑，你会：",
+    options: [
+      { text: "笑着说"好吧，自己觉得好笑就行了"", score: 4, type: "self_deprecating" },
+      { text: "立刻换个话题", score: 5, type: "tactful" },
+      { text: "坚持解释这个笑话为什么好笑", score: 1, type: "insensitive" }
+    ]
+  }
+];
+
+let answers = new Array(20).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const s = scenarios[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 20 * 100) + '%';
+  document.getElementById('scenarioText').textContent = s.scene;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  s.options.forEach((opt, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = (idx + 1) + '. ' + opt.text;
+    btn.onclick = () => selectOption(idx, btn);
+    container.appendChild(btn);
+  });
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  answers[currentQuestion] = idx;
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  
+  setTimeout(() => {
+    if (currentQuestion < 19) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 250);
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateResult() {
+  let totalScore = 0;
+  let totalCount = 0;
+  
+  scenarios.forEach((s, i) => {
+    if (answers[i] !== null) {
+      totalScore += s.options[answers[i]].score;
+      totalCount++;
+    }
+  });
+  
+  let avg = totalScore / totalCount;
+  return Math.round(avg * 20); // 1-5 分映射到 20-100
+}
+
+function showResult() {
+  const score = calculateResult();
+  const data = getResultData(score);
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('eqScore').textContent = score;
+  document.getElementById('eqLevel').textContent = data.level;
+  document.getElementById('eqEmoji').textContent = data.emoji;
+  
+  // 5 维评分
+  const dims = [
+    { name: '💗 共情能力', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) },
+    { name: '🎯 表达清晰', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) },
+    { name: '⚡ 应变能力', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) },
+    { name: '👂 倾听能力', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) },
+    { name: '🛡️ 边界感', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) }
+  ];
+  
+  const scoreRows = document.getElementById('scoreRows');
+  scoreRows.innerHTML = '';
+  dims.forEach(d => {
+    const row = document.createElement('div');
+    row.className = 'score-row';
+    row.innerHTML = `
+      <div class="score-labels">
+        <span>${d.name}</span>
+        <span>${d.score}分</span>
+      </div>
+      <div class="score-track">
+        <div class="score-fill" style="width:${d.score}%;"></div>
+      </div>
+    `;
+    scoreRows.appendChild(row);
+  });
+  
+  document.getElementById('commStyle').textContent = data.style;
+  document.getElementById('strengths').innerHTML = data.strengths.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('blindspots').innerHTML = data.blindspots.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('tips').textContent = data.tips;
+  
+  // 海报
+  document.getElementById('posterEmoji').textContent = data.emoji;
+  document.getElementById('posterScore').textContent = score;
+  document.getElementById('posterLevel').textContent = data.level;
+  document.getElementById('posterTrait').textContent = data.style.split('\\n')[0];
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getResultData(score) {
+  let level, emoji, style, strengths, blindspots, tips;
+  
+  if (score >= 85) {
+    level = '🌟 高情商达人';
+    emoji = '💎';
+    style = '你是真正的高情商达人，懂得在各种场合游刃有余。\\n\\n你能准确感知他人情绪，善于倾听，也能清晰表达自己。你既温和又有原则，是朋友圈中的"知心人"。';
+    strengths = ['善于共情，理解他人', '表达清晰、有条理', '应变能力强', '懂得设立边界', '真诚不虚伪'];
+    blindspots = ['可能过于完美主义', '有时会过度付出', '可能忽略自己的需求'];
+    tips = '保持现在的状态就好！你已经是朋友圈的情商典范了。可以尝试：\\n• 帮助身边的人提升情商\\n• 在社交场合发挥你的优势\\n• 不要让自己过度付出，注意自己的需求';
+  } else if (score >= 65) {
+    level = '😊 中高情商';
+    emoji = '😊';
+    style = '你有较好的情商，能在大多数场合处理好人际关系。\\n\\n你有同理心，能理解他人。但有时可能在表达和倾听之间还有提升空间。';
+    strengths = ['有同理心', '愿意倾听', '比较温和', '懂得基本社交礼仪'];
+    blindspots = ['可能不善拒绝', '有时会压抑自己的需求', '在冲突中可能回避', '表达可能不够清晰'];
+    tips = '你可以尝试：\\n• 学会坚定地说"不"\\n• 表达自己的想法，不用总是迎合\\n• 多练习清晰表达\\n• 在冲突中尝试正面面对\\n• 倾听时给对方更多反馈';
+  } else {
+    level = '🌱 成长中';
+    emoji = '🌱';
+    style = '你的情商还有提升空间，但这是可以学习和练习的。\\n\\n你可能在某些场合不知道如何回应他人。不用担心，每个人都有成长空间。';
+    strengths = ['真诚不做作', '愿意改进自己', '有自己的想法'];
+    blindspots = ['可能不善表达', '可能忽视他人感受', '在社交场合可能紧张', '可能不善拒绝', '可能过于自我'];
+    tips = '情商是可以通过练习提升的：\\n• 多倾听，少打断\\n• 试着站在对方角度看问题\\n• 学会表达自己的感受\\n• 多阅读情商相关书籍\\n• 在安全的关系中练习沟通\\n• 不要急于求成，慢慢进步';
+  }
+  
+  return { level, emoji, style, strengths, blindspots, tips };
+}
+
+function copyShareText() {
+  const score = document.getElementById('eqScore').textContent;
+  const level = document.getElementById('eqLevel').textContent;
+  
+  const text = '💬 我的情商指数：' + score + '\\n' + level + '\\n\\n你的情商怎么样？\\n👉 测试你的情商：jianhebox.cn/fun/eq.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(20).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

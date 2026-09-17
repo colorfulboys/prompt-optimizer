@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>塔罗占卜 - 大阿尔克那 22 张牌 | 简盒玩点有趣的</title>
+<meta name="description" content="免费在线塔罗占卜 - 22 张大阿尔克那牌，3 张牌阵（过去+现在+未来）。每张牌含正位/逆位详细解读，爱情事业财运全分析。">
+<meta name="keywords" content="塔罗占卜,塔罗牌,大阿尔克那,占卜,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .card, .info-text, .share-card, .poster-card, .tarot-pos {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .question-input {
+    width: 100%;
+    padding: 14px;
+    background: rgba(255,255,255,0.1) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-family: inherit;
+    margin: 16px 0;
+  }
+  .question-input::placeholder { color: rgba(255,255,255,0.5); }
+  .question-input:focus { outline: none; border-color: #f5576c; }
+
+  .tarot-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 6px;
+    margin: 20px 0;
+  }
+  .tarot-card-back {
+    aspect-ratio: 2/3;
+    background: linear-gradient(135deg, #4a2c5a, #2c1e4a) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .tarot-card-back::before {
+    content: '🌙';
+    font-size: 24px;
+    opacity: 0.6;
+  }
+  .tarot-card-back:hover {
+    transform: translateY(-4px) rotate(2deg);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  }
+  .tarot-card-back.selected {
+    border-color: #f5576c;
+    box-shadow: 0 0 20px rgba(245,87,108,0.5);
+  }
+
+  .drawn-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .tarot-pos {
+    text-align: center;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .tarot-pos:hover { transform: scale(1.05); }
+  .tarot-pos-emoji {
+    font-size: 48px;
+    margin: 12px 0;
+  }
+  .tarot-pos-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 4px 0;
+  }
+  .tarot-pos-position {
+    font-size: 12px;
+    opacity: 0.7;
+  }
+  .tarot-pos-direction {
+    display: inline-block;
+    margin-top: 6px;
+    padding: 3px 10px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    font-size: 11px;
+  }
+
+  .reading-section {
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    padding: 24px;
+    margin: 16px 0;
+  }
+  .reading-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: white;
+  }
+  .reading-position {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 16px;
+  }
+  .reading-content {
+    line-height: 1.8;
+    white-space: pre-line;
+    color: white;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 40px 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #2c1e4a, #4a2c5a);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; text-align: center; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-question {
+    font-size: 16px;
+    font-style: italic;
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+  .poster-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 16px 0;
+  }
+  .poster-card-item {
+    padding: 12px 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+  }
+  .poster-card-emoji { font-size: 28px; margin-bottom: 4px; }
+  .poster-card-name { font-size: 12px; font-weight: bold; }
+  .poster-card-dir {
+    font-size: 10px;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+  .poster-summary {
+    background: rgba(255,255,255,0.2);
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 12px;
+  }
+  .poster-footer {
+    margin-top: 20px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+
+  @media (max-width: 480px) {
+    .tarot-grid { grid-template-columns: repeat(6, 1fr); }
+    .poster-cards { grid-template-columns: repeat(3, 1fr); }
+    .drawn-cards { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🔮 塔罗占卜</h1>
+    <p class="subtitle">大阿尔克那 22 张牌 · 3 张牌阵（过去/现在/未来）</p>
+    <ul class="intro-feature-list">
+      <li>输入问题 → 从 22 张大阿尔克那抽 3 张</li>
+      <li>每张含正位 / 逆位详细解读</li>
+      <li>爱情 / 事业 / 财运 / 学业全分析</li>
+      <li>✨ 专属海报分享卡，发朋友圈必备</li>
+    </ul>
+    <button class="btn-primary" onclick="startApp()" style="width:100%;">开始占卜 →</button>
+  </div>
+
+  <div id="question" class="card hidden">
+    <h2 style="text-align:center; margin-bottom:16px;">💭 默念你的问题</h2>
+    <p style="text-align:center; opacity:0.9; margin-bottom:16px;">请专注您想问的事情，心诚则灵</p>
+    <input type="text" class="question-input" id="questionInput" placeholder="例：我的爱情运势如何？" maxlength="50">
+    <button class="btn-primary" onclick="drawCards()" style="width:100%; margin-top:12px;">🎴 抽取 3 张牌</button>
+  </div>
+
+  <div id="drawing" class="card hidden">
+    <h2 style="text-align:center; margin-bottom:16px;">🎴 抽取中...</h2>
+    <div class="tarot-grid" id="tarotGrid"></div>
+    <p style="text-align:center; margin-top:16px; opacity:0.8;">已选 <span id="selectedCount">0</span> / 3 张</p>
+    <button class="btn-primary" id="confirmBtn" onclick="confirmSelection()" style="width:100%; margin-top:16px;" disabled>确认选择</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <h2 style="text-align:center; margin-bottom:8px;">🔮 塔罗解读</h2>
+    <p style="text-align:center; opacity:0.85; margin-bottom:24px;" id="resultQuestion">您的问题</p>
+
+    <div class="drawn-cards" id="drawnCards"></div>
+
+    <div id="readings"></div>
+
+    <h3 style="margin: 24px 0 12px;">📊 综合解读</h3>
+    <div class="reading-section">
+      <div class="reading-content" id="overallReading"></div>
+    </div>
+
+    <h3 style="margin: 24px 0 12px;">💡 行动建议</h3>
+    <div class="reading-section">
+      <div class="reading-content" id="actionAdvice"></div>
+    </div>
+
+    <!-- 分享卡片 -->
+    <h3 style="margin: 24px 0 12px;">📤 分享我的塔罗占卜</h3>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存下面的专属海报</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">🔮 塔罗占卜</div>
+          <div class="poster-question" id="posterQuestion">我的问题</div>
+          <div class="poster-cards" id="posterCards"></div>
+          <div class="poster-summary" id="posterSummary">塔罗指引，真诚以待</div>
+          <div class="poster-footer">占卜你的命运 → jianhebox.cn/fun/tarot.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartApp()" style="width:100%; margin-top:12px;">🔄 重新占卜</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 塔罗占卜仅供娱乐参考，请勿作为决策依据。<br>
+    真正的人生，握在您自己手中。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+const tarotCards = [
+  {id:0, name:'愚者', emoji:'🃏', keywords:'新的开始、纯真、自由', upright:'代表新的旅程即将开始。保持开放的心态，勇敢踏出第一步。\\n\\n关键词：自由、冒险、纯真、潜能', reversed:'鲁莽冲动，不计后果。需要谨慎考虑再做决定。\\n\\n关键词：鲁莽、犹豫、迷失'},
+  {id:1, name:'魔术师', emoji:'🎩', keywords:'创造力、行动力、专注', upright:'您拥有实现目标所需的一切能力。现在是行动的最佳时机。\\n\\n关键词：创造力、技能、专注、行动', reversed:'能力未充分发挥，或被误用。需要重新审视自己的方向。\\n\\n关键词：欺骗、浪费、犹豫'},
+  {id:2, name:'女祭司', emoji:'🌙', keywords:'直觉、潜意识、智慧', upright:'相信您的直觉，内在的声音会引导您。答案已经在您心中。\\n\\n关键词：直觉、智慧、神秘、内在', reversed:'忽略直觉或内心。建议独处，倾听内在的声音。\\n\\n关键词：疏离、秘密、压抑'},
+  {id:3, name:'皇后', emoji:'👑', keywords:'丰盛、母性、创造', upright:'丰盛与繁荣的象征。享受生活的美好，关系也会开花结果。\\n\\n关键词：丰盛、母性、创造、滋养', reversed:'过度依赖或忽视自我照顾。重新找到内在的平衡。\\n\\n关键词：依赖、空虚、过度'},
+  {id:4, name:'皇帝', emoji:'🏛️', keywords:'权威、稳定、结构', upright:'领导力与稳定的象征。建立秩序，坚持原则。\\n\\n关键词：权威、稳定、责任、结构', reversed:'专制或僵化。需要灵活，倾听他人意见。\\n\\n关键词：专制、僵化、控制'},
+  {id:5, name:'教皇', emoji:'⛪', keywords:'传统、学习、指引', upright:'寻求智慧的指引。学习传统，遵循内心的信念。\\n\\n关键词：传统、智慧、指引、信念', reversed:'挑战传统或教条。寻找属于自己的真理。\\n\\n关键词：反叛、教条、空虚'},
+  {id:6, name:'恋人', emoji:'💕', keywords:'爱情、选择、和谐', upright:'爱情与和谐。面临重要选择，跟随内心的声音。\\n\\n关键词：爱情、和谐、选择、结合', reversed:'关系不和谐或面临困难选择。需要诚实面对。\\n\\n关键词：不和谐、失衡、犹豫'},
+  {id:7, name:'战车', emoji:'🏇', keywords:'胜利、决心、控制', upright:'通过决心与意志力达成目标。勇往直前。\\n\\n关键词：胜利、决心、行动、控制', reversed:'失去方向或控制。需要重新调整策略。\\n\\n关键词：失控、停滞、分散'},
+  {id:8, name:'力量', emoji:'🦁', keywords:'勇气、内在力量、耐心', upright:'以柔克刚。真正的力量来自内心的勇气与耐心。\\n\\n关键词：勇气、力量、耐心、内在', reversed:'自我怀疑或被恐惧支配。重建自信。\\n\\n关键词：软弱、自我怀疑、压抑'},
+  {id:9, name:'隐士', emoji:'🏮', keywords:'内省、智慧、孤独', upright:'向内探索的时刻。独处会带来智慧与答案。\\n\\n关键词：内省、智慧、独处、引导', reversed:'过度孤立或拒绝指导。适度开放自己。\\n\\n关键词：孤立、固执、迷失'},
+  {id:10, name:'命运之轮', emoji:'🎡', keywords:'转变、循环、机遇', upright:'命运的转折点。拥抱变化，抓住机遇。\\n\\n关键词：转变、循环、机遇、命运', reversed:'抗拒变化或运气不佳。接受不可控的部分。\\n\\n关键词：抗拒、低谷、停滞'},
+  {id:11, name:'正义', emoji:'⚖️', keywords:'公平、真理、因果', upright:'公平与真理。您将得到应得的，保持诚实。\\n\\n关键词：公平、真理、责任、因果', reversed:'不公或逃避责任。需要重新审视自己的行为。\\n\\n关键词：不公、逃避、不平衡'},
+  {id:12, name:'倒吊人', emoji:'🙃', keywords:'牺牲、新视角、等待', upright:'换个角度看问题。暂时的牺牲会有回报。\\n\\n关键词：牺牲、新视角、等待、放下', reversed:'无谓的牺牲或抗拒改变。接受当前的处境。\\n\\n关键词：抗拒、无谓牺牲、停滞'},
+  {id:13, name:'死神', emoji:'💀', keywords:'结束、转变、新生', upright:'结束与新生。一个章节结束，新的开始即将到来。\\n\\n关键词：结束、转变、新生、释放', reversed:'抗拒改变或陷入停滞。勇敢放手。\\n\\n关键词：抗拒、停滞、恐惧'},
+  {id:14, name:'节制', emoji:'🕊️', keywords:'平衡、耐心、中庸', upright:'平衡与和谐。保持中庸，耐心地调和。\\n\\n关键词：平衡、耐心、中庸、调和', reversed:'失衡或极端。需要找到中间点。\\n\\n关键词：失衡、极端、不耐'},
+  {id:15, name:'恶魔', emoji:'😈', keywords:'束缚、欲望、阴影', upright:'注意被物质或欲望束缚。觉察自己的阴影面。\\n\\n关键词：束缚、欲望、阴影、诱惑', reversed:'挣脱束缚，觉醒的时刻。打破限制。\\n\\n关键词：解脱、觉醒、释放'},
+  {id:16, name:'塔', emoji:'🗼', keywords:'突变、破坏、启示', upright:'突变与启示。摧毁旧的，建立新的。这是必要的破坏。\\n\\n关键词：突变、破坏、启示、解放', reversed:'避免灾难，或缓慢的改变。接受必要的转变。\\n\\n关键词：避免、延迟、渐进'},
+  {id:17, name:'星星', emoji:'⭐', keywords:'希望、灵感、平静', upright:'希望与灵感。未来充满光明，保持信念。\\n\\n关键词：希望、灵感、平静、信念', reversed:'失去希望或信心。重新连接内在的指引。\\n\\n关键词：失望、迷茫、怀疑'},
+  {id:18, name:'月亮', emoji:'🌕', keywords:'幻象、直觉、潜意识', upright:'幻象与不确定性。相信直觉，但也要保持清醒。\\n\\n关键词：幻象、直觉、潜意识、梦境', reversed:'走出迷茫，看清真相。释放恐惧。\\n\\n关键词：释放、真相、清晰'},
+  {id:19, name:'太阳', emoji:'☀️', keywords:'成功、快乐、活力', upright:'成功与快乐。一切顺利，享受这美好的时刻。\\n\\n关键词：成功、快乐、活力、光明', reversed:'暂时的乌云，但阳光会重新照耀。保持乐观。\\n\\n关键词：延迟、乌云、暂时'},
+  {id:20, name:'审判', emoji:'📯', keywords:'觉醒、重生、召唤', upright:'觉醒与重生。倾听内心的召唤，做出改变。\\n\\n关键词：觉醒、重生、召唤、宽恕', reversed:'拒绝改变或自我批判。放下过去，向前走。\\n\\n关键词：拒绝、自我批判、停滞'},
+  {id:21, name:'世界', emoji:'🌍', keywords:'完成、成就、圆满', upright:'圆满与成就。一个周期的结束，新的开始即将到来。\\n\\n关键词：完成、成就、圆满、整合', reversed:'未完成的事情需要处理。完成后再开始新的旅程。\\n\\n关键词：未完、不圆满、延迟'}
+];
+
+const positions = ['过去', '现在', '未来'];
+
+let selectedCards = [];
+let drawnCards = [];
+
+function initGrid() {
+  const grid = document.getElementById('tarotGrid');
+  grid.innerHTML = '';
+  for (let i = 0; i < 22; i++) {
+    const card = document.createElement('div');
+    card.className = 'tarot-card-back';
+    card.dataset.idx = i;
+    card.onclick = () => selectCard(i, card);
+    grid.appendChild(card);
+  }
+}
+
+function startApp() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('question').classList.remove('hidden');
+}
+
+function drawCards() {
+  const question = document.getElementById('questionInput').value.trim();
+  if (!question) {
+    alert('请输入您想问的问题');
+    return;
+  }
+  
+  document.getElementById('question').classList.add('hidden');
+  document.getElementById('drawing').classList.remove('hidden');
+  
+  selectedCards = [];
+  document.getElementById('selectedCount').textContent = '0';
+  document.getElementById('confirmBtn').disabled = true;
+  
+  initGrid();
+}
+
+function selectCard(idx, element) {
+  if (selectedCards.includes(idx)) {
+    selectedCards = selectedCards.filter(i => i !== idx);
+    element.classList.remove('selected');
+  } else if (selectedCards.length < 3) {
+    selectedCards.push(idx);
+    element.classList.add('selected');
+  }
+  
+  document.getElementById('selectedCount').textContent = selectedCards.length;
+  document.getElementById('confirmBtn').disabled = selectedCards.length !== 3;
+}
+
+function confirmSelection() {
+  if (selectedCards.length !== 3) return;
+  
+  // 随机决定正逆位
+  drawnCards = selectedCards.map(idx => {
+    const card = tarotCards[idx];
+    const reversed = Math.random() < 0.5;
+    return { ...card, reversed };
+  });
+  
+  showResult();
+}
+
+function showResult() {
+  const question = document.getElementById('questionInput').value.trim();
+  
+  document.getElementById('drawing').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('resultQuestion').textContent = '问题：' + question;
+  
+  // 展示 3 张牌
+  const drawn = document.getElementById('drawnCards');
+  drawn.innerHTML = '';
+  drawnCards.forEach((card, i) => {
+    const pos = document.createElement('div');
+    pos.className = 'tarot-pos';
+    pos.innerHTML = `
+      <div class="tarot-pos-position">${positions[i]}</div>
+      <div class="tarot-pos-emoji" style="transform: ${card.reversed ? 'rotate(180deg)' : 'none'};">${card.emoji}</div>
+      <div class="tarot-pos-name">${card.name}</div>
+      <div class="tarot-pos-direction">${card.reversed ? '逆位' : '正位'}</div>
+    `;
+    drawn.appendChild(pos);
+  });
+  
+  // 详细解读
+  const readings = document.getElementById('readings');
+  readings.innerHTML = '';
+  drawnCards.forEach((card, i) => {
+    const reading = card.reversed ? card.reversed : card.upright;
+    const section = document.createElement('div');
+    section.className = 'reading-section';
+    section.innerHTML = `
+      <div class="reading-title">${card.emoji} ${card.name} - ${card.reversed ? '逆位' : '正位'}</div>
+      <div class="reading-position">代表【${positions[i]}】 · ${card.keywords}</div>
+      <div class="reading-content">${reading}</div>
+    `;
+    readings.appendChild(section);
+  });
+  
+  // 综合解读
+  const overall = generateOverall(drawnCards);
+  document.getElementById('overallReading').textContent = overall;
+  
+  // 行动建议
+  const advice = generateAdvice(drawnCards);
+  document.getElementById('actionAdvice').textContent = advice;
+  
+  // 海报
+  updatePoster(question, drawnCards, overall);
+  
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function generateOverall(cards) {
+  const positive = cards.filter(c => !c.reversed).length;
+  let summary = '';
+  
+  if (positive === 3) {
+    summary = '🌟 三张牌全部正位，这是一个非常积极的牌阵！\\n\\n您的过去、现在、未来都充满了正向能量。宇宙在告诉您：现在是大胆前进的时刻。所有的努力都会有回报，坚持您的方向。\\n\\n可能的好消息：某段关系或事业即将进入丰收期，过去种下的种子现在正在结果。';
+  } else if (positive === 2) {
+    summary = '🌈 两正一逆，整体向好但有调整空间。\\n\\n大方向是积极向上的，但某个环节需要您的注意。可能是来自过去的影响（逆位的牌）需要您主动放下或调整。\\n\\n建议您保持乐观，同时保持觉知，主动解决障碍。';
+  } else if (positive === 1) {
+    summary = '⚖️ 一正两逆，需要谨慎与耐心。\\n\\n当前能量偏低，但仍有正向牌支撑。塔罗提醒您不要急躁，先整理过去的遗留问题。\\n\\n可能正在经历一个过渡期。保持信念，专注于内在成长，局势会慢慢转好。';
+  } else {
+    summary = '🌑 三张牌全部逆位，能量低沉。\\n\\n这是一个重要的反思期。塔罗提醒您：\\n\\n• 过去可能有未解决的事情需要面对\\n• 现在可能感到迷茫或停滞\\n• 未来需要彻底重新规划\\n\\n请勿灰心。逆位代表能量暂时受困，但通过觉察和调整，您可以反转局势。';
+  }
+  
+  return summary;
+}
+
+function generateAdvice(cards) {
+  const advices = cards.map(c => {
+    if (!c.reversed) {
+      return `【${c.name} 正位】${c.keywords}。顺势而为，把握当下。`;
+    } else {
+      return `【${c.name} 逆位】注意避免${c.keywords}中的负面影响。需要反思调整。`;
+    }
+  });
+  
+  return advices.join('\\n\\n') + '\\n\\n🌟 总建议：塔罗只是指引，行动才是改变命运的钥匙。无论牌面如何，您都有能力创造自己想要的人生。';
+}
+
+function updatePoster(question, cards, overall) {
+  document.getElementById('posterQuestion').textContent = '"' + question + '"';
+  
+  const posterCards = document.getElementById('posterCards');
+  posterCards.innerHTML = '';
+  cards.forEach((card, i) => {
+    const item = document.createElement('div');
+    item.className = 'poster-card-item';
+    item.innerHTML = `
+      <div class="poster-card-emoji" style="transform: ${card.reversed ? 'rotate(180deg)' : 'none'};">${card.emoji}</div>
+      <div class="poster-card-name">${card.name}</div>
+      <div class="poster-card-dir">${positions[i]}</div>
+    `;
+    posterCards.appendChild(item);
+  });
+  
+  const positive = cards.filter(c => !c.reversed).length;
+  let summary = '';
+  if (positive === 3) summary = '✨ 三牌全正，鸿运当头';
+  else if (positive === 2) summary = '🌟 两正一逆，向好可期';
+  else if (positive === 1) summary = '⚖️ 一正两逆，需要耐心';
+  else summary = '🌑 三牌逆位，深度反思';
+  
+  document.getElementById('posterSummary').textContent = summary;
+}
+
+function copyShareText() {
+  const question = document.getElementById('questionInput').value.trim();
+  const cards = drawnCards.map((c, i) => `${positions[i]}：${c.emoji} ${c.name}(${c.reversed ? '逆位' : '正位'})`).join('\\n');
+  
+  const text = `🔮 我的塔罗占卜\\n\\n问题：${question}\\n\\n${cards}\\n\\n👉 占卜你的命运：jianhebox.cn/fun/tarot.html`;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制到剪贴板！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartApp() {
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('question').classList.remove('hidden');
+  document.getElementById('questionInput').value = '';
+  selectedCards = [];
+  drawnCards = [];
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

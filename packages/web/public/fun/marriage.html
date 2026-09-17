@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>婚姻测试 - 婚前必测 · 测你的婚姻幸福指数 | 简盒玩点有趣的</title>
+<meta name="description" content="免费婚姻测试。25 道题测试你和伴侣的婚姻幸福指数，分析情感、沟通、经济、家庭、亲密 5 维评分。">
+<meta name="keywords" content="婚姻,测试,婚前,夫妻,关系,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6e7f, #bfe9ff);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+  .option {
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: white;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff) !important;
+    border-color: #ff6e7f;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .marriage-emoji {
+    font-size: 80px;
+    margin-bottom: 8px;
+  }
+  .marriage-score {
+    font-size: 64px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 12px 0;
+  }
+  .marriage-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .score-row { margin-bottom: 12px; }
+  .score-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+  }
+  .score-track {
+    height: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6e7f, #b5576c);
+    border-radius: 5px;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+    line-height: 1.8;
+  }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '💕';
+    position: absolute;
+    left: 0;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-emoji { font-size: 72px; margin: 12px 0; }
+  .poster-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  .poster-score {
+    font-size: 48px;
+    font-weight: 900;
+    margin: 12px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  .poster-trait {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>💍 婚姻测试</h1>
+    <p class="subtitle">婚前必测 · 测你的婚姻幸福指数</p>
+    <ul class="intro-feature-list">
+      <li>💑 25 道题评估你的婚姻状态</li>
+      <li>📊 5 维评分：情感 / 沟通 / 经济 / 家庭 / 亲密</li>
+      <li>💡 个性化建议 + 改善方案</li>
+      <li>✨ 专属海报分享</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 4-6 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center; opacity:0.8; margin-bottom:16px; font-size:14px;">问题 <span id="currentQ">1</span> / 25</p>
+    <h3 id="questionText" style="margin-bottom:16px; line-height:1.5;"></h3>
+    <div id="optionsContainer" class="options"></div>
+    <button class="btn" id="prevBtn" onclick="prevQuestion()" style="margin-top:12px;">← 上一题</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="marriage-emoji" id="marriageEmoji">💖</div>
+      <div style="font-size:14px; opacity:0.85;">婚姻幸福指数</div>
+      <div class="marriage-score" id="marriageScore">75</div>
+      <div class="marriage-level" id="marriageLevel">幸福婚姻</div>
+    </div>
+
+    <h3 class="section-title">📊 5 维评分</h3>
+    <div id="scoreRows"></div>
+
+    <h3 class="section-title">💑 婚姻解读</h3>
+    <div class="info-card" id="marriageReading"></div>
+
+    <h3 class="section-title">💪 你们的优势</h3>
+    <ul id="strengths" class="feature-list"></ul>
+
+    <h3 class="section-title">⚠️ 需要改善</h3>
+    <ul id="improvements" class="feature-list"></ul>
+
+    <h3 class="section-title">🌱 幸福建议</h3>
+    <div class="info-card" id="advice"></div>
+
+    <div class="section-title">📤 分享给 TA</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">婚姻幸福指数</div>
+          <div class="poster-emoji" id="posterEmoji">💖</div>
+          <div class="poster-level" id="posterLevel">幸福婚姻</div>
+          <div class="poster-score" id="posterScore">75</div>
+          <div class="poster-divider"></div>
+          <div class="poster-trait" id="posterTrait">愿你们幸福美满</div>
+          <div class="poster-footer">测试你的婚姻幸福 → jianhebox.cn/fun/marriage.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 婚姻测试仅供参考娱乐，真正幸福需要双方用心经营。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 25 道题，每题 1-4 分
+const questions = [
+  { text: "你和伴侣日常能自然地表达爱意吗？", options: ["经常", "偶尔", "很少", "几乎不"], score: 4 },
+  { text: "你们有矛盾时，能冷静沟通吗？", options: ["总是", "经常", "偶尔", "很少"], score: 4 },
+  { text: "你们对未来的规划一致吗？", options: ["很一致", "大部分一致", "有些分歧", "差距很大"], score: 4 },
+  { text: "你们的性生活和谐吗？", options: ["很和谐", "还可以", "不太和谐", "很少有"], score: 4 },
+  { text: "你们能信任对方吗？", options: ["完全信任", "基本信任", "有些担忧", "缺乏信任"], score: 4 },
+  { text: "你们会一起做家务吗？", options: ["一起分担", "大部分一起", "一方为主", "经常争执"], score: 4 },
+  { text: "你们对金钱的态度一致吗？", options: ["很一致", "有些不同", "经常分歧", "完全相反"], score: 4 },
+  { text: "你们能接受对方的缺点吗？", options: ["完全接受", "大部分接受", "有些不能", "很难接受"], score: 4 },
+  { text: "你们有自己的共同爱好吗？", options: ["很多", "有一些", "很少", "几乎没有"], score: 4 },
+  { text: "你们会给彼此独立空间吗？", options: ["非常尊重", "基本尊重", "有时干涉", "完全不给"], score: 4 },
+  { text: "你们能一起面对困难吗？", options: ["非常团结", "基本能", "有时各自", "很难团结"], score: 4 },
+  { text: "你们之间有话可说吗？", options: ["很多话题", "还好", "越来越少", "无话可说"], score: 4 },
+  { text: "你们互相尊重对方的朋友吗？", options: ["非常尊重", "基本尊重", "有些介意", "完全排斥"], score: 4 },
+  { text: "你们能接受对方的家人吗？", options: ["完全接受", "基本接受", "有些摩擦", "很难相处"], score: 4 },
+  { text: "你们对未来孩子的教育观念一致吗？", options: ["很一致", "大部分一致", "有些不同", "完全相反"], score: 4 },
+  { text: "你们处理冲突的方式健康吗？", options: ["很健康", "还可以", "有些问题", "很不健康"], score: 4 },
+  { text: "你们会为对方感到骄傲吗？", options: ["经常", "偶尔", "很少", "不会"], score: 4 },
+  { text: "你们有共同的价值观吗？", options: ["很一致", "大部分一致", "有些不同", "差距很大"], score: 4 },
+  { text: "你们会一起规划假期吗？", options: ["经常", "偶尔", "很少", "从不"], score: 4 },
+  { text: "你们能一起笑吗？", options: ["经常", "偶尔", "很少", "几乎不"], score: 4 },
+  { text: "你们能接受对方的成长变化吗？", options: ["完全接受", "基本接受", "有些担忧", "很难接受"], score: 4 },
+  { text: "你们会为对方做出改变吗？", options: ["经常", "偶尔", "很少", "从不"], score: 4 },
+  { text: "你们吵架后能很快和好吗？", options: ["很快", "当天", "需要时间", "冷战很久"], score: 4 },
+  { text: "你们对未来有共同的期待吗？", options: ["非常一致", "大部分一致", "有些不同", "没有共识"], score: 4 },
+  { text: "总的来说，你对婚姻满意吗？", options: ["非常满意", "基本满意", "有些失望", "很不满意"], score: 4 }
+];
+
+let answers = new Array(25).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 25 * 100) + '%';
+  document.getElementById('questionText').textContent = '第 ' + (currentQuestion + 1) + ' 题：' + q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  q.options.forEach((text, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = text;
+    btn.onclick = () => selectOption(idx, btn);
+    container.appendChild(btn);
+  });
+  
+  if (answers[currentQuestion] !== null) {
+    const btns = container.querySelectorAll('.option');
+    btns[answers[currentQuestion]].classList.add('selected');
+  }
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  // idx: 0=最好, 3=最差
+  // score: 4-idx: 4=最好, 1=最差
+  answers[currentQuestion] = 4 - idx;
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  
+  setTimeout(() => {
+    if (currentQuestion < 24) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 250);
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateResult() {
+  let total = 0;
+  let answered = 0;
+  answers.forEach(a => {
+    if (a !== null) {
+      total += a;
+      answered++;
+    }
+  });
+  if (answered === 0) return 0;
+  // 最大可能 100 分
+  return Math.round(total / (answered * 4) * 100);
+}
+
+function showResult() {
+  const score = calculateResult();
+  const data = getResultData(score);
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('marriageScore').textContent = score;
+  document.getElementById('marriageEmoji').textContent = data.emoji;
+  document.getElementById('marriageLevel').textContent = data.level;
+  
+  // 5 维评分
+  const dims = [
+    { name: '💗 情感连接', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) },
+    { name: '💬 沟通质量', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) },
+    { name: '💰 经济一致', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) },
+    { name: '👨‍👩‍👧 家庭责任', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) },
+    { name: '💞 亲密关系', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) }
+  ];
+  
+  const scoreRows = document.getElementById('scoreRows');
+  scoreRows.innerHTML = '';
+  dims.forEach(d => {
+    const row = document.createElement('div');
+    row.className = 'score-row';
+    row.innerHTML = `
+      <div class="score-labels">
+        <span>${d.name}</span>
+        <span>${d.score}分</span>
+      </div>
+      <div class="score-track">
+        <div class="score-fill" style="width:${d.score}%;"></div>
+      </div>
+    `;
+    scoreRows.appendChild(row);
+  });
+  
+  document.getElementById('marriageReading').textContent = data.reading;
+  document.getElementById('strengths').innerHTML = data.strengths.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('improvements').innerHTML = data.improvements.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('advice').textContent = data.advice;
+  
+  document.getElementById('posterEmoji').textContent = data.emoji;
+  document.getElementById('posterLevel').textContent = data.level;
+  document.getElementById('posterScore').textContent = score;
+  document.getElementById('posterTrait').textContent = data.trait;
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getResultData(score) {
+  let level, emoji, reading, strengths, improvements, advice, trait;
+  
+  if (score >= 85) {
+    level = '💞 天作之合';
+    emoji = '💖';
+    reading = '你们的婚姻非常幸福！\\n\\n你们是真正的灵魂伴侣，彼此理解、信任、支持。这份关系让你成为更好的人。';
+    strengths = ['深度情感连接', '默契的沟通', '共同价值观', '互相尊重', '稳定的经济基础'];
+    improvements = ['继续保持', '定期约会保持新鲜感', '共同成长'];
+    advice = '• 持续感恩对方的付出\\n• 保持定期约会\\n• 共同规划未来\\n• 一起尝试新事物\\n• 珍惜当下';
+    trait = '幸福美满的婚姻 💞';
+  } else if (score >= 70) {
+    level = '💕 幸福婚姻';
+    emoji = '💕';
+    reading = '你们的婚姻整体是幸福的。\\n\\n你们有不错的基础，但仍有一些可改善的空间。继续用心经营，会越来越幸福。';
+    strengths = ['有共同目标', '能互相支持', '基本沟通顺畅', '家庭责任分担'];
+    improvements = ['沟通方式可改善', '亲密时光需增加', '分歧处理更理性'];
+    advice = '• 每周固定约会时间\\n• 学习非暴力沟通\\n• 主动表达感激\\n• 解决未完成的小冲突\\n• 培养共同爱好';
+    trait = '幸福的婚姻 💕';
+  } else if (score >= 55) {
+    level = '💛 中等状态';
+    emoji = '💛';
+    reading = '你们的婚姻处于中等状态，有闪光点也有挑战。\\n\\n双方都需要投入更多努力。建议增加沟通、寻求专业帮助。';
+    strengths = ['基本在一起', '有家庭责任'];
+    improvements = ['沟通质量需提升', '情感连接需加强', '冲突处理需学习'];
+    advice = '• 主动表达需求和感受\\n• 学习倾听对方\\n• 每周一次深度对话\\n• 考虑婚姻咨询\\n• 回归初心，想想当初为什么在一起';
+    trait = '需要用心经营 💛';
+  } else {
+    level = '😟 需要关注';
+    emoji = '😟';
+    reading = '你们的婚姻面临较大挑战。\\n\\n双方都需要深刻反思和改变。建议认真考虑是否寻求专业婚姻咨询帮助。';
+    strengths = ['还在坚持'];
+    improvements = ['沟通严重不足', '情感连接断裂', '信任可能受损', '需要根本性改变'];
+    advice = '• 认真考虑婚姻咨询\\n• 双方深度对话，说出真实感受\\n• 给自己和对方一些时间思考\\n• 不要轻易放弃，但也要面对现实\\n• 必要时寻求专业帮助';
+    trait = '需要专业帮助';
+  }
+  
+  return { level, emoji, reading, strengths, improvements, advice, trait };
+}
+
+function copyShareText() {
+  const score = document.getElementById('marriageScore').textContent;
+  const level = document.getElementById('marriageLevel').textContent;
+  
+  const text = '💍 我们的婚姻幸福指数：' + score + '\\n' + level + '\\n\\n愿我们幸福美满 💕\\n👉 测试你的婚姻：jianhebox.cn/fun/marriage.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(25).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBTI 16型人格测试 - 60题专业版 | 简盒玩点有趣的</title>
+<meta name="description" content="免费 MBTI 16型人格测试，60 道专业题目。包含详尽 8 维度解读：性格画像、爱情观、友情观、家庭关系、压力反应、成长建议、专属配色。结果可一键生成分享卡片。">
+<meta name="keywords" content="MBTI,人格测试,16型人格,性格测试,免费测试">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 {
+    font-size: 28px;
+    margin-bottom: 12px;
+    text-align: center;
+    color: white;
+  }
+  .subtitle {
+    text-align: center;
+    opacity: 0.9;
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+    font-size: 17px;
+    padding: 16px 32px;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+  .btn:disabled, .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* 修复 1: 强制所有容器透明背景 */
+  .card, .options, .dimension-bar, .dimension-track, .share-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list {
+    list-style: none;
+    margin: 20px 0;
+  }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    transition: width 0.3s;
+    border-radius: 4px;
+  }
+  .question-counter {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 12px;
+    color: white;
+  }
+
+  .options {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+    background: transparent;
+  }
+  .option {
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 16px;
+    line-height: 1.5;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+    border-color: rgba(255,255,255,0.4);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+  .question {
+    margin-bottom: 24px;
+    width: 100%;
+  }
+  .question h3 {
+    font-size: 19px;
+    margin-bottom: 18px;
+    line-height: 1.5;
+    color: white;
+  }
+
+  .nav-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .nav-buttons button { flex: 1; }
+
+  .result-type {
+    font-size: 64px;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 4px;
+  }
+  .result-name {
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 8px;
+    color: white;
+  }
+  .result-nickname {
+    text-align: center;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    font-style: italic;
+    color: white;
+  }
+  .section-title {
+    font-size: 19px;
+    margin: 28px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .feature-list {
+    list-style: none;
+  }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #f5576c;
+    font-weight: bold;
+  }
+
+  .dimension-row { margin-bottom: 16px; }
+  .dimension-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+  }
+  .dimension-track {
+    height: 12px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+  .dimension-fill {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    transition: all 0.5s;
+    border-radius: 6px;
+  }
+  .dimension-fill.left { left: 0; }
+  .dimension-fill.right { right: 0; }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  /* 分享海报卡片 - 渐变 + 装饰 */
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 40px 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  }
+  .poster-card .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-card .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-card .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-card .poster-content { position: relative; z-index: 2; }
+  .poster-card .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+  .poster-card .poster-type {
+    font-size: 72px;
+    font-weight: 900;
+    letter-spacing: 6px;
+    margin: 16px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-card .poster-name {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .poster-card .poster-nick {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  .poster-card .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 20px auto;
+    border-radius: 2px;
+  }
+  .poster-card .poster-traits {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .poster-card .poster-trait {
+    background: rgba(255,255,255,0.2);
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+  }
+  .poster-card .poster-footer {
+    margin-top: 30px;
+    font-size: 11px;
+    opacity: 0.7;
+  }
+
+  /* 不同 MBTI 类型的专属配色 */
+  .poster-INTJ { background: linear-gradient(135deg, #1e3c72, #2a5298); }
+  .poster-INTP { background: linear-gradient(135deg, #4b6cb7, #182848); }
+  .poster-ENTJ { background: linear-gradient(135deg, #c31432, #240b36); }
+  .poster-ENTP { background: linear-gradient(135deg, #ff8008, #ffc837); }
+  .poster-INFJ { background: linear-gradient(135deg, #654ea3, #eaafc8); }
+  .poster-INFP { background: linear-gradient(135deg, #ff6e7f, #bfe9ff); }
+  .poster-ENFJ { background: linear-gradient(135deg, #ee9ca7, #ffdde1); color: #4a2c3a; }
+  .poster-ENFP { background: linear-gradient(135deg, #f857a6, #ff5858); }
+  .poster-ISTJ { background: linear-gradient(135deg, #403b4a, #2c5364); }
+  .poster-ISFJ { background: linear-gradient(135deg, #8e9eab, #eef2f3); color: #2c3e50; }
+  .poster-ESTJ { background: linear-gradient(135deg, #283c86, #45a247); }
+  .poster-ESFJ { background: linear-gradient(135deg, #fbc2eb, #a18cd1); color: #4a2c5a; }
+  .poster-ISTP { background: linear-gradient(135deg, #232526, #414345); }
+  .poster-ISFP { background: linear-gradient(135deg, #a8edea, #fed6e3); color: #4a3a4a; }
+  .poster-ESTP { background: linear-gradient(135deg, #c33764, #1d2671); }
+  .poster-ESFP { background: linear-gradient(135deg, #ff9966, #ff5e62); }
+
+  .poster-ENFJ .poster-type, .poster-ISFJ .poster-type,
+  .poster-ESFJ .poster-type, .poster-ISFP .poster-type,
+  .poster-ENFJ .poster-name, .poster-ISFJ .poster-name,
+  .poster-ESFJ .poster-name, .poster-ISFP .poster-name {
+    text-shadow: 0 4px 20px rgba(255,255,255,0.4);
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    font-size: 13px;
+    color: white;
+  }
+  .back-link {
+    text-align: center;
+    margin: 20px 0;
+  }
+  .back-link a {
+    color: white;
+    opacity: 0.8;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .back-link a:hover { opacity: 1; text-decoration: underline; }
+
+  @media (max-width: 480px) {
+    .result-type { font-size: 48px; }
+    .poster-card { padding: 30px 20px; }
+    .poster-card .poster-type { font-size: 56px; }
+    .nav-buttons { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🧠 MBTI 16型人格测试</h1>
+    <p class="subtitle">60 道深度题目 · 8 维度专业解读 · 1 分钟出结果</p>
+    <ul class="intro-feature-list">
+      <li>4 个核心维度（外向/内向、感觉/直觉、思考/情感、判断/感知）</li>
+      <li>完整的性格画像：爱情观、友情观、家庭关系、压力反应</li>
+      <li>专属配色 + 海报分享卡片，发朋友圈/小红书必备</li>
+      <li>基于 Myers-Briggs 类型指标，临床参考价值</li>
+      <li>✨ 完全免费 · 无需登录 · 无需注册</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 8-12 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="question-counter"><span id="currentQ">1</span> / 60</div>
+    <div class="question">
+      <h3 id="questionText"></h3>
+      <div id="optionsContainer" class="options"></div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn" id="prevBtn" onclick="prevQuestion()">← 上一题</button>
+      <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>下一题 →</button>
+    </div>
+  </div>
+
+  <div id="result" class="card hidden">
+    <h2 style="text-align:center; margin-bottom:8px;">🎉 你的 MBTI 类型</h2>
+    <div id="resultType" class="result-type"></div>
+    <div id="resultName" class="result-name"></div>
+    <div id="resultNickname" class="result-nickname"></div>
+    <div id="resultTags" class="tag-row" style="justify-content:center;"></div>
+
+    <h3 class="section-title">🎯 4 维度得分</h3>
+    <div id="dimensions"></div>
+
+    <h3 class="section-title">📝 性格画像</h3>
+    <p id="personalityPortrait" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">💪 核心优势</h3>
+    <ul id="strengths" class="feature-list"></ul>
+
+    <h3 class="section-title">⚠️ 潜在盲点</h3>
+    <ul id="weaknesses" class="feature-list"></ul>
+
+    <h3 class="section-title">💕 爱情观</h3>
+    <p id="loveStyle" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">👥 友情观</h3>
+    <p id="friendshipStyle" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">🏠 家庭关系</h3>
+    <p id="familyStyle" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">💼 适合的职业</h3>
+    <ul id="careers" class="feature-list"></ul>
+
+    <h3 class="section-title">🔗 最佳匹配</h3>
+    <p id="relationships" style="line-height:1.8; opacity:0.95;"></p>
+
+    <h3 class="section-title">😰 压力下的反应</h3>
+    <p id="stressResponse" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">🌱 成长建议</h3>
+    <p id="growthAdvice" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">🌟 著名人物</h3>
+    <p id="celebrities" style="line-height:1.8; opacity:0.95;"></p>
+
+    <!-- 一键分享卡片 -->
+    <h3 class="section-title">📤 分享我的结果</h3>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存下面的专属海报</p>
+      <div id="posterCard" class="poster-card poster-INFP">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">MBTI 16型人格测试</div>
+          <div class="poster-type" id="posterType">INFP</div>
+          <div class="poster-name" id="posterName">调停者</div>
+          <div class="poster-nick" id="posterNick">温柔的理想主义者</div>
+          <div class="poster-divider"></div>
+          <div class="poster-traits" id="posterTraits">
+            <span class="poster-trait">同理心</span>
+            <span class="poster-trait">创造力</span>
+            <span class="poster-trait">理想主义</span>
+          </div>
+          <div class="poster-footer">扫码测试你的 MBTI → jianhebox.cn/fun/mbti.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+
+    <div class="disclaimer-box">
+      ⚠️ 本测试基于 Myers-Briggs Type Indicator 量表，仅供娱乐参考。<br>
+      MBTI 不是科学诊断工具，结果可能随时间变化。<br>
+      请理性看待，不要作为职业/关系决策的唯一依据。
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+const questions = [
+  // E/I 外向/内向 (15 题)
+  {text:"在社交聚会中，你更倾向于：",a:"主动与很多人交谈（包括陌生人）",b:"只与少数熟悉的人深入交流",dim:"EI",pos:1},
+  {text:"周末你最享受的是：",a:"和朋友/家人一起出去玩",b:"一个人待在家里充电",dim:"EI",pos:-1},
+  {text:"你更喜欢的工作环境是：",a:"开放的办公室，能随时和同事互动",b:"安静的独立空间，能专注思考",dim:"EI",pos:-1},
+  {text:"在朋友聚会上没认识新朋友，你会：",a:"有点失落，下次尝试更主动",b:"觉得没什么，享受和老朋友聊天",dim:"EI",pos:1},
+  {text:"你更讨厌的事情是：",a:"长时间的独处",b:"频繁的社交活动",dim:"EI",pos:1},
+  {text:"思考问题时，你更倾向于：",a:"边说边想，喜欢讨论",b:"先想清楚再表达",dim:"EI",pos:-1},
+  {text:"你的能量来源主要是：",a:"与人互动",b:"独处与反思",dim:"EI",pos:1},
+  {text:"面对新的社交场合，你会：",a:"期待并主动认识人",b:"有点紧张，需要时间适应",dim:"EI",pos:1},
+  {text:"你更喜欢的工作方式是：",a:"团队协作",b:"独立完成",dim:"EI",pos:-1},
+  {text:"长途旅行中，你更喜欢：",a:"结伴同行",b:"独自探索",dim:"EI",pos:1},
+  {text:"你在人群中通常是：",a:"注意力和精力充沛",b:"观察和倾听为主",dim:"EI",pos:-1},
+  {text:"工作后的最佳放松：",a:"和朋友聚餐/聊天",b:"独自看书/追剧",dim:"EI",pos:1},
+  {text:"接到陌生电话，你会：",a:"期待并乐于接听",b:"能避免就避免",dim:"EI",pos:-1},
+  {text:"你更享受哪种派对：",a:"大型多人聚会，认识很多新朋友",b:"小型聚会，和几个好友深聊",dim:"EI",pos:1},
+  {text:"当你需要做重要决定时：",a:"倾向于和朋友讨论获得启发",b:"倾向于独自思考权衡利弊",dim:"EI",pos:-1},
+
+  // S/N 感觉/直觉 (15 题)
+  {text:"你更关注：",a:"现实的具体事实",b:"未来的可能性",dim:"SN",pos:1},
+  {text:"你喜欢的工作是：",a:"明确的、可操作的任务",b:"有创意的、需要想象的工作",dim:"SN",pos:-1},
+  {text:"你更欣赏哪种人：",a:"脚踏实地、务实",b:"富有想象力、有远见",dim:"SN",pos:1},
+  {text:"看书时你更喜欢：",a:"真实事件/历史",b:"奇幻/科幻/未来想象",dim:"SN",pos:-1},
+  {text:"你更擅长处理：",a:"具体的、实际的问题",b:"抽象的、理论的问题",dim:"SN",pos:1},
+  {text:"你更喜欢哪种描述：",a:"具体的、有细节的",b:"概括的、有隐喻的",dim:"SN",pos:1},
+  {text:"面对新事物，你更关注：",a:"它是什么、怎么用",b:"它能做什么、未来的发展",dim:"SN",pos:-1},
+  {text:"你更相信：",a:"经验和验证",b:"直觉和灵感",dim:"SN",pos:1},
+  {text:"你更擅长的是：",a:"关注当下的细节",b:"看到整体的模式",dim:"SN",pos:-1},
+  {text:"你喜欢的工作结果是：",a:"看得见摸得着的",b:"理论或想法上的",dim:"SN",pos:1},
+  {text:"你更倾向于：",a:"务实，按计划行事",b:"跳脱，喜欢尝试新方法",dim:"SN",pos:-1},
+  {text:"回忆过去，你更记得：",a:"具体的事件细节",b:"那段时间的整体感受",dim:"SN",pos:1},
+  {text:"你更感兴趣的新闻是：",a:"本地实事、政策变化",b:"科技趋势、未来预测",dim:"SN",pos:-1},
+  {text:"你学习新东西时：",a:"喜欢一步步按教程操作",b:"喜欢先了解整体思路",dim:"SN",pos:1},
+  {text:"你更喜欢的电影类型：",a:"现实主义题材",b:"奇幻/超现实题材",dim:"SN",pos:-1},
+
+  // T/F 思考/情感 (15 题)
+  {text:"做决定时你更依赖：",a:"逻辑和客观分析",b:"价值观和他人感受",dim:"TF",pos:1},
+  {text:"你更欣赏的朋友是：",a:"理性冷静的人",b:"温暖体贴的人",dim:"TF",pos:-1},
+  {text:"面对朋友犯错，你更倾向：",a:"直接指出，让对方改进",b:"委婉提醒，顾及对方面子",dim:"TF",pos:-1},
+  {text:"你更擅长的是：",a:"发现逻辑漏洞",b:"理解他人情绪",dim:"TF",pos:1},
+  {text:"你更不喜欢被人说：",a:"你这个人太不讲理",b:"你这个人太冷漠",dim:"TF",pos:-1},
+  {text:"在团队中你更关注：",a:"任务完成的质量",b:"成员的感受和氛围",dim:"TF",pos:1},
+  {text:"评价一部电影你更看重：",a:"剧情逻辑、拍摄手法",b:"情感共鸣、主题深度",dim:"TF",pos:1},
+  {text:"你更讨厌的批评是：",a:"你做事不讲逻辑",b:"你不考虑他人感受",dim:"TF",pos:-1},
+  {text:"面对他人求助，你会：",a:"分析问题给解决方案",b:"先给予情感支持",dim:"TF",pos:-1},
+  {text:"你更喜欢哪种赞美：",a:"你很聪明/能力强",b:"你很善良/体贴",dim:"TF",pos:1},
+  {text:"做决定时你更注重：",a:"公平、一视同仁",b:"和谐、人情",dim:"TF",pos:1},
+  {text:"你更欣赏哪种领导：",a:"决策果断、不感情用事",b:"关心员工、平易近人",dim:"TF",pos:1},
+  {text:"你更愿意讨论的话题：",a:"技术/理论/事实",b:"人/情感/关系",dim:"TF",pos:-1},
+  {text:"当朋友难过时，你更倾向：",a:"帮他分析问题原因",b:"陪着他，给他安慰",dim:"TF",pos:-1},
+  {text:"你更看重工作带来的：",a:"成就感",b:"归属感",dim:"TF",pos:1},
+
+  // J/P 判断/感知 (15 题)
+  {text:"你更喜欢的生活是：",a:"有计划、有条理",b:"随性、灵活应变",dim:"JP",pos:1},
+  {text:"出门旅行前你会：",a:"详细规划行程",b:"随走随定",dim:"JP",pos:1},
+  {text:"你的桌面/房间通常是：",a:"整洁，所有东西有固定位置",b:"看起来乱但你知道东西在哪",dim:"JP",pos:-1},
+  {text:"面对截止日期：",a:"提前完成",b:"最后一刻冲刺",dim:"JP",pos:1},
+  {text:"你更讨厌的状态：",a:"事情悬而未决",b:"被计划和规则束缚",dim:"JP",pos:1},
+  {text:"你更喜欢的工作：",a:"目标明确、按部就班",b:"自由度高、可调整",dim:"JP",pos:-1},
+  {text:"做决定时你更倾向：",a:"快速决定",b:"保留选择余地",dim:"JP",pos:-1},
+  {text:"你更喜欢哪种惊喜：",a:"按计划内的特别安排",b:"完全没预料到的",dim:"JP",pos:-1},
+  {text:"你更常用的工作方式是：",a:"列清单、打勾完成",b:"想到什么做什么",dim:"JP",pos:1},
+  {text:"关于规则和流程：",a:"愿意遵守，觉得有必要",b:"认为可以灵活变通",dim:"JP",pos:-1},
+  {text:"你更喜欢的工作模式：",a:"专注一件事直到完成",b:"同时处理多件事",dim:"JP",pos:1},
+  {text:"周末计划：",a:"早就安排好了",b:"当天看心情决定",dim:"JP",pos:1},
+  {text:"你更倾向于：",a:"提前赴约",b:"踩点到",dim:"JP",pos:1},
+  {text:"面对选择时：",a:"果断下单",b:"纠结很久、货比三家",dim:"JP",pos:-1},
+  {text:"你更喜欢的描述：",a:"有始有终",b:"灵活机动",dim:"JP",pos:1}
+];
+
+const mbtiTypes = {
+  "INTJ": {
+    name: "建筑师", nickname: "独立思考的战略家",
+    tags: ["理性", "远见", "独立", "高效"],
+    strengths: ["强大的战略思维", "独立自主", "追求长期目标", "理性分析", "高效解决问题"],
+    weaknesses: ["可能显得冷漠", "过度追求完美", "不善表达情感", "可能忽视他人感受", "对能力不足者不耐烦"],
+    careers: ["战略规划师", "系统架构师", "投资分析师", "科研人员", "律师", "产品经理"],
+    relationships: "最佳匹配：ENTP、ENFP（互补型）\n次选匹配：INTP（同频型）",
+    celebrities: "埃隆·马斯克、马克·扎克伯格、尼采、居里夫人",
+    personalityPortrait: "你是天生的战略家与思想家，喜欢用长远的眼光看待问题，并制定清晰的计划。\n\n你享受独处的时间，在安静中能产生最深刻的想法。你重视能力与效率，对自己和他人都有高标准。\n\n你不喜欢无意义的社交，更愿意与少数志同道合的人深入交流。你相信知识就是力量，会持续学习新领域的知识。",
+    loveStyle: "在感情中，你用行动而非甜言蜜语表达爱意。\n\n你倾向于寻找能与你智力匹配、有独立思想的伴侣。一旦认定，会非常忠诚和投入。\n\n你不太擅长甜言蜜语和小浪漫，但会用实际行动（解决问题、提供建议）来表达关心。",
+    friendshipStyle: "你的朋友圈不大，但每段关系都很深。\n\n你重视朋友的智商与独立思考能力，不喜欢过于依赖或情绪化的人。\n\n你是朋友中可靠的智囊，会给出理性建议。但有时会因太过直接而伤害朋友感情。",
+    familyStyle: "在家庭中，你常是独立、有主见的孩子。\n\n你尊重家人的能力，但难以在情感上深度连接。你可能会被视为'高冷'或'难以接近'。\n\n你倾向于用解决问题的方式处理家庭事务，而非情感安慰。",
+    stressResponse: "面对压力时，你可能：\n• 过度分析，陷入思维反刍\n• 完全封闭自己，拒绝沟通\n• 用工作/学习逃避情感问题\n• 对自己和他人更加挑剔",
+    growthAdvice: "• 练习表达情感，不只是分析问题\n• 接受不完美，包括他人和自己\n• 给身边的人更多耐心和温暖\n• 在追求目标的同时别忘了享受过程"
+  },
+  "INTP": {
+    name: "逻辑学家", nickname: "好奇的思考者",
+    tags: ["逻辑", "好奇", "独立", "创意"],
+    strengths: ["强大的逻辑思维", "独立思考", "创意解决问题", "客观理性", "理论性强"],
+    weaknesses: ["可能不善社交", "容易拖延", "忽视实际细节", "过度分析", "执行力弱"],
+    careers: ["程序员", "数学家", "哲学家", "研究员", "数据分析师", "作家"],
+    relationships: "最佳匹配：ENTJ、INTJ（同类型）\n次选匹配：ENFP（互补型）",
+    celebrities: "爱因斯坦、比尔·盖茨、亚伯拉罕·林肯",
+    personalityPortrait: "你是天生的思考者，对知识和真理有强烈渴望。你喜欢抽象概念和理论系统。\n\n你享受独处，因为这能让你自由地探索想法。你对外在世界不太关注，更专注于内心的思维世界。\n\n你追求逻辑一致性，会发现并质疑别人忽视的矛盾。你不介意挑战权威，只要论据充分。",
+    loveStyle: "在感情中，你需要智识上的刺激和精神上的连接。\n\n你倾向于理性分析感情问题，有时显得'不解风情'。但一旦深爱，会非常专一并尊重伴侣的独立性。\n\n你不擅长主动示爱，更愿意通过分享想法来表达亲密。",
+    friendshipStyle: "你偏好一对一深入交流，而非大型社交。\n\n你的朋友通常是书友、网友或少数能跟上你思维的同伴。你尊重朋友的独立性，不喜欢被需要或控制。\n\n你可能忘记朋友的生日或日常问候，但关键时候会给出深刻建议。",
+    familyStyle: "在家庭中，你可能是'怪才'或'异类'，有自己的世界。\n\n你与家人的沟通可能不够深入，更愿意沉浸在自己的兴趣中。你需要独处的空间，过多家庭聚会会让你疲惫。\n\n你对家人有深沉的爱，但不知如何表达。",
+    stressResponse: "面对压力时，你可能：\n• 彻底退缩，进入'洞穴'模式\n• 用思维活动完全逃避现实\n• 拖延到最后一刻\n• 对人际互动感到疲惫",
+    growthAdvice: "• 设定截止日期，强迫自己行动\n• 重视实践和落地，不只是理论\n• 主动维护人际关系\n• 允许自己不完美，享受当下"
+  },
+  "ENTJ": {
+    name: "指挥官", nickname: "果断的领导者",
+    tags: ["领导", "果断", "战略", "高效"],
+    strengths: ["天生领导者", "战略眼光", "高效决策", "自信果断", "长远规划"],
+    weaknesses: ["可能显得强硬", "不耐烦", "不善情绪表达", "可能忽视细节", "对能力不足者傲慢"],
+    careers: ["CEO、总经理", "律师", "管理顾问", "项目经理", "创业者", "战略顾问"],
+    relationships: "最佳匹配：INTP、INFP（互补型）\n次选匹配：ENTP（同类型）",
+    celebrities: "乔布斯、马云、特朗普",
+    personalityPortrait: "你是天生的领导者与决策者，擅长制定长远战略并推动执行。\n\n你追求效率与成果，对自己和团队都有高要求。你不喜欢拖延与无意义的讨论。\n\n你擅长发现系统性问题并制定解决方案。你的自信与果断让人愿意跟随你。",
+    loveStyle: "在感情中，你会主动出击，看准目标就行动。\n\n你喜欢能与你并肩作战、共同成长的伴侣。你会为伴侣提供资源和方向，但可能忽视情感表达。\n\n你不擅长甜言蜜语，更愿意用行动和成就来表达爱意。",
+    friendshipStyle: "你是朋友圈中的 leader 与决策者。\n\n你欣赏有能力的、目标清晰的人，对弱者缺乏耐心。你的朋友通常事业有成。\n\n你会为朋友提供建议和资源，但可能因太过直接而伤害感情。",
+    familyStyle: "在家庭中，你常承担决策者角色。\n\n你会为家人规划未来，提供资源。但你可能过于强势，让家人感到压力。你不太会处理家庭情感问题。\n\n你对家人的爱体现在行动上，但表达方式可能让人感觉冷漠。",
+    stressResponse: "面对压力时，你可能：\n• 更加好战，急于控制局面\n• 忽视情感，专注解决问题\n• 对拖延者更加不耐烦\n• 独自扛起所有责任",
+    growthAdvice: "• 学会倾听，不急于决策\n• 重视情感，不只是效率\n• 接受他人的不完美\n• 允许自己示弱和求助"
+  },
+  "ENTP": {
+    name: "辩论家", nickname: "聪明的创新者",
+    tags: ["创意", "辩论", "机智", "创新"],
+    strengths: ["创新思维", "善于辩论", "机智幽默", "适应力强", "看全局"],
+    weaknesses: ["可能显得好辩", "注意力分散", "不善跟进", "可能忽视细节", "容易厌倦"],
+    careers: ["创业者", "营销专家", "创意总监", "咨询顾问", "产品经理", "发明家"],
+    relationships: "最佳匹配：INTJ、INFJ（互补型）\n次选匹配：ENTJ（同类型）",
+    celebrities: "马克·吐温、爱迪生、汤姆·汉克斯",
+    personalityPortrait: "你是天生的创新者与辩论家，喜欢挑战传统观念。\n\n你看事物总能找到新的角度，讨厌无聊和重复。你机智幽默，喜欢智识上的切磋。\n\n你享受头脑风暴的过程，但不一定擅长执行。你的热情会感染周围的人。",
+    loveStyle: "在感情中，你需要智识上的刺激和自由的空间。\n\n你会被聪明、有独立思想的人吸引。你喜欢与伴侣辩论和探讨各种想法。\n\n你讨厌被束缚，需要伴侣给你足够的自由。但你一旦深爱，会非常热情和有趣。",
+    friendshipStyle: "你是朋友圈的开心果和智多星。\n\n你身边总有很多朋友，因为你能与各种人聊得来。你喜欢组织讨论和活动，享受思维的碰撞。\n\n但你可能难以维持长期深入的关系，因为容易对新朋友产生兴趣。",
+    familyStyle: "在家庭中，你是那个打破常规的孩子。\n\n你会挑战父母的传统观念，提出新想法。你不喜欢被规则束缚，会寻找例外。\n\n你与家人的关系可能起伏大，但你会用幽默化解矛盾。",
+    stressResponse: "面对压力时，你可能：\n• 过度辩论和争辩\n• 用新项目逃避现实\n• 注意力分散，无法聚焦\n• 变得玩世不恭或讽刺",
+    growthAdvice: "• 学会坚持，不只是开始\n• 重视细节和跟进\n• 倾听多于辩论\n• 关注他人的情感需求"
+  },
+  "INFJ": {
+    name: "提倡者", nickname: "富有同情心的理想主义者",
+    tags: ["同理心", "理想", "洞察", "写作"],
+    strengths: ["富有同理心", "理想主义", "深刻的洞察", "善于写作", "坚持价值观"],
+    weaknesses: ["过于敏感", "可能过度理想化", "不善拒绝", "需要独处时间", "完美主义"],
+    careers: ["心理咨询师", "作家", "教师", "艺术家", "人力资源", "社工"],
+    relationships: "最佳匹配：ENTP、ENFP（互补型）\n次选匹配：INTJ（同频型）",
+    celebrities: "马丁·路德·金、特蕾莎修女、Lady Gaga",
+    personalityPortrait: "你是富有洞察力的理想主义者，能看到他人看不到的深层意义。\n\n你外表温柔，内心有坚定的价值观。你渴望创造一个更美好的世界。\n\n你享受独处，在安静中能产生深刻的洞察。你对人际关系有敏锐的感知，能理解他人复杂的情感。",
+    loveStyle: "在感情中，你会全心投入，渴望灵魂伴侣般的深度连接。\n\n你能深切理解伴侣的需求和情感，是非常体贴的恋人。但你可能过于理想化伴侣，失望时会很受伤。\n\n你需要伴侣给你足够的独处空间和情感深度。",
+    friendshipStyle: "你是朋友中的倾听者和心灵导师。\n\n你只有少数真正交心的朋友，但每段关系都很深。你善于察觉朋友未说出口的情感。\n\n你愿意为朋友付出很多，但有时会因太过投入而受伤。",
+    familyStyle: "在家庭中，你是调和氛围的那个人。\n\n你能敏锐察觉家人的情感需求，是家人的情感支柱。但你可能因承担太多而疲惫。\n\n你渴望与家人有灵魂层面的交流，可能感到失望。",
+    stressResponse: "面对压力时，你可能：\n• 过度反思，陷入内耗\n• 完全封闭自己\n• 因小事过度敏感\n• 用完美主义逃避行动",
+    growthAdvice: "• 接受人性的不完美\n• 设立边界，学会拒绝\n• 不要承担他人的情感\n• 关注当下，不只是理想"
+  },
+  "INFP": {
+    name: "调停者", nickname: "温柔的理想主义者",
+    tags: ["同理心", "理想", "创造", "价值"],
+    strengths: ["富有同理心", "理想主义", "创造力强", "忠于价值观", "善解人意"],
+    weaknesses: ["过于理想化", "不善实际事务", "容易受伤", "不善冲突", "完美主义"],
+    careers: ["作家", "艺术家", "心理咨询师", "教师", "社工", "音乐人"],
+    relationships: "最佳匹配：ENFJ、ENTJ（互补型）\n次选匹配：INFJ（同频型）",
+    celebrities: "莎士比亚、约翰·列侬、奥黛丽·赫本",
+    personalityPortrait: "你是温柔的理想主义者，内心世界丰富多彩。\n\n你对人友善、有同理心，能理解他人的情感。你追求真善美，讨厌虚伪和功利。\n\n你享受独处，在独处时能写出最美的诗。你重视深层的人际连接，宁缺毋滥。",
+    loveStyle: "在感情中，你会寻找灵魂伴侣，渴望童话般的爱情。\n\n你是非常专一的恋人，会为爱付出一切。但你可能过于理想化伴侣，导致失望。\n\n你需要伴侣给你足够的情感深度和浪漫，但也要尊重你的独立性。",
+    friendshipStyle: "你是朋友中的倾听者和治愈者。\n\n你只有少数知心朋友，但每段关系都很深。你善于理解朋友的情感，是最好的倾听者。\n\n你可能因太过投入朋友的情感而感到疲惫。",
+    familyStyle: "在家庭中，你是那个最敏感、最理想化的孩子。\n\n你能敏锐感知家庭氛围的变化，是家人的情感支撑。但你可能感到家人不理解你的内心世界。\n\n你渴望家人能接受真实的你。",
+    stressResponse: "面对压力时，你可能：\n• 完全退缩进入幻想世界\n• 因小事过度受伤\n• 自我怀疑，否定价值\n• 用创作或独处逃避",
+    growthAdvice: "• 接受现实的不完美\n• 学会面对冲突，不只是逃避\n• 重视实际行动，不只是想法\n• 设立健康的情感边界"
+  },
+  "ENFJ": {
+    name: "主人公", nickname: "富有魅力的领导者",
+    tags: ["同理", "魅力", "领导", "关怀"],
+    strengths: ["天生同理心", "富有魅力", "善于激励", "组织能力强", "真诚关怀"],
+    weaknesses: ["可能过度关注他人", "不善拒绝", "过度理想化他人", "忽视自己需求", "过度自责"],
+    careers: ["教师", "培训师", "心理咨询师", "人力资源", "营销经理", "公关"],
+    relationships: "最佳匹配：INFP、INTP（互补型）\n次选匹配：ENFP（同频型）",
+    celebrities: "奥巴马、奥普拉、特蕾莎修女",
+    personalityPortrait: "你是天生的领导者和激励者，能激发他人的潜力。\n\n你富有同理心，能深切理解他人的情感。你擅长组织团队，让大家朝共同目标努力。\n\n你重视和谐的人际关系，会为他人付出很多。但有时会忽视自己的需求。",
+    loveStyle: "在感情中，你会全心投入，渴望照顾伴侣的方方面面。\n\n你是非常体贴的恋人，会记住所有细节。但你可能因付出过多而失去自我。\n\n你需要伴侣也给予你同等的关怀。",
+    friendshipStyle: "你是朋友圈的核心人物和组织者。\n\n你能照顾到每个朋友的感受，是大家的精神支柱。你乐于组织聚会和活动。\n\n但你可能因承担过多而感到疲惫，需要学会拒绝。",
+    familyStyle: "在家庭中，你是粘合剂和精神领袖。\n\n你会主动组织家庭聚会，关心每个成员。你承担调解家庭矛盾的角色。\n\n你可能因付出过多而感到不平衡。",
+    stressResponse: "面对压力时，你可能：\n• 过度自责，怀疑自己\n• 完全忽视自己的需求\n• 因无法帮助所有人而沮丧\n• 退缩进入内耗",
+    growthAdvice: "• 学会说不，保护自己的时间\n• 不要为他人的情绪负责\n• 重视自己的需求\n• 接受不完美的关系"
+  },
+  "ENFP": {
+    name: "竞选者", nickname: "热情的创造者",
+    tags: ["热情", "创意", "社交", "活力"],
+    strengths: ["热情洋溢", "富有创意", "善于社交", "看全局", "激励他人"],
+    weaknesses: ["注意力分散", "不善跟进", "过度理想化", "情绪波动大", "不善独处"],
+    careers: ["营销策划", "创意总监", "心理咨询师", "记者", "活动策划", "演员"],
+    relationships: "最佳匹配：INTJ、INFJ（互补型）\n次选匹配：ENFP（同频型）",
+    celebrities: "罗宾·威廉姆斯、艾伦·德杰尼勒斯、惠特尼·休斯顿",
+    personalityPortrait: "你是热情的创造者，浑身充满活力和创意。\n\n你能看到任何事的可能性，讨厌无聊和重复。你善于与人连接，让周围的人感到快乐。\n\n你享受探索新想法和结识新朋友，但难以坚持长期项目。",
+    loveStyle: "在感情中，你热烈浪漫，渴望灵魂伴侣般的深度连接。\n\n你很容易被新对象吸引，但一旦认定，会非常热情和投入。你需要伴侣给你自由和新鲜感。\n\n你是非常有趣的恋人，但可能因情绪波动而让伴侣困惑。",
+    friendshipStyle: "你是朋友圈的开心果和灵感来源。\n\n你身边总有新朋友，因为你能与各种人快速建立联系。你善于让聚会变得有趣。\n\n但你可能难以维持长期深入的关系，因为容易分心。",
+    familyStyle: "在家庭中，你是那个最有趣、最有创意的成员。\n\n你能调动家庭氛围，是聚会的灵魂人物。但你可能因情绪化而引发家庭矛盾。\n\n你渴望家人接受你多变的天性。",
+    stressResponse: "面对压力时，你可能：\n• 情绪崩溃或过度发泄\n• 完全分散注意力\n• 过度自责\n• 逃避到新的项目或关系",
+    growthAdvice: "• 学会坚持和跟进\n• 接受无聊的时刻\n• 重视深度而非广度\n• 面对不完美的现实"
+  },
+  "ISTJ": {
+    name: "物流师", nickname: "可靠的实践者",
+    tags: ["可靠", "务实", "责任", "细致"],
+    strengths: ["认真负责", "注重细节", "可靠守信", "务实高效", "遵守规则"],
+    weaknesses: ["可能过于固执", "不善变通", "不善表达情感", "可能过于保守", "抗拒改变"],
+    careers: ["会计", "审计师", "行政管理", "军官", "法官", "项目经理"],
+    relationships: "最佳匹配：ESFP、ESTP（互补型）\n次选匹配：ISTJ（同频型）",
+    celebrities: "乔治·华盛顿、安格拉·默克尔、娜塔莉·波特曼",
+    personalityPortrait: "你是可靠的实践者，言行一致，值得信赖。\n\n你重视责任与承诺，会认真完成每一件事。你注重事实和细节，讨厌夸大其词。\n\n你尊重传统和规则，喜欢稳定有序的生活。你不善表达情感，但行动胜过言语。",
+    loveStyle: "在感情中，你是忠诚可靠的伴侣，用行动表达爱意。\n\n你不擅长甜言蜜语，但会记得每个重要日子。你重视稳定和承诺，会为家庭负责。\n\n你可能不善表达浪漫，让伴侣感到缺乏激情。",
+    friendshipStyle: "你是朋友圈中可靠的老友。\n\n你不会频繁联系，但关键时刻一定在。你重视长期友谊，讨厌背叛和不守信。\n\n你可能被视为'无聊'，但朋友都知道你的好。",
+    familyStyle: "在家庭中，你是责任担当者和传统维护者。\n\n你会承担家庭事务，保持家庭稳定。你尊重家庭传统，可能保守但可靠。\n\n你不太擅长处理情感问题，让家人感觉冷漠。",
+    stressResponse: "面对压力时，你可能：\n• 完全封闭自己\n• 过度工作和承担\n• 拒绝承认压力\n• 责备自己做得不够好",
+    growthAdvice: "• 学会表达情感\n• 接受变化和新事物\n• 不要过度工作\n• 给生活留些弹性"
+  },
+  "ISFJ": {
+    name: "守卫者", nickname: "温暖的守护者",
+    tags: ["温暖", "守护", "细心", "可靠"],
+    strengths: ["温暖体贴", "细心周到", "可靠忠诚", "实际能力强", "善于照顾他人"],
+    weaknesses: ["不善拒绝", "过度付出", "不善表达需求", "可能过度牺牲", "抗拒改变"],
+    careers: ["护士", "教师", "社工", "行政助理", "营养师", "客户服务"],
+    relationships: "最佳匹配：ESFP、ESTP（互补型）\n次选匹配：ISFJ（同频型）",
+    celebrities: "凯特王妃、碧昂丝、玛格丽特·撒切尔",
+    personalityPortrait: "你是温暖的守护者，默默照顾身边的人。\n\n你细心周到，能记住他人的喜好。你重视和谐，不喜欢冲突。\n\n你享受服务他人，但可能忽视自己的需求。你重视稳定和传统。",
+    loveStyle: "在感情中，你是体贴入微的恋人。\n\n你会为伴侣准备惊喜，记住所有细节。但你可能因付出过多而失去自我。\n\n你需要伴侣也给予你同等的关怀。",
+    friendshipStyle: "你是朋友圈的贴心朋友。\n\n你会主动关心朋友，是大家倾诉的对象。你讨厌冲突，会为维护友谊付出很多。\n\n你可能因承担过多而感到疲惫。",
+    familyStyle: "在家庭中，你是照顾全家的人。\n\n你会操持家务、关心每个成员。你承担家庭和谐的责任，可能过度牺牲。\n\n你渴望家人的感激和认可。",
+    stressResponse: "面对压力时，你可能：\n• 完全退缩\n• 过度承担他人责任\n• 忽视自己的情感\n• 用忙碌逃避现实",
+    growthAdvice: "• 学会说不\n• 重视自己的需求\n• 接受不完美的关系\n• 不要为他人的情绪负责"
+  },
+  "ESTJ": {
+    name: "总经理", nickname: "务实的管理者",
+    tags: ["务实", "管理", "果断", "传统"],
+    strengths: ["务实高效", "组织能力强", "果断决策", "负责任", "执行力强"],
+    weaknesses: ["可能显得强硬", "不善变通", "不善情绪表达", "可能过于固执", "忽视他人感受"],
+    careers: ["管理者", "法官", "军官", "项目经理", "销售经理", "运营总监"],
+    relationships: "最佳匹配：ISFP、ISTP（互补型）\n次选匹配：ESTJ（同频型）",
+    celebrities: "亨利·福特、约翰·洛克菲勒、米歇尔·奥巴马",
+    personalityPortrait: "你是务实的管理者，擅长组织与执行。\n\n你重视规则和秩序，会推动事情按计划进行。你果断负责，能让团队高效运转。\n\n你尊重传统，讨厌推卸责任的人。你不太擅长处理情感问题。",
+    loveStyle: "在感情中，你用行动承担责任，是可靠的伴侣。\n\n你会为家庭提供物质保障，但可能忽视情感交流。你重视稳定和承诺。\n\n你不太擅长浪漫和甜言蜜语。",
+    friendshipStyle: "你是朋友圈的组织者和责任担当。\n\n你会主动组织活动，照顾朋友的生活需求。你重视信守承诺，讨厌迟到和失信。\n\n你可能因太过直接而伤害朋友。",
+    familyStyle: "在家庭中，你是顶梁柱和规则制定者。\n\n你会承担家庭经济责任，制定家庭规则。你重视孩子的责任感和纪律。\n\n你可能因太强势而让家人感到压力。",
+    stressResponse: "面对压力时，你可能：\n• 更加强硬和控制\n• 用工作逃避情感\n• 过度承担\n• 拒绝承认问题",
+    growthAdvice: "• 学会倾听和妥协\n• 重视情感，不只是效率\n• 给家人更多自由空间\n• 接受不完美的结果"
+  },
+  "ESFJ": {
+    name: "执政官", nickname: "热心的照顾者",
+    tags: ["热心", "社交", "和谐", "务实"],
+    strengths: ["热心助人", "善于社交", "实际能力强", "忠诚可靠", "组织能力强"],
+    weaknesses: ["过于在意他人评价", "不善拒绝", "可能过度干涉", "不善独处", "容易受伤"],
+    careers: ["销售", "教师", "护士", "公关", "行政主管", "活动策划"],
+    relationships: "最佳匹配：ISFP、ISTP（互补型）\n次选匹配：ESFJ（同频型）",
+    celebrities: "泰勒·斯威夫特、詹妮弗·洛佩兹、休·杰克曼",
+    personalityPortrait: "你是热心的照顾者，善于营造和谐的氛围。\n\n你重视人际关系，会主动关心他人。你擅长组织活动，让大家都感到受欢迎。\n\n你讨厌冲突，会努力维护和谐。但可能因过度在意他人看法而失去自我。",
+    loveStyle: "在感情中，你是温暖的恋人，全心投入。\n\n你会为伴侣付出很多，记得所有重要日子。你重视稳定的关系。\n\n你可能因过度付出而感到不平衡。",
+    friendshipStyle: "你是朋友圈的中心人物和组织者。\n\n你乐于组织聚会，关心每个朋友。你善于维护友谊，让圈子充满活力。\n\n你可能因过度承担而疲惫。",
+    familyStyle: "在家庭中，你是家庭和谐的粘合剂。\n\n你会组织家庭聚会，关心每个成员。你重视家庭传统和仪式。\n\n你可能因承担过多而感到压力。",
+    stressResponse: "面对压力时，你可能：\n• 因人际关系问题过度受伤\n• 过度自责\n• 用忙碌逃避\n• 寻求他人认可",
+    growthAdvice: "• 学会说不\n• 不要为他人情绪负责\n• 重视自己的需求\n• 接受不完美的人际关系"
+  },
+  "ISTP": {
+    name: "鉴赏家", nickname: "冷静的探索者",
+    tags: ["冷静", "逻辑", "动手", "理性"],
+    strengths: ["冷静理性", "动手能力强", "逻辑思维", "适应力强", "危机处理"],
+    weaknesses: ["不善表达情感", "可能显得冷漠", "容易厌倦", "不善长期承诺", "抗拒束缚"],
+    careers: ["工程师", "程序员", "技术员", "飞行员", "外科医生", "机械师"],
+    relationships: "最佳匹配：ESFJ、ESTJ（互补型）\n次选匹配：ISTP（同频型）",
+    celebrities: "迈克尔·乔丹、克林特·伊斯特伍德、汤姆·克鲁斯",
+    personalityPortrait: "你是冷静的探索者，擅长动手解决问题。\n\n你重视逻辑与效率，讨厌空谈。你享受独处，在安静中能产生最实际的想法。\n\n你不喜欢被控制，需要自由空间。你不善表达情感，但会用行动表达。",
+    loveStyle: "在感情中，你用行动而非言语表达爱意。\n\n你需要伴侣给你足够的自由空间。你不爱承诺，但一旦认定，会非常忠诚。\n\n你可能因不善表达而让伴侣感到不安。",
+    friendshipStyle: "你是朋友圈的'技术担当'和冷静参谋。\n\n你不太主动联系朋友，但关键时刻会出手。你重视朋友的实际能力。\n\n你可能被视为'高冷'，但朋友都知道你的好。",
+    familyStyle: "在家庭中，你是解决问题的那个人。\n\n你不太参与家庭情感交流，但会用行动承担责任。你需要独处空间。\n\n你可能被视为'冷淡'。",
+    stressResponse: "面对压力时，你可能：\n• 完全封闭自己\n• 用极端活动（冒险、刺激）逃避\n• 切断情感连接\n• 拒绝承认问题",
+    growthAdvice: "• 学会表达情感\n• 重视长期承诺\n• 给身边的人更多关注\n• 不要过度回避"
+  },
+  "ISFP": {
+    name: "探险家", nickname: "自由的艺术家",
+    tags: ["艺术", "自由", "敏感", "真实"],
+    strengths: ["艺术天赋", "真实自我", "温柔体贴", "活在当下", "适应力强"],
+    weaknesses: ["不善规划", "过度敏感", "不善表达", "不善冲突", "容易受伤"],
+    careers: ["艺术家", "设计师", "音乐人", "摄影师", "厨师", "心理咨询师"],
+    relationships: "最佳匹配：ENFJ、ESFJ（互补型）\n次选匹配：ISFP（同频型）",
+    celebrities: "迈克尔·杰克逊、玛丽莲·梦露、蕾哈娜",
+    personalityPortrait: "你是自由的艺术家，活在当下的体验派。\n\n你追求真实和美感，讨厌虚伪和束缚。你温柔敏感，能感受到世界的美好。\n\n你享受独处，在创作中找到自我。你不善长远规划，但活在当下。",
+    loveStyle: "在感情中，你是温柔的恋人，用心感受爱。\n\n你重视真实的情感连接，讨厌套路。你会为伴侣创造浪漫氛围。\n\n你可能因不善表达需求而感到委屈。",
+    friendshipStyle: "你是朋友中的艺术家和温柔陪伴。\n\n你不太主动社交，但能给朋友带来美和温暖。你不善冲突，会默默承受。\n\n你可能因过度敏感而受伤。",
+    familyStyle: "在家庭中，你是那个最敏感、最有艺术气质的成员。\n\n你能感知家庭氛围的变化，但不善表达。你渴望家人接受真实的你。\n\n你可能因家庭期望而感到压力。",
+    stressResponse: "面对压力时，你可能：\n• 完全退缩\n• 用艺术创作逃避\n• 过度受伤\n• 切断关系",
+    growthAdvice: "• 学会表达需求\n• 接受冲突的存在\n• 重视长远规划\n• 设立情感边界"
+  },
+  "ESTP": {
+    name: "企业家", nickname: "活力的行动派",
+    tags: ["活力", "行动", "机智", "务实"],
+    strengths: ["行动力强", "机智应变", "实际高效", "社交能力", "危机处理"],
+    weaknesses: ["不善长远规划", "可能显得冲动", "不善情感表达", "容易厌倦", "抗拒理论"],
+    careers: ["销售", "创业者", "营销经理", "运动员", "警察", "急救医生"],
+    relationships: "最佳匹配：ISFJ、ISTJ（互补型）\n次选匹配：ESTP（同频型）",
+    celebrities: "唐纳德·特朗普、麦当娜、布鲁斯·威利斯",
+    personalityPortrait: "你是活力的行动派，擅长把握当下机会。\n\n你务实高效，喜欢立刻行动。你机智幽默，善于处理危机。\n\n你享受社交和刺激，讨厌无聊。你不善长远规划，但总能化解眼前问题。",
+    loveStyle: "在感情中，你是热情浪漫的恋人。\n\n你会主动追求，看准目标就行动。你享受和伴侣一起冒险。\n\n你可能因不善承诺而让伴侣不安。",
+    friendshipStyle: "你是朋友圈的开心果和行动派。\n\n你组织活动、活跃气氛，是聚会的主角。你直率幽默。\n\n你可能因太过直接而伤害朋友。",
+    familyStyle: "在家庭中，你是那个带来活力和乐趣的成员。\n\n你会组织家庭活动，让家人快乐。但你可能因不善表达情感而让家人觉得你'不够稳重'。",
+    stressResponse: "面对压力时，你可能：\n• 冲动做出决定\n• 用刺激活动逃避\n• 与人冲突\n• 拒绝承认问题",
+    growthAdvice: "• 重视长远规划\n• 学会延迟满足\n• 关注他人情感需求\n• 不要过度冲动"
+  },
+  "ESFP": {
+    name: "表演者", nickname: "活力的表演家",
+    tags: ["活力", "表演", "社交", "享乐"],
+    strengths: ["热情洋溢", "表演天赋", "善于社交", "活在当下", "激励他人"],
+    weaknesses: ["不善规划", "注意力分散", "可能过度依赖外界认可", "不善独处", "抗拒理论"],
+    careers: ["演员", "销售", "活动策划", "公关", "导游", "营销"],
+    relationships: "最佳匹配：ISFJ、ISTJ（互补型）\n次选匹配：ESFP（同频型）",
+    celebrities: "玛丽莲·梦露、碧昂丝、杰米·福克斯",
+    personalityPortrait: "你是活力的表演家，浑身充满感染力。\n\n你活在当下，享受生活的每一刻。你善于社交，能让周围的人快乐。\n\n你讨厌无聊和孤独，需要持续的刺激。你不善长远规划，但总能让当下精彩。",
+    loveStyle: "在感情中，你是热情浪漫的恋人，享受每一刻甜蜜。\n\n你会为伴侣制造惊喜，让关系充满乐趣。你讨厌沉闷的关系。\n\n你可能因不善深入交流而让伴侣觉得'肤浅'。",
+    friendshipStyle: "你是朋友圈的明星和气氛制造者。\n\n你组织聚会、活跃气氛，是大家的开心果。你享受与朋友在一起的每一刻。\n\n你可能因不善深度交流而难以有知心朋友。",
+    familyStyle: "在家庭中，你是带来欢乐的成员。\n\n你会组织家庭活动，让家庭充满笑声。但你可能因不善承担责任而让家人觉得你'不够成熟'。",
+    stressResponse: "面对压力时，你可能：\n• 完全逃避\n• 用享乐掩盖\n• 寻求外界认可\n• 拒绝面对问题",
+    growthAdvice: "• 学会面对困难\n• 重视深度关系\n• 不要过度依赖外界认可\n• 培养长远规划能力"
+  }
+};
+
+let answers = new Array(60).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 60 * 100) + '%';
+  document.getElementById('questionText').textContent = '第 ' + (currentQuestion + 1) + ' 题：' + q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  const optA = document.createElement('button');
+  optA.className = 'option';
+  optA.textContent = q.a;
+  optA.onclick = () => selectOption(0, optA);
+  
+  const optB = document.createElement('button');
+  optB.className = 'option';
+  optB.textContent = q.b;
+  optB.onclick = () => selectOption(1, optB);
+  
+  container.appendChild(optA);
+  container.appendChild(optB);
+  
+  // 已选答案回显
+  if (answers[currentQuestion] !== null) {
+    const btns = container.querySelectorAll('.option');
+    btns[answers[currentQuestion]].classList.add('selected');
+    document.getElementById('nextBtn').disabled = false;
+  } else {
+    document.getElementById('nextBtn').disabled = true;
+  }
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  // 计算倾向
+  const q = questions[currentQuestion];
+  // pos=1: 选 A 偏第一个字母；pos=-1: 选 A 偏第二个字母
+  answers[currentQuestion] = q.pos === 1 ? idx : (1 - idx);
+  
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function nextQuestion() {
+  if (answers[currentQuestion] === null) return;
+  if (currentQuestion < 59) {
+    currentQuestion++;
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateType() {
+  // E=0, I=1, S=0, N=1, T=0, F=1, J=0, P=1
+  // 累加每个维度的得分
+  let ei = 0, sn = 0, tf = 0, jp = 0; // 0=E/S/T/J, 1=I/N/F/P
+  questions.forEach((q, i) => {
+    if (answers[i] === null) return;
+    // answers[i]: 0=选A, 1=选B
+    // pos=1: A是第一个字母 (0), B是第二个字母 (1)
+    // pos=-1: A是第二个字母 (1), B是第一个字母 (0)
+    let score = q.pos === 1 ? answers[i] : (1 - answers[i]);
+    
+    if (q.dim === 'EI') ei += score;
+    if (q.dim === 'SN') sn += score;
+    if (q.dim === 'TF') tf += score;
+    if (q.dim === 'JP') jp += score;
+  });
+  
+  // 8 分及以上为第二个字母
+  const type = 
+    (ei >= 8 ? 'I' : 'E') +
+    (sn >= 8 ? 'N' : 'S') +
+    (tf >= 8 ? 'F' : 'T') +
+    (jp >= 8 ? 'P' : 'J');
+  
+  return { type, scores: { ei, sn, tf, jp } };
+}
+
+function showResult() {
+  const { type, scores } = calculateType();
+  const data = mbtiTypes[type];
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('resultType').textContent = type;
+  document.getElementById('resultName').textContent = data.name;
+  document.getElementById('resultNickname').textContent = '"' + data.nickname + '"';
+  
+  // 标签
+  const tagsContainer = document.getElementById('resultTags');
+  tagsContainer.innerHTML = '';
+  data.tags.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'tag';
+    span.textContent = t;
+    tagsContainer.appendChild(span);
+  });
+  
+  // 4 维度得分
+  const dimsContainer = document.getElementById('dimensions');
+  dimsContainer.innerHTML = '';
+  
+  const dimNames = {
+    EI: ['E 外向', 'I 内向'],
+    SN: ['S 实感', 'N 直觉'],
+    TF: ['T 思考', 'F 情感'],
+    JP: ['J 判断', 'P 感知']
+  };
+  
+  const dims = [
+    {key:'EI', score: scores.ei},
+    {key:'SN', score: scores.sn},
+    {key:'TF', score: scores.tf},
+    {key:'JP', score: scores.jp}
+  ];
+  
+  dims.forEach(d => {
+    const total = 15;
+    const right = d.score;
+    const left = total - right;
+    const leftPct = left / total * 100;
+    const rightPct = right / total * 100;
+    const dom = left > right ? dimNames[d.key][0] : dimNames[d.key][1];
+    
+    const row = document.createElement('div');
+    row.className = 'dimension-row';
+    row.innerHTML = `
+      <div class="dimension-labels">
+        <span>${dimNames[d.key][0]} (${left})</span>
+        <span style="text-align:center;">${dom} 偏多</span>
+        <span>${dimNames[d.key][1]} (${right})</span>
+      </div>
+      <div class="dimension-track">
+        <div class="dimension-fill left" style="width:${leftPct}%;"></div>
+        <div class="dimension-fill right" style="width:${rightPct}%;"></div>
+      </div>
+    `;
+    dimsContainer.appendChild(row);
+  });
+  
+  // 性格画像
+  document.getElementById('personalityPortrait').textContent = data.personalityPortrait;
+  
+  // 列表
+  document.getElementById('strengths').innerHTML = data.strengths.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('weaknesses').innerHTML = data.weaknesses.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('careers').innerHTML = data.careers.map(s => '<li>' + s + '</li>').join('');
+  
+  // 爱情/友情/家庭
+  document.getElementById('loveStyle').textContent = data.loveStyle;
+  document.getElementById('friendshipStyle').textContent = data.friendshipStyle;
+  document.getElementById('familyStyle').textContent = data.familyStyle;
+  
+  // 关系匹配
+  document.getElementById('relationships').textContent = data.relationships;
+  
+  // 压力 + 成长
+  document.getElementById('stressResponse').textContent = data.stressResponse;
+  document.getElementById('growthAdvice').textContent = data.growthAdvice;
+  
+  // 著名人物
+  document.getElementById('celebrities').textContent = data.celebrities;
+  
+  // 分享卡片
+  updatePoster(type, data);
+  
+  // 滚动到顶部
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updatePoster(type, data) {
+  const poster = document.getElementById('posterCard');
+  poster.className = 'poster-card poster-' + type;
+  document.getElementById('posterType').textContent = type;
+  document.getElementById('posterName').textContent = data.name;
+  document.getElementById('posterNick').textContent = '"' + data.nickname + '"';
+  
+  const traitsContainer = document.getElementById('posterTraits');
+  traitsContainer.innerHTML = '';
+  data.tags.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'poster-trait';
+    span.textContent = t;
+    traitsContainer.appendChild(span);
+  });
+}
+
+function copyShareText() {
+  const { type, scores: _ } = calculateType();
+  const data = mbtiTypes[type];
+  const text = 
+    '🧠 我的 MBTI 类型是 ' + type + ' (' + data.name + ')\n' +
+    '"' + data.nickname + '"\n\n' +
+    '核心优势：' + data.strengths.slice(0, 3).join('、') + '\n' +
+    '适合职业：' + data.careers.slice(0, 3).join('、') + '\n\n' +
+    '👉 来测测你的：jianhebox.cn/fun/mbti.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    const hint = document.getElementById('copyHint');
+    hint.textContent = '✅ 已复制到剪贴板！可以粘贴到任何地方';
+    setTimeout(() => hint.textContent = '', 3000);
+  }).catch(() => {
+    // fallback
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    const hint = document.getElementById('copyHint');
+    hint.textContent = '✅ 已复制！';
+    setTimeout(() => hint.textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  const hint = document.getElementById('copyHint');
+  hint.textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => hint.textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(60).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 隐藏辅助
+document.addEventListener('DOMContentLoaded', () => {
+  // 给所有 .hidden 添加正确样式
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

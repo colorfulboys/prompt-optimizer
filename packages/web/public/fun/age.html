@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>心理年龄测试 - 你内心几岁？ | 简盒玩点有趣的</title>
+<meta name="description" content="免费心理年龄测试，25 道题测出你的心理年龄。分析内在成熟度、童心指数、生活态度。">
+<meta name="keywords" content="心理年龄,年龄测试,童心,成熟,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+  .option {
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    color: white;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+    line-height: 1.5;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .age-number {
+    font-size: 80px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 16px 0;
+  }
+  .age-emoji { font-size: 60px; }
+  .age-tag {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    margin-top: 12px;
+    font-size: 14px;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #f5576c;
+    font-weight: bold;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 40px 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-emoji {
+    font-size: 64px;
+    margin: 12px 0;
+  }
+  .poster-age {
+    font-size: 72px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin: 8px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-tag-line {
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 16px auto;
+    border-radius: 2px;
+  }
+  .poster-trait {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .poster-footer {
+    margin-top: 20px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+
+  @media (max-width: 480px) {
+    .age-number { font-size: 60px; }
+    .poster-age { font-size: 56px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🧠 心理年龄测试</h1>
+    <p class="subtitle">25 题 · 你内心是几岁？</p>
+    <ul class="intro-feature-list">
+      <li>25 道深度题目，测出你的真实心理年龄</li>
+      <li>分析成熟度、童心指数、生活态度</li>
+      <li>专属海报分享，发朋友圈必备</li>
+      <li>✨ 完全免费 · 无需登录</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 4-6 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center; opacity:0.8; margin-bottom:16px; font-size:14px;">问题 <span id="currentQ">1</span> / 25</p>
+    <h3 id="questionText" style="margin-bottom:16px; line-height:1.5;"></h3>
+    <div id="optionsContainer" class="options"></div>
+    <button class="btn" id="prevBtn" onclick="prevQuestion()" style="margin-top:12px;">← 上一题</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="age-emoji" id="ageEmoji">🧒</div>
+      <div style="font-size:14px; opacity:0.85; margin-bottom:4px;">你的心理年龄</div>
+      <div class="age-number" id="ageNumber">25</div>
+      <div class="age-tag" id="ageTag">岁 · 真实年龄相近</div>
+    </div>
+
+    <h3 class="section-title">📝 心理画像</h3>
+    <p id="personality" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">💪 你的优势</h3>
+    <ul id="strengths" class="feature-list"></ul>
+
+    <h3 class="section-title">⚠️ 你的盲点</h3>
+    <ul id="weaknesses" class="feature-list"></ul>
+
+    <h3 class="section-title">🌱 成长建议</h3>
+    <p id="growth" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <div class="section-title">📤 分享我的心理年龄</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存下面的专属海报</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">心理年龄测试</div>
+          <div class="poster-emoji" id="posterEmoji">🧒</div>
+          <div class="poster-tag-line">我内心是</div>
+          <div class="poster-age" id="posterAge">25</div>
+          <div class="poster-tag-line">岁</div>
+          <div class="poster-divider"></div>
+          <div class="poster-trait" id="posterTag">真实年龄相近</div>
+          <div class="poster-footer">测试你的心理年龄 → jianhebox.cn/fun/age.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 心理年龄测试仅供参考娱乐，结果不一定准确反映真实的你。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 25 题 - 每题影响最终年龄
+const questions = [
+  { text: "你更喜欢哪种娱乐？", a: "动漫、游戏、卡通", b: "电影、书籍、艺术", score: -3 },
+  { text: "周末你更喜欢：", a: "睡懒觉、打游戏", b: "外出探索、新体验", score: -2 },
+  { text: "你相信童话故事吗？", a: "相信美好和魔法", b: "更相信现实", score: -4 },
+  { text: "你更喜欢哪种旅行？", a: "主题乐园、动物园", b: "文化古迹、自然风光", score: -3 },
+  { text: "面对压力，你更倾向：", a: "找人倾诉、寻求安慰", b: "自己消化、独立解决", score: 4 },
+  { text: "对未来你更：", a: "充满想象、不切实际", b: "有清晰规划", score: -3 },
+  { text: "你更喜欢哪种音乐？", a: "流行、动漫歌曲", b: "经典、爵士、摇滚", score: -3 },
+  { text: "你更喜欢什么礼物？", a: "玩具、可爱的东西", b: "实用的、有意义的", score: -3 },
+  { text: "你更喜欢的电影类型：", a: "动画、奇幻", b: "现实、历史、悬疑", score: -3 },
+  { text: "你处理人际冲突的方式：", a: "希望大家都开心", b: "讲原则和道理", score: 4 },
+  { text: "你对新事物的态度：", a: "充满好奇，跃跃欲试", b: "谨慎评估再决定", score: -3 },
+  { text: "你更喜欢的食物：", a: "甜食、零食、快餐", b: "健康的、家常的", score: -2 },
+  { text: "你说话的方式：", a: "直接、有时冲动", b: "温和、考虑他人感受", score: 2 },
+  { text: "面对失败时：", a: "很快恢复，看得开", b: "深刻反思，吸取教训", score: 4 },
+  { text: "你更喜欢和谁在一起？", a: "年轻的朋友", b: "有阅历的朋友", score: 4 },
+  { text: "你喜欢的颜色：", a: "鲜艳、活泼的颜色", b: "沉稳、低调的颜色", score: -3 },
+  { text: "你更在意外表吗？", a: "喜欢打扮、追赶潮流", b: "舒适自然就好", score: -2 },
+  { text: "你做决定时：", a: "凭感觉、不纠结", b: "权衡利弊", score: 4 },
+  { text: "你对待感情：", a: "热烈、直接", b: "稳重、深思熟虑", score: 3 },
+  { text: "你更喜欢哪种环境？", a: "热闹、有活力", b: "安静、有秩序", score: 3 },
+  { text: "你看待人生：", a: "理想主义、浪漫", b: "现实主义、务实", score: 5 },
+  { text: "你更喜欢：", a: "惊喜、变化", b: "稳定、可预期", score: 3 },
+  { text: "你看待老去：", a: "不愿接受、抗拒", b: "坦然接受", score: 5 },
+  { text: "你做错事时：", a: "逃避、不愿面对", b: "勇于承认、负责", score: 4 },
+  { text: "你更喜欢：", a: "活在当下", b: "为未来规划", score: 4 }
+];
+
+let answers = new Array(25).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 25 * 100) + '%';
+  document.getElementById('questionText').textContent = '第 ' + (currentQuestion + 1) + ' 题：' + q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  const optA = document.createElement('button');
+  optA.className = 'option';
+  optA.textContent = 'A. ' + q.a;
+  optA.onclick = () => selectOption(0, optA);
+  
+  const optB = document.createElement('button');
+  optB.className = 'option';
+  optB.textContent = 'B. ' + q.b;
+  optB.onclick = () => selectOption(1, optB);
+  
+  container.appendChild(optA);
+  container.appendChild(optB);
+  
+  if (answers[currentQuestion] !== null) {
+    const btns = container.querySelectorAll('.option');
+    btns[answers[currentQuestion]].classList.add('selected');
+  }
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  answers[currentQuestion] = idx;
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  
+  setTimeout(() => {
+    if (currentQuestion < 24) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 250);
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateAge() {
+  // 基础年龄 25
+  let baseAge = 25;
+  let totalScore = 0;
+  
+  questions.forEach((q, i) => {
+    if (answers[i] === null) return;
+    // A 选 (idx=0) 加 score
+    if (answers[i] === 0) {
+      totalScore += q.score;
+    }
+  });
+  
+  // 总分范围 -75 到 +75
+  // 映射到 15-60 岁的范围
+  let finalAge = baseAge + Math.round(totalScore * 0.4);
+  finalAge = Math.max(15, Math.min(75, finalAge));
+  
+  return { age: finalAge, score: totalScore };
+}
+
+function showResult() {
+  const { age, score } = calculateAge();
+  const data = getAgeData(age, score);
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('ageNumber').textContent = age;
+  document.getElementById('ageEmoji').textContent = data.emoji;
+  document.getElementById('ageTag').textContent = data.tag;
+  document.getElementById('personality').textContent = data.personality;
+  document.getElementById('strengths').innerHTML = data.strengths.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('weaknesses').innerHTML = data.weaknesses.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('growth').textContent = data.growth;
+  
+  // 海报
+  document.getElementById('posterEmoji').textContent = data.emoji;
+  document.getElementById('posterAge').textContent = age;
+  document.getElementById('posterTag').textContent = data.tag;
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getAgeData(age, score) {
+  let emoji, tag, personality, strengths, weaknesses, growth;
+  
+  if (age <= 20) {
+    emoji = '🧒';
+    tag = '岁 · 童心未泯';
+    personality = '你的心理年龄非常年轻！\\n\\n你充满了好奇心和活力，对世界保持着孩子般的热情。你乐观开朗，喜欢新事物，容易被感动。\\n\\n你的世界是彩色的，你相信美好和可能。';
+    strengths = ['充满活力和好奇心', '乐观开朗', '真诚不做作', '容易结交朋友', '热爱生活'];
+    weaknesses = ['可能不够成熟', '做事缺乏规划', '容易冲动', '抗压能力较弱'];
+    growth = '• 多学习一些为人处事的智慧\\n• 学会接受挫折和失败\\n• 培养长期规划能力\\n• 给自己的未来一些方向';
+  } else if (age <= 30) {
+    emoji = '🧑';
+    tag = '岁 · 黄金年龄';
+    personality = '你的心理年龄正处于黄金时期！\\n\\n你既有年轻人的活力，又有成年的稳重。你对未来有期待，对当下有热情。\\n\\n你正处于人生的上升期，有无限可能。';
+    strengths = ['活力与成熟并存', '有理想和抱负', '适应力强', '懂得享受生活', '充满可能性'];
+    weaknesses = ['有时会迷茫', '在理想和现实间挣扎', '可能过于追求完美'];
+    growth = '• 找到自己的核心目标\\n• 学会平衡工作和生活\\n• 培养深度关系\\n• 不要害怕失败';
+  } else if (age <= 40) {
+    emoji = '🧔';
+    tag = '岁 · 成熟稳重';
+    personality = '你的心理年龄成熟稳重。\\n\\n你经历过人生的风雨，已经形成了自己的价值观和处事方式。你理性、务实、有担当。\\n\\n你不再追求表面的浮华，更看重内在的深度。';
+    strengths = ['成熟稳重', '有责任感', '经验丰富', '理性务实', '包容理解'];
+    weaknesses = ['可能缺乏激情', '有时过于保守', '可能变得世故'];
+    growth = '• 保持对生活的好奇心\\n• 不要停止学习和成长\\n• 给生活一些冒险\\n• 关注内心小孩';
+  } else {
+    emoji = '👴';
+    tag = '岁 · 智慧长者';
+    personality = '你的心理年龄已进入智慧长者的境界。\\n\\n你见多识广，内心平静而深远。你懂得生命的真谛，不再被表面的东西所迷惑。\\n\\n你的智慧和从容是你最大的财富。';
+    strengths = ['智慧深邃', '内心平静', '富有洞察力', '有耐心', '懂得放下'];
+    weaknesses = ['可能过于保守', '对新事物接受慢', '可能脱离年轻人'];
+    growth = '• 保持开放的心态\\n• 享受当下的每一刻\\n• 把智慧传递给下一代\\n• 让生活有新的可能';
+  }
+  
+  return { emoji, tag, personality, strengths, weaknesses, growth };
+}
+
+function copyShareText() {
+  const age = document.getElementById('ageNumber').textContent;
+  const tag = document.getElementById('ageTag').textContent;
+  const text = '🧠 我的心理年龄是 ' + age + ' 岁\\n' + tag + '\\n\\n你的是多少岁？\\n👉 测试你的心理年龄：jianhebox.cn/fun/age.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(25).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

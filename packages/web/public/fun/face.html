@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 面相分析（娱乐版）- 摄像头实时拍照 | 简盒玩点有趣的</title>
+<meta name="description" content="用摄像头实时拍照分析面相。娱乐版本，结果随机分配 + 模板化解读。分享时可一键换成自动匹配的虚拟头像保护隐私。">
+<meta name="keywords" content="面相,摄像头,娱乐,虚拟头像">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .card, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  /* 摄像头区 */
+  .camera-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.3);
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #video, #canvas, #preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+  #preview { display: none; }
+
+  .camera-controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+  .camera-controls button {
+    flex: 1;
+    min-width: 140px;
+  }
+
+  .loading {
+    text-align: center;
+    padding: 40px;
+  }
+  .loading-spinner {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255,255,255,0.2);
+    border-top: 5px solid #f5576c;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { font-size: 16px; margin: 12px 0; }
+  .loading-steps {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-top: 12px;
+    line-height: 1.8;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  .result-summary {
+    text-align: center;
+    padding: 24px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .face-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 16px;
+    border: 4px solid rgba(255,255,255,0.2);
+    display: block;
+  }
+  .result-type {
+    font-size: 48px;
+    margin: 12px 0;
+  }
+  .result-name {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: white;
+  }
+  .result-nick {
+    font-style: italic;
+    opacity: 0.85;
+    margin-bottom: 8px;
+  }
+
+  .wuguan-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .wuguan-card {
+    padding: 14px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .wuguan-emoji { font-size: 24px; }
+  .wuguan-label { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+  .wuguan-score {
+    font-size: 18px;
+    font-weight: bold;
+    color: #f093fb;
+    margin-top: 4px;
+  }
+
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #f5576c;
+    font-weight: bold;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .share-avatar-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .share-tab {
+    padding: 10px 18px;
+    background: rgba(255,255,255,0.1) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: white;
+    font-family: inherit;
+  }
+  .share-tab:hover {
+    background: rgba(255,255,255,0.2) !important;
+  }
+  .share-tab.active {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+    font-weight: bold;
+  }
+
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; text-align: center; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-photo {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid rgba(255,255,255,0.3);
+    margin: 12px 0;
+  }
+  .poster-avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin: 12px 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 70px;
+    border: 4px solid rgba(255,255,255,0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  .poster-type {
+    font-size: 32px;
+    margin: 8px 0;
+  }
+  .poster-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  .poster-nick {
+    font-size: 13px;
+    opacity: 0.9;
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+  .poster-scores {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin: 12px 0;
+  }
+  .poster-score {
+    padding: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    font-size: 11px;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+  .poster-avatar-match {
+    font-size: 11px;
+    opacity: 0.85;
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+
+  .honesty-note {
+    background: rgba(245, 87, 108, 0.2) !important;
+    border: 1px solid rgba(245, 87, 108, 0.4);
+    padding: 14px;
+    border-radius: 12px;
+    margin: 16px 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: white;
+  }
+
+  @media (max-width: 480px) {
+    .wuguan-grid { grid-template-columns: repeat(2, 1fr); }
+    .poster-card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>👤 AI 面相分析（娱乐版）</h1>
+    <p class="subtitle">摄像头实时拍照 · 分享可换虚拟头像</p>
+    <ul class="intro-feature-list">
+      <li>📸 用摄像头实时拍照分析五官、脸型、气质</li>
+      <li>📊 6 维度评分 + 详细解读报告</li>
+      <li>🎭 分享时一键换虚拟头像保护隐私</li>
+      <li>✨ 虚拟头像自动匹配您的面相</li>
+    </ul>
+
+    <div class="honesty-note">
+      ⚠️ <strong>诚实说明</strong>：本工具是<strong>娱乐版本</strong>，结果是随机分配 + 模板化解读，不是真实的 AI 人脸识别模型。结果仅供参考娱乐。<br><br>
+      📸 <strong>分析时</strong>：必须使用摄像头实时拍照<br>
+      🎭 <strong>分享时</strong>：可一键换成虚拟头像保护隐私（系统自动匹配最适合的形象）
+    </div>
+
+    <button class="btn-primary" onclick="startCamera()" style="width:100%;">📸 开启摄像头</button>
+  </div>
+
+  <!-- 摄像头区 -->
+  <div id="cameraSection" class="card hidden">
+    <h2 style="text-align:center; margin-bottom:16px;">📸 请正面对准摄像头</h2>
+    <div class="camera-container">
+      <video id="video" autoplay playsinline></video>
+      <canvas id="canvas" style="display:none;"></canvas>
+      <img id="preview" alt="预览">
+    </div>
+    <div class="camera-controls">
+      <button class="btn" onclick="closeCamera();goBack()">❌ 取消</button>
+      <button class="btn-primary" onclick="capture()">📸 拍照</button>
+      <button class="btn" onclick="switchCamera()">🔄 切换</button>
+    </div>
+  </div>
+
+  <!-- 加载中 -->
+  <div id="loading" class="card hidden">
+    <div class="loading">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">🧠 AI 正在分析您的面相...</div>
+      <div class="loading-steps" id="loadingSteps">
+        检测人脸位置...<br>
+        识别五官特征...<br>
+        分析脸型轮廓...<br>
+        计算气质类型...
+      </div>
+    </div>
+  </div>
+
+  <!-- 结果 -->
+  <div id="result" class="card hidden">
+    <div class="result-summary">
+      <img id="facePhoto" class="face-photo" alt="您的照片">
+      <div class="result-type" id="resultType">😊</div>
+      <div class="result-name" id="resultName">面相名称</div>
+      <div class="result-nick" id="resultNick">"面相描述"</div>
+    </div>
+
+    <h3 class="section-title">📊 五官评分</h3>
+    <div id="wuguanGrid" class="wuguan-grid"></div>
+
+    <h3 class="section-title">📝 性格特质</h3>
+    <p id="personality" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">💪 核心优势</h3>
+    <ul id="strengths" class="feature-list"></ul>
+
+    <h3 class="section-title">⚠️ 需要注意</h3>
+    <ul id="weaknesses" class="feature-list"></ul>
+
+    <h3 class="section-title">💕 爱情婚配</h3>
+    <p id="love" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">💼 事业财运</h3>
+    <p id="career" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <!-- 分享卡片 -->
+    <div class="section-title">📤 分享我的面相</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">选择分享方式：</p>
+
+      <div class="share-avatar-tabs">
+        <button class="share-tab active" onclick="chooseShareMode('photo')" id="photoShareTab">📷 我的真实照片</button>
+        <button class="share-tab" onclick="chooseShareMode('avatar')" id="avatarShareTab">🎭 虚拟头像</button>
+      </div>
+
+      <p style="margin:16px 0 12px; opacity:0.85; font-size:13px;">👇 长按或截图保存海报</p>
+
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">AI 面相分析（娱乐版）</div>
+          <div id="posterPhotoContainer">
+            <img id="posterPhoto" class="poster-photo" alt="照片">
+          </div>
+          <div id="posterAvatarContainer" style="display:none;">
+            <div id="posterAvatar" class="poster-avatar">🦁</div>
+          </div>
+          <div class="poster-type" id="posterType">😊</div>
+          <div class="poster-name" id="posterName">面相名</div>
+          <div class="poster-nick" id="posterNick">"描述"</div>
+          <div class="poster-avatar-match" id="posterAvatarMatch" style="display:none;">自动匹配 · 最适合您的形象</div>
+          <div class="poster-scores" id="posterScores"></div>
+          <div class="poster-footer">测试你的面相 → jianhebox.cn/fun/face.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartApp()" style="width:100%; margin-top:12px;">🔄 重新分析</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ <strong>娱乐版本</strong>，结果随机分配 + 模板化解读。<br>
+    📸 分析时：必须使用摄像头实时拍照（仅本地处理，不上传）<br>
+    🎭 分享时：可一键换成虚拟头像（自动匹配最适合的形象）
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+let videoStream = null;
+let currentFacingMode = 'user';
+let capturedImage = null;
+let shareMode = 'photo';
+let matchedAvatar = null;
+
+const faceTypes = {
+  weiyang: {
+    name: "威严型", nickname: "天生的领导者", emoji: "🦁",
+    color: "linear-gradient(135deg, #c31432, #240b36)",
+    personality: "您的面相透露出威严与力量感。\\n\\n您五官立体，气场强大。天生具有领导气质，能在人群中脱颖而出。\\n\\n您的眼神锐利，能洞察人心；下颌轮廓分明，给人信任感。",
+    strengths: ["威严有担当，决策力强", "气场强大，让人信服", "洞察力强", "适合做领袖"],
+    weaknesses: ["可能显得过于严肃", "不善亲近他人", "控制欲可能偏强"],
+    love: "【爱情】您是忠诚的伴侣，但可能显得强势。最佳配对：温和型能中和您的气场。",
+    career: "【事业】您适合领导、管理、创业类工作。在竞争中能取得高成就。",
+    colorTags: ["威严", "果断", "领导"]
+  },
+  youya: {
+    name: "优雅型", nickname: "艺术家之相", emoji: "🦢",
+    color: "linear-gradient(135deg, #ee9ca7, #ffdde1)",
+    personality: "您的面相透露出优雅与高贵。\\n\\n您五官柔和，气质独特。是天然的优雅人，举手投足都让人赏心悦目。\\n\\n您的眉眼温柔，给人亲近感；轮廓和谐，让人愿意靠近。",
+    strengths: ["优雅有品味", "艺术感强", "善于社交", "温柔体贴"],
+    weaknesses: ["可能过于追求完美", "不善冲突", "有时优柔寡断"],
+    love: "【爱情】您是浪漫的恋人，重视美的体验。最佳配对：能给您安全感的伴侣。",
+    career: "【事业】您适合艺术、设计、文学类工作。在美的领域能发光。",
+    colorTags: ["优雅", "艺术", "温柔"]
+  },
+  qinqie: {
+    name: "亲切型", nickname: "福气之相", emoji: "🐻",
+    color: "linear-gradient(135deg, #fbc2eb, #a18cd1)",
+    personality: "您的面相透露出亲切与福气。\\n\\n您五官圆润，气质温暖。是天然的暖心人，让人不由自主地想靠近。\\n\\n您的眼神柔和，给人安全感；轮廓圆润，让人感到亲切。",
+    strengths: ["亲切温暖", "善于倾听", "包容大度", "人缘极佳"],
+    weaknesses: ["可能过于迁就", "不善拒绝", "可能显得软弱"],
+    love: "【爱情】您是温柔的伴侣，会照顾对方的一切。最佳配对：能给您依靠的人。",
+    career: "【事业】您适合服务、教育、社交类工作。人缘好，贵人运旺。",
+    colorTags: ["亲切", "温暖", "福气"]
+  }
+};
+
+// 6 种虚拟头像（按类型分组，用于自动匹配）
+const virtualAvatars = {
+  weiyang: [
+    { id: 'wm', label: '威严男', emoji: '🤴', bg: 'linear-gradient(135deg, #c31432, #240b36)' },
+    { id: 'wf', label: '威严女', emoji: '👸', bg: 'linear-gradient(135deg, #ff416c, #ff4b2b)' }
+  ],
+  youya: [
+    { id: 'ym', label: '优雅男', emoji: '🧑‍🎨', bg: 'linear-gradient(135deg, #ee9ca7, #ffdde1)' },
+    { id: 'yf', label: '优雅女', emoji: '👩‍🎨', bg: 'linear-gradient(135deg, #fad0c4, #ffd1ff)' }
+  ],
+  qinqie: [
+    { id: 'qm', label: '亲切男', emoji: '🧔', bg: 'linear-gradient(135deg, #fbc2eb, #a18cd1)' },
+    { id: 'qf', label: '亲切女', emoji: '👩', bg: 'linear-gradient(135deg, #a1c4fd, #c2e9fb)' }
+  ]
+};
+
+// 启动摄像头
+async function startCamera() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('cameraSection').classList.remove('hidden');
+  
+  try {
+    videoStream = await navigator.mediaDevices.getUserMedia({
+      video: { 
+        facingMode: currentFacingMode,
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      },
+      audio: false
+    });
+    
+    document.getElementById('video').srcObject = videoStream;
+  } catch (err) {
+    alert('无法访问摄像头：' + err.message + '\\n\\n请确保：\\n1. 已授予摄像头权限\\n2. 使用 HTTPS 访问\\n3. 浏览器支持 getUserMedia');
+    goBack();
+  }
+}
+
+async function switchCamera() {
+  closeCamera();
+  currentFacingMode = currentFacingMode === 'user' ? 'environment' : 'user';
+  await startCamera();
+}
+
+function closeCamera() {
+  if (videoStream) {
+    videoStream.getTracks().forEach(track => track.stop());
+    videoStream = null;
+  }
+  document.getElementById('video').srcObject = null;
+}
+
+function capture() {
+  const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+  const preview = document.getElementById('preview');
+  
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0);
+  
+  capturedImage = canvas.toDataURL('image/jpeg', 0.8);
+  preview.src = capturedImage;
+  preview.style.display = 'block';
+  video.style.display = 'none';
+  
+  closeCamera();
+  
+  setTimeout(() => analyzeImage(capturedImage), 300);
+}
+
+function goBack() {
+  document.getElementById('cameraSection').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  closeCamera();
+}
+
+function analyzeImage(imageData) {
+  document.getElementById('cameraSection').classList.add('hidden');
+  document.getElementById('loading').classList.remove('hidden');
+  
+  const steps = [
+    '检测人脸位置...',
+    '识别五官特征...',
+    '分析脸型轮廓...',
+    '评估气质类型...',
+    '生成专属报告...'
+  ];
+  
+  let currentStep = 0;
+  const stepInterval = setInterval(() => {
+    if (currentStep < steps.length) {
+      document.getElementById('loadingSteps').innerHTML = 
+        steps.slice(currentStep).join('<br>');
+      currentStep++;
+    } else {
+      clearInterval(stepInterval);
+    }
+  }, 500);
+  
+  setTimeout(() => {
+    clearInterval(stepInterval);
+    showResult(imageData);
+  }, 2500);
+}
+
+function showResult(imageData) {
+  // 随机分配类型
+  const types = ['weiyang', 'youya', 'qinqie'];
+  const typeKey = types[Math.floor(Math.random() * types.length)];
+  const data = faceTypes[typeKey];
+  
+  // 自动匹配虚拟头像（随机选一个同类型的）
+  const avatars = virtualAvatars[typeKey];
+  matchedAvatar = avatars[Math.floor(Math.random() * avatars.length)];
+  
+  document.getElementById('loading').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  // 显示照片
+  document.getElementById('facePhoto').src = imageData;
+  
+  // 海报默认用真实照片
+  shareMode = 'photo';
+  document.getElementById('photoShareTab').classList.add('active');
+  document.getElementById('avatarShareTab').classList.remove('active');
+  
+  // 类型 + 名称
+  document.getElementById('resultType').textContent = data.emoji;
+  document.getElementById('resultName').textContent = data.name;
+  document.getElementById('resultNick').textContent = '"' + data.nickname + '"';
+  
+  // 五官评分
+  const wuguanItems = [
+    { emoji: '👁️', name: '眼睛', score: Math.floor(Math.random() * 20) + 80 },
+    { emoji: '👃', name: '鼻梁', score: Math.floor(Math.random() * 20) + 75 },
+    { emoji: '👄', name: '嘴唇', score: Math.floor(Math.random() * 20) + 78 },
+    { emoji: '👂', name: '耳朵', score: Math.floor(Math.random() * 20) + 75 },
+    { emoji: '🧠', name: '额头', score: Math.floor(Math.random() * 20) + 75 },
+    { emoji: '💪', name: '下颌', score: Math.floor(Math.random() * 20) + 78 }
+  ];
+  
+  const grid = document.getElementById('wuguanGrid');
+  grid.innerHTML = '';
+  wuguanItems.forEach(item => {
+    const card = document.createElement('div');
+    card.className = 'wuguan-card';
+    card.innerHTML = `
+      <div class="wuguan-emoji">${item.emoji}</div>
+      <div class="wuguan-label">${item.name}</div>
+      <div class="wuguan-score">${item.score}分</div>
+    `;
+    grid.appendChild(card);
+  });
+  
+  document.getElementById('personality').textContent = data.personality;
+  document.getElementById('strengths').innerHTML = data.strengths.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('weaknesses').innerHTML = data.weaknesses.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('love').textContent = data.love;
+  document.getElementById('career').textContent = data.career;
+  
+  // 存储 wuguanItems 供海报更新用
+  window._wuguanItems = wuguanItems;
+  
+  updatePoster(data);
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function chooseShareMode(mode) {
+  shareMode = mode;
+  
+  if (mode === 'photo') {
+    document.getElementById('photoShareTab').classList.add('active');
+    document.getElementById('avatarShareTab').classList.remove('active');
+    document.getElementById('posterAvatarMatch').style.display = 'none';
+  } else {
+    document.getElementById('avatarShareTab').classList.add('active');
+    document.getElementById('photoShareTab').classList.remove('active');
+    document.getElementById('posterAvatarMatch').style.display = 'block';
+  }
+  
+  const typeKey = { '威严型': 'weiyang', '优雅型': 'youya', '亲切型': 'qinqie' }[document.getElementById('resultName').textContent];
+  if (typeKey) updatePoster(faceTypes[typeKey]);
+}
+
+function updatePoster(data) {
+  // 背景色根据面相类型
+  document.getElementById('posterCard').style.background = data.color;
+  
+  // 海报头像
+  if (shareMode === 'avatar' && matchedAvatar) {
+    document.getElementById('posterPhotoContainer').style.display = 'none';
+    document.getElementById('posterAvatarContainer').style.display = 'block';
+    const avatarEl = document.getElementById('posterAvatar');
+    avatarEl.textContent = matchedAvatar.emoji;
+    avatarEl.style.background = matchedAvatar.bg;
+  } else {
+    document.getElementById('posterPhotoContainer').style.display = 'block';
+    document.getElementById('posterAvatarContainer').style.display = 'none';
+    document.getElementById('posterPhoto').src = capturedImage;
+  }
+  
+  // 类型名称
+  document.getElementById('posterType').textContent = data.emoji;
+  document.getElementById('posterName').textContent = data.name;
+  document.getElementById('posterNick').textContent = '"' + data.nickname + '"';
+  
+  // 五官评分
+  const posterScores = document.getElementById('posterScores');
+  posterScores.innerHTML = '';
+  if (window._wuguanItems) {
+    window._wuguanItems.slice(0, 6).forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'poster-score';
+      div.textContent = item.emoji + item.score;
+      posterScores.appendChild(div);
+    });
+  }
+}
+
+function copyShareText() {
+  const name = document.getElementById('resultName').textContent;
+  const nick = document.getElementById('resultNick').textContent;
+  const shareType = shareMode === 'avatar' ? '虚拟头像' : '真实照片';
+  
+  const text = '👤 我的 AI 面相分析（娱乐版）\\n分享方式：' + shareType + '\\n\\n' + name + '\\n' + nick + '\\n\\n👉 测试你的面相：jianhebox.cn/fun/face.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartApp() {
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  document.getElementById('preview').style.display = 'none';
+  document.getElementById('video').style.display = 'block';
+  document.getElementById('preview').src = '';
+  capturedImage = null;
+  matchedAvatar = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

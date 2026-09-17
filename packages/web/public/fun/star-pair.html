@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>星座配对测试 - 12 星座缘分配对 | 简盒玩点有趣的</title>
+<meta name="description" content="免费星座配对测试。12 星座两两配对，看你们的缘分指数、性格契合度、爱情配对解读。">
+<meta name="keywords" content="星座,配对,星座配对,占卜,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .select-row { margin-bottom: 16px; }
+  .select-row label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: white;
+  }
+  .select-row select {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255,255,255,0.1) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    font-family: inherit;
+  }
+  .select-row select option { background: #2c1e4a; color: white; }
+
+  .result-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .pair-stars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .pair-star {
+    font-size: 48px;
+  }
+  .pair-heart {
+    font-size: 36px;
+    color: #f5576c;
+    animation: heartbeat 1.5s infinite;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+  .pair-score {
+    font-size: 64px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 12px 0;
+  }
+  .pair-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #f5576c, #f093fb);
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .score-row { margin-bottom: 12px; }
+  .score-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+  }
+  .score-track {
+    height: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 5px;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+    line-height: 1.8;
+  }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-pair {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+    margin: 12px 0;
+  }
+  .poster-star-emoji {
+    font-size: 40px;
+  }
+  .poster-score {
+    font-size: 48px;
+    font-weight: 900;
+    margin: 8px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-level {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    margin: 8px 0;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  .poster-trait {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>💫 星座配对</h1>
+    <p class="subtitle">12 星座 · 144 种缘分组合</p>
+    <ul class="intro-feature-list">
+      <li>💕 选择你和 TA 的星座</li>
+      <li>📊 5 维缘分契合度分析</li>
+      <li>💖 性格互补 + 爱情配对解读</li>
+      <li>✨ 专属海报分享</li>
+    </ul>
+    <div class="select-row">
+      <label>♈ 你的星座</label>
+      <select id="myStar">
+        <option value="白羊">♈ 白羊座 (3.21-4.19)</option>
+        <option value="金牛">♉ 金牛座 (4.20-5.20)</option>
+        <option value="双子">♊ 双子座 (5.21-6.21)</option>
+        <option value="巨蟹">♋ 巨蟹座 (6.22-7.22)</option>
+        <option value="狮子">♌ 狮子座 (7.23-8.22)</option>
+        <option value="处女">♍ 处女座 (8.23-9.22)</option>
+        <option value="天秤">♎ 天秤座 (9.23-10.23)</option>
+        <option value="天蝎">♏ 天蝎座 (10.24-11.22)</option>
+        <option value="射手">♐ 射手座 (11.23-12.21)</option>
+        <option value="摩羯">♑ 摩羯座 (12.22-1.19)</option>
+        <option value="水瓶">♒ 水瓶座 (1.20-2.18)</option>
+        <option value="双鱼">♓ 双鱼座 (2.19-3.20)</option>
+      </select>
+    </div>
+    <div class="select-row">
+      <label>♈ TA 的星座</label>
+      <select id="theirStar">
+        <option value="白羊">♈ 白羊座</option>
+        <option value="金牛">♉ 金牛座</option>
+        <option value="双子">♊ 双子座</option>
+        <option value="巨蟹">♋ 巨蟹座</option>
+        <option value="狮子">♌ 狮子座</option>
+        <option value="处女">♍ 处女座</option>
+        <option value="天秤">♎ 天秤座</option>
+        <option value="天蝎">♏ 天蝎座</option>
+        <option value="射手">♐ 射手座</option>
+        <option value="摩羯">♑ 摩羯座</option>
+        <option value="水瓶">♒ 水瓶座</option>
+        <option value="双鱼">♓ 双鱼座</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="calculatePair()" style="width:100%; margin-top:12px;">💕 测试配对</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="pair-stars">
+        <span class="pair-star" id="myEmoji">♈</span>
+        <span class="pair-heart">❤️</span>
+        <span class="pair-star" id="theirEmoji">♉</span>
+      </div>
+      <div style="font-size:18px; margin-bottom:6px;" id="pairNames">白羊 ❤ 金牛</div>
+      <div class="pair-score" id="pairScore">85</div>
+      <div style="font-size:13px; opacity:0.85;">配对指数</div>
+      <div class="pair-level" id="pairLevel">天生一对</div>
+    </div>
+
+    <h3 class="section-title">📊 5 维契合</h3>
+    <div id="scoreRows"></div>
+
+    <h3 class="section-title">💕 配对解读</h3>
+    <div class="info-card" id="pairReading"></div>
+
+    <h3 class="section-title">💖 性格互补</h3>
+    <div class="info-card" id="complement"></div>
+
+    <h3 class="section-title">🌹 相处建议</h3>
+    <ul id="adviceList" class="feature-list"></ul>
+
+    <div class="section-title">📤 分享配对</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">星座配对</div>
+          <div class="poster-pair">
+            <span class="poster-star-emoji" id="posterMyEmoji">♈</span>
+            <span style="font-size:24px;">❤️</span>
+            <span class="poster-star-emoji" id="posterTheirEmoji">♉</span>
+          </div>
+          <div class="poster-score" id="posterScore">85</div>
+          <div class="poster-level" id="posterLevel">天生一对</div>
+          <div class="poster-divider"></div>
+          <div class="poster-trait" id="posterTrait">配对解读</div>
+          <div class="poster-footer">测试你们的配对 → jianhebox.cn/fun/star-pair.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartApp()" style="width:100%; margin-top:12px;">🔄 测试其他配对</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 星座配对仅供娱乐参考，感情需要双方经营。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+const starEmojis = {
+  '白羊': '♈', '金牛': '♉', '双子': '♊', '巨蟹': '♋',
+  '狮子': '♌', '处女': '♍', '天秤': '♎', '天蝎': '♏',
+  '射手': '♐', '摩羯': '♑', '水瓶': '♒', '双鱼': '♓'
+};
+
+// 星座元素：火、土、风、水
+const starElements = {
+  '白羊': 'fire', '狮子': 'fire', '射手': 'fire',
+  '金牛': 'earth', '处女': 'earth', '摩羯': 'earth',
+  '双子': 'air', '天秤': 'air', '水瓶': 'air',
+  '巨蟹': 'water', '天蝎': 'water', '双鱼': 'water'
+};
+
+// 星座特点
+const starTraits = {
+  '白羊': { personality: '热情、冲动、直接、勇敢', love: '主动、直接、不拘小节' },
+  '金牛': { personality: '稳重、实际、固执、可靠', love: '忠诚、稳定、慢热' },
+  '双子': { personality: '机智、善变、好奇、社交', love: '浪漫、灵活、需新鲜感' },
+  '巨蟹': { personality: '温柔、念旧、保护、敏感', love: '深情、依赖、需要安全感' },
+  '狮子': { personality: '自信、慷慨、领导、有创造力', love: '热烈、直接、喜欢被崇拜' },
+  '处女': { personality: '完美、细心、挑剔、实际', love: '认真、有条理、慢热' },
+  '天秤': { personality: '优雅、和谐、公正、犹豫', love: '浪漫、追求美感、需平衡' },
+  '天蝎': { personality: '深沉、专注、神秘、强烈', love: '深情、占有欲强、爱恨分明' },
+  '射手': { personality: '自由、乐观、爱冒险、坦率', love: '自由、追求理想、不受束缚' },
+  '摩羯': { personality: '实际、稳重、有野心、保守', love: '专一、负责、慢热' },
+  '水瓶': { personality: '独立、创新、理性、独特', love: '自由、需要空间' },
+  '双鱼': { personality: '浪漫、敏感、艺术、梦幻', love: '梦幻、浪漫、全心投入' }
+};
+
+// 计算配对指数
+function calculatePairScore(s1, s2) {
+  let base = 60;
+  
+  // 同元素加分（火+火、土+土、风+风、水+水）
+  if (starElements[s1] === starElements[s2]) {
+    base += 15;
+  }
+  // 相邻元素加分
+  else if (
+    (starElements[s1] === 'fire' && starElements[s2] === 'air') ||
+    (starElements[s1] === 'air' && starElements[s2] === 'fire') ||
+    (starElements[s1] === 'earth' && starElements[s2] === 'water') ||
+    (starElements[s1] === 'water' && starElements[s2] === 'earth')
+  ) {
+    base += 12;
+  }
+  // 对立元素减分
+  else if (
+    (starElements[s1] === 'fire' && starElements[s2] === 'water') ||
+    (starElements[s1] === 'water' && starElements[s2] === 'fire') ||
+    (starElements[s1] === 'earth' && starElements[s2] === 'air') ||
+    (starElements[s1] === 'air' && starElements[s2] === 'earth')
+  ) {
+    base -= 5;
+  }
+  
+  // 特定配对加成
+  const specialPairs = {
+    '巨蟹-天蝎': 95, '天蝎-巨蟹': 95,
+    '狮子-射手': 92, '射手-狮子': 92,
+    '双子-天秤': 90, '天秤-双子': 90,
+    '金牛-处女': 90, '处女-金牛': 90,
+    '白羊-狮子': 88, '狮子-白羊': 88,
+    '摩羯-金牛': 88, '金牛-摩羯': 88,
+    '天蝎-双鱼': 88, '双鱼-天蝎': 88,
+    '射手-水瓶': 85, '水瓶-射手': 85
+  };
+  
+  const pairKey = s1 + '-' + s2;
+  if (specialPairs[pairKey]) {
+    return specialPairs[pairKey];
+  }
+  
+  // 基础分 + 名字加成（确定性）
+  let seed = 0;
+  for (let i = 0; i < s1.length; i++) seed += s1.charCodeAt(i);
+  for (let i = 0; i < s2.length; i++) seed += s2.charCodeAt(i);
+  
+  base += (seed % 15);
+  return Math.max(45, Math.min(95, base));
+}
+
+function calculatePair() {
+  const s1 = document.getElementById('myStar').value;
+  const s2 = document.getElementById('theirStar').value;
+  
+  if (s1 === s2) {
+    alert('请选择两个不同的星座');
+    return;
+  }
+  
+  const score = calculatePairScore(s1, s2);
+  
+  let level, desc;
+  if (score >= 90) {
+    level = '💞 天作之合';
+    desc = '你们的星座配对堪称完美，命中注定的缘分。\\n\\n你们的性格、价值观、情感需求都高度契合。在一起会有深刻的理解和共鸣，是彼此生命中的重要伴侣。';
+  } else if (score >= 80) {
+    level = '💕 佳偶天成';
+    desc = '你们是非常有缘的配对。\\n\\n星座特质高度契合，能在彼此身上找到共鸣。虽然可能有些小摩擦，但更多的是理解和包容。好好经营，前景光明。';
+  } else if (score >= 70) {
+    level = '💗 情投意合';
+    desc = '你们的配对是不错的组合。\\n\\n虽然有些性格差异，但更多的是互补。关系需要双方用心经营，多沟通多理解，会有好的结果。';
+  } else if (score >= 60) {
+    level = '💝 缘分尚可';
+    desc = '你们的配对需要更多磨合。\\n\\n性格差异较大，需要双方都付出努力。学会欣赏对方的不同，是关系长久的关键。';
+  } else {
+    level = '🤍 挑战重重';
+    desc = '你们的配对充满挑战。\\n\\n性格、价值观差异较大，关系需要很多努力。如果真的在一起，需要极大的包容和理解。';
+  }
+  
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('myEmoji').textContent = starEmojis[s1];
+  document.getElementById('theirEmoji').textContent = starEmojis[s2];
+  document.getElementById('pairNames').textContent = s1 + ' ❤ ' + s2;
+  document.getElementById('pairScore').textContent = score;
+  document.getElementById('pairLevel').textContent = level;
+  
+  // 5 维评分
+  const dims = [
+    { name: '💗 情感契合', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) },
+    { name: '🧠 思想契合', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) },
+    { name: '⚡ 生活节奏', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) },
+    { name: '💬 沟通能力', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) },
+    { name: '🔥 激情指数', score: Math.min(100, score + Math.floor(Math.random() * 10 - 5)) }
+  ];
+  
+  const scoreRows = document.getElementById('scoreRows');
+  scoreRows.innerHTML = '';
+  dims.forEach(d => {
+    const row = document.createElement('div');
+    row.className = 'score-row';
+    row.innerHTML = `
+      <div class="score-labels">
+        <span>${d.name}</span>
+        <span>${d.score}分</span>
+      </div>
+      <div class="score-track">
+        <div class="score-fill" style="width:${d.score}%;"></div>
+      </div>
+    `;
+    scoreRows.appendChild(row);
+  });
+  
+  document.getElementById('pairReading').textContent = desc;
+  
+  // 性格互补
+  const t1 = starTraits[s1];
+  const t2 = starTraits[s2];
+  document.getElementById('complement').innerHTML = 
+    '<strong>' + s1 + '座：</strong>' + t1.personality + '<br><br>' +
+    '<strong>' + s2 + '座：</strong>' + t2.personality + '<br><br>' +
+    '<strong>互补分析：</strong>' + s1 + '的' + t1.love + '，与' + s2 + '的' + t2.love + '形成有趣的对比。' +
+    '你们能在彼此身上看到不同的世界，但也正是这种差异让关系更有深度。';
+  
+  // 相处建议
+  let advices;
+  if (score >= 85) {
+    advices = ['珍惜这份难得的缘分', '保持初心，不要因为熟悉而忽视', '共同成长，让关系更深厚', '给彼此空间和时间'];
+  } else if (score >= 70) {
+    advices = ['多沟通，理解对方想法', '给彼此独立空间', '创造共同回忆', '在分歧中寻找平衡'];
+  } else {
+    advices = ['需要更多耐心和理解', '学会欣赏对方不同', '不要急于改变对方', '真诚是关系的基础'];
+  }
+  document.getElementById('adviceList').innerHTML = advices.map(a => '<li>' + a + '</li>').join('');
+  
+  // 海报
+  document.getElementById('posterMyEmoji').textContent = starEmojis[s1];
+  document.getElementById('posterTheirEmoji').textContent = starEmojis[s2];
+  document.getElementById('posterScore').textContent = score;
+  document.getElementById('posterLevel').textContent = level;
+  document.getElementById('posterTrait').textContent = desc.split('\\n')[0];
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyShareText() {
+  const score = document.getElementById('pairScore').textContent;
+  const names = document.getElementById('pairNames').textContent;
+  const level = document.getElementById('pairLevel').textContent;
+  
+  const text = '💫 ' + names + '\\n配对指数：' + score + '\\n' + level + '\\n\\n👉 测试你们的配对：jianhebox.cn/fun/star-pair.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartApp() {
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

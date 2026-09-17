@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 玄学头像生成 - 命格头像 · 易经八卦解读 | 简盒玩点有趣的</title>
+<meta name="description" content="输入姓名 + 出生日期，AI 根据你的命格生成专属玄学头像，附易经八卦解读、五行分析、性格特质、人生建议、开运指南。仅供娱乐。">
+<meta name="keywords" content="玄学头像,命格,易经,八卦,五行,八字,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 {
+    font-size: 28px;
+    margin-bottom: 12px;
+    text-align: center;
+    color: white;
+  }
+  .subtitle {
+    text-align: center;
+    opacity: 0.9;
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: white;
+  }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  /* 强制透明背景 */
+  .card, .form-row, .wuxing-bar, .share-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list {
+    list-style: none;
+    margin: 20px 0;
+  }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .form-row {
+    margin-bottom: 16px;
+  }
+  .form-row label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    opacity: 0.9;
+    color: white;
+  }
+  .form-row input, .form-row select {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255,255,255,0.1) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    font-family: inherit;
+  }
+  .form-row input::placeholder { color: rgba(255,255,255,0.5); }
+  .form-row input:focus, .form-row select:focus {
+    outline: none;
+    border-color: #f5576c;
+  }
+  .form-row select option { background: #2c1e4a; color: white; }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  .face-display {
+    text-align: center;
+    padding: 30px;
+  }
+  .face-circle {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    animation: rotate 20s linear infinite;
+  }
+  @keyframes rotate {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+  }
+  .face-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: white;
+  }
+  .face-mingge {
+    font-size: 16px;
+    opacity: 0.9;
+    color: white;
+  }
+
+  .wuxing-bar {
+    display: flex;
+    height: 36px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 12px 0;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .wuxing-segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    transition: all 0.3s;
+  }
+
+  .info-card {
+    background: rgba(255,255,255,0.08) !important;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 12px 0;
+  }
+  .info-text {
+    line-height: 1.8;
+    opacity: 0.95;
+    white-space: pre-line;
+    color: white;
+  }
+
+  /* 分享海报 */
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 40px 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #2c1810, #c31432);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; text-align: center; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-face {
+    font-size: 80px;
+    margin: 12px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 6px 0;
+  }
+  .poster-mingge {
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 16px;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 16px auto;
+    border-radius: 2px;
+  }
+  .poster-wuxing {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 16px 0;
+  }
+  .poster-wx {
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    font-size: 13px;
+  }
+  .poster-traits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin: 12px 0;
+  }
+  .poster-trait {
+    padding: 4px 10px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    font-size: 12px;
+  }
+  .poster-footer {
+    margin-top: 24px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link {
+    text-align: center;
+    margin: 20px 0;
+  }
+  .back-link a {
+    color: white;
+    opacity: 0.8;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  .loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+  }
+  .loading-spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255,255,255,0.2);
+    border-top: 4px solid #f5576c;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @media (max-width: 480px) {
+    .poster-card { padding: 30px 20px; }
+    .poster-face { font-size: 60px; }
+    .face-circle { width: 160px; height: 160px; font-size: 64px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🪄 AI 玄学头像</h1>
+    <p class="subtitle">基于命格的专属头像 + 易经八卦解读</p>
+    <ul class="intro-feature-list">
+      <li>输入姓名 + 出生日期 → 生成专属命格头像</li>
+      <li>五行分析、易经卦象、爱情/事业/财运</li>
+      <li>性格特质 + 人生建议 + 开运指南</li>
+      <li>✨ 专属海报分享卡片，发朋友圈必备</li>
+    </ul>
+    <button class="btn-primary" onclick="startApp()" style="width:100%;">开始生成 →</button>
+  </div>
+
+  <div id="form" class="card hidden">
+    <h2 style="text-align:center; margin-bottom:24px;">📝 输入你的信息</h2>
+    <div class="form-row">
+      <label>姓名 *</label>
+      <input type="text" id="userName" placeholder="请输入你的姓名" maxlength="20">
+    </div>
+    <div class="form-row">
+      <label>出生年份 *</label>
+      <select id="birthYear">
+        <option value="">请选择</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>出生月份 *</label>
+      <select id="birthMonth">
+        <option value="">请选择</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>出生日期 *</label>
+      <select id="birthDay">
+        <option value="">请选择</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>性别</label>
+      <select id="gender">
+        <option value="male">男</option>
+        <option value="female">女</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="generate()" style="width:100%; margin-top:12px;">✨ 生成玄学头像</button>
+  </div>
+
+  <div id="loading" class="card hidden">
+    <div class="loading">
+      <div class="loading-spinner"></div>
+      <p>正在解读你的命格...</p>
+      <p style="font-size:13px; opacity:0.7; margin-top:8px;">分析五行 · 推演卦象 · 生成专属头像</p>
+    </div>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="face-display">
+      <div id="faceCircle" class="face-circle">🔥</div>
+      <div id="faceName" class="face-name">命格名</div>
+      <div id="faceMingge" class="face-mingge">"命格描述"</div>
+    </div>
+
+    <div class="section-title">⚖️ 五行分布</div>
+    <div id="wuxingBar" class="wuxing-bar"></div>
+    <div id="wuxingText" class="info-text"></div>
+
+    <div class="section-title">🃏 易经卦象</div>
+    <div id="guaxiangText" class="info-text" style="line-height:1.8;"></div>
+
+    <div class="section-title">💎 性格特质</div>
+    <div id="xinggeText" class="info-text"></div>
+
+    <div class="section-title">🍀 人生建议</div>
+    <div id="jianyiText" class="info-text"></div>
+
+    <div class="section-title">💕 爱情婚配</div>
+    <div id="loveText" class="info-text"></div>
+
+    <div class="section-title">💼 事业财运</div>
+    <div id="careerText" class="info-text"></div>
+
+    <div class="section-title">🎨 头像寓意</div>
+    <div id="faceMeaning" class="info-text"></div>
+
+    <!-- 分享卡片 -->
+    <div class="section-title">📤 分享我的玄学头像</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存下面的专属海报</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">AI 玄学头像</div>
+          <div class="poster-face" id="posterFace">🔥</div>
+          <div class="poster-name" id="posterName">命格名</div>
+          <div class="poster-mingge" id="posterMingge">"命格描述"</div>
+          <div class="poster-divider"></div>
+          <div class="poster-wuxing" id="posterWuxing">
+            <span class="poster-wx">金 30%</span>
+          </div>
+          <div class="poster-traits" id="posterTraits">
+            <span class="poster-trait">智慧</span>
+            <span class="poster-trait">敏锐</span>
+          </div>
+          <div class="poster-footer">测试你的玄学命格 → jianhebox.cn/fun/ai-face.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartApp()" style="width:100%; margin-top:12px;">🔄 重新生成</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 本工具结果仅供娱乐参考，不构成任何专业建议。<br>
+    玄学解读纯属虚构，图像生成基于命理算法演示。<br>
+    请理性看待，不要作为人生决策依据。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 生肖
+function getShengxiao(year) {
+  const shengxiaoList = ['猴', '鸡', '狗', '猪', '鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊'];
+  return shengxiaoList[year % 12];
+}
+
+// 五行主属
+function getWuxingMain(year) {
+  // 简化天干地支算法
+  const tianGan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+  const gan = tianGan[year % 10];
+  const wxMap = {'甲':'木', '乙':'木', '丙':'火', '丁':'火', '戊':'土', '己':'土', '庚':'金', '辛':'金', '壬':'水', '癸':'水'};
+  return wxMap[gan];
+}
+
+// 五行分布
+function getWuxingDist(year, month, day) {
+  const seed = year * 10000 + month * 100 + day;
+  const total = 100;
+  // 简化算法：基于种子生成稳定分布
+  const jin = Math.abs((seed * 7) % 35) + 5;
+  const mu = Math.abs((seed * 11) % 35) + 5;
+  const shui = Math.abs((seed * 13) % 30) + 5;
+  const huo = Math.abs((seed * 17) % 30) + 5;
+  const tu = Math.abs((seed * 19) % 30) + 5;
+  const sum = jin + mu + shui + huo + tu;
+  return {
+    jin: Math.round(jin / sum * total),
+    mu: Math.round(mu / sum * total),
+    shui: Math.round(shui / sum * total),
+    huo: Math.round(huo / sum * total),
+    tu: Math.round(tu / sum * total)
+  };
+}
+
+// 易经卦象
+function getGua(year, month, day) {
+  const guaList = [
+    {name:'乾卦', desc:'天行健，君子以自强不息', traits:['刚健', '积极', '领导']},
+    {name:'坤卦', desc:'地势坤，君子以厚德载物', traits:['包容', '温和', '承载']},
+    {name:'震卦', desc:'震来虩虩，笑言哑哑', traits:['行动', '勇气', '突破']},
+    {name:'巽卦', desc:'随风巽，君子以申命行事', traits:['灵活', '沟通', '渗透']},
+    {name:'坎卦', desc:'习坎，有孚，维心亨', traits:['智慧', '坚韧', '深邃']},
+    {name:'离卦', desc:'明两作，离，大人以继明照于四方', traits:['光明', '热情', '洞察']},
+    {name:'艮卦', desc:'艮其背，不获其身', traits:['稳重', '止定', '内敛']},
+    {name:'兑卦', desc:'兑，说也，刚中而柔外', traits:['喜悦', '表达', '亲和']}
+  ];
+  const seed = year + month * 31 + day;
+  return guaList[seed % guaList.length];
+}
+
+// 命格头像 emoji
+function getFaceEmoji(wuxingMain) {
+  const map = {
+    '金': '🌟',
+    '木': '🌳',
+    '水': '🌊',
+    '火': '🔥',
+    '土': '⛰️'
+  };
+  return map[wuxingMain];
+}
+
+// 命格名称
+function getMinggeName(year, wuxingMain) {
+  const minggeList = {
+    '金': ['金星闪耀格', '金玉满堂格', '金刚不坏格'],
+    '木': ['青云直上格', '桃李芬芳格', '根深叶茂格'],
+    '水': ['润物无声格', '海纳百川格', '智者乐水格'],
+    '火': ['旭日东升格', '热情似火格', '光明磊落格'],
+    '土': ['厚德载物格', '稳如泰山格', '大地之母格']
+  };
+  const list = minggeList[wuxingMain];
+  return list[year % list.length];
+}
+
+// 命格描述
+function getMinggeDesc(wuxingMain) {
+  const desc = {
+    '金': '金主果断，刚毅不屈。你的命格如金属般坚硬，面对困难毫不退缩。',
+    '木': '木主仁慈，生机勃勃。你的命格如大树般向上成长，富有同情心和创造力。',
+    '水': '水主智慧，灵活变通。你的命格如流水般灵动，善于适应各种环境。',
+    '火': '火主热情，光明磊落。你的命格如火焰般热烈，充满活力和感染力。',
+    '土': '土主稳重，承载万物。你的命格如大地般踏实，值得信赖和依靠。'
+  };
+  return desc[wuxingMain];
+}
+
+// 性格特质
+function getXingge(wuxingMain) {
+  const xingge = {
+    '金': '你是一个原则性很强的人，做事果断、有条理。你重视公平和正义，但有时会显得过于严肃。你是朋友圈中可靠的决策者，能在关键时刻给出明确方向。',
+    '木': '你是一个富有同情心的人，善于理解他人的感受。你充满创造力，喜欢探索新事物。你的人缘很好，但你需要学会拒绝，避免过度付出。',
+    '水': '你是一个智慧型的人，思维灵活，善于分析。你能适应各种环境，是天生的解决问题者。但你有时会显得过于深沉，让人难以捉摸。',
+    '火': '你是一个热情洋溢的人，充满活力和感染力。你善于表达，能调动周围人的情绪。但你需要学会耐心，避免过于急躁。',
+    '土': '你是一个稳重可靠的人，值得信赖。你重视承诺和责任，是朋友圈中的定海神针。但你需要学会放松，享受当下。'
+  };
+  return xingge[wuxingMain];
+}
+
+// 人生建议
+function getJianyi(wuxingMain) {
+  const jianyi = {
+    '金': '【开运建议】\\n• 适合从事金融、法律、管理类工作\\n• 多穿白色、金色服饰\\n• 西方和北方是你的幸运方位\\n• 注意呼吸系统和皮肤健康',
+    '木': '【开运建议】\\n• 适合从事教育、文化、艺术类工作\\n• 多穿绿色、青色服饰\\n• 东方是你的幸运方位\\n• 注意肝胆保养，保持心情舒畅',
+    '水': '【开运建议】\\n• 适合从事科研、策划、咨询类工作\\n• 多穿黑色、深蓝色服饰\\n• 北方是你的幸运方位\\n• 注意肾脏和泌尿系统健康',
+    '火': '【开运建议】\\n• 适合从事公关、销售、演艺类工作\\n• 多穿红色、橙色服饰\\n• 南方是你的幸运方位\\n• 注意心血管健康，避免熬夜',
+    '土': '【开运建议】\\n• 适合从事建筑、农业、管理类工作\\n• 多穿黄色、棕色服饰\\n• 中央是你的幸运方位\\n• 注意消化系统健康，规律饮食'
+  };
+  return jianyi[wuxingMain];
+}
+
+// 爱情婚配
+function getLove(wuxingMain) {
+  const love = {
+    '金': '【爱情配对】\\n最佳配对：水命人(灵活互补)\\n次选：土命人(稳重相合)\\n爱情观：你重视承诺，一旦认定会很专一。但你不善表达浪漫，伴侣需要理解你的稳重。',
+    '木': '【爱情配对】\\n最佳配对：火命人(热情相吸)\\n次选：水命人(滋润成长)\\n爱情观：你温柔体贴，是理想的灵魂伴侣。但你有时会过度付出，需要保持独立。',
+    '水': '【爱情配对】\\n最佳配对：金命人(刚柔并济)\\n次选：木命人(智慧相投)\\n爱情观：你聪明机智，能与伴侣深入交流。但你有时会显得神秘，需要更多坦诚。',
+    '火': '【爱情配对】\\n最佳配对：木命人(木生火)\\n次选：土命人(火生土)\\n爱情观：你热情浪漫，能点燃爱情的火花。但你需要学会持久，不要三分钟热度。',
+    '土': '【爱情配对】\\n最佳配对：火命人(火生土)\\n次选：金命人(土生金)\\n爱情观：你稳重可靠，是理想的结婚对象。但你需要更多浪漫，让爱情保鲜。'
+  };
+  return love[wuxingMain];
+}
+
+// 事业财运
+function getCareer(wuxingMain) {
+  const career = {
+    '金': '【事业财运】\\n你在金融、科技、法律领域有天赋，决策力强。\\n财运稳健，适合稳健投资，不宜投机。\\n贵人运：你的贵人多是有权威的长辈。',
+    '木': '【事业财运】\\n你在教育、文化、艺术领域容易出彩。\\n财运缓慢上升，前期需要积累。\\n贵人运：你的贵人多是同龄的朋友。',
+    '水': '【事业财运】\\n你在科研、策划、咨询领域有优势。\\n财运起伏大，要顺势而为。\\n贵人运：你的贵人多是智者和导师。',
+    '火': '【事业财运】\\n你在公关、销售、演艺领域容易成功。\\n财运来得快，但也要注意储蓄。\\n贵人运：你的贵人多是热情的支持者。',
+    '土': '【事业财运】\\n你在管理、建筑、农业领域有天赋。\\n财运稳定增长，晚年更佳。\\n贵人运：你的贵人多是稳重的合作伙伴。'
+  };
+  return career[wuxingMain];
+}
+
+// 头像寓意
+function getFaceMeaning(wuxingMain, emoji) {
+  const meanings = {
+    '金': `你的头像 emoji 是 ${emoji}，象征着坚硬、纯粹和永恒。\\n\\n如金属般闪耀的你，有着清晰的价值观和强大的意志力。你的头像代表着你内心的光明和坚定，是金玉其内的最佳写照。`,
+    '木': `你的头像 emoji 是 ${emoji}，象征着生命、成长和希望。\\n\\n如大树般蓬勃的你，富有生机和创造力。你的头像代表着你内心的温柔和力量，是向上生长的最好诠释。`,
+    '水': `你的头像 emoji 是 ${emoji}，象征着智慧、灵活和深邃。\\n\\n如流水般灵动的你，有着深邃的思维和适应力。你的头像代表着你内心的清澈和智慧，是上善若水的最好体现。`,
+    '火': `你的头像 emoji 是 ${emoji}，象征着热情、光明和活力。\\n\\n如火焰般热烈的你，充满感染力和创造力。你的头像代表着你内心的光明和热情，是热情似火的最好写照。`,
+    '土': `你的头像 emoji 是 ${emoji}，象征着稳重、承载和可靠。\\n\\n如大地般踏实的你，值得信赖和依靠。你的头像代表着你内心的宽厚和稳定，是厚德载物的最好诠释。`
+  };
+  return meanings[wuxingMain];
+}
+
+let currentResult = null;
+
+function initForm() {
+  const yearSelect = document.getElementById('birthYear');
+  const monthSelect = document.getElementById('birthMonth');
+  const daySelect = document.getElementById('birthDay');
+  
+  // 年份
+  for (let y = 2026; y >= 1940; y--) {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y + '年';
+    yearSelect.appendChild(opt);
+  }
+  
+  // 月份
+  for (let m = 1; m <= 12; m++) {
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = m + '月';
+    monthSelect.appendChild(opt);
+  }
+  
+  // 日期（先默认 31 天）
+  for (let d = 1; d <= 31; d++) {
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = d + '日';
+    daySelect.appendChild(opt);
+  }
+}
+
+function startApp() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('form').classList.remove('hidden');
+  if (!document.getElementById('birthYear').children.length > 1) {
+    initForm();
+  }
+}
+
+function generate() {
+  const name = document.getElementById('userName').value.trim();
+  const year = parseInt(document.getElementById('birthYear').value);
+  const month = parseInt(document.getElementById('birthMonth').value);
+  const day = parseInt(document.getElementById('birthDay').value);
+  
+  if (!name) {
+    alert('请输入姓名');
+    return;
+  }
+  if (!year || !month || !day) {
+    alert('请完整选择出生日期');
+    return;
+  }
+  
+  // 模拟加载
+  document.getElementById('form').classList.add('hidden');
+  document.getElementById('loading').classList.remove('hidden');
+  
+  setTimeout(() => {
+    calculateAndShow(name, year, month, day);
+  }, 1500);
+}
+
+function calculateAndShow(name, year, month, day) {
+  const shengxiao = getShengxiao(year);
+  const wuxingMain = getWuxingMain(year);
+  const wuxingDist = getWuxingDist(year, month, day);
+  const gua = getGua(year, month, day);
+  const emoji = getFaceEmoji(wuxingMain);
+  const mingge = getMinggeName(year, wuxingMain);
+  const minggeDesc = getMinggeDesc(wuxingMain);
+  const xingge = getXingge(wuxingMain);
+  const jianyi = getJianyi(wuxingMain);
+  const love = getLove(wuxingMain);
+  const career = getCareer(wuxingMain);
+  const faceMeaning = getFaceMeaning(wuxingMain, emoji);
+  
+  currentResult = {name, year, month, day, shengxiao, wuxingMain, wuxingDist, gua, emoji, mingge, minggeDesc};
+  
+  document.getElementById('loading').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('faceCircle').textContent = emoji;
+  document.getElementById('faceName').textContent = name + ' · ' + mingge;
+  document.getElementById('faceMingge').textContent = '"' + minggeDesc + '"';
+  
+  // 五行分布
+  const wuxingColors = {
+    '金': 'linear-gradient(135deg, #ffd700, #ffed4e)',
+    '木': 'linear-gradient(135deg, #2ecc71, #27ae60)',
+    '水': 'linear-gradient(135deg, #3498db, #2980b9)',
+    '火': 'linear-gradient(135deg, #e74c3c, #c0392b)',
+    '土': 'linear-gradient(135deg, #d4a373, #b08968)'
+  };
+  
+  const wuxingBar = document.getElementById('wuxingBar');
+  wuxingBar.innerHTML = '';
+  ['金', '木', '水', '火', '土'].forEach(wx => {
+    const seg = document.createElement('div');
+    seg.className = 'wuxing-segment';
+    seg.style.width = wuxingDist[['jin','mu','shui','huo','tu'][['金','木','水','火','土'].indexOf(wx)]] + '%';
+    seg.style.background = wuxingColors[wx];
+    seg.textContent = wx + ' ' + wuxingDist[['jin','mu','shui','huo','tu'][['金','木','水','火','土'].indexOf(wx)]] + '%';
+    wuxingBar.appendChild(seg);
+  });
+  
+  document.getElementById('wuxingText').textContent = 
+    `你的命格主属「${wuxingMain}」\\n` +
+    `五行分布显示：你天生具有${wuxingMain === '金' ? '刚毅果断' : wuxingMain === '木' ? '仁慈创造' : wuxingMain === '水' ? '智慧灵活' : wuxingMain === '火' ? '热情光明' : '稳重承载'}的特质，${wuxingDist[wuxingMain === '金' ? 'jin' : wuxingMain === '木' ? 'mu' : wuxingMain === '水' ? 'shui' : wuxingMain === '火' ? 'huo' : 'tu']}% 的能量集中在这一行。`;
+  
+  // 易经卦象
+  document.getElementById('guaxiangText').textContent = 
+    `你占得「${gua.name}」\\n\\n卦辞：${gua.desc}\\n\\n核心特质：${gua.traits.join('、')}`;
+  
+  document.getElementById('xinggeText').textContent = xingge;
+  document.getElementById('jianyiText').textContent = jianyi;
+  document.getElementById('loveText').textContent = love;
+  document.getElementById('careerText').textContent = career;
+  document.getElementById('faceMeaning').textContent = faceMeaning;
+  
+  // 海报
+  updatePoster(name, mingge, minggeDesc, emoji, wuxingMain, wuxingDist, gua);
+  
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updatePoster(name, mingge, minggeDesc, emoji, wuxingMain, wuxingDist, gua) {
+  document.getElementById('posterFace').textContent = emoji;
+  document.getElementById('posterName').textContent = name + ' · ' + mingge;
+  document.getElementById('posterMingge').textContent = '"' + minggeDesc + '"';
+  
+  // 五行
+  const wxContainer = document.getElementById('posterWuxing');
+  wxContainer.innerHTML = '';
+  ['金', '木', '水', '火', '土'].forEach(wx => {
+    const span = document.createElement('span');
+    span.className = 'poster-wx';
+    const key = ['金','木','水','火','土'].indexOf(wx) === 0 ? 'jin' : 
+                ['金','木','水','火','土'].indexOf(wx) === 1 ? 'mu' :
+                ['金','木','水','火','土'].indexOf(wx) === 2 ? 'shui' :
+                ['金','木','水','火','土'].indexOf(wx) === 3 ? 'huo' : 'tu';
+    span.textContent = wx + ' ' + wuxingDist[key] + '%';
+    wxContainer.appendChild(span);
+  });
+  
+  // 特质
+  const traitsContainer = document.getElementById('posterTraits');
+  traitsContainer.innerHTML = '';
+  gua.traits.slice(0, 4).forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'poster-trait';
+    span.textContent = t;
+    traitsContainer.appendChild(span);
+  });
+  
+  // 海报颜色根据命格
+  const colorMap = {
+    '金': 'linear-gradient(135deg, #b8860b, #ffd700)',
+    '木': 'linear-gradient(135deg, #2d5016, #4a7c2a)',
+    '水': 'linear-gradient(135deg, #1e3a8a, #3b82f6)',
+    '火': 'linear-gradient(135deg, #7c1d1d, #c31432)',
+    '土': 'linear-gradient(135deg, #5d4037, #8d6e63)'
+  };
+  document.getElementById('posterCard').style.background = colorMap[wuxingMain];
+}
+
+function copyShareText() {
+  if (!currentResult) return;
+  const { name, mingge, minggeDesc, emoji } = currentResult;
+  const gua = getGua(currentResult.year, currentResult.month, currentResult.day);
+  
+  const text = `🪄 我的玄学命格\\n\\n` +
+    `${emoji} ${name} · ${mingge}\\n` +
+    `"${minggeDesc}"\\n\\n` +
+    `🃏 我占得${gua.name}\\n${gua.desc}\\n\\n` +
+    `👉 测试你的玄学命格：jianhebox.cn/fun/ai-face.html`;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制到剪贴板！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartApp() {
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('form').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 隐藏辅助
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>趣味问答 - 脑筋急转弯 + 冷知识 | 简盒玩点有趣的</title>
+<meta name="description" content="免费趣味问答工具。50+ 道脑筋急转弯、冷知识、奇葩问题。聚会聊天必备，测你的反应速度。">
+<meta meta="keywords" content="趣味问答,脑筋急转弯,冷知识,聊天,聚会,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #ff9966, #ff5e62);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .mode-tabs {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0;
+    flex-wrap: wrap;
+  }
+  .mode-tab {
+    flex: 1;
+    min-width: 100px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.1) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    color: white;
+    font-family: inherit;
+    font-size: 14px;
+  }
+  .mode-tab.active {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+    font-weight: bold;
+  }
+
+  .question-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .question-category {
+    display: inline-block;
+    padding: 5px 14px;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+  .question-text {
+    font-size: 22px;
+    line-height: 1.5;
+    color: white;
+    margin: 8px 0;
+  }
+  .question-counter {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-top: 12px;
+  }
+
+  .answer-display {
+    text-align: center;
+    padding: 20px;
+    background: rgba(46, 204, 113, 0.2) !important;
+    border: 2px solid #2ecc71;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .answer-label {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-bottom: 6px;
+  }
+  .answer-text {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1.5;
+    color: white;
+  }
+
+  .score-display {
+    display: flex;
+    justify-content: space-around;
+    margin: 16px 0;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .score-item {
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 10px;
+    text-align: center;
+    flex: 1;
+    min-width: 100px;
+  }
+  .score-item-label {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  .score-item-value {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .control-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .control-buttons button {
+    flex: 1;
+    min-width: 110px;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+    line-height: 1.8;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #ff9966, #ff5e62);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-emoji { font-size: 72px; margin: 12px 0; }
+  .poster-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  .poster-score {
+    font-size: 48px;
+    font-weight: 900;
+    margin: 12px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  .poster-tagline {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🤔 趣味问答</h1>
+    <p class="subtitle">脑筋急转弯 + 冷知识 + 奇葩问题</p>
+    <ul class="intro-feature-list">
+      <li>🧠 50+ 道趣味问题</li>
+      <li>💡 3 种模式：脑筋急转弯 / 冷知识 / 奇葩问</li>
+      <li>⏱️ 计时模式：测你的反应速度</li>
+      <li>✨ 专属海报分享</li>
+    </ul>
+    <h3 style="margin-top:16px; margin-bottom:8px;">选择模式：</h3>
+    <div class="mode-tabs">
+      <button class="mode-tab active" onclick="setMode('brain')">🧠 脑筋急转弯</button>
+      <button class="mode-tab" onclick="setMode('trivia')">📚 冷知识</button>
+      <button class="mode-tab" onclick="setMode('weird')">🤯 奇葩问</button>
+    </div>
+    <button class="btn-primary" onclick="startGame()" style="width:100%; margin-top:16px;">🎮 开始游戏</button>
+  </div>
+
+  <div id="game" class="card hidden">
+    <div class="score-display">
+      <div class="score-item">
+        <div class="score-item-label">已答</div>
+        <div class="score-item-value" id="answeredNum">0</div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-label">已看答案</div>
+        <div class="score-item-value" id="revealedNum">0</div>
+      </div>
+      <div class="score-item">
+        <div class="score-item-label">正确（自评）</div>
+        <div class="score-item-value" id="correctNum">0</div>
+      </div>
+    </div>
+
+    <div class="question-display">
+      <div class="question-category" id="questionCategory">脑筋急转弯</div>
+      <div class="question-text" id="questionText">点击下一题开始</div>
+      <div class="question-counter" id="questionCounter">第 1 / 50 题</div>
+    </div>
+
+    <div class="answer-display hidden" id="answerSection">
+      <div class="answer-label">💡 答案</div>
+      <div class="answer-text" id="answerText"></div>
+    </div>
+
+    <div class="control-buttons">
+      <button class="btn-primary" onclick="nextQuestion()">⏭️ 下一题</button>
+      <button class="btn" onclick="revealAnswer()">💡 看答案</button>
+      <button class="btn" onclick="markCorrect()">✓ 答对了</button>
+    </div>
+
+    <div class="section-title">📤 分享你的战绩</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">趣味问答</div>
+          <div class="poster-emoji">🤔</div>
+          <div class="poster-title" id="posterMode">脑筋急转弯</div>
+          <div class="poster-score" id="posterScore">15</div>
+          <div class="poster-divider"></div>
+          <div class="poster-tagline" id="posterTagline">已答 15 / 答对 8</div>
+          <div class="poster-footer">测你的脑洞 → jianhebox.cn/fun/quiz.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="endGame()" style="width:100%; margin-top:16px;">🚪 结束游戏</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 脑筋急转弯答案纯属娱乐，不一定唯一，笑一笑就好。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 脑筋急转弯
+const brainQuestions = [
+  { q: '什么东西比乌鸦更让人讨厌？', a: '乌鸦嘴（因为乌鸦嘴会说不吉利的话）' },
+  { q: '什么东西人们都不喜欢吃？', a: '亏（吃亏）' },
+  { q: '什么东西天天来，但永远不会到？', a: '明天' },
+  { q: '什么东西人们都不喜欢吃？', a: '亏（吃亏）' },
+  { q: '一年四季都盛开的花是什么花？', a: '塑料花' },
+  { q: '什么人生病从来不看医生？', a: '盲人' },
+  { q: '用什么可以解开所有的谜？', a: '谜底' },
+  { q: '什么车子寸步难行？', a: '风车' },
+  { q: '什么时候太阳会从西边升起？', a: '在做梦的时候' },
+  { q: '什么东西越洗越脏？', a: '水' },
+  { q: '什么书谁也没见过？', a: '天书' },
+  { q: '一个人从一百米高的楼上跳下来，为什么没有摔死？', a: '他跳到了水里' },
+  { q: '医院里最有经验的人是谁？', a: '病人（因为久病成医）' },
+  { q: '什么东西大家都不喜欢却都喜欢往里面放？', a: '屁' },
+  { q: '什么时候四减一等于五？', a: '四边形减去一个角等于五边形' },
+  { q: '什么船最安全？', a: '友谊的小船（但是会翻）' },
+  { q: '人们最怕的是什么日子？', a: '星期一到星期五（因为要上班）' },
+  { q: '黑人小孩为什么喜欢吃白色巧克力？', a: '怕咬到自己的手指头' },
+  { q: '什么东西越大越没有？', a: '贫穷' },
+  { q: '什么地方可以买到手脚？', a: '钟表店（钟表的"手脚"指针）' }
+];
+
+// 冷知识
+const triviaQuestions = [
+  { q: '人一生中会脱落多少公斤的皮肤？', a: '约 40 公斤' },
+  { q: '章鱼有几颗心脏？', a: '3 颗（2 颗鳃心 + 1 颗主心）' },
+  { q: '蜂蜜不会变质的真正原因是什么？', a: '低水分 + 高糖 + 酸性 + 天然抗菌物质' },
+  { q: '世界上最长的地名有几个字？', a: '泰国曼谷的全称有 168 个字母' },
+  { q: '人类的鼻子能分辨多少种气味？', a: '约 1 万亿种' },
+  { q: '北极熊的皮肤是什么颜色？', a: '黑色（毛发是透明的）' },
+  { q: '一个吻可以燃烧多少卡路里？', a: '约 2-3 卡' },
+  { q: '蜗牛可以睡多久？', a: '3 年' },
+  { q: '人类的血管连起来有多长？', a: '约 10 万公里（绕地球 2.5 圈）' },
+  { q: '可口可乐最初的成分含有什么？', a: '可卡因（1903 年前）' },
+  { q: '人每天会脱落多少根头发？', a: '约 50-100 根' },
+  { q: '人类共有多少根头发？', a: '约 10 万根' },
+  { q: '火星上日落是什么颜色？', a: '蓝色' },
+  { q: '猫头鹰的耳朵在哪里？', a: '眼睛后面（不是头顶）' },
+  { q: '人脑的存储容量相当于多少？', a: '约 2.5 PB（250 万 GB）' },
+  { q: '金鱼的记忆真的只有 7 秒吗？', a: '不是，可以记几个月' },
+  { q: '世界上最小的鸟是什么？', a: '吸蜜蜂鸟（约 5cm）' },
+  { q: '人为什么不能自己挠自己的痒痒？', a: '小脑能预判自己的动作，让感觉减弱' },
+  { q: '地球上最古老的树木是？', a: '狐尾松（5000 多年）' },
+  { q: '人的一生大约会走多远？', a: '约 16 万公里（绕地球 4 圈）' }
+];
+
+// 奇葩问题
+const weirdQuestions = [
+  { q: '如果只能带三样东西去荒岛，你带什么？', a: '开放题，思考你的优先级' },
+  { q: '如果你能和任何历史人物吃饭，你选谁？', a: '开放题，了解你的价值观' },
+  { q: '如果你有隐身能力 24 小时，你会做什么？', a: '开放题，了解你的欲望和价值观' },
+  { q: '你最后悔没说出口的话是什么？', a: '开放题，思考沟通' },
+  { q: '如果可以删除一个记忆，你会删除哪个？', a: '开放题，思考你的痛点' },
+  { q: '你觉得人生最重要的是什么？', a: '开放题，思考你的核心价值观' },
+  { q: '如果你有 1000 万，你会怎么花？', a: '开放题，思考你的优先级' },
+  { q: '你最想对 18 岁的自己说什么？', a: '开放题，思考你的成长' },
+  { q: '如果只能保留 5 个手机 APP，你保留哪些？', a: '开放题，了解你的生活重心' },
+  { q: '你做过最疯狂的事是什么？', a: '开放题，了解你的边界' },
+  { q: '如果可以穿越到任何时代，你选哪个？', a: '开放题，了解你的浪漫或务实' },
+  { q: '你最害怕失去的是什么？', a: '开放题，了解你的核心恐惧' },
+  { q: '如果明天是世界末日，你今天会做什么？', a: '开放题，了解你的真实优先级' },
+  { q: '你会选择永生但孤独，还是短暂但被爱？', a: '开放题，深度思考' },
+  { q: '如果可以成为任何虚构人物，你选谁？', a: '开放题，了解你的向往' }
+];
+
+let currentMode = 'brain';
+let answeredCount = 0;
+let revealedCount = 0;
+let correctCount = 0;
+let currentQuestion = null;
+
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function getPool() {
+  if (currentMode === 'brain') return brainQuestions;
+  if (currentMode === 'trivia') return triviaQuestions;
+  return weirdQuestions;
+}
+
+function startGame() {
+  answeredCount = 0;
+  revealedCount = 0;
+  correctCount = 0;
+  
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  
+  updateScores();
+  nextQuestion();
+}
+
+function getRandomQuestion() {
+  const pool = getPool();
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function nextQuestion() {
+  currentQuestion = getRandomQuestion();
+  document.getElementById('questionText').textContent = currentQuestion.q;
+  document.getElementById('questionCategory').textContent = 
+    currentMode === 'brain' ? '🧠 脑筋急转弯' : 
+    currentMode === 'trivia' ? '📚 冷知识' : 
+    '🤯 奇葩问题';
+  document.getElementById('questionCounter').textContent = '第 ' + (answeredCount + 1) + ' 题';
+  document.getElementById('answerSection').classList.add('hidden');
+  
+  answeredCount++;
+  updateScores();
+}
+
+function revealAnswer() {
+  if (!currentQuestion) return;
+  document.getElementById('answerText').textContent = currentQuestion.a;
+  document.getElementById('answerSection').classList.remove('hidden');
+  revealedCount++;
+  updateScores();
+}
+
+function markCorrect() {
+  correctCount++;
+  updateScores();
+  // 自动下一题
+  setTimeout(() => {
+    nextQuestion();
+  }, 500);
+}
+
+function updateScores() {
+  document.getElementById('answeredNum').textContent = answeredCount;
+  document.getElementById('revealedNum').textContent = revealedCount;
+  document.getElementById('correctNum').textContent = correctCount;
+  
+  // 更新海报
+  document.getElementById('posterMode').textContent = 
+    currentMode === 'brain' ? '脑筋急转弯' : 
+    currentMode === 'trivia' ? '冷知识' : 
+    '奇葩问题';
+  document.getElementById('posterScore').textContent = answeredCount;
+  document.getElementById('posterTagline').textContent = 
+    '已答 ' + answeredCount + ' / 答对 ' + correctCount;
+}
+
+function copyShareText() {
+  const text = '🤔 趣味问答\\n模式：' + 
+    (currentMode === 'brain' ? '脑筋急转弯' : currentMode === 'trivia' ? '冷知识' : '奇葩问题') +
+    '\\n已答：' + answeredCount + ' / 答对：' + correctCount + '\\n\\n👉 来挑战：jianhebox.cn/fun/quiz.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function endGame() {
+  if (confirm('确定结束本轮游戏？')) {
+    document.getElementById('game').classList.add('hidden');
+    document.getElementById('intro').classList.remove('hidden');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

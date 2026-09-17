@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepSeek 提示词实战 9 招：让国产最强 AI 听懂你 | 简盒</title>
+<meta name="description" content="9 个 DeepSeek 专用技巧 + 6 大实战场景 + 高阶玩法。">
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+  pre code { background: none; color: inherit; padding: 0; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  th { background: #f0f0f0; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }
+  a { color: #0099ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }
+  .back-home:hover { text-decoration: none; transform: translateY(-1px); }
+
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style>
+<!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-deepseek-prompt.html#article",
+      "headline": "DeepSeek 提示词实战 9 招：让国产最强 AI 听懂你在说什么",
+      "description": "DeepSeek 提示词 9 招",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-deepseek-prompt.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["DeepSeek 提示词 9 招", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-deepseek-prompt.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "DeepSeek 提示词实战 9 招：让国产最强 AI 听懂你在说什么",
+          "item": "https://www.jianhebox.cn/article-deepseek-prompt.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Baidu Tongji (R57.10) -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?deb3c3385c923e6f7cc59e23b4d4d850";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+<!-- R57.9 SEO: 视觉面包屑 -->
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">首页</a>
+  <span class="bc-sep">›</span>
+  <a href="/articles.html">教程</a>
+  <span class="bc-sep">›</span>
+  <span>DeepSeek 提示词实战 9 招：让国产最强 AI 听懂你在说什么</span>
+</nav>
+<a href="/" class="back-home">← 简盒首页</a>
+<h1>DeepSeek 提示词实战 9 招：让国产最强 AI 听懂你在说什么</h1>
+<blockquote>最后更新：2026 年 9 月 · 阅读时长：约 8 分钟 · 适用：所有用 DeepSeek 的人</blockquote>
+<hr>
+<h2>📌 为什么这篇教程值得看？</h2>
+<p>DeepSeek 是 <strong>2025-2026 年国产 AI 最大黑马</strong>：</p>
+<ul>
+<li>🚀 中文场景<strong>最强</strong>（超过 GPT-4）</li>
+<li>💰 <strong>完全免费</strong>（API 价格仅 GPT-4 的 1/30）</li>
+<li>🎯 推理能力强（数学、代码、逻辑）</li>
+</ul>
+<p><strong>但很多人用 DeepSeek 效果差</strong>，原因：<strong>提示词写错了</strong>。</p>
+<p><strong>这篇教程教你</strong> 9 个 DeepSeek 专用技巧。</p>
+<hr>
+<h2>🚀 快速通道</h2>
+<p><a href="https://www.jianhebox.cn/#/basic/system">简盒 AI 提示词优化器</a> → 选「DeepSeek 优化」模式 → 一键改写。</p>
+<hr>
+<h2>📖 DeepSeek vs ChatGPT 的核心差异</h2>
+<p>| 维度 | DeepSeek | ChatGPT |</p>
+<p>|---|---|---|</p>
+<p>| <strong>中文</strong> | ⭐⭐⭐⭐⭐ | ⭐⭐⭐ |</p>
+<p>| <strong>英文</strong> | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |</p>
+<p>| <strong>推理</strong> | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ |</p>
+<p>| <strong>代码</strong> | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |</p>
+<p>| <strong>价格</strong> | ⭐⭐⭐⭐⭐ 几乎免费 | ⭐⭐ $20/月 |</p>
+<p>| <strong>联网</strong> | ❌（无）| ✅（Plus） |</p>
+<p><strong>结论</strong>：</p>
+<ul>
+<li><strong>中文任务</strong> → DeepSeek（首选）</li>
+<li><strong>英文 + 联网</strong> → ChatGPT</li>
+<li><strong>代码</strong> → 两者都行，DeepSeek 略胜</li>
+</ul>
+<hr>
+<h2>🎯 9 个 DeepSeek 实战技巧</h2>
+<h3>技巧 1：明确身份</h3>
+<p><strong>原理</strong>：DeepSeek 对"你是谁"非常敏感。</p>
+<p><strong>❌ 错误</strong>：</p>
+<pre><code>帮我写一篇关于健康的文章</code></pre>
+<p><strong>✅ 正确</strong>：</p>
+<pre><code>你是中国营养学会首席专家，有 20 年临床营养经验。
+请给 30-40 岁白领女性写一篇关于"高压工作下保持健康饮食"的公众号文章。</code></pre>
+<p><strong>效果对比</strong>：输出质量提升 3-5 倍。</p>
+<hr>
+<h3>技巧 2：详细任务描述</h3>
+<p><strong>DeepSeek 偏好具体任务</strong>。</p>
+<p><strong>❌ 错误</strong>：</p>
+<pre><code>帮我优化这段提示词</code></pre>
+<p><strong>✅ 正确</strong>：</p>
+<pre><code>你是 AI 提示词工程师。
+请帮我优化以下提示词，要求：
+1. 增加 4 大要素（角色/任务/上下文/格式）
+2. 让 AI 输出更结构化
+3. 加入具体示例
+4. 控制在 200 字以内
+
+我的原提示词是："帮我写一篇关于护肤的文章"</code></pre>
+<hr>
+<h3>技巧 3：中文 Chain of Thought（链式思考）</h3>
+<p><strong>DeepSeek 中文链式思考</strong>效果特别好。</p>
+<p><strong>Prompt</strong>：</p>
+<pre><code>请一步步思考：
+1. 分析问题的核心
+2. 列出可能的解决方案
+3. 比较每个方案的优缺点
+4. 给出推荐方案
+
+问题：[你的问题]</code></pre>
+<p><strong>DeepSeek 中文推理</strong> 比英文模型好，因为：</p>
+<ul>
+<li>训练数据中文占比大</li>
+<li>中文语法更精确</li>
+<li>推理能力在中文场景下发挥更好</li>
+</ul>
+<hr>
+<h3>技巧 4：Few-Shot（给示例）</h3>
+<p>DeepSeek 对<strong>示例</strong>非常敏感。</p>
+<p><strong>❌ 无示例</strong>：</p>
+<pre><code>把英文翻译成中文。</code></pre>
+<p><strong>✅ 有示例</strong>：</p>
+<pre><code>请将以下英文翻译成中文：
+
+示例：
+- "Hello world" → "你好世界"
+- "How are you?" → "你好吗？"
+- "I love programming" → "我爱编程"
+
+现在翻译：
+- "The quick brown fox jumps over the lazy dog"
+- "Practice makes perfect"</code></pre>
+<p><strong>效果</strong>：有示例时输出准确率提升 <strong>40%+</strong>。</p>
+<hr>
+<h3>技巧 5：结构化输出</h3>
+<p>DeepSeek <strong>擅长</strong>输出结构化内容。</p>
+<p><strong>Prompt</strong>：</p>
+<pre><code>请按以下格式输出：
+
+【核心观点】
+（1-2 句话）
+
+【关键要点】
+1. ...
+2. ...
+3. ...
+
+【适用场景】
+- ...
+
+【注意事项】
+- ...
+
+【示例】
+（具体例子）
+
+主题：[你的主题]</code></pre>
+<p><strong>优势</strong>：DeepSeek 会<strong>精确遵循</strong>格式（比 GPT-4 更稳定）。</p>
+<hr>
+<h3>技巧 6：指定输出长度</h3>
+<p>DeepSeek 默认输出<strong>较长</strong>（中文场景常见）。</p>
+<p><strong>控制长度 Prompt</strong>：</p>
+<pre><code>请用 100-150 字概括以下文章的核心观点：
+
+[文章内容]</code></pre>
+<p>或：</p>
+<pre><code>请分 3 段，每段 50 字，写一个简短的总结。</code></pre>
+<p><strong>注意</strong>：用"<strong>字数范围</strong>"比"简短"更有效。</p>
+<hr>
+<h3>技巧 7：负面提示</h3>
+<p>告诉 DeepSeek <strong>不要做什么</strong>。</p>
+<p><strong>Prompt</strong>：</p>
+<pre><code>请写一篇关于"AI 工具"的推荐文章。
+
+要求：
+- 列出 5 个工具
+- 每个工具给 1 个具体使用场景
+
+不要：
+- 用空话（"AI 让生活更美好"）
+- 重复标题
+- 列举过多功能（每个工具聚焦 1 个场景）
+- 用 emoji 装饰</code></pre>
+<p><strong>负面提示</strong>显著提升输出质量。</p>
+<hr>
+<h3>技巧 8：角色对话</h3>
+<p>DeepSeek 在<strong>角色对话</strong>上特别强。</p>
+<p><strong>Prompt</strong>：</p>
+<pre><code>你是 [角色]，我有问题要问你。
+
+角色设定：
+- [身份]
+- [性格]
+- [背景]
+
+你的回答要符合：
+- 语气一致
+- 不打破角色
+- 给具体建议
+
+现在开始对话：
+[你的问题]</code></pre>
+<p><strong>适用场景</strong>：</p>
+<ul>
+<li>模拟面试</li>
+<li>模拟客户对话</li>
+<li>历史人物对话</li>
+<li>心理咨询</li>
+</ul>
+<hr>
+<h3>技巧 9：迭代优化</h3>
+<p>DeepSeek 支持<strong>多轮对话</strong>，可以<strong>逐步优化</strong>输出。</p>
+<p><strong>第 1 轮</strong>：</p>
+<pre><code>请写一篇关于"远程办公"的短文。</code></pre>
+<p><strong>第 2 轮</strong>：</p>
+<pre><code>请把开头改得更吸引人（增加钩子）。</code></pre>
+<p><strong>第 3 轮</strong>：</p>
+<pre><code>请加 3 个具体的远程办公工具推荐。</code></pre>
+<p><strong>第 4 轮</strong>：</p>
+<pre><code>请重新组织结构，让文章更清晰（用小标题分节）。</code></pre>
+<p><strong>优势</strong>：逐步优化比"一次到位"<strong>质量高 5 倍</strong>。</p>
+<hr>
+<h2>🎯 6 个实战场景</h2>
+<h3>场景 1：写公众号文章</h3>
+<p><strong>DeepSeek 专用 Prompt</strong>：</p>
+<pre><code>你是公众号爆款作者，目标读者是 [读者]。
+
+请写一篇 2000 字的公众号文章：
+- 主题：[主题]
+- 风格：口语化、有故事、有干货
+- 结构：开头钩子 + 5 个要点 + 结尾引导
+- 关键词：[关键词] 出现 3-5 次
+- emoji：偶尔用，不要每段都有</code></pre>
+<h3>场景 2：写小红书</h3>
+<p><strong>Prompt</strong>：</p>
+<pre><code>你是小红书爆款作者。
+
+请写一篇小红书笔记：
+- 主题：[主题]
+- 标题：18 字内，有 emoji
+- 正文：300-500 字，分 3-5 段
+- 风格：口语化、像朋友聊天
+- 关键词：[关键词] 出现 3 次
+- 结尾引导评论</code></pre>
+<h3>场景 3：写代码</h3>
+<p><strong>Prompt</strong>：</p>
+<pre><code>你是 [Python/Java/...] 高级工程师。
+
+请编写：
+- 功能：[功能描述]
+- 输入：[输入示例]
+- 输出：[输出示例]
+
+要求：
+- 加注释（中文）
+- 异常处理
+- 单元测试
+- 代码风格：PEP 8</code></pre>
+<h3>场景 4：翻译</h3>
+<p><strong>Prompt</strong>：</p>
+<pre><code>请将以下 [英文] 翻译成 [中文]。
+
+要求：
+- 保留原意
+- 流畅自然
+- 专业术语准确
+- 文末标注关键术语的英文原文
+
+[内容]</code></pre>
+<h3>场景 5：分析数据</h3>
+<p><strong>Prompt</strong>：</p>
+<pre><code>请分析以下数据：
+
+[数据 CSV/JSON/文本]
+
+分析要求：
+1. 数据基本情况（行数、字段、缺失值）
+2. 主要趋势 / 异常
+3. 关键洞察（3-5 条）
+4. 行动建议
+
+输出格式：Markdown 表格 + 文字说明</code></pre>
+<h3>场景 6：学习新概念</h3>
+<p><strong>Prompt</strong>：</p>
+<pre><code>我想深入理解 [概念]。
+
+请：
+1. 用 1 句话解释
+2. 用 1 个例子说明
+3. 列出 3 个常见误区
+4. 推荐 3 个学习资源（书/网站/视频）
+5. 给出"费曼学习法"自测题 3 道</code></pre>
+<hr>
+<h2>🔧 DeepSeek 使用技巧</h2>
+<h3>技巧 1：用网页版而非 API</h3>
+<p><strong>DeepSeek 网页版</strong>（chat.deepseek.com）：</p>
+<ul>
+<li>✅ <strong>完全免费</strong></li>
+<li>✅ 中文友好</li>
+<li>✅ 无需 API Key</li>
+</ul>
+<h3>技巧 2：用 DeepSeek + 简盒组合</h3>
+<p><a href="https://www.jianhebox.cn/#/basic/system">简盒提示词优化器</a>：</p>
+<ul>
+<li>输入烂提示词 → 输出专业提示词</li>
+<li>选「DeepSeek 模式」 → 自动适配</li>
+</ul>
+<h3>技巧 3：理解 DeepSeek 的"思考过程"</h3>
+<p>DeepSeek 输出时会<strong>显示思考过程</strong>（灰色文本）：</p>
+<ul>
+<li>✅ <strong>一定要读</strong></li>
+<li>✅ 检查是否有逻辑问题</li>
+<li>✅ 如果"想错了"，<strong>纠正它</strong></li>
+</ul>
+<p><strong>举例</strong>：</p>
+<blockquote>思考：用户想要写一篇关于 Python 入门的文章，那么我应该先介绍什么是 Python，然后解释为什么学 Python，然后给学习路径……</blockquote>
+<blockquote>等等，用户可能已经有编程基础，我应该先问……</blockquote>
+<p>这种<strong>自我反思</strong>让 DeepSeek 输出更准。</p>
+<hr>
+<h2>⚠️ DeepSeek 的局限</h2>
+<h3>局限 1：无联网搜索</h3>
+<p><strong>DeepSeek 不能</strong>：</p>
+<ul>
+<li>❌ 获取实时新闻</li>
+<li>❌ 搜索最新数据</li>
+<li>❌ 访问外部链接</li>
+</ul>
+<p><strong>替代</strong>：</p>
+<ul>
+<li>用 ChatGPT（有联网）</li>
+<li>用秘塔 AI 搜索（中文联网）</li>
+<li>用 New Bing</li>
+</ul>
+<h3>局限 2：英文略弱</h3>
+<p>DeepSeek <strong>英文</strong> 比 GPT-4 略弱（特别创意写作）。</p>
+<p><strong>建议</strong>：英文任务用 ChatGPT。</p>
+<h3>局限 3：偶尔"幻觉"</h3>
+<p>DeepSeek 有时会<strong>编造事实</strong>。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>关键事实查证（百度/Google）</li>
+<li>让 DeepSeek <strong>注明信息来源</strong></li>
+<li>用"请谨慎，不要编造"提示词</li>
+</ul>
+<hr>
+<h2>🎓 DeepSeek 高阶玩法</h2>
+<h3>玩法 1：API 调用</h3>
+<p><strong>DeepSeek API</strong> 价格：</p>
+<p>| 模型 | 价格（每百万 token） |</p>
+<p>|---|---|</p>
+<p>| DeepSeek-V2 | ¥1 |</p>
+<p>| DeepSeek-Coder | ¥1 |</p>
+<p>| GPT-4 对比 | ¥210 |</p>
+<p><strong>便宜 200 倍</strong>！</p>
+<p><strong>适合</strong>：</p>
+<ul>
+<li>自动化批量任务</li>
+<li>集成到应用</li>
+<li>成本敏感项目</li>
+</ul>
+<h3>玩法 2：本地部署</h3>
+<p><strong>DeepSeek 开源</strong>，可在本地跑：</p>
+<pre><code># 下载模型（需要 16GB+ 显存）
+git clone https://github.com/deepseek-ai/DeepSeek-V2
+
+# 本地推理
+python inference.py --model deepseek-v2 --prompt "..."</code></pre>
+<p><strong>优势</strong>：</p>
+<ul>
+<li>✅ <strong>完全本地</strong>（隐私安全）</li>
+<li>✅ <strong>无需联网</strong></li>
+<li>❌ 需要 GPU</li>
+</ul>
+<h3>玩法 3：组合多 AI</h3>
+<p><strong>最佳实践</strong>：DeepSeek + ChatGPT + Claude 各用所长</p>
+<p>| 任务 | 模型 |</p>
+<p>|---|---|</p>
+<p>| 中文创作 | DeepSeek |</p>
+<p>| 英文创作 | ChatGPT |</p>
+<p>| 长文档分析 | Claude |</p>
+<p>| 联网搜索 | 秘塔 AI |</p>
+<p>| 代码 | DeepSeek-Coder |</p>
+<hr>
+<h2>🚀 开始用 DeepSeek</h2>
+<p><a href="https://www.jianhebox.cn/#/basic/system">👉 打开简盒 AI 提示词优化器</a></p>
+<p>DeepSeek 专用模板 + 9 招实战技巧。</p>
+<p>特点：</p>
+<ul>
+<li>✅ <strong>DeepSeek 模式</strong> 自动适配</li>
+<li>✅ <strong>300+ 模板</strong></li>
+<li>✅ <strong>完全免费</strong></li>
+</ul>
+<hr>
+<h2>📚 相关教程</h2>
+<ul>
+<li><a href="/article-ai-prompt-engineer.html">AI 提示词工程师入门</a></li>
+<li><a href="/article-xiaohongshu-ai.html">AI 写小红书爆款完全指南</a></li>
+<li><a href="/article-wechat-ai.html">AI 写公众号爆款 7 个秘密</a></li>
+</ul>
+<hr>
+<h2>💬 反馈</h2>
+<ul>
+<li>📧 <a href="mailto:hi@jianhebox.cn">hi@jianhebox.cn</a></li>
+</ul>
+<blockquote>本文由 <a href="https://www.jianhebox.cn/">简盒 JianHeBox</a> 编辑整理。</blockquote>
+<!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-deepseek-prompt.html&title=DeepSeek%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AE%9E%E6%88%98%209%20%E6%8B%9B%EF%BC%9A%E8%AE%A9%E5%9B%BD%E4%BA%A7%E6%9C%80%E5%BC%BA%20AI%20%E5%90%AC%E6%87%82%E4%BD%A0%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-deepseek-prompt.html&title=DeepSeek%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AE%9E%E6%88%98%209%20%E6%8B%9B%EF%BC%9A%E8%AE%A9%E5%9B%BD%E4%BA%A7%E6%9C%80%E5%BC%BA%20AI%20%E5%90%AC%E6%87%82%E4%BD%A0%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-deepseek-prompt.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-deepseek-prompt.html&text=DeepSeek%20%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%AE%9E%E6%88%98%209%20%E6%8B%9B%EF%BC%9A%E8%AE%A9%E5%9B%BD%E4%BA%A7%E6%9C%80%E5%BC%BA%20AI%20%E5%90%AC%E6%87%82%E4%BD%A0%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-ai-prompt-engineer.html" class="related-item"><span>AI 提示词工程师入门</span><span class="arrow">→</span></a>
+    <a href="/article-xiaohongshu-ai.html" class="related-item"><span>AI 写小红书爆款完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-wechat-ai.html" class="related-item"><span>AI 写公众号爆款 7 个秘密</span><span class="arrow">→</span></a>
+    <a href="/article-free-ai-tools-2026.html" class="related-item"><span>2026 免费 AI 工具清单</span><span class="arrow">→</span></a>
+    <a href="/article-fcpxml-guide.html" class="related-item"><span>FCPXML 字幕转换完全教程</span><span class="arrow">→</span></a>
+    </div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body>
+</html>

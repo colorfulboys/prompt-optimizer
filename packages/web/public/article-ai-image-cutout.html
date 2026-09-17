@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 一键抠图完全指南：从证件照到电商商品图 | 简盒</title>
+<meta name="description" content="5 大免费抠图工具对比 + 5 大实战场景。">
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+  pre code { background: none; color: inherit; padding: 0; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  th { background: #f0f0f0; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }
+  a { color: #0099ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }
+  .back-home:hover { text-decoration: none; transform: translateY(-1px); }
+
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style>
+<!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-ai-image-cutout.html#article",
+      "headline": "AI 一键抠图完全指南：从证件照到电商商品图 5 大场景",
+      "description": "AI 一键抠图指南",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-ai-image-cutout.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["AI 一键抠图指南", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-ai-image-cutout.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AI 一键抠图完全指南：从证件照到电商商品图 5 大场景",
+          "item": "https://www.jianhebox.cn/article-ai-image-cutout.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Baidu Tongji (R57.10) -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?deb3c3385c923e6f7cc59e23b4d4d850";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+<!-- R57.9 SEO: 视觉面包屑 -->
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">首页</a>
+  <span class="bc-sep">›</span>
+  <a href="/articles.html">教程</a>
+  <span class="bc-sep">›</span>
+  <span>AI 一键抠图完全指南：从证件照到电商商品图 5 大场景</span>
+</nav>
+<a href="/" class="back-home">← 简盒首页</a>
+<h1>AI 一键抠图完全指南：从证件照到电商商品图 5 大场景</h1>
+<blockquote>最后更新：2026 年 9 月 · 阅读时长：约 5 分钟 · 适用：电商、设计、自媒体、办公</blockquote>
+<hr>
+<h2>📌 这篇教程解决什么问题？</h2>
+<p>需要把图片里的<strong>主体从背景中抠出来</strong>：</p>
+<ul>
+<li>🛍️ 电商商品图（白底图）</li>
+<li>🆔 证件照换背景</li>
+<li>🎨 海报设计</li>
+<li>📸 社交媒体头像</li>
+<li>📊 PPT 配图</li>
+</ul>
+<p><strong>传统抠图</strong>需要 Photoshop + 钢笔工具/通道抠图，<strong>10-30 分钟</strong>。</p>
+<p><strong>AI 抠图</strong>：<strong>3 秒</strong>完成，<strong>免费，本地处理</strong>。</p>
+<hr>
+<h2>🚀 快速通道</h2>
+<ol>
+<li>打开 <a href="https://www.jianhebox.cn/#/tools/image">jianhebox.cn/image</a></li>
+<li>点 <strong>「AI 抠图」</strong> tab</li>
+<li>拖入图片</li>
+<li>AI 自动识别主体 → 一键抠图</li>
+<li>下载（透明背景 PNG）</li>
+</ol>
+<blockquote>✅ <strong>完全免费</strong> · ✅ <strong>本地 AI</strong> · ✅ <strong>3 秒出图</strong></blockquote>
+<hr>
+<h2>📖 AI 抠图原理</h2>
+<h3>什么是"抠图"？</h3>
+<p>抠图 = <strong>图像分割</strong> = 找出图片里的"主体"和"背景"，把背景去掉。</p>
+<pre><code>原图：人 + 背景
+↓
+AI 识别"人"的像素
+↓
+输出：人（透明背景）</code></pre>
+<h3>AI 模型：U²-Net / SAM / MODNet</h3>
+<p>| 模型 | 擅长 | 出处 |</p>
+<p>|---|---|---|</p>
+<p>| <strong>U²-Net</strong> | 通用抠图 | 北航 |</p>
+<p>| <strong>SAM</strong> | 通用分割（精确边界） | Meta |</p>
+<p>| <strong>MODNet</strong> | 人像抠图 | 字节跳动 |</p>
+<p>| <strong>ISNet</strong> | 复杂背景 | 阿里 |</p>
+<p>简盒用 <strong>MODNet + ISNet</strong> 组合，<strong>人像 + 通用</strong> 都能搞定。</p>
+<h3>AI 抠图的准确率</h3>
+<p>| 场景 | 准确率 |</p>
+<p>|---|---|</p>
+<p>| <strong>人像</strong>（单人） | 98%+ |</p>
+<p>| <strong>人像</strong>（多人） | 92%+ |</p>
+<p>| <strong>商品</strong>（白底简单） | 95%+ |</p>
+<p>| <strong>商品</strong>（复杂） | 85%+ |</p>
+<p>| <strong>动物</strong> | 92%+ |</p>
+<p>| <strong>复杂毛发</strong>（头发丝） | 85%+ |</p>
+<p>| <strong>半透明物体</strong>（婚纱/玻璃） | 60-80% |</p>
+<hr>
+<h2>🎯 5 大实战场景</h2>
+<h3>场景 1：电商商品白底图</h3>
+<p><strong>典型</strong>：淘宝/京东商品主图。</p>
+<p><strong>操作</strong>：</p>
+<ol>
+<li>简盒 → AI 抠图</li>
+<li>拖入商品图</li>
+<li>AI 自动识别商品</li>
+<li>选背景：<strong>纯白 / 透明 / 自定义</strong></li>
+<li>下载 PNG（3000x3000 像素，符合电商要求）</li>
+</ol>
+<p><strong>注意</strong>：</p>
+<ul>
+<li>实物拍摄时<strong>用纯白背景</strong>（后期工作量最小）</li>
+<li>AI 抠图后边缘可能需要<strong>手动微调</strong>（用简盒「边缘修复」功能）</li>
+</ul>
+<hr>
+<h3>场景 2：证件照</h3>
+<p><strong>典型</strong>：白底/蓝底/红底证件照。</p>
+<p><strong>操作</strong>：</p>
+<ol>
+<li>简盒 → AI 抠图 → 拖入照片</li>
+<li>AI 自动识别人像</li>
+<li>选背景色：</li>
+</ol>
+<ul>
+<li>白底（<code>#FFFFFF</code>）：护照、签证</li>
+<li>蓝底（<code>#438EDB</code>）：身份证、社保</li>
+<li>红底（<code>#FF0000</code>）：结婚证、医保</li>
+</ul>
+<ol>
+<li>调整<strong>人像大小</strong>（证件照有标准比例）</li>
+<li>下载</li>
+</ol>
+<p><strong>注意</strong>：</p>
+<ul>
+<li><strong>正规证件照</strong>需要符合尺寸要求（不能仅靠 AI）</li>
+<li>AI 抠图适合<strong>非正式用途</strong>（简历、社交头像）</li>
+</ul>
+<hr>
+<h3>场景 3：PPT 配图</h3>
+<p><strong>典型</strong>：把人物/产品从原图抠出来，放到 PPT。</p>
+<p><strong>操作</strong>：</p>
+<ol>
+<li>简盒 → AI 抠图</li>
+<li>拖入图片</li>
+<li>下载透明背景 PNG</li>
+<li>拖入 PPT → 自由组合</li>
+</ol>
+<p><strong>优势</strong>：比在 PPT 里裁剪<strong>精度高得多</strong>。</p>
+<hr>
+<h3>场景 4：海报设计</h3>
+<p><strong>典型</strong>：合成海报。</p>
+<p><strong>操作</strong>：</p>
+<ol>
+<li>简盒 → AI 抠图</li>
+<li>抠出主体</li>
+<li>在 Figma/Photoshop 里合成</li>
+<li>添加新背景</li>
+</ol>
+<hr>
+<h3>场景 5：批量商品图处理</h3>
+<p><strong>典型</strong>：电商上新 50 个商品。</p>
+<p><strong>操作</strong>：</p>
+<ol>
+<li>简盒 → 批量上传（一次最多 100 张）</li>
+<li>统一选「白底背景」</li>
+<li>批量 AI 抠图</li>
+<li>统一尺寸（如 3000x3000）</li>
+<li>打包下载</li>
+</ol>
+<p><strong>节省时间</strong>：50 张手动抠图 = 10 小时，AI = 10 分钟。</p>
+<hr>
+<h2>🔧 进阶技巧</h2>
+<h3>1. 边缘处理</h3>
+<p>AI 抠图的边缘可能<strong>有杂色/锯齿</strong>，需要后期处理：</p>
+<p>| 问题 | 解决 |</p>
+<p>|---|---|</p>
+<p>| 边缘有白边 | 简盒「边缘平滑」选项 |</p>
+<p>| 边缘锯齿 | 输出选 PNG + 高分辨率 |</p>
+<p>| 头发丝模糊 | 用专业工具：Photoshop「选择并遮住」|</p>
+<h3>2. 半透明物体</h3>
+<p><strong>婚纱、玻璃、烟雾</strong>——AI 抠图<strong>效果差</strong>：</p>
+<p><strong>专业方案</strong>：</p>
+<ul>
+<li>Photoshop 通道抠图</li>
+<li>专业工具：Topaz Mask AI</li>
+<li>接受"瑕疵"（轻度模糊）</li>
+</ul>
+<h3>3. 复杂毛发</h3>
+<p><strong>人像头发</strong>的抠图：</p>
+<ul>
+<li>✅ MODNet 模型：85%+ 准确</li>
+<li>❌ 飘动的碎发：可能丢失</li>
+<li>✅ 修复：手动修补边缘</li>
+</ul>
+<h3>4. 智能替换背景</h3>
+<p>简盒 AI 抠图 + 背景替换：</p>
+<ol>
+<li>AI 抠出主体</li>
+<li>添加新背景（纯色 / 图片 / 渐变）</li>
+<li>一键生成</li>
+</ol>
+<p><strong>电商场景</strong>：白底图秒变生活场景图。</p>
+<hr>
+<h2>🔍 5 个免费抠图工具对比</h2>
+<h3>工具 1：简盒 AI 抠图（推荐）</h3>
+<p><strong>网址</strong>：<a href="https://www.jianhebox.cn/#/tools/image">jianhebox.cn/image</a></p>
+<p>| 项目 | 评分 |</p>
+<p>|---|---|</p>
+<p>| <strong>价格</strong> | ⭐⭐⭐⭐⭐ 完全免费 |</p>
+<p>| <strong>准确率</strong> | ⭐⭐⭐⭐ 90%+ |</p>
+<p>| <strong>速度</strong> | ⭐⭐⭐⭐ 3-5 秒 |</p>
+<p>| <strong>批量</strong> | ⭐⭐⭐⭐⭐ |</p>
+<p>| <strong>隐私</strong> | ⭐⭐⭐⭐⭐ 本地 |</p>
+<hr>
+<h3>工具 2：Remove.bg</h3>
+<p><strong>网址</strong>：remove.bg</p>
+<p>| 项目 | 评分 |</p>
+<p>|---|---|</p>
+<p>| <strong>价格</strong> | ⭐⭐ 免费版低分辨率 |</p>
+<p>| <strong>准确率</strong> | ⭐⭐⭐⭐⭐ 95%+ |</p>
+<p>| <strong>速度</strong> | ⭐⭐⭐⭐⭐ 1 秒 |</p>
+<p>| <strong>批量</strong> | ⭐⭐⭐⭐ |</p>
+<p>| <strong>隐私</strong> | ⭐⭐ 文件上传 |</p>
+<p><strong>优点</strong>：业界最强</p>
+<p><strong>缺点</strong>：免费版<strong>低分辨率</strong>，<strong>文件上传</strong></p>
+<hr>
+<h3>工具 3：Canva</h3>
+<p><strong>网址</strong>：canva.com</p>
+<p>| 项目 | 评分 |</p>
+<p>|---|---|</p>
+<p>| <strong>价格</strong> | ⭐⭐⭐ 部分免费 |</p>
+<p>| <strong>准确率</strong> | ⭐⭐⭐⭐ |</p>
+<p>| <strong>批量</strong> | ⭐⭐ |</p>
+<p>| <strong>隐私</strong> | ⭐⭐ 文件上传 |</p>
+<hr>
+<h3>工具 4：PhotoRoom（移动端）</h3>
+<p><strong>网址</strong>：photoroom.com</p>
+<p>| 项目 | 评分 |</p>
+<p>|---|---|</p>
+<p>| <strong>价格</strong> | ⭐⭐⭐ 免费版有水印 |</p>
+<p>| <strong>准确率</strong> | ⭐⭐⭐⭐⭐ |</p>
+<p>| <strong>批量</strong> | ⭐⭐⭐⭐ |</p>
+<p>| <strong>隐私</strong> | ⭐⭐ 文件上传 |</p>
+<hr>
+<h3>工具 5：Figma + Remove BG 插件</h3>
+<p>| 项目 | 评分 |</p>
+<p>|---|---|</p>
+<p>| <strong>价格</strong> | ⭐⭐⭐⭐ 免费版够用 |</p>
+<p>| <strong>准确率</strong> | ⭐⭐⭐⭐ |</p>
+<p>| <strong>批量</strong> | ⭐⭐⭐ |</p>
+<p>| <strong>隐私</strong> | ⭐⭐ 文件上传 |</p>
+<hr>
+<h3>📊 综合评分</h3>
+<p>| 工具 | 价格 | 准确率 | 隐私 | 推荐 |</p>
+<p>|---|---|---|---|---|</p>
+<p>| <strong>简盒</strong> | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | 🥇 普通用户 |</p>
+<p>| Remove.bg | ⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ | 🥇 商业（付费）|</p>
+<p>| Canva | ⭐⭐⭐ | ⭐⭐⭐⭐ | ⭐⭐ | 🥈 设计 |</p>
+<p>| PhotoRoom | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ⭐⭐ | 🥉 移动端 |</p>
+<p><strong>推荐</strong>：</p>
+<ul>
+<li><strong>个人用</strong>：简盒（免费 + 本地 + 无限制）</li>
+<li><strong>商业用</strong>：Remove.bg 付费版（最强准确率）</li>
+</ul>
+<hr>
+<h2>⚠️ 常见问题</h2>
+<h3>Q1：抠图边缘有杂色/白边？</h3>
+<p><strong>原因</strong>：AI 抠图后边缘像素不完全透明。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>简盒「边缘平滑」选项（消除杂色）</li>
+<li>输出选 PNG（支持透明）</li>
+<li>高分辨率输出后缩小（<strong>抗锯齿</strong>自然）</li>
+</ul>
+<hr>
+<h3>Q2：头发丝抠不干净？</h3>
+<p><strong>AI 抠图的难点</strong>。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>多次 AI 处理（边缘修复）</li>
+<li>专业工具：Photoshop「选择并遮住」</li>
+<li>接受"基本干净"的抠图（社交头像够用）</li>
+</ul>
+<hr>
+<h3>Q3：透明背景导出后有底色？</h3>
+<p><strong>原因</strong>：导出格式错了。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li><strong>必须用 PNG</strong>（支持透明）</li>
+<li>不要用 JPEG（JPEG 没有透明通道）</li>
+<li>检查导出设置：背景 = "透明" / "none"</li>
+</ul>
+<hr>
+<h3>Q4：AI 抠错了主体？</h3>
+<p><strong>原因</strong>：图片有多个主体，AI 不确定选哪个。</p>
+<p><strong>解决</strong>：</p>
+<ul>
+<li>简盒「指定主体」功能（手动框选）</li>
+<li>换更干净的原图（主体突出）</li>
+</ul>
+<hr>
+<h3>Q5：商业使用合规？</h3>
+<p><strong>法律</strong>：</p>
+<ul>
+<li>你拍摄/购买的素材 → 完全 OK</li>
+<li>第三方授权素材 → 看授权协议</li>
+<li>侵权素材 → 抠图后<strong>仍侵权</strong></li>
+</ul>
+<hr>
+<h2>🎓 进阶：抠图工作流</h2>
+<h3>电商商品图完整流程</h3>
+<pre><code>商品拍摄（白底）
+    ↓
+简盒批量抠图（统一背景）
+    ↓
+统一尺寸（如 3000x3000）
+    ↓
+批量加水印（可选）
+    ↓
+上传电商平台</code></pre>
+<h3>设计海报完整流程</h3>
+<pre><code>收集素材
+    ↓
+简盒 AI 抠图（抠出主体）
+    ↓
+Figma/Photoshop 合成
+    ↓
+添加文字/特效
+    ↓
+导出（PNG 透明 + JPEG 分享）</code></pre>
+<hr>
+<h2>🚀 开始抠图</h2>
+<p><a href="https://www.jianhebox.cn/#/tools/image">👉 打开简盒图片工具箱</a></p>
+<p>特点：</p>
+<ul>
+<li>✅ <strong>完全免费</strong></li>
+<li>✅ <strong>本地 AI 模型</strong>（隐私安全）</li>
+<li>✅ <strong>3-5 秒出图</strong></li>
+<li>✅ <strong>批量处理</strong></li>
+<li>✅ <strong>支持背景替换</strong></li>
+<li>✅ <strong>导出透明 PNG</strong></li>
+</ul>
+<hr>
+<h2>📚 相关教程</h2>
+<ul>
+<li><a href="/article-image-compress.html">图片压缩完全指南</a></li>
+<li><a href="/article-old-photo-restore.html">老照片修复完整教程</a></li>
+<li><a href="/article-pdf-to-word.html">PDF 转 Word 免费教程</a></li>
+</ul>
+<hr>
+<h2>💬 反馈</h2>
+<ul>
+<li>📧 <a href="mailto:hi@jianhebox.cn">hi@jianhebox.cn</a></li>
+</ul>
+<blockquote>本文由 <a href="https://www.jianhebox.cn/">简盒 JianHeBox</a> 编辑整理。</blockquote>
+<!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-ai-image-cutout.html&title=AI%20%E4%B8%80%E9%94%AE%E6%8A%A0%E5%9B%BE%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A%E4%BB%8E%E8%AF%81%E4%BB%B6%E7%85%A7%E5%88%B0%E7%94%B5%E5%95%86%E5%95%86%E5%93%81%E5%9B%BE%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-ai-image-cutout.html&title=AI%20%E4%B8%80%E9%94%AE%E6%8A%A0%E5%9B%BE%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A%E4%BB%8E%E8%AF%81%E4%BB%B6%E7%85%A7%E5%88%B0%E7%94%B5%E5%95%86%E5%95%86%E5%93%81%E5%9B%BE%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-ai-image-cutout.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-ai-image-cutout.html&text=AI%20%E4%B8%80%E9%94%AE%E6%8A%A0%E5%9B%BE%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A%E4%BB%8E%E8%AF%81%E4%BB%B6%E7%85%A7%E5%88%B0%E7%94%B5%E5%95%86%E5%95%86%E5%93%81%E5%9B%BE%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-image-compress.html" class="related-item"><span>图片压缩完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-old-photo-restore.html" class="related-item"><span>老照片修复完整教程</span><span class="arrow">→</span></a>
+    <a href="/article-free-ai-tools-2026.html" class="related-item"><span>2026 免费 AI 工具清单</span><span class="arrow">→</span></a>
+    <a href="/article-video-watermark-removal.html" class="related-item"><span>视频去水印 5 种方法</span><span class="arrow">→</span></a>
+    <a href="/article-ai-prompt-engineer.html" class="related-item"><span>AI 提示词工程师入门</span><span class="arrow">→</span></a>
+    </div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>抑郁测试 PHQ-9 - 心情健康自测 | 简盒玩点有趣的</title>
+<meta name="description" content="免费抑郁测试，PHQ-9 健康问卷改编。9 道题测出你最近 2 周的心情状态。专业自测量表，结果仅供参考。">
+<meta name="keywords" content="抑郁,心情,心理健康,PHQ-9,测试,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #4a5cb8, #6e7eb8);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #84fab0, #8fd3f4);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .options {
+    display: grid;
+    gap: 8px;
+  }
+  .option {
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: white;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #84fab0, #8fd3f4) !important;
+    border-color: #84fab0;
+    color: #2c3e50;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .mood-emoji { font-size: 80px; margin-bottom: 8px; }
+  .mood-score {
+    font-size: 56px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #84fab0, #8fd3f4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 12px 0;
+  }
+  .mood-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #84fab0, #8fd3f4);
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+    line-height: 1.8;
+  }
+
+  .urgent-banner {
+    background: rgba(231, 76, 60, 0.3) !important;
+    border: 2px solid #e74c3c;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 16px 0;
+    text-align: center;
+    line-height: 1.6;
+  }
+  .urgent-banner strong { color: #ff6b6b; font-size: 16px; }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #4a5cb8, #6e7eb8);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-emoji { font-size: 72px; margin: 12px 0; }
+  .poster-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  .poster-score {
+    font-size: 48px;
+    font-weight: 900;
+    margin: 12px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  .poster-tip {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>💙 心情自测 PHQ-9</h1>
+    <p class="subtitle">最近 2 周你的心情怎么样？</p>
+    <ul class="intro-feature-list">
+      <li>📊 基于国际通用 PHQ-9 抑郁量表</li>
+      <li>⏰ 测最近 2 周的情绪状态</li>
+      <li>💡 个性化建议 + 自助方法</li>
+      <li>⚠️ 仅供娱乐参考 · 不替代专业诊断</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 2-3 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center; opacity:0.8; margin-bottom:16px; font-size:14px;">问题 <span id="currentQ">1</span> / 9</p>
+    <h3 style="margin-bottom:12px; line-height:1.5; font-size:18px;">过去 2 周内，以下问题困扰你的频率：</h3>
+    <p id="questionText" style="margin-bottom:16px; line-height:1.5; font-size:17px; padding:14px; background:rgba(255,255,255,0.08); border-radius:12px;"></p>
+    <div id="optionsContainer" class="options"></div>
+    <button class="btn" id="prevBtn" onclick="prevQuestion()" style="margin-top:12px;">← 上一题</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="mood-emoji" id="moodEmoji">😊</div>
+      <div style="font-size:14px; opacity:0.85;">你的心情指数</div>
+      <div class="mood-score" id="moodScore">5</div>
+      <div class="mood-level" id="moodLevel">心情良好</div>
+    </div>
+
+    <div id="urgentSection" class="urgent-banner hidden">
+      <strong>⚠️ 请关注你的心理健康</strong><br>
+      你的测试结果显示可能有较严重的抑郁倾向。<br>
+      强烈建议：寻求专业心理咨询师或医生的帮助。<br>
+      24 小时心理援助热线：<strong>400-161-9995</strong>
+    </div>
+
+    <h3 class="section-title">📊 心情解读</h3>
+    <div class="info-card" id="moodReading"></div>
+
+    <h3 class="section-title">💡 自助建议</h3>
+    <div class="info-card" id="selfHelp"></div>
+
+    <h3 class="section-title">🌱 日常调节</h3>
+    <div class="info-card" id="dailyCare"></div>
+
+    <div class="section-title">📤 分享我的心情</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">心情自测 PHQ-9</div>
+          <div class="poster-emoji" id="posterEmoji">😊</div>
+          <div class="poster-level" id="posterLevel">心情良好</div>
+          <div class="poster-score" id="posterScore">5</div>
+          <div class="poster-divider"></div>
+          <div class="poster-tip" id="posterTip">照顾好自己</div>
+          <div class="poster-footer">测试你的心情 → jianhebox.cn/fun/mood.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ <strong>重要声明</strong>：本工具是娱乐性自测，<strong>不能替代专业诊断</strong>。<br>
+    如果你持续感到心情低落或有自伤念头，请立即联系专业心理咨询师或拨打心理援助热线：<br>
+    <strong>24 小时心理援助热线：400-161-9995</strong> · 北京心理危机研究与干预中心
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// PHQ-9 标准问卷 - 0-3 分
+const questions = [
+  { text: "做事时提不起劲或没有兴趣", options: ["完全不会", "几天", "一半以上的天数", "几乎每天"] },
+  { text: "感到心情低落、沮丧或绝望", options: ["完全不会", "几天", "一半以上的天数", "几乎每天"] },
+  { text: "入睡困难、睡不安稳或睡得太多", options: ["完全不会", "几天", "一半以上的天数", "几乎每天"] },
+  { text: "感觉疲倦或没有活力", options: ["完全不会", "几天", "一半以上的天数", "几乎每天"] },
+  { text: "食欲不振或吃太多", options: ["完全不会", "几天", "一半以上的天数", "几乎每天"] },
+  { text: "觉得自己很糟、很失败，或让自己或家人失望", options: ["完全不会", "几天", "一半以上的天数", "几乎每天"] },
+  { text: "对事物专注有困难，例如阅读报纸或看电视时", options: ["完全不会", "几天", "一半以上的天数", "几乎每天"] },
+  { text: "动作或说话速度缓慢到别人已经察觉，或烦躁、坐立不安", options: ["完全不会", "几天", "一半以上的天数", "几乎每天"] },
+  { text: "有不如死掉或用某种方式伤害自己的念头", options: ["完全不会", "几天", "一半以上的天数", "几乎每天"] }
+];
+
+let answers = new Array(9).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 9 * 100) + '%';
+  document.getElementById('questionText').textContent = q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  q.options.forEach((text, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = text;
+    btn.onclick = () => selectOption(idx, btn);
+    container.appendChild(btn);
+  });
+  
+  if (answers[currentQuestion] !== null) {
+    const btns = container.querySelectorAll('.option');
+    btns[answers[currentQuestion]].classList.add('selected');
+  }
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  answers[currentQuestion] = idx;
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  
+  setTimeout(() => {
+    if (currentQuestion < 8) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 250);
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateResult() {
+  let total = 0;
+  answers.forEach(a => {
+    if (a !== null) total += a;
+  });
+  return total; // 0-27 分
+}
+
+function showResult() {
+  const score = calculateResult();
+  const data = getResultData(score);
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('moodScore').textContent = score;
+  document.getElementById('moodEmoji').textContent = data.emoji;
+  document.getElementById('moodLevel').textContent = data.level;
+  
+  // 紧急提示
+  if (score >= 15) {
+    document.getElementById('urgentSection').classList.remove('hidden');
+  } else {
+    document.getElementById('urgentSection').classList.add('hidden');
+  }
+  
+  document.getElementById('moodReading').textContent = data.reading;
+  document.getElementById('selfHelp').textContent = data.selfHelp;
+  document.getElementById('dailyCare').textContent = data.dailyCare;
+  
+  // 海报
+  document.getElementById('posterEmoji').textContent = data.emoji;
+  document.getElementById('posterLevel').textContent = data.level;
+  document.getElementById('posterScore').textContent = score;
+  document.getElementById('posterTip').textContent = data.tip;
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getResultData(score) {
+  let level, emoji, reading, selfHelp, dailyCare, tip;
+  
+  if (score <= 4) {
+    level = '😊 心情良好';
+    emoji = '😊';
+    reading = '你的心情状态良好！\\n\\n最近 2 周你的情绪基本稳定，没有明显的抑郁症状。继续保持健康的生活方式。';
+    selfHelp = '• 继续保持规律作息\\n• 多与朋友家人交流\\n• 适当运动，保持活力\\n• 培养兴趣爱好';
+    dailyCare = '保持当前的健康习惯：充足睡眠、均衡饮食、适度运动、与朋友保持联系。心情好的时候也要照顾好自己。';
+    tip = '心情不错 · 继续保持';
+  } else if (score <= 9) {
+    level = '😐 轻度抑郁';
+    emoji = '😐';
+    reading = '你可能有轻度的抑郁倾向。\\n\\n最近 2 周你有一些情绪低落的体验，但还在可控范围内。建议多关注自己的情绪，做一些调整。';
+    selfHelp = '• 增加运动，每周 3 次以上\\n• 多晒太阳，多接触自然\\n• 找人倾诉，不要憋着\\n• 做让自己开心的事\\n• 减少社交媒体使用';
+    dailyCare = '建议建立规律的作息，尝试正念冥想，记录情绪日记。如果 2 周后没有改善，考虑咨询心理咨询师。';
+    tip = '轻度抑郁 · 多关注自己';
+  } else if (score <= 14) {
+    level = '😔 中度抑郁';
+    emoji = '😔';
+    reading = '你可能有中度的抑郁倾向。\\n\\n最近 2 周你的情绪问题已经影响到日常生活。建议主动寻求帮助，不要独自承受。';
+    selfHelp = '• 寻求专业心理咨询\\n• 告诉信任的人你的状态\\n• 不要做重大决定\\n• 保持基本作息\\n• 避免独处太久';
+    dailyCare = '建议预约心理咨询师或精神科医生。同时告知家人朋友你的状态，获得支持。专业的帮助会让恢复更快。';
+    tip = '中度抑郁 · 需要支持';
+  } else if (score <= 19) {
+    level = '😢 中重度抑郁';
+    emoji = '😢';
+    reading = '你可能有中重度抑郁倾向。\\n\\n你的情绪问题已经严重影响到生活，强烈建议尽快寻求专业帮助。你不是一个人。';
+    selfHelp = '• 立即联系专业医生\\n• 拨打心理援助热线\\n• 告诉家人你的状态\\n• 不要独处\\n• 按时服药（如医生建议）';
+    dailyCare = '强烈建议尽快去精神科或心理科就诊。抑郁是可以治疗的，请不要放弃寻求帮助。家人和朋友的支持很重要。';
+    tip = '需要专业帮助';
+  } else {
+    level = '😰 重度抑郁';
+    emoji = '😰';
+    reading = '你可能有重度抑郁倾向。\\n\\n你的情绪状态需要立即关注。请立即寻求专业帮助，你的健康比什么都重要。';
+    selfHelp = '• 立即拨打援助热线\\n• 联系精神科急诊\\n• 告诉身边人你的状态\\n• 不要独处\\n• 远离危险物品';
+    dailyCare = '请立即拨打 24 小时心理援助热线 400-161-9995，或前往最近的精神科急诊。你值得被帮助，请不要独自承受。';
+    tip = '请立即寻求帮助';
+  }
+  
+  return { level, emoji, reading, selfHelp, dailyCare, tip };
+}
+
+function copyShareText() {
+  const score = document.getElementById('moodScore').textContent;
+  const level = document.getElementById('moodLevel').textContent;
+  
+  const text = '💙 我的心情指数：' + score + '\\n' + level + '\\n\\n照顾好自己 💙\\n👉 测试心情：jianhebox.cn/fun/mood.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(9).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

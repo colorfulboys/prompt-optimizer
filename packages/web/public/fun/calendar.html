@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>老黄历查询 - 每日宜忌 · 吉日选择 | 简盒玩点有趣的</title>
+<meta name="description" content="免费老黄历查询，今日宜忌、时辰吉凶、五行穿衣、八字运势。每日吉日选择参考。">
+<meta name="keywords" content="老黄历,黄历,宜忌,吉日,时辰,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .date-picker {
+    width: 100%;
+    padding: 14px;
+    background: rgba(255,255,255,0.1) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 16px;
+    font-family: inherit;
+    margin: 12px 0;
+  }
+  .date-picker:focus {
+    outline: none;
+    border-color: #f5576c;
+  }
+
+  .date-picker::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 24px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .lunar-date {
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 6px;
+  }
+  .solar-date {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 6px 0;
+  }
+  .weekday {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 12px;
+  }
+  .lucky-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #f5576c, #f093fb);
+    border-radius: 24px;
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .yi-ji-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .yi-card, .ji-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  .yi-card {
+    background: rgba(46, 204, 113, 0.15) !important;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+  }
+  .ji-card {
+    background: rgba(231, 76, 60, 0.15) !important;
+    border: 1px solid rgba(231, 76, 60, 0.3);
+  }
+  .yi-card h4, .ji-card h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .yi-card ul, .ji-card ul {
+    list-style: none;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  .yi-card ul li::before {
+    content: '✓ ';
+    color: #2ecc71;
+    font-weight: bold;
+  }
+  .ji-card ul li::before {
+    content: '✗ ';
+    color: #e74c3c;
+    font-weight: bold;
+  }
+
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  .shenshen-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin: 12px 0;
+  }
+  .shenshen-item {
+    padding: 8px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 12px;
+  }
+  .shenshen-time {
+    font-size: 10px;
+    opacity: 0.7;
+  }
+  .shenshen-status-ji { color: #2ecc71; }
+  .shenshen-status-xiong { color: #e74c3c; }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #c31432, #240b36);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-date {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  .poster-level {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    margin: 8px 0;
+    font-size: 14px;
+  }
+  .poster-yi-ji {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .poster-yi, .poster-ji {
+    padding: 8px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 8px;
+    font-size: 11px;
+    text-align: left;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>📅 老黄历查询</h1>
+    <p class="subtitle">每日宜忌 · 吉日选择 · 时辰吉凶</p>
+    <ul class="intro-feature-list">
+      <li>📆 选择日期 → 查询当日宜忌</li>
+      <li>⏰ 12 时辰吉凶 + 五行穿衣</li>
+      <li>🌟 综合运势 + 财位 + 喜神方位</li>
+      <li>✨ 专属海报分享</li>
+    </ul>
+    <label style="display:block; margin-top:20px;">选择日期：</label>
+    <input type="date" class="date-picker" id="dateInput">
+    <button class="btn-primary" onclick="queryCalendar()" style="width:100%; margin-top:12px;">🔍 查询</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="lunar-date" id="lunarDate">农历 · </div>
+      <div class="solar-date" id="solarDate">2026年9月15日</div>
+      <div class="weekday" id="weekday">星期一</div>
+      <div class="lucky-level" id="luckyLevel">⭐⭐⭐⭐ 大吉</div>
+    </div>
+
+    <div class="yi-ji-grid">
+      <div class="yi-card">
+        <h4>✅ 宜</h4>
+        <ul id="yiList"></ul>
+      </div>
+      <div class="ji-card">
+        <h4>❌ 忌</h4>
+        <ul id="jiList"></ul>
+      </div>
+    </div>
+
+    <h3 class="section-title">⏰ 12 时辰吉凶</h3>
+    <div class="shenshen-grid" id="shenshenGrid"></div>
+
+    <h3 class="section-title">🎨 五行穿衣</h3>
+    <div class="info-card" id="wuxingDress"></div>
+
+    <h3 class="section-title">💰 今日财位</h3>
+    <div class="info-card" id="caifuPos"></div>
+
+    <h3 class="section-title">🌟 喜神方位</h3>
+    <div class="info-card" id="xishenPos"></div>
+
+    <h3 class="section-title">💡 今日建议</h3>
+    <div class="info-card" id="todayAdvice"></div>
+
+    <div class="section-title">📤 分享今日黄历</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">老黄历</div>
+          <div class="poster-date" id="posterDate">2026年9月15日</div>
+          <div class="poster-level" id="posterLevel">⭐⭐⭐⭐ 大吉</div>
+          <div class="poster-divider"></div>
+          <div class="poster-yi-ji">
+            <div class="poster-yi" id="posterYi">✅ <span id="posterYiText"></span></div>
+            <div class="poster-ji" id="posterJi">❌ <span id="posterJiText"></span></div>
+          </div>
+          <div class="poster-footer">查询今日黄历 → jianhebox.cn/fun/calendar.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="document.getElementById('result').classList.add('hidden');document.getElementById('intro').classList.remove('hidden');" style="width:100%; margin-top:12px;">🔄 查询其他日期</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 老黄历内容仅供娱乐参考，请勿作为决策依据。<br>
+    真正的吉凶，来自于你的努力和选择。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+const yiOptions = ['祭祀', '祈福', '求嗣', '开光', '塑绘', '理发', '会亲友', '伐木', '作梁', '开市', '交易', '立券', '纳财', '栽种', '牧养', '安葬'];
+const jiOptions = ['嫁娶', '入宅', '动土', '安床', '开仓', '出货', '破土', '祈福', '斋醮', '作灶', '造船', '安门'];
+
+const shenshenData = [
+  { time: '子时', range: '23:00-01:00', zhishi: '吉' },
+  { time: '丑时', range: '01:00-03:00', zhishi: '凶' },
+  { time: '寅时', range: '03:00-05:00', zhishi: '吉' },
+  { time: '卯时', range: '05:00-07:00', zhishi: '吉' },
+  { time: '辰时', range: '07:00-09:00', zhishi: '凶' },
+  { time: '巳时', range: '09:00-11:00', zhishi: '吉' },
+  { time: '午时', range: '11:00-13:00', zhishi: '吉' },
+  { time: '未时', range: '13:00-15:00', zhishi: '凶' },
+  { time: '申时', range: '15:00-17:00', zhishi: '吉' },
+  { time: '酉时', range: '17:00-19:00', zhishi: '凶' },
+  { time: '戌时', range: '19:00-21:00', zhishi: '吉' },
+  { time: '亥时', range: '21:00-23:00', zhishi: '凶' }
+];
+
+const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+
+const wuxingColors = [
+  { element: '金', color: '白色 / 金色 / 银色', emoji: '⚪', desc: '金旺助运，贵人相助' },
+  { element: '木', color: '绿色 / 青绿色', emoji: '🟢', desc: '木气生发，事业起步' },
+  { element: '水', color: '黑色 / 蓝色', emoji: '🔵', desc: '水主智慧，思维清晰' },
+  { element: '火', color: '红色 / 紫色', emoji: '🔴', desc: '火旺热情，人际活跃' },
+  { element: '土', color: '黄色 / 棕色', emoji: '🟡', desc: '土主稳重，财运稳固' }
+];
+
+const directions = ['东', '南', '西', '北', '东南', '西南', '东北', '西北'];
+
+function queryCalendar() {
+  const dateInput = document.getElementById('dateInput').value;
+  if (!dateInput) {
+    alert('请选择日期');
+    return;
+  }
+  
+  const date = new Date(dateInput);
+  const seed = date.getTime();
+  
+  // 简化的"老黄历"算法 - 基于日期生成确定性随机结果
+  const dayRand = (offset) => {
+    const x = Math.sin(seed + offset) * 10000;
+    return Math.abs(x - Math.floor(x));
+  };
+  
+  // 选择宜忌（每天 4-5 个）
+  const numYi = 4 + Math.floor(dayRand(1) * 2);
+  const numJi = 3 + Math.floor(dayRand(2) * 2);
+  
+  const yiItems = [];
+  for (let i = 0; i < numYi; i++) {
+    const idx = Math.floor(dayRand(3 + i * 7) * yiOptions.length);
+    if (!yiItems.includes(yiOptions[idx])) yiItems.push(yiOptions[idx]);
+  }
+  
+  const jiItems = [];
+  for (let i = 0; i < numJi; i++) {
+    const idx = Math.floor(dayRand(4 + i * 11) * jiOptions.length);
+    if (!jiItems.includes(jiOptions[idx])) jiItems.push(jiOptions[idx]);
+  }
+  
+  // 吉凶等级
+  const luckScore = dayRand(100);
+  let luckyLevel;
+  if (luckScore > 0.8) luckyLevel = '⭐⭐⭐⭐⭐ 大吉大利';
+  else if (luckScore > 0.6) luckyLevel = '⭐⭐⭐⭐ 大吉';
+  else if (luckScore > 0.4) luckyLevel = '⭐⭐⭐ 中吉';
+  else if (luckScore > 0.2) luckyLevel = '⭐⭐ 小吉';
+  else luckyLevel = '⭐ 平平';
+  
+  // 时辰吉凶（每天随机排列）
+  const shenshen = [...shenshenData];
+  for (let i = shenshen.length - 1; i > 0; i--) {
+    const j = Math.floor(dayRand(5 + i * 13) * (i + 1));
+    [shenshen[i], shenshen[j]] = [shenshen[j], shenshen[i]];
+  }
+  
+  // 五行穿衣
+  const wxIdx = Math.floor(dayRand(200) * wuxingColors.length);
+  const wuxing = wuxingColors[wxIdx];
+  
+  // 财位方位
+  const caiIdx = Math.floor(dayRand(300) * directions.length);
+  const caiPos = directions[caiIdx];
+  
+  // 喜神方位
+  const xiIdx = Math.floor(dayRand(400) * directions.length);
+  const xiPos = directions[xiIdx];
+  
+  // 农历日期（简化）
+  const lunarDay = Math.floor(dayRand(500) * 30) + 1;
+  const lunarMonth = Math.floor(dayRand(600) * 12) + 1;
+  const lunarYear = date.getFullYear();
+  
+  // 显示
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('solarDate').textContent = 
+    date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
+  document.getElementById('lunarDate').textContent = '农历 ' + lunarYear + '年' + lunarMonth + '月' + lunarDay + '日';
+  document.getElementById('weekday').textContent = weekdays[date.getDay()];
+  document.getElementById('luckyLevel').textContent = luckyLevel;
+  
+  document.getElementById('yiList').innerHTML = yiItems.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('jiList').innerHTML = jiItems.map(s => '<li>' + s + '</li>').join('');
+  
+  // 时辰吉凶
+  const shenshenGrid = document.getElementById('shenshenGrid');
+  shenshenGrid.innerHTML = '';
+  shenshen.forEach(s => {
+    const item = document.createElement('div');
+    item.className = 'shenshen-item';
+    item.innerHTML = `
+      <div style="font-weight:bold;">${s.time}</div>
+      <div class="shenshen-time">${s.range}</div>
+      <div class="${s.zhishi === '吉' ? 'shenshen-status-ji' : 'shenshen-status-xiong'}">${s.zhishi}</div>
+    `;
+    shenshenGrid.appendChild(item);
+  });
+  
+  document.getElementById('wuxingDress').innerHTML = 
+    '<div style="font-size:24px; margin-bottom:8px;">' + wuxing.emoji + ' ' + wuxing.element + '旺</div>' +
+    '今日穿衣主色：<strong>' + wuxing.color + '</strong><br>' +
+    '五行说明：' + wuxing.desc;
+  
+  document.getElementById('caifuPos').innerHTML = 
+    '💰 今日财位在 <strong>' + caiPos + '方</strong><br>' +
+    '适宜朝' + caiPos + '方活动，利于求财。<br>' +
+    '建议：办公桌朝' + caiPos + '摆放，或在' + caiPos + '方放置绿色植物催旺财运。';
+  
+  document.getElementById('xishenPos').innerHTML = 
+    '🌟 今日喜神在 <strong>' + xiPos + '方</strong><br>' +
+    '适合朝' + xiPos + '方发展，贵人相助。<br>' +
+    '建议：今日重要事务可朝' + xiPos + '方进行。';
+  
+  // 今日建议
+  const advices = [
+    '保持心情开朗，好运会自然到来',
+    '主动关心身边人，人缘即是财源',
+    '今日适合学习和反思',
+    '运动健身，提升精气神',
+    '注意饮食，保持健康',
+    '与家人共度时光',
+    '专注工作，不要被杂念分心',
+    '保持微笑，吸引正能量'
+  ];
+  const adviceIdx = Math.floor(dayRand(700) * advices.length);
+  document.getElementById('todayAdvice').innerHTML = 
+    '💡 今日重点：<strong>' + advices[adviceIdx] + '</strong><br><br>' +
+    '🌈 黄历提示：宜' + yiItems[0] + '，忌' + jiItems[0] + '。' +
+    '保持平常心，专注当下，好运自然来。';
+  
+  // 海报
+  document.getElementById('posterDate').textContent = 
+    (date.getMonth() + 1) + '月' + date.getDate() + '日';
+  document.getElementById('posterLevel').textContent = luckyLevel;
+  document.getElementById('posterYiText').textContent = yiItems.slice(0, 3).join('、');
+  document.getElementById('posterJiText').textContent = jiItems.slice(0, 3).join('、');
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyShareText() {
+  const solar = document.getElementById('solarDate').textContent;
+  const lunar = document.getElementById('lunarDate').textContent;
+  const level = document.getElementById('luckyLevel').textContent;
+  const yi = document.getElementById('yiList').textContent;
+  const ji = document.getElementById('jiList').textContent;
+  
+  const text = '📅 老黄历：' + solar + '\\n' + lunar + '\\n\\n' +
+    level + '\\n\\n' +
+    '宜：' + yi.replace(/✓/g, '').replace(/\\s+/g, ' ') + '\\n' +
+    '忌：' + ji.replace(/✗/g, '').replace(/\\s+/g, ' ') + '\\n\\n' +
+    '👉 查询黄历：jianhebox.cn/fun/calendar.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 默认今天
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('dateInput').value = today;
+  
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

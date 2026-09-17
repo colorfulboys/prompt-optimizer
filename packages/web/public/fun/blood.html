@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>血型性格测试 - A/B/AB/O 4 型 | 简盒玩点有趣的</title>
+<meta name="description" content="免费血型性格测试。30 题测出你的血型性格类型，分析爱情、事业、人际关系的特点。">
+<meta name="keywords" content="血型,性格,A型,B型,AB型,O型,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+  .option {
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    color: white;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .blood-letter {
+    font-size: 100px;
+    font-weight: bold;
+    margin: 12px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .blood-name {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .blood-nick {
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #f5576c;
+    font-weight: bold;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 40px 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #c31432, #240b36);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-letter {
+    font-size: 110px;
+    font-weight: 900;
+    margin: 16px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-name {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 6px;
+  }
+  .poster-nick {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 16px auto;
+    border-radius: 2px;
+  }
+  .poster-trait {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .poster-footer {
+    margin-top: 20px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; justify-content: center; }
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    font-size: 13px;
+    color: white;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🩸 血型性格测试</h1>
+    <p class="subtitle">A / B / AB / O · 30 题测你的血型性格</p>
+    <ul class="intro-feature-list">
+      <li>4 种血型性格：A 完美型 / B 自由型 / AB 矛盾型 / O 阳光型</li>
+      <li>分析爱情、事业、人际关系特点</li>
+      <li>专属海报 + 9 维度详尽解读</li>
+      <li>✨ 完全免费 · 无需登录</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 5-8 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center; opacity:0.8; margin-bottom:16px; font-size:14px;">问题 <span id="currentQ">1</span> / 30</p>
+    <h3 id="questionText" style="margin-bottom:16px; line-height:1.5;"></h3>
+    <div id="optionsContainer" class="options"></div>
+    <button class="btn" id="prevBtn" onclick="prevQuestion()" style="margin-top:12px;">← 上一题</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div id="bloodLetter" class="blood-letter">A</div>
+      <div class="blood-name" id="bloodName">A 型血</div>
+      <div class="blood-nick" id="bloodNick">"完美型"</div>
+      <div class="tag-row" id="bloodTags"></div>
+    </div>
+
+    <h3 class="section-title">🩸 性格画像</h3>
+    <p id="personality" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">💪 核心优势</h3>
+    <ul id="strengths" class="feature-list"></ul>
+
+    <h3 class="section-title">⚠️ 潜在弱点</h3>
+    <ul id="weaknesses" class="feature-list"></ul>
+
+    <h3 class="section-title">💕 爱情特点</h3>
+    <p id="love" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">💼 事业特点</h3>
+    <p id="career" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">🤝 人际关系</h3>
+    <p id="relationships" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">🌱 成长建议</h3>
+    <p id="growth" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <div class="section-title">📤 分享我的血型性格</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存下面的专属海报</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">血型性格测试</div>
+          <div id="posterLetter" class="poster-letter">A</div>
+          <div class="poster-name" id="posterName">A 型血</div>
+          <div class="poster-nick" id="posterNick">"完美型"</div>
+          <div class="poster-divider"></div>
+          <div class="poster-trait" id="posterTrait">性格简述</div>
+          <div class="poster-footer">测试你的血型性格 → jianhebox.cn/fun/blood.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 血型性格理论来源于日本，仅供娱乐参考。没有科学证据证明血型决定性格。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+const questions = [
+  // A 型
+  { text: "做事时你更注重：", a: "完美、细节", b: "速度、效率", type: "A" },
+  { text: "你更喜欢：", a: "有计划、有准备", b: "随性自然", type: "A" },
+  { text: "面对规则：", a: "严格遵守", b: "灵活变通", type: "A" },
+  { text: "你更喜欢的工作：", a: "稳定、有序", b: "变化、有趣", type: "A" },
+  { text: "你更在意外界的：", a: "评价和看法", b: "自我感受", type: "A" },
+  { text: "你更倾向：", a: "提前规划", b: "临时决定", type: "A" },
+  { text: "你更讨厌：", a: "混乱、失控", b: "无聊、重复", type: "A" },
+  { text: "面对压力：", a: "独自承受", b: "找人倾诉", type: "A" },
+  // B 型
+  { text: "你更喜欢的：", a: "自由、不被约束", b: "稳定、有依靠", type: "B" },
+  { text: "你更在意的：", a: "自己的感受", b: "他人的评价", type: "B" },
+  { text: "你更喜欢的工作：", a: "自由职业", b: "团队合作", type: "B" },
+  { text: "你更讨厌：", a: "被规则束缚", b: "失去自我", type: "B" },
+  { text: "你的兴趣：", a: "广泛、多变", b: "专注、深入", type: "B" },
+  { text: "面对新事物：", a: "立刻尝试", b: "观察后再试", type: "B" },
+  { text: "你更喜欢的旅行：", a: "独自背包", b: "跟团旅游", type: "B" },
+  // AB 型
+  { text: "你更觉得自己：", a: "既外向又内向", b: "单纯一种性格", type: "AB" },
+  { text: "你更喜欢：", a: "理性+感性的平衡", b: "纯粹理性或感性", type: "AB" },
+  { text: "你更喜欢：", a: "独处也喜欢社交", b: "只喜欢其中一种", type: "AB" },
+  { text: "你更欣赏：", a: "矛盾中的美感", b: "纯粹的美感", type: "AB" },
+  { text: "你的朋友认为你：", a: "难以捉摸", b: "容易理解", type: "AB" },
+  { text: "你更喜欢：", a: "出人意料的惊喜", b: "可预期的稳定", type: "AB" },
+  // O 型
+  { text: "你更喜欢的氛围：", a: "热闹、活跃", b: "安静、平和", type: "O" },
+  { text: "你更在意的：", a: "实现目标", b: "内心平静", type: "O" },
+  { text: "你更喜欢的：", a: "领导大家", b: "配合他人", type: "O" },
+  { text: "你更喜欢的工作：", a: "有挑战、竞争", b: "稳定、舒适", type: "O" },
+  { text: "面对困难：", a: "正面冲上去", b: "绕道而行", type: "O" },
+  { text: "你更喜欢的：", a: "明确的目标", b: "开放的可能性", type: "O" },
+  { text: "你更喜欢：", a: "直接表达", b: "委婉含蓄", type: "O" },
+  { text: "在群体中：", a: "自然成为焦点", b: "喜欢当观众", type: "O" },
+  { text: "你更欣赏：", a: "力量与果断", b: "温柔与包容", type: "O" }
+];
+
+const bloodTypes = {
+  A: {
+    name: "A 型血", nickname: "完美型", emoji: "🅰️",
+    color: "linear-gradient(135deg, #c31432, #240b36)",
+    tags: ["完美", "认真", "谨慎", "负责"],
+    personality: "A 型血是完美主义者和认真负责的人。\\n\\n你做事一丝不苟，注重细节和规则。你有强烈的责任感，会把事情做到最好。你外表温和，内心有坚定的标准。\\n\\n你善于规划，讨厌混乱和不确定性。你的可靠性是你最大的优点。",
+    strengths: ["认真负责，做事严谨", "有计划有条理", "重视承诺", "自我要求高", "团队中的稳定力量"],
+    weaknesses: ["可能过于追求完美", "压力过大", "不善变通", "可能过度担忧", "不善拒绝"],
+    love: "【爱情】\\nA 型血在感情中认真投入，一旦认定会很忠诚。你重视稳定和承诺，是理想的结婚对象。\\n\\n你可能在恋爱初期过于拘谨，需要时间放开。你欣赏有责任感的人。",
+    career: "【事业】\\n你适合需要细致和责任感的工作：会计、审计、行政、医护、法律、研究等。\\n\\n你是团队中的稳定力量，但可能需要学习灵活变通。",
+    relationships: "【人际关系】\\n你是值得信赖的朋友，但不善于主动社交。你朋友圈不大，但每段关系都很深。\\n\\n你需要学习放松，给自己和他人一些空间。",
+    growth: "【成长建议】\\n• 接受不完美\\n• 给生活一些弹性\\n• 不要把所有压力自己扛\\n• 学会说不大胆说不"
+  },
+  B: {
+    name: "B 型血", nickname: "自由型", emoji: "🅱️",
+    color: "linear-gradient(135deg, #f7971e, #ffd200)",
+    tags: ["自由", "独立", "直率", "有趣"],
+    personality: "B 型血是自由不羁的人。\\n\\n你追求自由和独立，讨厌被规则束缚。你直率坦诚，想什么就说什么。你兴趣广泛，对世界充满好奇。\\n\\n你重视自己的感受胜过他人的评价，是个真正的自由灵魂。",
+    strengths: ["独立、不依赖", "直率坦诚", "兴趣广泛", "适应力强", "有创意"],
+    weaknesses: ["可能显得自私", "不善合作", "难以坚持", "可能过于随意"],
+    love: "【爱情】\\nB 型血在感情中需要空间和自由。你不喜欢被束缚，需要伴侣理解你的独立性。\\n\\n你可能不适合太黏人的关系，但一旦认定，会非常专一。",
+    career: "【事业】\\n你适合需要创意和自由的工作：艺术、设计、自由职业、创业等。\\n\\n你讨厌朝九晚五的固定工作，喜欢按自己的节奏生活。",
+    relationships: "【人际关系】\\n你朋友很多但可能都不够深。你可能让人觉得难以捉摸，但你的直率让人信任。\\n\\n你需要学习更深入地关心他人。",
+    growth: "【成长建议】\\n• 学会为他人考虑\\n• 给承诺一些重量\\n• 深度而非广度\\n• 培养持续性"
+  },
+  AB: {
+    name: "AB 型血", nickname: "矛盾型", emoji: "🆎",
+    color: "linear-gradient(135deg, #667eea, #764ba2)",
+    tags: ["矛盾", "复杂", "理性", "独特"],
+    personality: "AB 型血是复杂矛盾的人。\\n\\n你兼具 A 型的细腻和 B 型的自由，是矛盾的结合体。你有时理性，有时感性，让人难以捉摸。你喜欢独处也喜欢社交，是天生的多面手。\\n\\n你是独特的、有深度的、有距离感的。",
+    strengths: ["思维敏捷", "多面手", "有深度", "理性+感性平衡", "独特"],
+    weaknesses: ["可能难以接近", "显得冷漠", "自己矛盾", "难以做决定"],
+    love: "【爱情】\\nAB 型血在感情中复杂而深刻。你需要精神连接，但又不希望太黏。你欣赏聪明独立的人。\\n\\n你可能让伴侣困惑，但你的深度让关系有意义。",
+    career: "【事业】\\n你适合需要多维度思考的工作：策划、咨询、创意、分析等。\\n\\n你能在不同角色间切换，是优秀的协调者。",
+    relationships: "【人际关系】\\n你的朋友不多但都很深。你不善主动，但一旦建立关系就会很忠诚。\\n\\n你需要学习表达情感，让人更容易接近你。",
+    growth: "【成长建议】\\n• 不要让别人难以接近\\n• 学会选择和决定\\n• 接受自己的矛盾\\n• 表达内心的感受"
+  },
+  O: {
+    name: "O 型血", nickname: "阳光型", emoji: "🅾️",
+    color: "linear-gradient(135deg, #f093fb, #f5576c)",
+    tags: ["阳光", "自信", "果断", "领导"],
+    personality: "O 型血是阳光自信的人。\\n\\n你充满活力和自信，喜欢成为焦点。你果断有魄力，敢于行动。你是天生的领导者，能激励他人。\\n\\n你重视结果和成就，是积极向上的行动派。",
+    strengths: ["阳光自信", "果断有力", "有领导力", "行动力强", "热情"],
+    weaknesses: ["可能过于强势", "不善接受批评", "可能忽视细节"],
+    love: "【爱情】\\nO 型血在感情中热情主动，喜欢掌控局面。你一旦认定会很投入，但可能显得有些强势。\\n\\n你欣赏阳光有活力的人，需要伴侣能跟上你的节奏。",
+    career: "【事业】\\n你适合需要领导力的事业：销售、管理、创业、政治等。\\n\\n你是天生的 leader，能激发团队的活力。",
+    relationships: "【人际关系】\\n你是朋友圈的核心和开心果。你朋友很多，但可能需要学会倾听和给空间。\\n\\n你的热情让人愿意跟随你。",
+    growth: "【成长建议】\\n• 学会接受不完美\\n• 倾听他人的声音\\n• 不要控制欲太强\\n• 给别人一些空间"
+  }
+};
+
+let answers = new Array(30).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 30 * 100) + '%';
+  document.getElementById('questionText').textContent = '第 ' + (currentQuestion + 1) + ' 题：' + q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  const optA = document.createElement('button');
+  optA.className = 'option';
+  optA.textContent = 'A. ' + q.a;
+  optA.onclick = () => selectOption(0, optA);
+  
+  const optB = document.createElement('button');
+  optB.className = 'option';
+  optB.textContent = 'B. ' + q.b;
+  optB.onclick = () => selectOption(1, optB);
+  
+  container.appendChild(optA);
+  container.appendChild(optB);
+  
+  if (answers[currentQuestion] !== null) {
+    const btns = container.querySelectorAll('.option');
+    btns[answers[currentQuestion]].classList.add('selected');
+  }
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  answers[currentQuestion] = idx;
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  
+  setTimeout(() => {
+    if (currentQuestion < 29) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 250);
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateType() {
+  const scores = { A: 0, B: 0, AB: 0, O: 0 };
+  questions.forEach((q, i) => {
+    if (answers[i] === 0) scores[q.type]++;
+  });
+  
+  let topType = 'A';
+  for (const k in scores) {
+    if (scores[k] > scores[topType]) topType = k;
+  }
+  
+  return { type: topType, scores };
+}
+
+function showResult() {
+  const { type } = calculateType();
+  const data = bloodTypes[type];
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('bloodLetter').textContent = type;
+  document.getElementById('bloodLetter').style.background = data.color;
+  document.getElementById('bloodLetter').style.webkitBackgroundClip = 'text';
+  document.getElementById('bloodLetter').style.webkitTextFillColor = 'transparent';
+  document.getElementById('bloodLetter').style.backgroundClip = 'text';
+  
+  document.getElementById('bloodName').textContent = data.name;
+  document.getElementById('bloodNick').textContent = '"' + data.nickname + '"';
+  
+  const tagsContainer = document.getElementById('bloodTags');
+  tagsContainer.innerHTML = '';
+  data.tags.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'tag';
+    span.textContent = t;
+    tagsContainer.appendChild(span);
+  });
+  
+  document.getElementById('personality').textContent = data.personality;
+  document.getElementById('strengths').innerHTML = data.strengths.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('weaknesses').innerHTML = data.weaknesses.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('love').textContent = data.love;
+  document.getElementById('career').textContent = data.career;
+  document.getElementById('relationships').textContent = data.relationships;
+  document.getElementById('growth').textContent = data.growth;
+  
+  // 海报
+  document.getElementById('posterCard').style.background = data.color;
+  document.getElementById('posterLetter').textContent = type;
+  document.getElementById('posterName').textContent = data.name;
+  document.getElementById('posterNick').textContent = '"' + data.nickname + '"';
+  document.getElementById('posterTrait').textContent = data.personality.split('\\n')[0];
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyShareText() {
+  const { type } = calculateType();
+  const data = bloodTypes[type];
+  const text = '🩸 我的血型性格是 ' + data.name + '\\n"' + data.nickname + '"\\n\\n' + data.personality.split('\\n')[0] + '\\n\\n👉 测试你的血型：jianhebox.cn/fun/blood.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(30).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

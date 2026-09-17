@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>测近期财运 - 财富运势分析 | 简盒玩点有趣的</title>
+<meta name="description" content="免费近期财运测试。20 题测出你的近期财运、理财建议、招财方法。">
+<meta name="keywords" content="财运,测试,财富,理财,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+  .option {
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    color: white;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .gold-emoji {
+    font-size: 80px;
+    margin-bottom: 8px;
+    animation: shine 3s ease-in-out infinite;
+  }
+  @keyframes shine {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(5deg); }
+  }
+  .gold-score {
+    font-size: 64px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 12px 0;
+  }
+  .gold-level {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #4a3000;
+  }
+
+  .score-row { margin-bottom: 12px; }
+  .score-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+  }
+  .score-track {
+    height: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f7971e, #ffd200);
+    border-radius: 5px;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+  }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '💰';
+    position: absolute;
+    left: 0;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-emoji { font-size: 72px; margin: 12px 0; }
+  .poster-score {
+    font-size: 56px;
+    font-weight: 900;
+    margin: 8px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-level {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    margin: 8px 0;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  .poster-tip {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 12px 0;
+    font-size: 13px;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>💰 测近期财运</h1>
+    <p class="subtitle">近期你的财富运势如何？</p>
+    <ul class="intro-feature-list">
+      <li>💸 20 题测出近期财运走势</li>
+      <li>📊 6 维度财运分析</li>
+      <li>💡 理财建议 + 招财方法</li>
+      <li>✨ 专属海报分享</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 3-5 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center; opacity:0.8; margin-bottom:16px; font-size:14px;">问题 <span id="currentQ">1</span> / 20</p>
+    <h3 id="questionText" style="margin-bottom:16px; line-height:1.5;"></h3>
+    <div id="optionsContainer" class="options"></div>
+    <button class="btn" id="prevBtn" onclick="prevQuestion()" style="margin-top:12px;">← 上一题</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="gold-emoji">💰</div>
+      <div style="font-size:14px; opacity:0.85;">你的近期财运</div>
+      <div class="gold-score" id="goldScore">85</div>
+      <div class="gold-level" id="goldLevel">财运亨通</div>
+    </div>
+
+    <h3 class="section-title">📊 6 维财运</h3>
+    <div id="scoreRows"></div>
+
+    <h3 class="section-title">💰 财运预测</h3>
+    <div class="info-card" id="goldForecast"></div>
+
+    <h3 class="section-title">💼 理财建议</h3>
+    <ul id="adviceList" class="feature-list"></ul>
+
+    <h3 class="section-title">🌟 招财方法</h3>
+    <div class="info-card" id="luckBoost"></div>
+
+    <div class="section-title">📤 分享我的财运</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">财运测试</div>
+          <div class="poster-emoji">💰</div>
+          <div class="poster-score" id="posterScore">85</div>
+          <div class="poster-level" id="posterLevel">财运亨通</div>
+          <div class="poster-divider"></div>
+          <div class="poster-tip" id="posterTip">近期你的财运走势...</div>
+          <div class="poster-footer">测试你的财运 → jianhebox.cn/fun/money.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 财运测试仅供娱乐参考，真正的好财运来自努力工作 + 理性投资 + 持续学习。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+const questions = [
+  { text: "近期是否有意外收入？", a: "有，挺可观的", b: "没有，正常工资", score: 5 },
+  { text: "你目前的存款情况：", a: "在增加", b: "勉强持平", score: 4 },
+  { text: "你是否有记账习惯？", a: "有，清楚的", b: "没，随意花", score: 3 },
+  { text: "你每月是否有结余？", a: "有，能存一些", b: "基本月光", score: 4 },
+  { text: "最近是否有投资理财？", a: "有，收益不错", b: "没有", score: 4 },
+  { text: "你的工作收入稳定吗？", a: "稳定，可能涨薪", b: "一般", score: 3 },
+  { text: "你是否有副业收入？", a: "有", b: "没有", score: 4 },
+  { text: "最近是否有意外支出？", a: "没有", b: "有一些", score: 3 },
+  { text: "你是否有应急资金？", a: "有 6 个月以上", b: "不够", score: 4 },
+  { text: "你对自己的理财能力：", a: "有信心", b: "需要学习", score: 3 },
+  { text: "近期是否收到礼物/红包？", a: "有几次", b: "没有", score: 3 },
+  { text: "你和家人的财务关系：", a: "和谐，互相支持", b: "一般", score: 2 },
+  { text: "你是否会为兴趣买单？", a: "会，注重生活品质", b: "很少", score: 2 },
+  { text: "你最近是否冲动消费？", a: "很少，比较理性", b: "有，控制不住", score: -3 },
+  { text: "你的消费观：", a: "理性、按需", b: "随心所欲", score: 3 },
+  { text: "你是否会给自己买保险？", a: "会", b: "不会", score: 3 },
+  { text: "你是否有学习理财？", a: "有在看书/课程", b: "没有", score: 3 },
+  { text: "你近期的最大财务目标：", a: "有明确目标", b: "没想过", score: 3 },
+  { text: "你相信钱是挣出来的吗？", a: "相信", b: "靠运气", score: 3 },
+  { text: "你最近的现金流：", a: "正向流入", b: "紧张", score: 4 }
+];
+
+let answers = new Array(20).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 20 * 100) + '%';
+  document.getElementById('questionText').textContent = '第 ' + (currentQuestion + 1) + ' 题：' + q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  const optA = document.createElement('button');
+  optA.className = 'option';
+  optA.textContent = 'A. ' + q.a;
+  optA.onclick = () => selectOption(0, optA);
+  
+  const optB = document.createElement('button');
+  optB.className = 'option';
+  optB.textContent = 'B. ' + q.b;
+  optB.onclick = () => selectOption(1, optB);
+  
+  container.appendChild(optA);
+  container.appendChild(optB);
+  
+  if (answers[currentQuestion] !== null) {
+    const btns = container.querySelectorAll('.option');
+    btns[answers[currentQuestion]].classList.add('selected');
+  }
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  answers[currentQuestion] = idx;
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  
+  setTimeout(() => {
+    if (currentQuestion < 19) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 250);
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateResult() {
+  let totalScore = 0;
+  let totalCount = 0;
+  
+  questions.forEach((q, i) => {
+    if (answers[i] !== null) {
+      if (answers[i] === 0) {
+        totalScore += q.score;
+      } else {
+        totalScore += (-q.score);
+      }
+      totalCount++;
+    }
+  });
+  
+  const maxScore = totalCount * 5;
+  let finalScore = Math.round((totalScore + maxScore) / (maxScore * 2) * 100);
+  finalScore = Math.max(0, Math.min(100, finalScore));
+  
+  return finalScore;
+}
+
+function showResult() {
+  const score = calculateResult();
+  const data = getResultData(score);
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('goldScore').textContent = score;
+  document.getElementById('goldLevel').textContent = data.level;
+  
+  // 6 维财运
+  const dims = [
+    { name: '💼 工作收入', score: Math.min(100, score + Math.floor(Math.random() * 15 - 7)) },
+    { name: '💰 副业潜力', score: Math.min(100, score + Math.floor(Math.random() * 15 - 7)) },
+    { name: '📈 投资收益', score: Math.min(100, score + Math.floor(Math.random() * 15 - 7)) },
+    { name: '💸 理财能力', score: Math.min(100, score + Math.floor(Math.random() * 15 - 7)) },
+    { name: '🎁 意外之财', score: Math.min(100, score + Math.floor(Math.random() * 15 - 7)) },
+    { name: '🏠 资产积累', score: Math.min(100, score + Math.floor(Math.random() * 15 - 7)) }
+  ];
+  
+  const scoreRows = document.getElementById('scoreRows');
+  scoreRows.innerHTML = '';
+  dims.forEach(d => {
+    const row = document.createElement('div');
+    row.className = 'score-row';
+    row.innerHTML = `
+      <div class="score-labels">
+        <span>${d.name}</span>
+        <span>${d.score}分</span>
+      </div>
+      <div class="score-track">
+        <div class="score-fill" style="width:${d.score}%;"></div>
+      </div>
+    `;
+    scoreRows.appendChild(row);
+  });
+  
+  document.getElementById('goldForecast').textContent = data.forecast;
+  document.getElementById('adviceList').innerHTML = data.advice.map(a => '<li>' + a + '</li>').join('');
+  document.getElementById('luckBoost').textContent = data.luckBoost;
+  
+  // 海报
+  document.getElementById('posterScore').textContent = score;
+  document.getElementById('posterLevel').textContent = data.level;
+  document.getElementById('posterTip').textContent = data.forecast.split('\\n')[0];
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getResultData(score) {
+  let level, forecast, advice, luckBoost;
+  
+  if (score >= 85) {
+    level = '💰 财运亨通';
+    forecast = '近期你的财运极佳！\\n\\n正财运旺盛，可能有升职加薪、奖金或投资收益。副业也有起色。财运亨通，宜把握机会。';
+    advice = ['保持理性，不被冲昏头脑', '适度投资，但不要冒险', '多储蓄，建立应急基金', '适当学习新技能提升收入', '健康也是财富，注意身体'];
+    luckBoost = '开运建议：\\n• 钱包里放一张新的百元钞招财\\n• 穿黄色/金色衣服\\n• 东南方向是你的财位\\n• 卧室放一盆绿植旺财\\n• 每天对自己说"我会越来越富"';
+  } else if (score >= 55) {
+    level = '💵 财运平稳';
+    forecast = '近期你的财运平稳，没有大的起伏。\\n\\n收入稳定，支出可控。适合稳扎稳打，不要急于求成。做好本职工作，财运自然来。';
+    advice = ['保持现有工作稳定', '理性消费，避免冲动', '学习理财基础知识', '尝试小额定投', '把多余的钱存起来'];
+    luckBoost = '开运建议：\\n• 每日记账，了解资金流向\\n• 培养一个增加收入的技能\\n• 不要投机，稳健为上\\n• 早起十分钟规划今天支出\\n• 多和财务状况好的人学习';
+  } else {
+    level = '💸 财运需努力';
+    forecast = '近期财运偏弱，需要更加努力。\\n\\n可能是收入没有大的增长，或者支出偏多。建议开源节流，学习理财，调整消费习惯。';
+    advice = ['审视自己的消费习惯', '学习一门新技能增加收入', '减少不必要的开支', '开始记账，了解钱去哪了', '不要借钱给朋友', '远离高风险投资'];
+    luckBoost = '开运建议：\\n• 现在开始记账，了解每一笔支出\\n• 提升自己 = 增加收入潜力\\n• 副业可以从小做起\\n• 远离赌博、彩票\\n• 健康是最大的财富\\n• 把"财运不好"变成"奋斗的动力"';
+  }
+  
+  return { level, forecast, advice, luckBoost };
+}
+
+function copyShareText() {
+  const score = document.getElementById('goldScore').textContent;
+  const level = document.getElementById('goldLevel').textContent;
+  
+  const text = '💰 我的近期财运：' + score + '\\n' + level + '\\n\\n你的财运怎么样？\\n👉 测试你的财运：jianhebox.cn/fun/money.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(20).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

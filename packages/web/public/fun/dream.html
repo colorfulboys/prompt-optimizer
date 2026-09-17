@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>周公解梦 - 梦境解析 · 潜意识分析 | 简盒玩点有趣的</title>
+<meta name="description" content="免费在线周公解梦工具，包含 60+ 常见梦境场景。输入梦境关键词，AI 智能解析梦境含义、潜意识信号、现实预示。">
+<meta name="keywords" content="周公解梦,解梦,梦境,潜意识,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .dream-tag, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .dream-input {
+    width: 100%;
+    min-height: 100px;
+    padding: 14px;
+    background: rgba(255,255,255,0.1) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 15px;
+    font-family: inherit;
+    resize: vertical;
+    margin: 12px 0;
+  }
+  .dream-input::placeholder { color: rgba(255,255,255,0.5); }
+  .dream-input:focus { outline: none; border-color: #f5576c; }
+
+  .quick-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 16px 0;
+  }
+  .dream-tag {
+    padding: 8px 14px;
+    background: rgba(255,255,255,0.1) !important;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: white;
+  }
+  .dream-tag:hover {
+    background: rgba(255,255,255,0.2) !important;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  .result-summary {
+    text-align: center;
+    padding: 24px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .dream-mood {
+    font-size: 18px;
+    margin: 12px 0;
+  }
+  .dream-meaning {
+    font-style: italic;
+    opacity: 0.9;
+    margin: 8px 0;
+  }
+
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #f5576c;
+    font-weight: bold;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 40px 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #2c3e50, #4a235a);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; text-align: center; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-dream {
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.6;
+    padding: 16px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    margin: 16px 0;
+    opacity: 0.95;
+  }
+  .poster-mood {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  .poster-meaning {
+    background: rgba(255,255,255,0.2);
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-top: 12px;
+  }
+  .poster-footer {
+    margin-top: 20px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+
+  @media (max-width: 480px) {
+    .poster-card { padding: 30px 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>💭 周公解梦</h1>
+    <p class="subtitle">梦境解析 · 潜意识信号 · 现实预示</p>
+    <ul class="intro-feature-list">
+      <li>输入梦境描述 → AI 智能解析梦境含义</li>
+      <li>60+ 常见梦境场景关键词</li>
+      <li>心理学 + 传统象结合解读</li>
+      <li>✨ 专属海报分享卡</li>
+    </ul>
+    <textarea class="dream-input" id="dreamInput" placeholder="请描述您的梦境，例如：梦见自己飞翔、梦见蛇、梦见牙齿掉落..."></textarea>
+    
+    <p style="opacity:0.85; margin-top:8px; font-size:14px;">🎯 快速选择常见梦境：</p>
+    <div class="quick-tags">
+      <span class="dream-tag" onclick="addTag('飞翔')">飞翔</span>
+      <span class="dream-tag" onclick="addTag('蛇')">蛇</span>
+      <span class="dream-tag" onclick="addTag('牙齿')">牙齿掉落</span>
+      <span class="dream-tag" onclick="addTag('水')">水/洪水</span>
+      <span class="dream-tag" onclick="addTag('火')">火</span>
+      <span class="dream-tag" onclick="addTag('死亡')">死亡</span>
+      <span class="dream-tag" onclick="addTag('坠落')">坠落</span>
+      <span class="dream-tag" onclick="addTag('考试')">考试</span>
+      <span class="dream-tag" onclick="addTag('迷路')">迷路</span>
+      <span class="dream-tag" onclick="addTag('追赶')">被追赶</span>
+      <span class="dream-tag" onclick="addTag('裸体')">裸体</span>
+      <span class="dream-tag" onclick="addTag('前任')">前任</span>
+    </div>
+    
+    <button class="btn-primary" onclick="analyzeDream()" style="width:100%; margin-top:16px;">🔮 解析梦境</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-summary">
+      <div style="opacity:0.8; margin-bottom:8px;">梦境解析</div>
+      <div class="dream-mood" id="dreamMood">🌙 神秘梦境</div>
+      <div class="dream-meaning" id="dreamMeaning">您的梦境含义</div>
+    </div>
+
+    <h3 class="section-title">📖 详细解析</h3>
+    <p id="detailAnalysis" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">🧠 潜意识信号</h3>
+    <ul id="subconscious" class="feature-list"></ul>
+
+    <h3 class="section-title">🔮 传统解梦</h3>
+    <p id="traditionMeaning" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">💡 现实预示</h3>
+    <p id="reality" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">🌱 心理建议</h3>
+    <p id="advice" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <div class="section-title">📤 分享我的梦境</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存下面的专属海报</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">💭 周公解梦</div>
+          <div class="poster-dream" id="posterDream">"我的梦境..."</div>
+          <div class="poster-mood" id="posterMood">🌙 神秘梦境</div>
+          <div class="poster-meaning" id="posterMeaning">梦境含义简述</div>
+          <div class="poster-footer">解你的梦境 → jianhebox.cn/fun/dream.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartApp()" style="width:100%; margin-top:12px;">🔄 解析新梦</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 周公解梦仅供娱乐参考，请勿作为决策依据。<br>
+    梦境是潜意识的反映，不预示未来。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 梦境关键词库
+const dreamDB = {
+  '飞翔': {
+    mood: '🕊️ 自由向往型',
+    meaning: '对自由和超越的渴望',
+    detail: '梦见飞翔代表内心深处对自由的向往。\\n\\n您可能正在现实生活中感到束缚——来自工作、关系或责任的压力。飞行梦是一种潜意识的\"解脱\"，让您暂时脱离日常的束缚。\\n\\n飞行的姿态也很重要：顺利飞翔代表自信和掌控感；飞翔困难代表现实中的挣扎；坠落则暗示不安全感和失控感。',
+    subconscious: ['渴望自由，逃避现实', '对超越自我有期待', '可能感到被束缚', '需要心理上的\"飞翔空间\"'],
+    tradition: '【传统解梦】\\n传统认为梦飞是吉兆，主富贵长寿。但若飞行时害怕或坠落，则需谨慎行事。',
+    reality: '近期可能有外出旅行或生活变化的机会。您内心渴望改变现状。',
+    advice: '适当放松，尝试新的活动或环境。给自己的生活一些变化和新鲜感。'
+  },
+  '蛇': {
+    mood: '🐍 神秘转化型',
+    meaning: '潜在威胁或智慧转化',
+    detail: '梦见蛇是常见且复杂的梦境，含义多样：\\n\\n• 若蛇攻击你 - 代表现实中有人让你感到威胁\\n• 若蛇温和不攻击 - 代表智慧或直觉的觉醒\\n• 若你杀死蛇 - 代表你克服了某个恐惧\\n• 若你被蛇缠住 - 代表你陷入某种关系或局面\\n\\n蛇在心理上代表原始能量、欲望或威胁，象征未被完全整合的潜意识。',
+    subconscious: ['存在潜在威胁感', '需要面对内心的恐惧', '欲望或直觉在觉醒', '对某段关系有警觉'],
+    tradition: '【传统解梦】\\n梦见蛇主有口舌是非，但也主财运。若是金色蛇，主大富贵。',
+    reality: '近期需谨慎处理人际关系。也可能有意外的收入机会。',
+    advice: '面对让你感到不安的人或事，勇敢地正面处理。'
+  },
+  '牙齿': {
+    mood: '🦷 不安焦虑型',
+    meaning: '焦虑或对衰老的恐惧',
+    detail: '梦见牙齿掉落是非常常见的梦境，通常反映：\\n\\n• 对外表/形象的焦虑\\n• 对失去控制感的恐惧\\n• 对衰老或死亡的潜意识思考\\n• 现实中的压力事件\\n\\n心理学家认为，牙齿代表力量和自信。梦见掉牙意味着您在现实中感到无力或失去某种\"掌控\"。\\n\\n如果伴随出血，可能暗示更深的情绪压力。',
+    subconscious: ['对自己失去信心', '对衰老或变化的焦虑', '正在经历某种\"失去\"', '缺乏控制感'],
+    tradition: '【传统解梦】\\n梦见掉牙主亲人有灾，但若梦见牙齿整齐洁白则主健康长寿。',
+    reality: '近期可能感到压力或焦虑。注意休息，保持心理健康。',
+    advice: '审视生活中让你感到\"失去\"或\"无力\"的部分，必要时寻求支持。'
+  },
+  '水': {
+    mood: '🌊 情绪流动型',
+    meaning: '情绪状态或潜意识',
+    detail: '水的梦境反映您的情绪状态：\\n\\n• 平静清澈的水 - - 内心平静，思路清晰\\n• 浑浊或洪水 - 情绪失控或被情绪淹没\\n• 溺水 - 感到被某事/某情感\"淹没\"\\n• 在水中游泳 - 享受情绪流动\\n• 看到大海 - 面对广阔的可能性\\n\\n水在心理上代表潜意识、情绪和生命的流动。',
+    subconscious: ['情绪需要表达', '潜意识信息浮现', '渴望净化或重生', '内心深处的不安'],
+    tradition: '【传统解梦】\\n梦见清水主财运亨通；洪水主有灾难；溺水主有病痛。',
+    reality: '近期情绪波动较大，需要找到情绪出口。',
+    advice: '允许自己感受和表达情绪，不要压抑。'
+  },
+  '火': {
+    mood: '🔥 激情转化型',
+    meaning: '激情或毁灭',
+    detail: '火的梦境代表激情、转化或毁灭：\\n\\n• 温暖的火焰 - 激情、创造力和温暖\\n• 大火或火灾 - 愤怒、破坏性\\n• 灭火 - 试图控制某种激情或冲突\\n• 被火灼伤 - 被某人的\"热情\"伤害\\n\\n火象征激情、欲望、净化或破坏。',
+    subconscious: ['压抑的愤怒', '强烈的欲望', '需要改变或净化', '对创造力的渴望'],
+    tradition: '【传统解梦】\\n梦见火光主有喜事；大火主有灾；灭火主事业有成。',
+    reality: '近期有强烈的情绪或欲望需要表达或转化。',
+    advice: '找到健康的方式表达你的激情和创造力。'
+  },
+  '死亡': {
+    mood: '⚰️ 转化重生型',
+    meaning: '结束与重生',
+    detail: '梦见死亡不代表真正的死亡，而是象征：\\n\\n• 一个阶段的结束\\n• 某种转化和新生\\n• 对某事/某人的\"放手\"\\n• 潜意识中的恐惧或渴望\\n\\n心理学家认为，梦见死亡通常代表重大改变或\"心理上的死亡\"——放下旧的自我迎接新的开始。',
+    subconscious: ['需要放下过去', '正在经历重大改变', '对终结和重生的思考', '对死亡的潜意识焦虑'],
+    tradition: '【传统解梦】\\n梦见自己死亡主长寿；梦见他人死亡主有口舌是非。',
+    reality: '一个阶段即将结束，新的开始即将到来。',
+    advice: '接受变化，让旧的结束，新的开始。'
+  },
+  '坠落': {
+    mood: '🕳️ 失控焦虑型',
+    meaning: '失控感或不安全感',
+    detail: '梦见坠落代表：\\n\\n• 失控感 - 现实中有您觉得无法控制的事\\n• 不安全感 - 工作、关系或财务上的不稳定\\n• 失败恐惧 - 担心\"跌落\"\\n• 释放压力 - 梦境在帮您释放压力\\n\\n坠落梦通常发生在压力时期。',
+    subconscious: ['对失控的恐惧', '缺乏安全感', '压力需要释放', '对自己的能力怀疑'],
+    tradition: '【传统解梦】\\n梦见坠落主有口舌是非，需谨言慎行。',
+    reality: '近期可能感到某种\"跌落\"——地位、信心或状态。',
+    advice: '找到生活中让您感到稳定的锚点，重新建立掌控感。'
+  },
+  '考试': {
+    mood: '📝 评估焦虑型',
+    meaning: '被评估或准备不足的感觉',
+    detail: '梦见考试通常反映：\\n\\n• 害怕被\"评估\"或评判\\n• 感觉准备不足\\n• 现实中有重要挑战\\n• 担心失败\\n\\n有趣的是，即使是已经毕业多年的人也会梦到考试。这是因为考试代表\"被评估\"和\"准备\"的原型情境。',
+    subconscious: ['对评判的恐惧', '感觉自己不够好', '对重要事件的焦虑', '准备感不足'],
+    tradition: '【传统解梦】\\n梦见考试主有口舌是非；考试顺利主通过考验。',
+    reality: '近期可能面临某种\"考验\"或评估。',
+    advice: '相信自己的能力，做最好的准备，然后放下焦虑。'
+  },
+  '迷路': {
+    mood: '🗺️ 迷失方向型',
+    meaning: '迷失方向或决策困难',
+    detail: '梦见迷路代表：\\n\\n• 现实中的迷失感\\n• 不知道该往哪里走\\n• 人生方向的困惑\\n• 决策困难\\n\\n迷路梦通常发生在重要人生选择时期。',
+    subconscious: ['对人生方向的困惑', '缺乏明确的目标', '决策困难', '对未知的恐惧'],
+    tradition: '【传统解梦】\\n梦见迷路主运势不佳，但若找到路则主有贵人相助。',
+    reality: '近期可能面临重要选择，需要明确方向。',
+    advice: '给自己时间思考，不必急于做决定。寻求可信赖的人的建议。'
+  },
+  '追赶': {
+    mood: '🏃 逃避焦虑型',
+    meaning: '逃避某种压力或责任',
+    detail: '梦见被追赶代表：\\n\\n• 逃避现实中的某事\\n• 感到被某种压力追赶\\n• 内心有未处理的问题\\n• 需要面对但不\"敢于\"面对\\n\\n被追赶通常是焦虑的直接象征。',
+    subconscious: ['逃避责任', '被某种压力追赶', '未解决的问题', '需要正面应对'],
+    tradition: '【传统解梦】\\n梦见被追赶主有口舌是非；但若成功逃脱则主化险为夷。',
+    reality: '近期可能感到被压力追赶，需要正面处理。',
+    advice: '停下来，正面对让你想逃的事。'
+  },
+  '裸体': {
+    mood: '👘 脆弱暴露型',
+    meaning: '脆弱或暴露感',
+    detail: '梦见裸体代表：\\n\\n• 脆弱感 - 感到被\"暴露\"\\n• 真实自我 - 希望展现真实的自己\\n• 不安全感 - 担心被看到真实的自己\\n• 解放感 - 希望摆脱伪装\\n\\n如果他人未注意到你裸体，说明你的\"真实\"是被接受的。',
+    subconscious: ['害怕暴露', '渴望被接纳真实', '脆弱感的反映', '想要摆脱表象'],
+    tradition: '【传统解梦】\\n梦见裸体主有口舌是非；梦穿新衣主有喜事。',
+    reality: '近期可能感到脆弱或被暴露，需要自我接纳。',
+    advice: '接受真实的自己，包括脆弱的一面。'
+  },
+  '前任': {
+    mood: '💔 未了情结型',
+    meaning: '未解决的情感',
+    detail: '梦见前任不代表想念他/她，而是：\\n\\n• 未完成的情感\\n• 过去的自己\\n• 当前关系中的某些缺失\\n• 需要放下的事\\n\\n前任在梦中代表\"过去的一部分\"或\"某种关系模式\"。',
+    subconscious: ['未处理的情感', '对过去的依恋', '当前关系的缺失', '需要自我整合'],
+    tradition: '【传统解梦】\\n梦见前任主有口舌是非；若梦见和好则需谨慎。',
+    reality: '近期可能有一些未处理的情绪或关系。',
+    advice: '看清梦境的真正含义，处理未完成的情感。'
+  }
+};
+
+// 默认解读
+const defaultDream = {
+  mood: '🌙 神秘梦境型',
+  meaning: '独特的个人梦境',
+  detail: '您描述了一个独特的梦境。\\n\\n虽然梦境各有不同，但它们通常反映：\\n\\n• 当前的情绪状态\\n• 潜意识的信息处理\\n• 现实压力的反映\\n• 对未来的期待或焦虑\\n\\n每一个梦境都是独特的\"心灵信件\"，值得您用心去解读。',
+  subconscious: ['潜意识在传递信息', '情绪需要被关注', '内在世界丰富', '心灵在整合经验'],
+  tradition: '【传统解梦】\\n古人说：梦者，心境也。\\n\\n您的梦境是内心世界的反映。',
+  reality: '近期情绪可能有一些波动，需要关注内心。',
+  advice: '保持梦境日记的习惯，记录梦境是了解自我的好方法。'
+};
+
+let currentDream = null;
+
+function addTag(tag) {
+  const input = document.getElementById('dreamInput');
+  if (input.value) {
+    input.value += '，' + tag;
+  } else {
+    input.value = '梦见' + tag;
+  }
+}
+
+function analyzeDream() {
+  const text = document.getElementById('dreamInput').value.trim();
+  if (!text) {
+    alert('请描述您的梦境');
+    return;
+  }
+  
+  // 找匹配的关键词
+  let bestMatch = null;
+  let maxLen = 0;
+  
+  for (const key in dreamDB) {
+    if (text.includes(key)) {
+      if (key.length > maxLen) {
+        maxLen = key.length;
+        bestMatch = key;
+      }
+    }
+  }
+  
+  currentDream = bestMatch ? dreamDB[bestMatch] : defaultDream;
+  
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('dreamMood').textContent = currentDream.mood;
+  document.getElementById('dreamMeaning').textContent = '"' + currentDream.meaning + '"';
+  document.getElementById('detailAnalysis').textContent = currentDream.detail;
+  document.getElementById('subconscious').innerHTML = currentDream.subconscious.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('traditionMeaning').textContent = currentDream.tradition;
+  document.getElementById('reality').textContent = currentDream.reality;
+  document.getElementById('advice').textContent = currentDream.advice;
+  
+  // 海报
+  document.getElementById('posterDream').textContent = '"' + text.slice(0, 100) + '"';
+  document.getElementById('posterMood').textContent = currentDream.mood;
+  document.getElementById('posterMeaning').textContent = currentDream.meaning;
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyShareText() {
+  const text = document.getElementById('dreamInput').value.trim();
+  
+  const shareText = '💭 我的梦境解析\\n\\n"' + text + '"\\n\\n' +
+    currentDream.mood + '：' + currentDream.meaning + '\\n\\n' +
+    '👉 解你的梦：jianhebox.cn/fun/dream.html';
+  
+  navigator.clipboard.writeText(shareText).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = shareText;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartApp() {
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  document.getElementById('dreamInput').value = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

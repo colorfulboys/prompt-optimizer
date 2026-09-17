@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 写小红书爆款完全指南：5 步流程 + 6 套标题公式 | 简盒</title>
+<meta name="description" content="从选题到标题到正文到关键词到封面，AI 完整流程。">
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+  pre code { background: none; color: inherit; padding: 0; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  th { background: #f0f0f0; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }
+  a { color: #0099ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }
+  .back-home:hover { text-decoration: none; transform: translateY(-1px); }
+
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style>
+<!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-xiaohongshu-ai.html#article",
+      "headline": "AI 写小红书爆款完全指南：5 步流程 + 6 套标题公式",
+      "description": "AI 写小红书爆款指南",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-xiaohongshu-ai.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["AI 写小红书爆款指南", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-xiaohongshu-ai.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "AI 写小红书爆款完全指南：5 步流程 + 6 套标题公式",
+          "item": "https://www.jianhebox.cn/article-xiaohongshu-ai.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Baidu Tongji (R57.10) -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?deb3c3385c923e6f7cc59e23b4d4d850";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+<!-- R57.9 SEO: 视觉面包屑 -->
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">首页</a>
+  <span class="bc-sep">›</span>
+  <a href="/articles.html">教程</a>
+  <span class="bc-sep">›</span>
+  <span>AI 写小红书爆款完全指南：5 步流程 + 6 套标题公式</span>
+</nav>
+<a href="/" class="back-home">← 简盒首页</a>
+<h1>AI 写小红书爆款完全指南：5 步流程 + 6 套标题公式</h1>
+<blockquote>最后更新：2026 年 9 月 · 阅读时长：约 7 分钟 · 适用：所有想做小红书的人</blockquote>
+<hr>
+<h2>📌 这篇教程解决什么问题？</h2>
+<p>小红书日活 3.5 亿，<strong>80% 用户会搜索</strong>——是<strong>精准流量最大的中文平台之一</strong>。</p>
+<p>但小红书<strong>门槛高</strong>：</p>
+<ul>
+<li>❌ 不知道写什么话题</li>
+<li>❌ 写了没流量</li>
+<li>❌ 标题没吸引力</li>
+<li>❌ 内容没结构</li>
+</ul>
+<p><strong>AI 改变了这一切</strong>：</p>
+<ul>
+<li>✅ AI 自动生成话题</li>
+<li>✅ AI 帮你起爆款标题</li>
+<li>✅ AI 写符合小红书风格的正文</li>
+<li>✅ AI 自动优化关键词</li>
+</ul>
+<p><strong>这篇教程教你</strong>用 AI 做出 10w+ 笔记。</p>
+<hr>
+<h2>🚀 快速通道</h2>
+<p><a href="https://www.jianhebox.cn/#/basic/system">简盒 AI 提示词优化器</a> → 选「小红书爆款」模板 → 一键生成。</p>
+<hr>
+<h2>📖 小红书的核心算法</h2>
+<h3>小红书的流量推荐机制</h3>
+<pre><code>笔记发布
+    ↓
+初级流量池（200-500 曝光）
+    ↓
+观察指标：点击率 + 完读率 + 互动率
+    ↓
+指标优秀 → 更大流量池（5000+ 曝光）
+    ↓
+继续观察
+    ↓
+爆款（10w+）或普通</code></pre>
+<p><strong>关键指标</strong>：</p>
+<ul>
+<li><strong>点击率</strong>（CTR）：标题 + 封面吸引力</li>
+<li><strong>完读率</strong>：内容质量</li>
+<li><strong>互动率</strong>（点赞 + 收藏 + 评论）：价值感</li>
+</ul>
+<h3>影响算法的 5 个因素</h3>
+<p>| 因素 | 权重 | 优化方法 |</p>
+<p>|---|---|---|</p>
+<p>| <strong>标题</strong> | 30% | 钩子 + 关键词 |</p>
+<p>| <strong>封面</strong> | 25% | 高清 + 文字 |</p>
+<p>| <strong>内容质量</strong> | 20% | 实用 + 真实 |</p>
+<p>| <strong>关键词布局</strong> | 15% | 标题/正文/标签 |</p>
+<p>| <strong>互动</strong> | 10% | 引导评论 |</p>
+<hr>
+<h2>🎯 5 步爆款流程</h2>
+<h3>步骤 1：选对选题</h3>
+<p><strong>选题 = 流量天花板</strong>。</p>
+<p><strong>AI 选题 Prompt</strong>：</p>
+<pre><code>你是小红书运营专家。我做 [你的领域]。
+
+请给我 10 个高潜力选题：
+1. 有具体场景（如"通勤路上"）
+2. 有数字（如"30 天瘦 5 斤"）
+3. 反常识（如"越懒越瘦"）
+4. 解决痛点（如"不会拍照"）
+
+要求：每个选题给 1 句话标题示例 + 预估流量潜力。</code></pre>
+<p><a href="https://www.jianhebox.cn/#/basic/system">简盒提示词优化器</a> 跑这个 prompt → 获得 10 个选题 → 选 3 个最喜欢的。</p>
+<hr>
+<h3>步骤 2：写爆款标题</h3>
+<p><strong>6 套万能公式</strong>：</p>
+<h3>公式 1：数字 + 效果</h3>
+<pre><code>30 天瘦 5 斤的 5 个习惯
+3 步搞定 Excel 数据透视表
+7 天学会 Python 自动化</code></pre>
+<h3>公式 2：人群 + 痛点</h3>
+<pre><code>通勤女生的 5 个通勤包推荐
+25+ 女生必备的抗老精华
+学生党的 5 个免费学习工具</code></pre>
+<h3>公式 3：反差 + 好奇</h3>
+<pre><code>越懒越聪明的 5 个习惯
+不运动也能瘦的 3 个方法
+我靠这个副业月入 5 万（别学我）</code></pre>
+<h3>公式 4：场景 + 解决方案</h3>
+<pre><code>半夜 3 点失眠？这个方法让我秒睡
+早上起不来？5 个方法让你 6 点自然醒
+存不下钱？3 招让你月存 50%</code></pre>
+<h3>公式 5：身份 + 价值</h3>
+<pre><code>前阿里 P8 告诉你：跳槽必问的 5 个问题
+皮肤科医生自用的 3 个抗老成分
+资深 HR：这样写简历面试翻倍</code></pre>
+<h3>公式 6：争议 + 引导评论</h3>
+<pre><code>为什么我不推荐女生做全职太太？
+月薪 1 万 vs 月薪 3 万 差在哪里？</code></pre>
+<p><strong>AI 起标题 Prompt</strong>：</p>
+<pre><code>你是小红书爆款标题专家。
+
+我的笔记主题是：[你的主题]
+
+请按以下公式给我 10 个标题：
+1. 数字 + 效果
+2. 人群 + 痛点
+3. 反差 + 好奇
+4. 场景 + 解决方案
+5. 身份 + 价值
+6. 争议 + 引导
+
+要求：
+- 20 字以内
+- 有 emoji
+- 能引发点击</code></pre>
+<hr>
+<h3>步骤 3：写正文</h3>
+<p><strong>小红书正文 4 段结构</strong>：</p>
+<pre><code>📌 钩子段（3 行内）：点题 + 引发好奇
+📌 干货段（80%）：分点 + 具体 + 可执行
+📌 情绪段（10%）：共鸣 + 个人故事
+📌 引导段（5%）：评论 + 关注 + 收藏</code></pre>
+<p><strong>AI 写正文 Prompt</strong>：</p>
+<pre><code>你是小红书爆款笔记作者。我的选题是 [选题]。
+
+请按以下结构写一篇笔记：
+
+1. <strong>钩子段</strong>（3 行内）：直接点题，给出"看了不亏"的理由
+2. <strong>正文段</strong>（300-500 字）：
+   - 用 emoji 分段
+   - 5 个左右的要点
+   - 每个要点给具体例子
+3. <strong>情绪段</strong>（50 字）：个人感受或故事
+4. <strong>引导段</strong>：引导评论（如"你平时是怎么做的？评论区告诉我"）
+
+风格要求：
+- 口语化（像朋友聊天）
+- 短句（每句 < 30 字）
+- 多 emoji
+- 关键词自然出现 3-5 次</code></pre>
+<hr>
+<h3>步骤 4：选关键词 + 标签</h3>
+<p><strong>关键词布局的 3 个位置</strong>：</p>
+<ol>
+<li><strong>标题</strong>：1-2 个核心关键词</li>
+<li><strong>正文</strong>：3-5 次相关关键词（自然）</li>
+<li><strong>标签</strong>：5-10 个标签（精准 + 长尾）</li>
+</ol>
+<p><strong>找关键词的方法</strong>：</p>
+<ol>
+<li>小红书搜索框输入主题词</li>
+<li>看<strong>下拉提示</strong>（用户常搜的词）</li>
+<li>看<strong>相关搜索</strong>（长尾词）</li>
+</ol>
+<p><strong>AI 生成标签 Prompt</strong>：</p>
+<pre><code>我的小红书笔记主题是 [主题]。
+
+请给我：
+1. 3 个大词（如 "护肤"、"学习"）
+2. 5 个中词（如 "油皮敏感肌"、"Python 入门"）
+3. 5 个长尾词（如 "30 岁油皮敏感肌精华推荐"、"零基础 Python 入门教程"）
+
+要求：用户搜索量大、竞争不太激烈的词。</code></pre>
+<hr>
+<h3>步骤 5：优化封面</h3>
+<p><strong>封面 3 要素</strong>：</p>
+<ul>
+<li><strong>高清图片</strong>（核心吸引力）</li>
+<li><strong>大字号文字</strong>（标题摘要，3-7 个字）</li>
+<li><strong>对比色</strong>（吸引眼球）</li>
+</ul>
+<p><strong>AI 写封面文字 Prompt</strong>：</p>
+<pre><code>我的笔记主题是 [主题]。
+
+请给我 3 套封面文字（每套 4-6 字）：
+1. 痛点型：戳中用户焦虑
+2. 效果型：突出好处
+3. 好奇型：引发点击
+
+要求：
+- 4-6 字
+- 有冲击力
+- 与主题强相关</code></pre>
+<hr>
+<h2>🔧 5 大爆款笔记模板</h2>
+<h3>模板 1：清单型（最易爆）</h3>
+<pre><code>📌 [主题]必备清单（建议收藏）
+
+1. [要点 1]
+   - 详细解释
+   - 举例
+
+2. [要点 2]
+   ...
+
+5. [要点 5]
+
+评论区告诉我你最想要哪个？</code></pre>
+<h3>模板 2：对比型</h3>
+<pre><code>📌 A vs B，哪个更值得买？
+
+✅ A 的优点：
+- ...
+
+❌ A 的缺点：
+- ...
+
+✅ B 的优点：
+- ...
+
+❌ B 的缺点：
+- ...
+
+🎯 总结：[推荐建议]
+
+你选哪个？评论区告诉我～</code></pre>
+<h3>模板 3：教程型</h3>
+<pre><code>📌 [主题]保姆级教程（建议收藏）
+
+Step 1: [步骤]
+截图 + 说明
+
+Step 2: [步骤]
+...
+
+Step 5: [步骤]
+
+🎉 效果展示
+
+需要详细资料？评论区扣"教程"～</code></pre>
+<h3>模板 4：避坑型</h3>
+<pre><code>📌 [主题]千万别踩的 5 个坑
+
+我去年[主题]踩了 5 个坑，血亏 [金额]。
+
+坑 1: [坑]
+- 怎么避免
+
+...
+
+如果觉得有用，记得⭐收藏～</code></pre>
+<h3>模板 5：故事型</h3>
+<pre><code>📌 [吸引人的故事标题]
+
+去年这个时候，我 [背景]。
+
+[转折 + 结果]
+
+这个过程我学到 [经验]。
+
+希望对你有帮助～</code></pre>
+<hr>
+<h2>🎓 AI 工具组合</h2>
+<p>| 工具 | 用途 |</p>
+<p>|---|---|</p>
+<p>| <strong><a href="https://www.jianhebox.cn/#/basic/system">简盒提示词优化器</a></strong> | 选题 + 标题 + 正文生成 |</p>
+<p>| <strong>DeepSeek</strong> | 中文场景最强 |</p>
+<p>| <strong>Claude</strong> | 长文本分析 |</p>
+<p>| <strong>ChatGPT</strong> | 英文资料 |</p>
+<p>| <strong>秘塔 AI 搜索</strong> | 找热点话题 |</p>
+<p>| <strong>新榜小红书</strong> | 看竞品爆款 |</p>
+<hr>
+<h2>⚠️ 小红书避坑指南</h2>
+<h3>❌ 禁忌 1：标题党但不实用</h3>
+<p><strong>平台打击</strong>：点击率高但完读率低 → 算法降权。</p>
+<p><strong>正确做法</strong>：标题吸引 + 内容实在。</p>
+<h3>❌ 禁忌 2：抄袭</h3>
+<p><strong>后果</strong>：限流、封号、起诉。</p>
+<p><strong>正确做法</strong>：原创或授权。</p>
+<h3>❌ 禁忌 3：频繁删笔记</h3>
+<p><strong>后果</strong>：账号权重下降。</p>
+<p><strong>正确做法</strong>：发之前认真检查。</p>
+<h3>❌ 禁忌 4：硬广</h3>
+<p><strong>后果</strong>：限流。</p>
+<p><strong>正确做法</strong>：软植入，分享真实体验。</p>
+<h3>❌ 禁忌 5：不稳定的更新</h3>
+<p><strong>后果</strong>：算法不推荐。</p>
+<p><strong>正确做法</strong>：<strong>稳定频率</strong>（如每周 3 篇）。</p>
+<hr>
+<h2>📈 提升笔记流量的 5 个技巧</h2>
+<h3>技巧 1：发布时机</h3>
+<p><strong>最佳发布时段</strong>：</p>
+<ul>
+<li><strong>早 7-9 点</strong>（通勤）</li>
+<li><strong>午 12-14 点</strong>（午休）</li>
+<li><strong>晚 20-22 点</strong>（睡前高峰）</li>
+</ul>
+<p><strong>测试</strong>：观察你的粉丝活跃时间。</p>
+<h3>技巧 2：互动引导</h3>
+<p><strong>结尾留问题</strong>：</p>
+<ul>
+<li>"你觉得呢？"</li>
+<li>"评论区告诉我你的看法"</li>
+<li>"扣 [关键词] 送 [资料]"</li>
+</ul>
+<h3>技巧 3：置顶评论</h3>
+<p><strong>发布后立刻</strong>：自己写一条评论（可补充内容、可引导）。</p>
+<p><strong>举例</strong>：</p>
+<blockquote>评论区扣"教程"送完整 PDF 资料哦～</blockquote>
+<h3>技巧 4：私域引流</h3>
+<p><strong>避免</strong>：直接留微信（违规）</p>
+<p><strong>合规做法</strong>：</p>
+<ul>
+<li>评论区 / 简介 / 私信（避免敏感词）</li>
+<li>用"小红书号"或"小红书群"代替微信号</li>
+</ul>
+<h3>技巧 5：内容矩阵</h3>
+<p><strong>同一主题不同角度</strong>：</p>
+<ul>
+<li>图文 + 视频</li>
+<li>长文 + 短文</li>
+<li>教程 + 评测</li>
+</ul>
+<hr>
+<h2>🚀 开始写小红书</h2>
+<p><a href="https://www.jianhebox.cn/#/basic/system">👉 打开简盒 AI 提示词优化器</a></p>
+<p>小红书专用模板 + 一键生成。</p>
+<p>特点：</p>
+<ul>
+<li>✅ <strong>300+ 行业模板</strong></li>
+<li>✅ <strong>多模型支持</strong>（DeepSeek/ChatGPT/Claude）</li>
+<li>✅ <strong>变量提示词</strong>（一次写好换变量复用）</li>
+<li>✅ <strong>完全免费</strong></li>
+</ul>
+<hr>
+<h2>📚 相关教程</h2>
+<ul>
+<li><a href="/article-wechat-ai.html">AI 写公众号爆款 7 个秘密</a></li>
+<li><a href="/article-deepseek-prompt.html">DeepSeek 提示词实战 9 招</a></li>
+<li><a href="/article-ai-prompt-engineer.html">AI 提示词工程师入门</a></li>
+</ul>
+<hr>
+<h2>💬 反馈</h2>
+<ul>
+<li>📧 <a href="mailto:hi@jianhebox.cn">hi@jianhebox.cn</a></li>
+</ul>
+<blockquote>本文由 <a href="https://www.jianhebox.cn/">简盒 JianHeBox</a> 编辑整理。</blockquote>
+<!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-xiaohongshu-ai.html&title=AI%20%E5%86%99%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%88%86%E6%AC%BE%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A5%20%E6%AD%A5%E6%B5%81%E7%A8%8B%20%2B%206%20%E5%A5%97%E6%A0%87%E9%A2%98%E5%85%AC%E5%BC%8F%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-xiaohongshu-ai.html&title=AI%20%E5%86%99%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%88%86%E6%AC%BE%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A5%20%E6%AD%A5%E6%B5%81%E7%A8%8B%20%2B%206%20%E5%A5%97%E6%A0%87%E9%A2%98%E5%85%AC%E5%BC%8F%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-xiaohongshu-ai.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-xiaohongshu-ai.html&text=AI%20%E5%86%99%E5%B0%8F%E7%BA%A2%E4%B9%A6%E7%88%86%E6%AC%BE%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A5%20%E6%AD%A5%E6%B5%81%E7%A8%8B%20%2B%206%20%E5%A5%97%E6%A0%87%E9%A2%98%E5%85%AC%E5%BC%8F%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-wechat-ai.html" class="related-item"><span>AI 写公众号爆款 7 个秘密</span><span class="arrow">→</span></a>
+    <a href="/article-ai-prompt-engineer.html" class="related-item"><span>AI 提示词工程师入门</span><span class="arrow">→</span></a>
+    <a href="/article-deepseek-prompt.html" class="related-item"><span>DeepSeek 提示词实战 9 招</span><span class="arrow">→</span></a>
+    <a href="/article-free-ai-tools-2026.html" class="related-item"><span>2026 免费 AI 工具清单</span><span class="arrow">→</span></a>
+    <a href="/article-fcpxml-guide.html" class="related-item"><span>FCPXML 字幕转换完全教程</span><span class="arrow">→</span></a>
+    </div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body>
+</html>

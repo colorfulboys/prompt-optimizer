@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>九型人格测试 - 9 种核心人格 | 简盒玩点有趣的</title>
+<meta name="description" content="免费九型人格测试，108 题专业版。包含 9 种核心人格类型详尽解读：性格特征、优势盲点、人际关系、成长方向。">
+<meta name="keywords" content="九型人格,人格测试,性格测试,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .question-counter {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-bottom: 12px;
+    color: white;
+  }
+  .options {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+    background: transparent;
+  }
+  .option {
+    padding: 16px 20px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 16px;
+    line-height: 1.5;
+    color: white;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+    border-color: rgba(255,255,255,0.4);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+  .question h3 {
+    font-size: 19px;
+    margin-bottom: 18px;
+    line-height: 1.5;
+    color: white;
+  }
+  .nav-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .nav-buttons button { flex: 1; }
+
+  .result-type {
+    font-size: 56px;
+    font-weight: bold;
+    text-align: center;
+    margin: 16px 0;
+    color: white;
+    letter-spacing: 2px;
+  }
+  .result-name {
+    font-size: 26px;
+    text-align: center;
+    margin-bottom: 8px;
+    color: white;
+  }
+  .result-nickname {
+    text-align: center;
+    opacity: 0.85;
+    margin-bottom: 24px;
+    font-style: italic;
+    color: white;
+  }
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: #f5576c;
+    font-weight: bold;
+  }
+
+  .score-row { margin-bottom: 14px; }
+  .score-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+  }
+  .score-track {
+    height: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 5px;
+    transition: width 0.5s;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 40px 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; text-align: center; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-type {
+    font-size: 56px;
+    font-weight: 900;
+    letter-spacing: 4px;
+    margin: 12px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-name {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .poster-nick {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 16px auto;
+    border-radius: 2px;
+  }
+  .poster-traits {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin: 12px 0;
+  }
+  .poster-trait {
+    padding: 4px 10px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    font-size: 12px;
+  }
+  .poster-footer {
+    margin-top: 20px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; justify-content: center; }
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    font-size: 13px;
+    color: white;
+  }
+
+  @media (max-width: 480px) {
+    .result-type { font-size: 42px; }
+    .poster-card { padding: 30px 20px; }
+    .poster-type { font-size: 42px; }
+    .nav-buttons { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🧭 九型人格测试</h1>
+    <p class="subtitle">36 题精华版 · 9 种核心人格类型</p>
+    <ul class="intro-feature-list">
+      <li>9 种人格类型深度解析，每种都有独特的动机与恐惧</li>
+      <li>性格特征、核心动机、优势盲点、人际关系</li>
+      <li>成长方向 + 专属配色海报</li>
+      <li>✨ 完全免费 · 无需登录</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 5-8 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="question-counter"><span id="currentQ">1</span> / 36</div>
+    <div class="question">
+      <h3 id="questionText"></h3>
+      <div id="optionsContainer" class="options"></div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn" id="prevBtn" onclick="prevQuestion()">← 上一题</button>
+      <button class="btn-primary" id="nextBtn" onclick="nextQuestion()" disabled>下一题 →</button>
+    </div>
+  </div>
+
+  <div id="result" class="card hidden">
+    <h2 style="text-align:center; margin-bottom:8px;">🎯 你的九型人格</h2>
+    <div id="resultType" class="result-type">9 号</div>
+    <div id="resultName" class="result-name">和平型</div>
+    <div id="resultNickname" class="result-nickname">"调停者"</div>
+    <div id="resultTags" class="tag-row"></div>
+
+    <h3 class="section-title">📊 9 型得分</h3>
+    <div id="scores"></div>
+
+    <h3 class="section-title">💭 核心动机</h3>
+    <p id="coreMotivation" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">😨 核心恐惧</h3>
+    <p id="coreFear" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">📝 性格画像</h3>
+    <p id="personality" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">💪 核心优势</h3>
+    <ul id="strengths" class="feature-list"></ul>
+
+    <h3 class="section-title">⚠️ 潜在盲点</h3>
+    <ul id="weaknesses" class="feature-list"></ul>
+
+    <h3 class="section-title">👥 人际关系</h3>
+    <p id="relationships" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">🌱 成长方向</h3>
+    <p id="growth" style="line-height:1.8; opacity:0.95; white-space:pre-line;"></p>
+
+    <h3 class="section-title">🌟 著名人物</h3>
+    <p id="celebrities" style="line-height:1.8; opacity:0.95;"></p>
+
+    <h3 class="section-title">📤 分享我的结果</h3>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存下面的专属海报</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">九型人格测试</div>
+          <div class="poster-type" id="posterType">9 号</div>
+          <div class="poster-name" id="posterName">和平型</div>
+          <div class="poster-nick" id="posterNick">"调停者"</div>
+          <div class="poster-divider"></div>
+          <div class="poster-traits" id="posterTraits">
+            <span class="poster-trait">和谐</span>
+          </div>
+          <div class="poster-footer">测试你的九型 → jianhebox.cn/fun/enneagram.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+
+    <div class="disclaimer-box">
+      ⚠️ 本测试基于九型人格理论，仅供娱乐参考。<br>
+      人格类型不是固定的，会随成长和觉察而变化。
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 36 题 - 4 题每型
+const questions = [
+  // 1 号 完美型
+  {text:"做事时，你更注重：",a: "做对的事情，追求完美",b: "做得开心，享受过程", type: 0},
+  {text:"看到不公正的事，你会：",a: "立即指出，必须纠正",b: "忍忍就过去了", type: 0},
+  {text:"工作中，你倾向于：",a: "按规矩办事",b: "灵活处理", type: 0},
+  {text:"朋友请你帮忙，你更愿意：",a: "如果做不到就拒绝",b: "先答应再说", type: 0},
+
+  // 2 号 助人型
+  {text:"朋友难过时，你的第一反应是：",a: "主动陪伴安慰",b: "等他来找你", type: 1},
+  {text:"别人赞美你，你通常会：",a: "很开心，很享受",b: "有点不好意思", type: 1},
+  {text:"你更喜欢的工作是：",a: "帮助他人，解决问题",b: "独立完成任务", type: 1},
+  {text:"当别人没有回应你的好意，你会：",a: "有点失落",b: "无所谓", type: 1},
+
+  // 3 号 成就型
+  {text:"你更看重：",a: "成功和成就",b: "过程和体验", type: 2},
+  {text:"别人评价你时，你更在意：",a: "你的能力和表现",b: "你的性格和人品", type: 2},
+  {text:"你更喜欢的工作是：",a: "有挑战，能晋升",b: "稳定，轻松", type: 2},
+  {text:"做事时，你更注重：",a: "效率和结果",b: "质量和过程", type: 2},
+
+  // 4 号 浪漫型
+  {text:"你觉得自己：",a: "与众不同，有独特品味",b: "和大家一样", type: 3},
+  {text:"你更容易被什么打动？",a: "深刻的情感",b: "实际的好处", type: 3},
+  {text:"你更喜欢：",a: "小众的、独特的",b: "主流的、被认可的", type: 3},
+  {text:"你更害怕：",a: "平庸、没意义",b: "失败、被拒绝", type: 3},
+
+  // 5 号 思考型
+  {text:"你更喜欢：",a: "独处思考",b: "和人交流", type: 4},
+  {text:"别人情绪激动时，你会：",a: "退后观察",b: "陪伴安慰", type: 4},
+  {text:"面对新信息，你更倾向：",a: "深入分析",b: "感性接受", type: 4},
+  {text:"你更喜欢的生活是：",a: "简单、有私人空间",b: "热闹、有人陪伴", type: 4},
+
+  // 6 号 忠诚型
+  {text:"面对不确定性，你更：",a: "担心，想提前准备",b: "随遇而安", type: 5},
+  {text:"你更喜欢的工作环境是：",a: "稳定、可预期",b: "变化、有新鲜感", type: 5},
+  {text:"做决定时，你更倾向于：",a: "反复权衡",b: "果断行动", type: 5},
+  {text:"你更信任：",a: "经过验证的",b: "直觉", type: 5},
+
+  // 7 号 享乐型
+  {text:"你更喜欢：",a: "尝试新事物",b: "深入精通", type: 6},
+  {text:"面对痛苦时，你更倾向于：",a: "转移注意力，做开心的事",b: "面对它，处理它", type: 6},
+  {text:"你更喜欢的工作是：",a: "多样化、有趣",b: "专注、深入", type: 6},
+  {text:"你更讨厌：",a: "无聊、被束缚",b: "混乱、无序", type: 6},
+
+  // 8 号 力量型
+  {text:"你更喜欢：",a: "掌控局面",b: "配合他人", type: 7},
+  {text:"面对冲突，你更倾向于：",a: "正面应对",b: "回避或妥协", type: 7},
+  {text:"你更容易被什么吸引？",a: "力量和保护",b: "和谐和平衡", type: 7},
+  {text:"你更讨厌：",a: "被控制、被欺负",b: "被忽视、被冷落", type: 7},
+
+  // 9 号 和平型
+  {text:"面对冲突，你更倾向于：",a: "回避，调停",b: "面对，解决", type: 8},
+  {text:"你更喜欢的工作节奏是：",a: "稳定、舒适",b: "快节奏、有挑战", type: 8},
+  {text:"你更容易：",a: "随大流",b: "坚持己见", type: 8},
+  {text:"你更害怕：",a: "冲突、不和",b: "被忽视", type: 8}
+];
+
+const enneagramTypes = {
+  1: {
+    name: "完美型", nickname: "改革者",
+    emoji: "🎯",
+    tags: ["原则", "改进", "自律", "理想"],
+    color: "linear-gradient(135deg, #2c3e50, #34495e)",
+    motivation: "追求完美，做正确的事。\\n\\n你相信世界应该是公正、有序、正确的。你的核心动机是改善自己和周围的环境。\\n\\n你严格要求自己，也对他人有高期待。你讨厌错误和不公。",
+    fear: "害怕犯错、不完美、被批评。\\n\\n你最深的恐惧是自己或世界变得堕落、不公正。你担心自己的标准不够高，担心自己不够好。",
+    personality: "你是天生的理想主义者和改革家。你用高标准要求自己，看不惯错误和低质量。\\n\\n你重视原则和公正，做事有条理。你是组织中的\"质量守门员\"，能发现别人忽视的缺陷。\\n\\n你外表严肃，内心有强烈的道德感。你相信通过努力，世界可以变得更美好。",
+    strengths: ["高度的责任感和原则性", "追求卓越，做事认真", "自律、有条理", "公正客观", "持续改进的动力"],
+    weaknesses: ["对自己和他人过于苛刻", "难以接受错误", "可能显得挑剔", "压抑愤怒", "完美主义导致拖延"],
+    relationships: "【人际关系】\\n你是认真负责的朋友，但可能显得严肃。\\n\\n在亲密关系中，你是可靠的伴侣，但要注意不要过于挑剔。\\n\\n你欣赏那些和你一样有原则的人，可能难以容忍懒散和不负责任。",
+    growth: "【成长方向】\\n• 接受不完美，包括自己的不完美\\n• 区分原则问题和非原则问题\\n• 学会放松，享受过程\\n• 原谅自己和他人\\n• 培养慈悲心",
+    celebrities: "圣雄甘地、马丁·路德·金、孔子、乔布斯"
+  },
+  2: {
+    name: "助人型", nickname: "给予者",
+    emoji: "💝",
+    tags: ["关爱", "给予", "热情", "关系"],
+    color: "linear-gradient(135deg, #e74c3c, #ff6b6b)",
+    motivation: "被爱、被需要。\\n\\n你的核心动机是获得无条件的爱。你相信通过付出爱，你会得到回报。\\n\\n你渴望被认可、被感激。",
+    fear: "害怕不被爱、不被需要。\\n\\n你最深的恐惧是被抛弃、被遗忘。你害怕孤独，害怕自己的付出没有意义。",
+    personality: "你是天生的照顾者和给予者。你能敏锐地感知他人的需求，并主动提供帮助。\\n\\n你热情、慷慨、有同理心。你是朋友圈中的\"暖宝宝\"，总在照顾他人。\\n\\n你重视人际关系，是出色的社交者。但你有时会忘记照顾自己。",
+    strengths: ["富有同理心，能理解他人", "慷慨大方", "善于建立关系", "热情有爱心", "体贴入微"],
+    weaknesses: ["过度付出，忽视自己", "难以拒绝", "期待回报", "可能显得依赖", "为取悦他人失去自我"],
+    relationships: "【人际关系】\\n你是朋友圈的核心和粘合剂。但要学会接受帮助，而不是总是给予。\\n\\n在亲密关系中，你是温暖的伴侣，但要注意不要用爱来控制对方。\\n\\n你欣赏有爱心的人，但可能吸引不健康的关系。",
+    growth: "【成长方向】\\n• 学会说不，保护自己的边界\\n• 给自己爱，不要等别人给\\n• 接受帮助，不必总付出\\n• 承认自己的需求\\n• 培养自我价值感",
+    celebrities: "特蕾莎修女、德蕾莎修女、黛安娜王妃、奥普拉"
+  },
+  3: {
+    name: "成就型", nickname: "实干家",
+    emoji: "🏆",
+    tags: ["成功", "高效", "形象", "目标"],
+    color: "linear-gradient(135deg, #f39c12, #e67e22)",
+    motivation: "成功、被认可。\\n\\n你的核心动机是证明自己的价值。你相信通过成就和成功，你会获得尊重和爱。\\n\\n你不断追求更高的目标。",
+    fear: "害怕失败、无价值。\\n\\n你最深的恐惧是无能、无价值。你害怕失败，害怕被看穿其实不够好。",
+    personality: "你是天生的成就者和实干家。你有明确的目标，并全力去实现。\\n\\n你高效、有魅力、适应力强。你能根据场合调整自己的形象。\\n\\n你重视结果和效率，是出色的领导者。但你有时会过于关注外在评价。",
+    strengths: ["强烈的目标导向", "高效执行力", "善于激励他人", "自信有魅力", "适应力强"],
+    weaknesses: ["过度关注形象", "可能显得肤浅", "工作狂倾向", "难以面对失败", "可能失去真实自我"],
+    relationships: "【人际关系】\\n你是社交明星，但要注意不要只关注外在。\\n\\n在亲密关系中，你是有吸引力的伴侣，但要注意给对方足够的情感关注。\\n\\n你欣赏有能力的人，可能忽视情感型的人。",
+    growth: "【成长方向】\\n• 接受失败是成长的一部分\\n• 关注内在价值，不只是成就\\n• 允许自己脆弱\\n• 培养真实的情感连接\\n• 慢下来，享受当下",
+    celebrities: "埃隆·马斯克、奥普拉、汤姆·克鲁斯、迈克尔·乔丹"
+  },
+  4: {
+    name: "浪漫型", nickname: "艺术家",
+    emoji: "🎭",
+    tags: ["独特", "深度", "情感", "真实"],
+    color: "linear-gradient(135deg, #8e44ad, #9b59b6)",
+    motivation: "找到真实的自己。\\n\\n你的核心动机是寻找独特的身份和意义。你渴望被理解，追求深度和真实。\\n\\n你不愿与他人雷同。",
+    fear: "害怕平庸、没有身份。\\n\\n你最深的恐惧是没有独特的自我，害怕成为普通人。你害怕被误解，但也害怕被完全理解后的暴露感。",
+    personality: "你是天生的艺术家和浪漫主义者。你有独特的视角和深刻的情感。\\n\\n你追求真实和美感，讨厌平庸和虚伪。你外表可能与众不同，内心世界丰富多彩。\\n\\n你重视深度胜过广度，宁可少而精，不要多而泛。",
+    strengths: ["富有创造力和艺术感", "情感深刻", "独特视角", "真实自我", "审美敏感"],
+    weaknesses: ["情绪化", "容易陷入忧郁", "过度理想化", "自我中心", "难以接受现实"],
+    relationships: "【人际关系】\\n你是深刻的朋友，但可能显得情绪化。\\n\\n在亲密关系中，你追求灵魂伴侣般的关系，但可能过于理想化伴侣。\\n\\n你欣赏有深度的人，对肤浅的人不耐烦。",
+    growth: "【成长方向】\\n• 接受平庸的时刻也是生活的一部分\\n• 学会从积极面看生活\\n• 不要把痛苦浪漫化\\n• 培养情绪稳定\\n• 接受现实的不完美",
+    celebrities: "玛丽莲·梦露、约翰·列侬、艾迪生·狄伦、Lady Gaga"
+  },
+  5: {
+    name: "思考型", nickname: "观察者",
+    emoji: "🔍",
+    tags: ["思考", "独立", "洞察", "理性"],
+    color: "linear-gradient(135deg, #34495e, #2c3e50)",
+    motivation: "理解世界、知识。\\n\\n你的核心动机是理解周围的世界。你相信知识就是力量。\\n\\n你渴望在某个领域深入精通。",
+    fear: "害怕无知、被侵入。\\n\\n你最深的恐惧是无能、无知、被侵入私人空间。你需要独处来恢复能量。",
+    personality: "你是天生的思考者和观察者。你喜欢独处思考，追求深度理解。\\n\\n你观察敏锐，分析能力强。你是朋友圈中的\"智者\"，会给出深刻建议。\\n\\n你重视独立和自由，讨厌被打扰。你不善社交，但能给你信任的人深刻的陪伴。",
+    strengths: ["强大的分析能力", "独立思考", "客观理性", "知识渊博", "洞察力强"],
+    weaknesses: ["过度孤立", "不善表达情感", "可能显得冷漠", "脱离现实", "拖延行动"],
+    relationships: "【人际关系】\\n你是可靠的智囊，但可能显得疏离。\\n\\n在亲密关系中，你是忠诚的伴侣，但需要大量独处时间。\\n\\n你欣赏独立的人，难以容忍过度依赖。",
+    growth: "【成长方向】\\n• 学会表达情感，不只是思考\\n• 参与实际行动，不只是观察\\n• 适度分享内心世界\\n• 接受情感连接的价值\\n• 平衡独处和社交",
+    celebrities: "爱因斯坦、比尔·盖茨、亚伯拉罕·林肯、史蒂芬·霍金"
+  },
+  6: {
+    name: "忠诚型", nickname: "怀疑论者",
+    emoji: "🛡️",
+    tags: ["忠诚", "警觉", "责任", "谨慎"],
+    color: "linear-gradient(135deg, #16a085, #1abc9c)",
+    motivation: "安全感、支持。\\n\\n你的核心动机是寻找安全和支持。你想得最坏的情况，提前准备。\\n\\n你信任可靠的人。",
+    fear: "害怕没有支持、被抛弃。\\n\\n你最深的恐惧是没有指引、被抛弃、没有准备。你担心最坏的情况会发生。",
+    personality: "你是天生的怀疑者和和忠诚的朋友。你警觉、负责、能预见问题。\\n\\n你重视安全感和稳定性，会提前考虑风险。你是朋友圈中的\"定心丸\"，能给出可靠建议。\\n\\n你表面可能显得焦虑，内心其实非常忠诚。一旦信任，你会很坚定。",
+    strengths: ["忠诚可靠", "预见风险", "负责任", "谨慎细心", "团队合作"],
+    weaknesses: ["过度焦虑", "难以信任", "犹豫不决", "最坏情况思维", "可能显得消极"],
+    relationships: "【人际关系】\\n你是忠诚的朋友，会保护你在乎的人。\\n\\n在亲密关系中，你是可靠的伴侣，但可能过度担心。\\n\\n你欣赏真诚和稳定，对虚伪和不一致很敏感。",
+    growth: "【成长方向】\\n• 培养内在的安全感\\n• 信任自己和他人\\n• 不要追求完美保证\\n• 接受不确定性\\n• 相信自己的判断",
+    celebrities: "沃尔特·迪士尼、罗纳德·里根、杰米·福克斯、布拉德·皮特"
+  },
+  7: {
+    name: "享乐型", nickname: "冒险家",
+    emoji: "🎉",
+    tags: ["活力", "创意", "自由", "乐观"],
+    color: "linear-gradient(135deg, #f1c40f, #f39c12)",
+    motivation: "快乐、自由、体验。\\n\\n你的核心动机是体验生活的所有可能。你追求快乐和自由，讨厌被束缚。\\n\\n你想让每一刻都精彩。",
+    fear: "害怕痛苦、被束缚。\\n\\n你最深的恐惧是被限制、被困在痛苦中。你害怕无聊和重复。",
+    personality: "你是天生的冒险者和享乐主义者。你充满活力，热爱生活，富有创造力。\\n\\n你喜欢新事物，能看到各种可能性。你是朋友圈中的\"开心果\"，点子最多。\\n\\n你重视自由和选择，讨厌被束缚。但你有时会逃避痛苦，只看光明面。",
+    strengths: ["乐观积极", "富有创造力", "适应力强", "感染力强", "点子多"],
+    weaknesses: ["逃避痛苦", "难以坚持", "注意力分散", "可能显得肤浅", "不擅长处理负面情绪"],
+    relationships: "【人际关系】\\n你是朋友圈的活力源泉，但可能显得不够深入。\\n\\n在亲密关系中，你是有趣的伴侣，但要注意对方的情感需求。\\n\\n你欣赏有趣的人，难以容忍沉闷或。",
+    growth: "【成长方向】\\n• 面对痛苦，不只是逃避\\n• 学会深入，不只是广泛\\n• 重视承诺和坚持\\n• 接受生活的平淡时刻\\n• 培养情绪深度",
+    celebrities: "罗宾·威廉姆斯、史蒂文·斯皮尔伯格、蕾哈娜、理查德·布兰森"
+  },
+  8: {
+    name: "力量型", nickname: "挑战者",
+    emoji: "⚔️",
+    tags: ["力量", "正义", "果断", "保护"],
+    color: "linear-gradient(135deg, #c0392b, #e74c3c)",
+    motivation: "掌控、保护。\\n\\n你的核心动机是掌控局面，保护弱者和自己在乎的人。\\n\\n你讨厌软弱和不公。",
+    fear: "害怕被控制、被伤害。\\n\\n你最深的恐惧是被控制、被伤害、被软弱。你宁愿先发制人。",
+    personality: "你是天生的领导者和保护者。你果断、有力量、不畏强权。\\n\\n你重视正义和真实，讨厌虚伪。你是朋友圈中的\"保护者\"，会为朋友挺身而出。\\n\\n你外表强硬，内心其实有柔软的一面，只是很少展示。",
+    strengths: ["果断有力", "保护他人", "正义感强", "有领导力", "敢于面对"],
+    weaknesses: ["可能显得强硬", "不善示弱", "控制欲强", "可能忽视他人感受", "过于好斗"],
+    relationships: "【人际关系】\\n你是保护者，会为你在乎的人挺身而出。\\n\\n在亲密关系中，你是有力的伴侣，但要注意不要控制对方。\\n\\n你欣赏强者，鄙视弱者。",
+    growth: "【成长方向】\\n• 学会示弱，展示真实\\n• 倾听他人，不只是主导\\n• 控制不是爱\\n• 接受他人的脆弱\\n• 培养慈悲心",
+    celebrities: "唐纳德·特朗普、马丁·路德·金、麦当娜、肖恩·康纳利"
+  },
+  9: {
+    name: "和平型", nickname: "调停者",
+    emoji: "🕊️",
+    tags: ["和谐", "包容", "稳定", "接纳"],
+    color: "linear-gradient(135deg, #3498db, #2980b9)",
+    motivation: "和谐、平静。\\n\\n你的核心动机是保持内心的平静和外部的和谐。你想避免冲突。\\n\\n你珍惜简单和舒适。",
+    fear: "害怕冲突、失去。\\n\\n你最深的恐惧是冲突、分离、被打破平静。你宁愿妥协，也不愿冲突。",
+    personality: "你是天生的和平使者和调解人。你温和、包容、善于倾听。\\n\\n你重视和谐，讨厌冲突。你是朋友圈中的\"粘合剂\"，能让对立的人平和相处。\\n\\n你外表随和，内心有自己的想法，只是很少表达。",
+    strengths: ["温和包容", "善于调解", "倾听者", "稳定可靠", "接纳他人"],
+    weaknesses: ["回避冲突", "优柔寡断", "可能显得懒散", "压抑自我", "难以说\"不\""],
+    relationships: "【人际关系】\\n你是温和的朋友，能接纳所有人。\\n\\n在亲密关系中，你是体贴的伴侣，但要注意不要压抑自己的需求。\\n\\n你欣赏平和的人，可能回避强硬的人。",
+    growth: "【成长方向】\\n• 学会面对冲突，不只是回避\\n• 表达自己的意见\\n• 设立边界\\n• 采取主动\\n• 重视自己的目标",
+    celebrities: "达尔文、林肯、黛安娜王妃、摩根·弗里曼"
+  }
+};
+
+let answers = new Array(36).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 36 * 100) + '%';
+  document.getElementById('questionText').textContent = '第 ' + (currentQuestion + 1) + ' 题：' + q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  const optA = document.createElement('button');
+  optA.className = 'option';
+  optA.textContent = q.a;
+  optA.onclick = () => selectOption(0, optA);
+  
+  const optB = document.createElement('button');
+  optB.className = 'option';
+  optB.textContent = q.b;
+  optB.onclick = () => selectOption(1, optB);
+  
+  container.appendChild(optA);
+  container.appendChild(optB);
+  
+  if (answers[currentQuestion] !== null) {
+    const btns = container.querySelectorAll('.option');
+    btns[answers[currentQuestion]].classList.add('selected');
+    document.getElementById('nextBtn').disabled = false;
+  } else {
+    document.getElementById('nextBtn').disabled = true;
+  }
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  answers[currentQuestion] = idx;
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('nextBtn').disabled = false;
+}
+
+function nextQuestion() {
+  if (answers[currentQuestion] === null) return;
+  if (currentQuestion < 35) {
+    currentQuestion++;
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateType() {
+  const scores = new Array(9).fill(0);
+  questions.forEach((q, i) => {
+    if (answers[i] === null) return;
+    // 0=A, 1=B
+    // type 是该题所属的类型 (0-8)
+    // 选 A 加 1 分（更倾向该型）
+    if (answers[i] === 0) {
+      scores[q.type]++;
+    }
+  });
+  
+  const total = scores.reduce((a, b) => a + b, 0);
+  const normalized = scores.map(s => Math.round(s / 4 * 100));
+  
+  let maxIdx = 0;
+  for (let i = 1; i < 9; i++) {
+    if (scores[i] > scores[maxIdx]) maxIdx = i;
+  }
+  
+  return { type: maxIdx + 1, scores: normalized };
+}
+
+function showResult() {
+  const { type, scores } = calculateType();
+  const data = enneagramTypes[type];
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('resultType').textContent = type + ' 号';
+  document.getElementById('resultName').textContent = data.name;
+  document.getElementById('resultNickname').textContent = '"' + data.nickname + '"';
+  
+  const tagsContainer = document.getElementById('resultTags');
+  tagsContainer.innerHTML = '';
+  data.tags.forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'tag';
+    span.textContent = t;
+    tagsContainer.appendChild(span);
+  });
+  
+  const scoresContainer = document.getElementById('scores');
+  scoresContainer.innerHTML = '';
+  for (let i = 0; i < 9; i++) {
+    const row = document.createElement('div');
+    row.className = 'score-row';
+    const name = enneagramTypes[i + 1].name;
+    row.innerHTML = `
+      <div class="score-labels">
+        <span>${i + 1}号 ${name}</span>
+        <span>${scores[i]}%</span>
+      </div>
+      <div class="score-track">
+        <div class="score-fill" style="width:${scores[i]}%;"></div>
+      </div>
+    `;
+    scoresContainer.appendChild(row);
+  }
+  
+  document.getElementById('coreMotivation').textContent = data.motivation;
+  document.getElementById('coreFear').textContent = data.fear;
+  document.getElementById('personality').textContent = data.personality;
+  document.getElementById('strengths').innerHTML = data.strengths.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('weaknesses').innerHTML = data.weaknesses.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('relationships').textContent = data.relationships;
+  document.getElementById('growth').textContent = data.growth;
+  document.getElementById('celebrities').textContent = data.celebrities;
+  
+  updatePoster(type, data);
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updatePoster(type, data) {
+  const poster = document.getElementById('posterCard');
+  poster.style.background = data.color;
+  document.getElementById('posterType').textContent = type + ' 号';
+  document.getElementById('posterName').textContent = data.name;
+  document.getElementById('posterNick').textContent = '"' + data.nickname + '"';
+  
+  const traitsContainer = document.getElementById('posterTraits');
+  traitsContainer.innerHTML = '';
+  data.tags.slice(0, 4).forEach(t => {
+    const span = document.createElement('span');
+    span.className = 'poster-trait';
+    span.textContent = t;
+    traitsContainer.appendChild(span);
+  });
+}
+
+function copyShareText() {
+  const { type } = calculateType();
+  const data = enneagramTypes[type];
+  
+  const text = '🧭 我的九型人格是 ' + type + ' 号 (' + data.name + ')\\n"' + data.nickname + '"\\n\\n核心动机：' + data.motivation.split('\\n')[0] + '\\n\\n👉 来测测你的：jianhebox.cn/fun/enneagram.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(36).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>八字命盘 - 四柱八字 · 五行分析 | 简盒玩点有趣的</title>
+<meta name="description" content="免费八字命盘工具，输入出生日期生成四柱八字，分析五行喜忌、十神格局、大运流年。附性格特质、爱情事业、人生建议。">
+<meta name="keywords" content="八字,命盘,四柱,五行,十神,大运,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .info-text, .share-card, .poster-card, .form-row {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .form-row { margin-bottom: 16px; }
+  .form-row label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    opacity: 0.9;
+    color: white;
+  }
+  .form-row input, .form-row select {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255,255,255,0.1) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    font-family: inherit;
+  }
+  .form-row input::placeholder { color: rgba(255,255,255,0.5); }
+  .form-row input:focus, .form-row select:focus {
+    outline: none;
+    border-color: #f5576c;
+  }
+  .form-row select option { background: #2c1e4a; color: white; }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+
+  /* 八字四柱 */
+  .bazi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 20px 0;
+  }
+  .bazi-column {
+    text-align: center;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    padding: 12px 6px;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .bazi-label {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-bottom: 6px;
+  }
+  .bazi-gan {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 4px 0;
+    color: #f093fb;
+  }
+  .bazi-zhi {
+    font-size: 28px;
+    font-weight: bold;
+    color: #f5576c;
+  }
+  .bazi-canggan {
+    font-size: 11px;
+    opacity: 0.7;
+    margin-top: 4px;
+  }
+
+  /* 五行分布 */
+  .wuxing-bar {
+    display: flex;
+    height: 36px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 12px 0;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .wuxing-segment {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  }
+
+  /* 日主 */
+  .rizhu-display {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .rizhu-name {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 4px;
+  }
+  .rizhu-value {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 6px 0;
+  }
+  .rizhu-desc {
+    font-size: 13px;
+    opacity: 0.9;
+    margin-top: 6px;
+  }
+
+  .info-card {
+    background: rgba(255,255,255,0.08) !important;
+    padding: 16px;
+    border-radius: 12px;
+    margin: 12px 0;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 40px 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #2c1810, #c31432);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; text-align: center; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-bzi {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin: 16px 0;
+  }
+  .poster-bzi-item {
+    padding: 8px 4px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+  }
+  .poster-bzi-label {
+    font-size: 10px;
+    opacity: 0.7;
+  }
+  .poster-bzi-value {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 2px 0;
+  }
+  .poster-rizhu {
+    margin: 12px 0;
+    padding: 12px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+  }
+  .poster-rizhu-label {
+    font-size: 11px;
+    opacity: 0.8;
+  }
+  .poster-rizhu-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 4px 0;
+  }
+  .poster-wuxing {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 12px 0;
+    flex-wrap: wrap;
+  }
+  .poster-wx {
+    padding: 4px 10px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    font-size: 11px;
+  }
+  .poster-footer {
+    margin-top: 20px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+
+  .loading {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+  }
+  .loading-spinner {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255,255,255,0.2);
+    border-top: 4px solid #f5576c;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 480px) {
+    .bazi-grid { grid-template-columns: repeat(2, 1fr); }
+    .poster-bzi { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>📿 八字命盘</h1>
+    <p class="subtitle">四柱八字 · 五行分析 · 人生解读</p>
+    <ul class="intro-feature-list">
+      <li>输入出生日期 → 生成四柱八字（年柱/月柱/日柱/时柱）</li>
+      <li>日主强弱 · 五行喜忌 · 十神格局</li>
+      <li>性格特质 + 爱情婚姻 + 事业财运</li>
+      <li>✨ 专属海报分享卡，发朋友圈必备</li>
+    </ul>
+    <button class="btn-primary" onclick="startApp()" style="width:100%;">开始排盘 →</button>
+  </div>
+
+  <div id="form" class="card hidden">
+    <h2 style="text-align:center; margin-bottom:24px;">📝 输入出生信息</h2>
+    <div class="form-row">
+      <label>出生年份 *</label>
+      <select id="birthYear"></select>
+    </div>
+    <div class="form-row">
+      <label>出生月份 *</label>
+      <select id="birthMonth"></select>
+    </div>
+    <div class="form-row">
+      <label>出生日期 *</label>
+      <select id="birthDay"></select>
+    </div>
+    <div class="form-row">
+      <label>出生时辰 *</label>
+      <select id="birthHour">
+        <option value="0">子时 (23:00-01:00)</option>
+        <option value="2">丑时 (01:00-03:00)</option>
+        <option value="4">寅时 (03:00-05:00)</option>
+        <option value="6">卯时 (05:00-07:00)</option>
+        <option value="8">辰时 (07:00-09:00)</option>
+        <option value="10">巳时 (09:00-11:00)</option>
+        <option value="12">午时 (11:00-13:00)</option>
+        <option value="14">未时 (13:00-15:00)</option>
+        <option value="16">申时 (15:00-17:00)</option>
+        <option value="18">酉时 (17:00-19:00)</option>
+        <option value="20">戌时 (19:00-21:00)</option>
+        <option value="22">亥时 (21:00-23:00)</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>性别</label>
+      <select id="gender">
+        <option value="male">男</option>
+        <option value="female">女</option>
+      </select>
+    </div>
+    <button class="btn-primary" onclick="generate()" style="width:100%; margin-top:12px;">✨ 排八字</button>
+  </div>
+
+  <div id="loading" class="card hidden">
+    <div class="loading">
+      <div class="loading-spinner"></div>
+      <p>正在排八字...</p>
+      <p style="font-size:13px; opacity:0.7; margin-top:8px;">推算四柱 · 分析五行 · 生成解读</p>
+    </div>
+  </div>
+
+  <div id="result" class="card hidden">
+    <h2 style="text-align:center; margin-bottom:8px;">📿 您的八字命盘</h2>
+    <p style="text-align:center; opacity:0.85; margin-bottom:16px;" id="resultMeta"></p>
+
+    <!-- 四柱 -->
+    <div class="bazi-grid" id="baziGrid"></div>
+
+    <!-- 日主 -->
+    <div class="rizhu-display">
+      <div class="rizhu-name">日主 (日元) · 代表您本人</div>
+      <div class="rizhu-value" id="rizhuValue">甲木</div>
+      <div class="rizhu-desc" id="rizhuDesc"></div>
+    </div>
+
+    <!-- 五行 -->
+    <div class="section-title">⚖️ 五行分布</div>
+    <div id="wuxingBar" class="wuxing-bar"></div>
+    <div id="wuxingText" class="info-text"></div>
+
+    <div class="section-title">💎 性格特质</div>
+    <div id="xinggeText" class="info-text"></div>
+
+    <div class="section-title">🍀 五行喜忌</div>
+    <div id="xiJiText" class="info-text"></div>
+
+    <div class="section-title">💕 爱情婚姻</div>
+    <div id="loveText" class="info-text"></div>
+
+    <div class="section-title">💼 事业财运</div>
+    <div id="careerText" class="info-text"></div>
+
+    <div class="section-title">🌱 人生建议</div>
+    <div id="adviceText" class="info-text"></div>
+
+    <!-- 分享卡片 -->
+    <div class="section-title">📤 分享我的八字</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存下面的专属海报</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">八字命盘</div>
+          <div class="poster-bzi" id="posterBzi"></div>
+          <div class="poster-rizhu">
+            <div class="poster-rizhu-label">日主</div>
+            <div class="poster-rizhu-value" id="posterRizhu">甲木</div>
+          </div>
+          <div class="poster-wuxing" id="posterWuxing">
+            <span class="poster-wx">金 30%</span>
+          </div>
+          <div class="poster-footer">排算你的八字 → jianhebox.cn/fun/bazi.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartApp()" style="width:100%; margin-top:12px;">🔄 重新排盘</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 八字命盘仅供娱乐参考，请勿作为决策依据。<br>
+    命运在自己手中，努力才是改变的关键。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+const tiangan = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+const dizhi = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+
+// 五行对应
+const tianganWuxing = {
+  '甲': '木', '乙': '木',
+  '丙': '火', '丁': '火',
+  '戊': '土', '己': '土',
+  '庚': '金', '辛': '金',
+  '壬': '水', '癸': '水'
+};
+const dizhiWuxing = {
+  '子': '水', '亥': '水',
+  '寅': '木', '卯': '木',
+  '巳': '火', '午': '火',
+  '申': '金', '酉': '金',
+  '辰': '土', '戌': '土', '丑': '土', '未': '土'
+};
+const wuxingColors = {
+  '金': 'linear-gradient(135deg, #ffd700, #ffed4e)',
+  '木': 'linear-gradient(135deg, #2ecc71, #27ae60)',
+  '水': 'linear-gradient(135deg, #3498db, #2980b9)',
+  '火': 'linear-gradient(135deg, #e74c3c, #c0392b)',
+  '土': 'linear-gradient(135deg, #d4a373, #b08968)'
+};
+
+// 日主解读
+const rizhuInterpret = {
+  '甲': { name: '甲木', desc: '参天大木', character: '你如参天大树，挺拔正直，富有生命力。你有强烈的进取心和责任感，是天生的领导者。但你有时会过于固执，不善变通。\\n\\n关键词：正直、进取、向上、领导', love: '【爱情】你是专一的伴侣，重视承诺。但要学会柔和表达情感。\\n\\n最佳配对：乙木、壬水、丁火', career: '【事业】你适合管理、领导、创业类工作。在木旺的环境发展更好。\\n\\n喜用神：木、水', advice: '【建议】发挥你的领导力，但学会倾听他人。' },
+  '乙': { name: '乙木', desc: '花草藤蔓', character: '你如花草藤蔓，柔韧而坚韧。你善于适应环境，能屈能伸。你温和、有同理心，是出色的外交家。\\n\\n关键词：柔韧、温和、适应、坚韧', love: '【爱情】你是温柔的恋人，善解人意。但要避免过于迁就。\\n\\n最佳配对：甲木、癸水、丙火', career: '【事业】你适合艺术、文学、外交类工作。在温和的环境更易成功。\\n\\n喜用神：水、木', advice: '【建议】保持柔韧的同时，也要建立自己的底线。' },
+  '丙': { name: '丙火', desc: '太阳之火', character: '你如太阳般热情，光明磊落。你有强大的感染力，能照亮周围的人。你大方、热情、有创造力。\\n\\n关键词：热情、光明、慷慨、活力', love: '【爱情】你是热情浪漫的恋人，但要注意对方的情感需求。\\n\\n最佳配对：辛金、壬水、甲木', career: '【事业】你适合公关、销售、演艺类工作。在火旺的环境如鱼得水。\\n\\n喜用神：火、木', advice: '【建议】你的热情是天赋，但要学会持久。' },
+  '丁': { name: '丁火', desc: '烛光星火', character: '你如烛光般温暖而专注。你洞察力强，善于分析。你外表温和，内心坚定。\\n\\n关键词：温暖、专注、洞察、细腻', love: '【爱情】你是细腻的恋人，重视精神连接。\\n\\n最佳配对：壬水、甲木、辛金', career: '【事业】你适合研究、技术、艺术类工作。在专注的环境中更出色。\\n\\n喜用神：火、木', advice: '【建议】坚持你的专注，但也要注意团队合作。' },
+  '戊': { name: '戊土', desc: '高山厚土', character: '你如高山般稳重，可靠可信。你有强大的包容力，能承载他人。你重视稳定和承诺。\\n\\n关键词：稳重、包容、可靠、厚实', love: '【爱情】你是可靠的伴侣，但可能显得不够浪漫。\\n\\n最佳配对：癸水、甲木、丙火', career: '【事业】你适合管理、建筑、金融类工作。在稳定的组织中能发挥所长。\\n\\n喜用神：土、火', advice: '【建议】保持稳重的优点，但也要学会灵活。' },
+  '己': { name: '己土', desc: '田园沃土', character: '你如田园般滋养万物。你善于照顾他人，是天生的养育者。你重视实际和具体。\\n\\n关键词：滋养、实际、养育、包容', love: '【爱情】你是体贴的恋人，会照顾对方的一切。\\n\\n最佳配对：甲木、丙火、癸水', career: '【事业】你适合农业、教育、医疗类工作。在与他人相关的领域能发光。\\n\\n喜用神：土、火', advice: '【建议】发挥滋养的优势，但也要有自己的目标。' },
+  '庚': { name: '庚金', desc: '刀剑之金', character: '你如刀剑般刚毅果断。你有强烈的正义感，做事雷厉风行。你重视效率和结果。\\n\\n关键词：刚毅、果断、正义、锋利', love: '【爱情】你是忠诚的伴侣，但可能显得过于强硬。\\n\\n最佳配对：乙木、丁火、壬水', career: '【事业】你适合军警、金融、法律类工作。在竞争中能发挥所长。\\n\\n喜用神：金、土', advice: '【建议】保持果断，但也要有柔软的一面。' },
+  '辛': { name: '辛金', desc: '珠玉之金', character: '你如珠玉般精致温润。你有敏锐的审美和细腻的情感。你追求精致和完美。\\n\\n关键词：精致、敏锐、温润、细腻', love: '【爱情】你是浪漫的恋人，重视美的体验。\\n\\n最佳配对：丁火、丙火、癸水', career: '【事业】你适合艺术、珠宝、设计类工作。在美的领域能发挥所长。\\n\\n喜用神：金、水', advice: '【建议】发挥你的审美天赋，但也要脚踏实地。' },
+  '壬': { name: '壬水', desc: '江河之水', character: '你如江河般奔涌向前。你思维灵活，善于变通。你有大智慧，能包容万物。\\n\\n关键词：智慧、灵活、包容、流动', love: '【爱情】你是浪漫的伴侣，能给伴侣自由空间。\\n\\n最佳配对：丁火、庚金、甲木', career: '【事业】你适合商业、策划、外交类工作。在变化的领域如鱼得水。\\n\\n喜用神：水、金', advice: '【建议】保持灵活的优势，但也要有持续性。' },
+  '癸': { name: '癸水', desc: '雨露之水', character: '你如雨露般润物细无声。你温柔、敏感、富有同理心。你善于观察和理解他人。\\n\\n关键词：温柔、敏感、洞察、滋润', love: '【爱情】你是温柔的恋人，能理解伴侣的内心。\\n\\n最佳配对：丙火、戊土、乙木', career: '【事业】你适合心理、艺术、研究类工作。在细腻的领域能发光。\\n\\n喜用神：水、金', advice: '【建议】发挥你的温柔优势，但也要有自己的主张。' }
+};
+
+// 计算年柱 (简化的农历近似算法)
+function getYearPillar(year) {
+  // 1984 年是甲子年
+  const offset = (year - 1984) % 60;
+  const ganIdx = ((offset % 10) + 10) % 10;
+  const zhiIdx = ((offset % 12) + 12) % 12;
+  return { gan: tiangan[ganIdx], zhi: dizhi[zhiIdx] };
+}
+
+// 月柱 (基于年干推算)
+function getMonthPillar(year, month) {
+  const yearGan = getYearPillar(year).gan;
+  const yearGanIdx = tiangan.indexOf(yearGan);
+  // 五虎遁：甲己之年丙作首
+  const monthGanStart = (yearGanIdx % 5) * 2;
+  const ganIdx = (monthGanStart + (month - 1)) % 10;
+  // 月支固定：正月寅
+  const zhiIdx = (month + 1) % 12;
+  return { gan: tiangan[ganIdx], zhi: dizhi[zhiIdx] };
+}
+
+// 日柱 (简化算法)
+function getDayPillar(year, month, day) {
+  const seed = year * 10000 + month * 100 + day;
+  const offset = (seed * 13) % 60;
+  const ganIdx = offset % 10;
+  const zhiIdx = offset % 12;
+  return { gan: tiangan[ganIdx], zhi: dizhi[zhiIdx] };
+}
+
+// 时柱
+function getHourPillar(dayGan, hourBranchIdx) {
+  const dayGanIdx = tiangan.indexOf(dayGan);
+  // 五鼠遁：甲己还加甲
+  const hourGanStart = (dayGanIdx % 5) * 2;
+  const ganIdx = (hourGanStart + hourBranchIdx / 2) % 10;
+  return { gan: tiangan[ganIdx], zhi: dizhi[hourBranchIdx / 2] };
+}
+
+function initForm() {
+  const yearSelect = document.getElementById('birthYear');
+  const monthSelect = document.getElementById('birthMonth');
+  const daySelect = document.getElementById('birthDay');
+  
+  for (let y = 2026; y >= 1940; y--) {
+    const opt = document.createElement('option');
+    opt.value = y;
+    opt.textContent = y + '年';
+    yearSelect.appendChild(opt);
+  }
+  
+  for (let m = 1; m <= 12; m++) {
+    const opt = document.createElement('option');
+    opt.value = m;
+    opt.textContent = m + '月';
+    monthSelect.appendChild(opt);
+  }
+  
+  for (let d = 1; d <= 31; d++) {
+    const opt = document.createElement('option');
+    opt.value = d;
+    opt.textContent = d + '日';
+    daySelect.appendChild(opt);
+  }
+}
+
+function startApp() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('form').classList.remove('hidden');
+  if (document.getElementById('birthYear').children.length === 0) {
+    initForm();
+  }
+}
+
+function generate() {
+  const year = parseInt(document.getElementById('birthYear').value);
+  const month = parseInt(document.getElementById('birthMonth').value);
+  const day = parseInt(document.getElementById('birthDay').value);
+  const hour = parseInt(document.getElementById('birthHour').value);
+  
+  if (!year || !month || !day) {
+    alert('请完整选择出生日期');
+    return;
+  }
+  
+  document.getElementById('form').classList.add('hidden');
+  document.getElementById('loading').classList.remove('hidden');
+  
+  setTimeout(() => calculateAndShow(year, month, day, hour), 1200);
+}
+
+function calculateAndShow(year, month, day, hour) {
+  const yearPillar = getYearPillar(year);
+  const monthPillar = getMonthPillar(year, month);
+  const dayPillar = getDayPillar(year, month, day);
+  const hourPillar = getHourPillar(dayPillar.gan, hour);
+  
+  const rizhu = dayPillar.gan;
+  const rizhuData = rizhuInterpret[rizhu];
+  
+  // 五行分布
+  const wuxingDist = {};
+  ['金', '木', '水', '火', '土'].forEach(wx => wuxingDist[wx] = 0);
+  
+  [yearPillar, monthPillar, dayPillar, hourPillar].forEach(pillar => {
+    wuxingDist[tianganWuxing[pillar.gan]]++;
+    wuxingDist[dizhiWuxing[pillar.zhi]]++;
+  });
+  
+  document.getElementById('loading').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('resultMeta').textContent = year + '年' + month + '月' + day + '日 · ' + (hour < 12 ? '上午' : '下午');
+  
+  // 展示四柱
+  const grid = document.getElementById('baziGrid');
+  grid.innerHTML = '';
+  const pillars = [
+    { p: yearPillar, label: '年柱' },
+    { p: monthPillar, label: '月柱' },
+    { p: dayPillar, label: '日柱' },
+    { p: hourPillar, label: '时柱' }
+  ];
+  pillars.forEach(item => {
+    const col = document.createElement('div');
+    col.className = 'bazi-column';
+    col.innerHTML = `
+      <div class="bazi-label">${item.label}</div>
+      <div class="bazi-gan">${item.p.gan}</div>
+      <div class="bazi-zhi">${item.p.zhi}</div>
+      <div class="bazi-canggan">${tianganWuxing[item.p.gan]}${dizhiWuxing[item.p.zhi]}</div>
+    `;
+    grid.appendChild(col);
+  });
+  
+  document.getElementById('rizhuValue').textContent = rizhuData.name;
+  document.getElementById('rizhuDesc').textContent = rizhuData.desc;
+  
+  // 五行
+  const total = Object.values(wuxingDist).reduce((a, b) => a + b, 0);
+  const wuxingBar = document.getElementById('wuxingBar');
+  wuxingBar.innerHTML = '';
+  ['金', '木', '水', '火', '土'].forEach(wx => {
+    const pct = Math.round(wuxingDist[wx] / total * 100);
+    const seg = document.createElement('div');
+    seg.className = 'wuxing-segment';
+    seg.style.width = pct + '%';
+    seg.style.background = wuxingColors[wx];
+    seg.textContent = pct > 5 ? wx + ' ' + pct + '%' : '';
+    wuxingBar.appendChild(seg);
+  });
+  
+  // 找出最旺和最弱
+  const maxWx = Object.keys(wuxingDist).reduce((a, b) => wuxingDist[a] > wuxingDist[b] ? a : b);
+  const minWx = Object.keys(wuxingDist).reduce((a, b) => wuxingDist[a] < wuxingDist[b] ? a : b);
+  const maxWxWuxing = tianganWuxing[rizhu];
+  
+  document.getElementById('wuxingText').textContent = 
+    `您的日主为【${rizhu}】属${maxWxWuxing}。\\n\\n五行中【${maxWx}】最旺（${Math.round(wuxingDist[maxWx]/total*100)}%），【${minWx}】最弱（${Math.round(wuxingDist[minWx]/total*100)}%）。`;
+  
+  document.getElementById('xinggeText').textContent = rizhuData.character;
+  
+  document.getElementById('xiJiText').textContent = 
+    `您的日主为【${rizhuData.name}】。\\n\\n` +
+    `【喜用神】${rizhuData.career.replace('【事业】', '').match(/喜用神：(.+)/)?.[1] || '需要综合分析'}\\n\\n` +
+    `建议在日常生活中多接触相应五行的颜色、方位和职业，以平衡命局。`;
+  
+  document.getElementById('loveText').textContent = rizhuData.love;
+  document.getElementById('careerText').textContent = rizhuData.career;
+  document.getElementById('adviceText').textContent = rizhuData.advice;
+  
+  // 海报
+  updatePoster([yearPillar, monthPillar, dayPillar, hourPillar], rizhuData, wuxingDist);
+  
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updatePoster(pillars, rizhuData, wuxingDist) {
+  const posterBzi = document.getElementById('posterBzi');
+  posterBzi.innerHTML = '';
+  const labels = ['年', '月', '日', '时'];
+  pillars.forEach((p, i) => {
+    const item = document.createElement('div');
+    item.className = 'poster-bzi-item';
+    item.innerHTML = `
+      <div class="poster-bzi-label">${labels[i]}柱</div>
+      <div class="poster-bzi-value">${p.gan}</div>
+      <div class="poster-bzi-value">${p.zhi}</div>
+    `;
+    posterBzi.appendChild(item);
+  });
+  
+  document.getElementById('posterRizhu').textContent = rizhuData.name;
+  
+  const total = Object.values(wuxingDist).reduce((a, b) => a + b, 0);
+  const wxContainer = document.getElementById('posterWuxing');
+  wxContainer.innerHTML = '';
+  ['金', '木', '水', '火', '土'].forEach(wx => {
+    const span = document.createElement('span');
+    span.className = 'poster-wx';
+    span.textContent = wx + ' ' + Math.round(wuxingDist[wx]/total*100) + '%';
+    wxContainer.appendChild(span);
+  });
+}
+
+function copyShareText() {
+  const rizhu = document.getElementById('rizhuValue').textContent;
+  const wuxing = document.getElementById('wuxingText').textContent;
+  
+  const text = `📿 我的八字命盘\\n\\n日主：${rizhu}\\n\\n${wuxing}\\n\\n👉 排算你的八字：jianhebox.cn/fun/bazi.html`;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartApp() {
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('form').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

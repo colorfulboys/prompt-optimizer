@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>内向/外向测试 - MBTI 维度 I/E | 简盒玩点有趣的</title>
+<meta name="description" content="免费内向/外向测试。20 道题测出你的内外向倾向，分析你的社交风格、能量来源、独处需求。">
+<meta name="keywords" content="内向,外向,内外向,MBTI,I,E,性格,娱乐">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  .card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  h1 { font-size: 28px; margin-bottom: 12px; text-align: center; color: white; }
+  .subtitle { text-align: center; opacity: 0.9; margin-bottom: 24px; font-size: 14px; color: white; }
+  .btn, .btn-primary {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border: none;
+  }
+  .btn:hover, .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  }
+
+  .card, .options, .info-text, .share-card, .poster-card {
+    background-color: transparent !important;
+    background-image: none !important;
+  }
+
+  .intro-feature-list { list-style: none; margin: 20px 0; }
+  .intro-feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .intro-feature-list li::before {
+    content: '✨';
+    position: absolute;
+    left: 0;
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .options {
+    display: grid;
+    gap: 10px;
+  }
+  .option {
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.08) !important;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    color: white;
+    text-align: left;
+    width: 100%;
+    font-family: inherit;
+  }
+  .option:hover {
+    background: rgba(255,255,255,0.15) !important;
+    transform: translateX(4px);
+  }
+  .option.selected {
+    background: linear-gradient(135deg, #f093fb, #f5576c) !important;
+    border-color: #f5576c;
+  }
+
+  .result-display {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 16px;
+    margin: 16px 0;
+  }
+  .direction-emoji {
+    font-size: 80px;
+    margin-bottom: 8px;
+  }
+  .direction-score {
+    font-size: 64px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 12px 0;
+  }
+  .direction-label {
+    display: inline-block;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, #f5576c, #f093fb);
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .scale-container {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    gap: 12px;
+  }
+  .scale-side {
+    flex: 1;
+    text-align: center;
+    padding: 12px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  .scale-bar {
+    flex: 2;
+    height: 24px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .scale-fill {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #f5576c, #f093fb);
+    border-radius: 12px;
+  }
+  .scale-marker {
+    position: absolute;
+    top: -8px;
+    width: 4px;
+    height: 40px;
+    background: white;
+    border-radius: 2px;
+  }
+
+  .section-title {
+    font-size: 19px;
+    margin: 24px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(255,255,255,0.2);
+    color: white;
+  }
+  .info-card {
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    margin: 12px 0;
+    line-height: 1.8;
+  }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.6;
+    color: white;
+  }
+  .feature-list li::before {
+    content: '💡';
+    position: absolute;
+    left: 0;
+  }
+
+  .share-card {
+    border: 2px dashed rgba(255,255,255,0.3);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+  }
+  .poster-card {
+    width: 360px;
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 30px;
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    color: white;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif;
+    text-align: center;
+  }
+  .poster-bg-circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .poster-circle-1 {
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.2);
+    top: -80px; right: -80px;
+  }
+  .poster-circle-2 {
+    width: 150px; height: 150px;
+    background: rgba(255,255,255,0.15);
+    bottom: -60px; left: -60px;
+  }
+  .poster-content { position: relative; z-index: 2; }
+  .poster-tag {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .poster-emoji { font-size: 72px; margin: 12px 0; }
+  .poster-label {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .poster-score {
+    font-size: 48px;
+    font-weight: 900;
+    margin: 12px 0;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  .poster-divider {
+    width: 50px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 12px auto;
+    border-radius: 2px;
+  }
+  .poster-trait {
+    background: rgba(255,255,255,0.2);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .poster-footer {
+    margin-top: 16px;
+    font-size: 11px;
+    opacity: 0.75;
+  }
+
+  .disclaimer-box {
+    margin-top: 24px;
+    padding: 16px;
+    background: rgba(255,255,255,0.08) !important;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+    opacity: 0.8;
+    color: white;
+  }
+  .share-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .share-actions button { flex: 1; min-width: 120px; }
+  .back-link { text-align: center; margin: 20px 0; }
+  .back-link a { color: white; opacity: 0.8; text-decoration: none; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div id="intro" class="card">
+    <h1>🧠 内向 vs 外向</h1>
+    <p class="subtitle">20 道题 · 测你的能量方向</p>
+    <ul class="intro-feature-list">
+      <li>📊 测你是内向 (I) 还是外向 (E)</li>
+      <li>💫 你的能量来源 + 独处需求</li>
+      <li>🤝 社交风格 + 工作模式</li>
+      <li>✨ 专属海报分享</li>
+    </ul>
+    <button class="btn-primary" onclick="startTest()" style="width:100%;">开始测试 →</button>
+    <p style="text-align:center; margin-top:16px; font-size:12px; opacity:0.7;">预计用时 3-5 分钟</p>
+  </div>
+
+  <div id="test" class="card hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <p style="text-align:center; opacity:0.8; margin-bottom:16px; font-size:14px;">问题 <span id="currentQ">1</span> / 20</p>
+    <h3 id="questionText" style="margin-bottom:16px; line-height:1.5;"></h3>
+    <div id="optionsContainer" class="options"></div>
+    <button class="btn" id="prevBtn" onclick="prevQuestion()" style="margin-top:12px;">← 上一题</button>
+  </div>
+
+  <div id="result" class="card hidden">
+    <div class="result-display">
+      <div class="direction-emoji" id="dirEmoji">🌟</div>
+      <div style="font-size:14px; opacity:0.85;">你的内外向倾向</div>
+      <div class="direction-score" id="dirScore">50</div>
+      <div class="direction-label" id="dirLabel">平衡型</div>
+    </div>
+
+    <h3 class="section-title">📊 内外向倾向</h3>
+    <div class="scale-container">
+      <div class="scale-side">内向 (I)</div>
+      <div class="scale-bar">
+        <div class="scale-fill" id="scaleFill" style="width:50%;"></div>
+        <div class="scale-marker" id="scaleMarker" style="left:50%;"></div>
+      </div>
+      <div class="scale-side">外向 (E)</div>
+    </div>
+    <div style="text-align:center; opacity:0.85; margin-bottom:16px;">
+      <span id="scaleExplain">偏中性 · 内外向特质兼具</span>
+    </div>
+
+    <h3 class="section-title">📝 性格画像</h3>
+    <div class="info-card" id="personality"></div>
+
+    <h3 class="section-title">💪 你的优势</h3>
+    <ul id="strengths" class="feature-list"></ul>
+
+    <h3 class="section-title">⚠️ 需要注意</h3>
+    <ul id="blindspots" class="feature-list"></ul>
+
+    <h3 class="section-title">🌱 成长建议</h3>
+    <div class="info-card" id="growth"></div>
+
+    <div class="section-title">📤 分享我的倾向</div>
+    <div class="share-card">
+      <p style="margin-bottom:12px; opacity:0.9;">长按或截图保存</p>
+      <div id="posterCard" class="poster-card">
+        <div class="poster-bg-circle poster-circle-1"></div>
+        <div class="poster-bg-circle poster-circle-2"></div>
+        <div class="poster-content">
+          <div class="poster-tag">内外向测试</div>
+          <div class="poster-emoji" id="posterEmoji">🌟</div>
+          <div class="poster-label" id="posterLabel">平衡型</div>
+          <div class="poster-score" id="posterScore">50</div>
+          <div class="poster-divider"></div>
+          <div class="poster-trait" id="posterTrait">你的能量方向</div>
+          <div class="poster-footer">测试你的内外向 → jianhebox.cn/fun/ie.html</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn-primary" onclick="downloadPoster()">💾 保存图片</button>
+        <button class="btn" onclick="copyShareText()">📋 复制文字</button>
+      </div>
+      <p id="copyHint" style="margin-top:12px; font-size:13px; opacity:0.7;"></p>
+    </div>
+
+    <button class="btn" onclick="restartTest()" style="width:100%; margin-top:12px;">🔄 重新测试</button>
+  </div>
+
+  <div class="disclaimer-box">
+    ⚠️ 内外向没有好坏之分，每个人都有独特的能量方式。
+  </div>
+
+  <div class="back-link">
+    <a href="/fun/">← 返回玩点有趣的</a>
+  </div>
+</div>
+
+<script>
+// 20 道题 - 选 A 加 I 分，选 B 加 E 分
+const questions = [
+  { text: "周末你更喜欢的活动：", a: "在家看书、看剧", b: "和朋友聚会、出去玩", score: -1 },
+  { text: "在聚会上，你更：", a: "和熟悉的人聊天", b: "主动认识新朋友", score: -1 },
+  { text: "面对新环境，你：", a: "需要时间适应", b: "很快融入", score: -1 },
+  { text: "遇到压力时，你更：", a: "独处反思", b: "找人倾诉", score: -1 },
+  { text: "你的朋友圈：", a: "小而深", b: "广而泛", score: -1 },
+  { text: "你更喜欢的工作：", a: "独立完成", b: "团队合作", score: -1 },
+  { text: "做决定时，你更：", a: "深思熟虑", b: "边说边想", score: -1 },
+  { text: "你更喜欢的旅行：", a: "安静的自然", b: "热闹的城市", score: -1 },
+  { text: "开会时，你更倾向：", a: "倾听思考", b: "积极发言", score: -1 },
+  { text: "你说话的节奏：", a: "慢、斟酌", b: "快、流畅", score: -1 },
+  { text: "你更喜欢的娱乐：", a: "独自游戏、阅读", b: "KTV、桌游", score: -1 },
+  { text: "在微信群里，你：", a: "偶尔回复", b: "经常发言", score: -1 },
+  { text: "你更讨厌：", a: "被忽视", b: "被打扰", score: -1 },
+  { text: "你的能量来源：", a: "独处充电", b: "社交充电", score: -1 },
+  { text: "你更喜欢的工作环境：", a: "独立办公室", b: "开放空间", score: -1 },
+  { text: "遇到陌生人主动搭话：", a: "有些紧张", b: "感觉很自然", score: -1 },
+  { text: "你更喜欢的表达方式：", a: "私下深入交流", b: "当众表达", score: -1 },
+  { text: "你的思考方式：", a: "内省思考", b: "边说边想", score: -1 },
+  { text: "你更喜欢的工作节奏：", a: "稳定、不被打扰", b: "多任务、有变化", score: -1 },
+  { text: "你的休息方式：", a: "独处静养", b: "参加活动", score: -1 }
+];
+
+let answers = new Array(20).fill(null);
+let currentQuestion = 0;
+
+function startTest() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('test').classList.remove('hidden');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('currentQ').textContent = currentQuestion + 1;
+  document.getElementById('progressFill').style.width = ((currentQuestion + 1) / 20 * 100) + '%';
+  document.getElementById('questionText').textContent = '第 ' + (currentQuestion + 1) + ' 题：' + q.text;
+  
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  
+  const optA = document.createElement('button');
+  optA.className = 'option';
+  optA.textContent = 'A. ' + q.a;
+  optA.onclick = () => selectOption(0, optA);
+  
+  const optB = document.createElement('button');
+  optB.className = 'option';
+  optB.textContent = 'B. ' + q.b;
+  optB.onclick = () => selectOption(1, optB);
+  
+  container.appendChild(optA);
+  container.appendChild(optB);
+  
+  if (answers[currentQuestion] !== null) {
+    const btns = container.querySelectorAll('.option');
+    btns[answers[currentQuestion]].classList.add('selected');
+  }
+  
+  document.getElementById('prevBtn').disabled = currentQuestion === 0;
+}
+
+function selectOption(idx, btn) {
+  answers[currentQuestion] = idx;
+  document.querySelectorAll('#optionsContainer .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  
+  setTimeout(() => {
+    if (currentQuestion < 19) {
+      currentQuestion++;
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 250);
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+}
+
+function calculateResult() {
+  // -1 = 内向 (A), 0 = 中性 (没选), 1 = 外向 (B)
+  // 累加：负数越多越内向，正数越多越外向
+  let score = 0;
+  let answeredCount = 0;
+  
+  questions.forEach((q, i) => {
+    if (answers[i] === null) return;
+    answeredCount++;
+    if (answers[i] === 0) score -= 1;  // A: 内向
+    else score += 1;  // B: 外向
+  });
+  
+  // -20 ~ +20 映射到 0 ~ 100
+  // -20 -> 0, 0 -> 50, +20 -> 100
+  const finalScore = Math.round((score + answeredCount) / (answeredCount * 2) * 100);
+  return finalScore;
+}
+
+function showResult() {
+  const score = calculateResult();
+  const data = getResultData(score);
+  
+  document.getElementById('test').classList.add('hidden');
+  document.getElementById('result').classList.remove('hidden');
+  
+  document.getElementById('dirScore').textContent = score;
+  document.getElementById('dirLabel').textContent = data.label;
+  document.getElementById('dirEmoji').textContent = data.emoji;
+  
+  // 量表
+  document.getElementById('scaleFill').style.width = score + '%';
+  document.getElementById('scaleMarker').style.left = score + '%';
+  document.getElementById('scaleExplain').textContent = data.explain;
+  
+  document.getElementById('personality').textContent = data.personality;
+  document.getElementById('strengths').innerHTML = data.strengths.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('blindspots').innerHTML = data.blindspots.map(s => '<li>' + s + '</li>').join('');
+  document.getElementById('growth').textContent = data.growth;
+  
+  // 海报
+  document.getElementById('posterEmoji').textContent = data.emoji;
+  document.getElementById('posterLabel').textContent = data.label;
+  document.getElementById('posterScore').textContent = score;
+  document.getElementById('posterTrait').textContent = data.explain;
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getResultData(score) {
+  let label, emoji, explain, personality, strengths, blindspots, growth;
+  
+  if (score >= 80) {
+    label = '🌟 高度外向';
+    emoji = '🎉';
+    explain = '非常外向 · 你是社交达人';
+    personality = '你是高度外向的人，精力充沛、热情开朗。你在人群中如鱼得水，是真正的社交达人。你享受与人互动，从社交中获取能量。\\n\\n你善于表达，感染力强。你的存在能让周围气氛活跃起来。';
+    strengths = ['社交能力强', '善于表达', '自信有感染力', '行动力强', '适应力强'];
+    blindspots = ['可能不善倾听', '有时过于聒噪', '需要学会独处', '可能忽视深度'];
+    growth = '学会倾听他人，给身边的人留些空间。独处时可以做些深度的事情。';
+  } else if (score >= 60) {
+    label = '😊 偏外向';
+    emoji = '😊';
+    explain = '偏外向 · 喜欢与人相处';
+    personality = '你偏外向，享受与人互动。\\n\\n你能在社交中感到快乐，但也会需要一些独处时间。你比较擅长表达自己，朋友圈也比较广。';
+    strengths = ['社交愉快', '善于沟通', '有活力', '容易交朋友'];
+    blindspots = ['可能需要更多独处', '有时过于外向', '需要培养深度思考'];
+    growth = '适当安排一些独处时间，培养深度思考能力。';
+  } else if (score >= 40) {
+    label = '⚖️ 平衡型';
+    emoji = '🌟';
+    explain = '偏中性 · 内外向特质兼具';
+    personality = '你是内外向平衡的人，兼具两种特质。\\n\\n你知道何时该社交，何时该独处。这种平衡让你在各种场合都能游刃有余。';
+    strengths = ['适应力强', '灵活', '既能社交也能独处', '自我调节好'];
+    blindspots = ['可能没有特别突出的特质', '需要更多自我觉察'];
+    growth = '发挥你的平衡优势，在需要时切换角色。';
+  } else if (score >= 20) {
+    label = '🌙 偏内向';
+    emoji = '🌙';
+    explain = '偏内向 · 享受独处';
+    personality = '你偏内向，享受独处。\\n\\n你从独处中获得能量，深度思考能力很强。你不善太多社交，但一旦有深入的连接，会非常珍贵。';
+    strengths = ['深度思考', '专注力强', '善于倾听', '自我充实'];
+    blindspots = ['可能社交太少', '不善表达', '可能错失机会'];
+    growth = '适当扩展社交圈，练习表达自己的想法。';
+  } else {
+    label = '📚 高度内向';
+    emoji = '📚';
+    explain = '非常内向 · 深度专注型';
+    personality = '你是高度内向的人，深度专注、内心丰富。\\n\\n你从独处中获得能量，需要大量时间独处来恢复。你不善太多社交，但有极深的内在世界。';
+    strengths = ['深度专注', '独立思考', '有深度', '自律'];
+    blindspots = ['社交严重不足', '不善表达', '可能封闭'];
+    growth = '适当走出舒适区，多与人交流。';
+  }
+  
+  return { label, emoji, explain, personality, strengths, blindspots, growth };
+}
+
+function copyShareText() {
+  const score = document.getElementById('dirScore').textContent;
+  const label = document.getElementById('dirLabel').textContent;
+  
+  const text = '🧠 我的内外向倾向：' + score + '\\n' + label + '\\n\\n你的能量方向是什么？\\n👉 测试你的内外向：jianhebox.cn/fun/ie.html';
+  
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    document.getElementById('copyHint').textContent = '✅ 已复制！';
+    setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+  });
+}
+
+function downloadPoster() {
+  document.getElementById('copyHint').textContent = '💡 海报建议：使用手机截图或浏览器右键保存图片';
+  setTimeout(() => document.getElementById('copyHint').textContent = '', 3000);
+}
+
+function restartTest() {
+  answers = new Array(20).fill(null);
+  currentQuestion = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const style = document.createElement('style');
+  style.textContent = '.hidden { display: none !important; }';
+  document.head.appendChild(style);
+});
+</script>
+</body>
+</html>

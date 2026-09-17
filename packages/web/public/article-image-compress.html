@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>图片压缩完全指南：把图片压到 1/10 大小 | 简盒</title>
+<meta name="description" content="JPEG/PNG/WebP/AVIF 4 种格式对比 + 5 大场景实战。">
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+  pre code { background: none; color: inherit; padding: 0; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  th { background: #f0f0f0; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }
+  a { color: #0099ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }
+  .back-home:hover { text-decoration: none; transform: translateY(-1px); }
+
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style>
+<!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-image-compress.html#article",
+      "headline": "图片压缩完全指南：把图片压到 1/10 大小，画质几乎无损",
+      "description": "图片压缩完全指南",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-image-compress.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["图片压缩完全指南", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-image-compress.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "图片压缩完全指南：把图片压到 1/10 大小，画质几乎无损",
+          "item": "https://www.jianhebox.cn/article-image-compress.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Baidu Tongji (R57.10) -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?deb3c3385c923e6f7cc59e23b4d4d850";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+<!-- R57.9 SEO: 视觉面包屑 -->
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">首页</a>
+  <span class="bc-sep">›</span>
+  <a href="/articles.html">教程</a>
+  <span class="bc-sep">›</span>
+  <span>图片压缩完全指南：把图片压到 1/10 大小，画质几乎无损</span>
+</nav>
+<a href="/" class="back-home">← 简盒首页</a>
+<h1>图片压缩完全指南：把图片压到 1/10 大小，画质几乎无损</h1>
+<blockquote>最后更新：2026 年 9 月 · 阅读时长：约 7 分钟 · 适用：站长、自媒体、电商、设计师</blockquote>
+<hr>
+<h2>📌 这篇教程解决什么问题？</h2>
+<p>图片文件太大，<strong>网页加载慢、占用空间、传输慢</strong>：</p>
+<ul>
+<li>📱 朋友圈 9 张图限制 25MB</li>
+<li>🌐 网页图片 > 200KB 影响加载速度</li>
+<li>💾 1 万张原图占硬盘几十 GB</li>
+<li>📧 邮件附件限制 25MB</li>
+</ul>
+<p><strong>图片压缩</strong>就能解决。</p>
+<p><strong>但压缩有陷阱</strong>：</p>
+<ul>
+<li>❌ 压太狠 → 画质糊、有损色彩</li>
+<li>❌ 选错格式 → 文件反而更大</li>
+<li>❌ 上传在线工具 → 隐私泄漏</li>
+</ul>
+<p><strong>这篇教程教你</strong>：</p>
+<ul>
+<li>✅ 把图片压到 1/10，画质几乎无损</li>
+<li>✅ 完全免费、本地处理</li>
+<li>✅ 多种压缩策略，按需选</li>
+</ul>
+<hr>
+<h2>🚀 快速通道</h2>
+<ol>
+<li>打开 <a href="https://www.jianhebox.cn/#/tools/image">jianhebox.cn/image</a></li>
+<li>点 <strong>「图片压缩」</strong> tab</li>
+<li>拖入图片（支持 JPG/PNG/WebP/AVIF/GIF）</li>
+<li>选压缩档位：<strong>高质量 / 推荐 / 极致压缩</strong></li>
+<li>选输出格式：<strong>保持原格式 / WebP / AVIF</strong></li>
+<li>点压缩 → 下载</li>
+</ol>
+<blockquote>✅ <strong>完全免费</strong> · ✅ <strong>本地处理</strong> · ✅ <strong>批量压缩</strong></blockquote>
+<hr>
+<h2>📖 基础概念</h2>
+<h3>一张图片为什么这么大？</h3>
+<pre><code>1000万像素照片：~30 MB（未压缩）
+JPEG（高画质）：~5 MB
+JPEG（中画质）：~2 MB
+WebP（高画质）：~1.5 MB
+AVIF（高画质）：~800 KB</code></pre>
+<p><strong>关键概念</strong>：</p>
+<ul>
+<li><strong>有损压缩</strong>：丢细节，文件小（适合照片）</li>
+<li><strong>无损压缩</strong>：保留所有信息，文件较大（适合图标、截图）</li>
+</ul>
+<h3>4 个影响图片大小的参数</h3>
+<p>| 参数 | 作用 |</p>
+<p>|---|---|</p>
+<p>| <strong>分辨率</strong> | 长 × 宽（像素） |</p>
+<p>| <strong>质量</strong>（Q 值） | 1-100，数字越小压缩越狠 |</p>
+<p>| <strong>格式</strong> | JPEG/PNG/WebP/AVIF |</p>
+<p>| <strong>色深</strong> | 8-bit / 16-bit（一般不用） |</p>
+<hr>
+<h2>🎯 4 种格式对比</h2>
+<h3>JPEG vs PNG vs WebP vs AVIF</h3>
+<p>| 格式 | 压缩类型 | 透明度 | 动画 | 兼容性 | 体积 |</p>
+<p>|---|---|---|---|---|---|</p>
+<p>| <strong>JPEG</strong> | 有损 | ❌ | ❌ | 100% | 基准 |</p>
+<p>| <strong>PNG</strong> | 无损 | ✅ | ❌ | 100% | 大 |</p>
+<p>| <strong>WebP</strong> | 都有 | ✅ | ✅ | 95% | <strong>小 30%</strong> |</p>
+<p>| <strong>AVIF</strong> | 都有 | ✅ | ✅ | 80% | <strong>小 50%</strong> |</p>
+<p>| <strong>HEIC</strong> | 有损 | ✅ | ❌ | Apple | 小 30% |</p>
+<h3>选格式建议</h3>
+<p>| 场景 | 推荐格式 |</p>
+<p>|---|---|</p>
+<p>| 照片 | <strong>WebP</strong>（或 JPEG 兼容） |</p>
+<p>| Logo / 图标 | <strong>PNG</strong> 或 <strong>WebP</strong> |</p>
+<p>| 透明背景 | <strong>WebP</strong>（或 PNG） |</p>
+<p>| 动图 | <strong>WebP 动图</strong> |</p>
+<p>| 网页图片 | <strong>AVIF / WebP</strong> |</p>
+<p>| 苹果设备 | <strong>HEIC</strong> |</p>
+<hr>
+<h2>🎯 5 个实战场景</h2>
+<h3>场景 1：网站图片优化（SEO）</h3>
+<p><strong>目标</strong>：网页加载速度 < 2 秒</p>
+<pre><code>所有图片转 WebP / AVIF
+宽度 ≤ 1920px（多数屏幕够用）
+质量 80-85</code></pre>
+<p><a href="https://www.jianhebox.cn/#/tools/image">简盒图片工具箱</a> → 批量压缩 → 一键优化 100 张。</p>
+<p><strong>效果</strong>：</p>
+<ul>
+<li>平均节省 50-70% 体积</li>
+<li>网页加载速度提升 30-50%</li>
+<li>Google PageSpeed 评分 +10-20 分</li>
+</ul>
+<hr>
+<h3>场景 2：朋友圈发 9 张图</h3>
+<p><strong>问题</strong>：朋友圈 9 张图限制 25MB，<strong>原图可能 100MB+</strong>。</p>
+<p><strong>方案</strong>：</p>
+<pre><code>目标：9 张图 ≤ 25 MB（平均 2.7 MB/张）
+宽度 ≤ 2000px
+质量 75-80
+格式 JPEG</code></pre>
+<p><a href="https://www.jianhebox.cn/#/tools/image">简盒图片工具箱</a> → 选「朋友圈」预设。</p>
+<hr>
+<h3>场景 3：电商商品图</h3>
+<p><strong>目标</strong>：保留细节（商品图必须看清）</p>
+<pre><code>宽度：原尺寸（不缩）
+质量 90-95
+格式：保持原格式（JPEG/WebP）</code></pre>
+<p><a href="https://www.jianhebox.cn/#/tools/image">简盒图片工具箱</a> → 选「电商」预设。</p>
+<hr>
+<h3>场景 4：截图标注/教程</h3>
+<p><strong>问题</strong>：截图原图通常很大（4K 显示器截屏）。</p>
+<p><strong>方案</strong>：</p>
+<pre><code>保持 PNG（无损）或转 WebP
+质量 90+（文字要清晰）
+批注/标注：在原图基础上加</code></pre>
+<hr>
+<h3>场景 5：摄影作品集</h3>
+<p><strong>问题</strong>：RAW 文件 30MB+，分享给客户太慢。</p>
+<p><strong>方案</strong>：</p>
+<pre><code>目标：高质量 JPEG/WebP
+宽度 2400px（专业展示）
+质量 90+
+保留 EXIF 信息（相机参数）</code></pre>
+<hr>
+<h2>🔧 高级参数详解</h2>
+<h3>1. 质量（Q 值）</h3>
+<p>| Q 值 | 画质 | 文件大小（1000万像素照片）|</p>
+<p>|---|---|---|</p>
+<p>| 100 | 无损（视觉） | 5 MB |</p>
+<p>| <strong>85</strong> | <strong>肉眼无差异</strong>（推荐） | 2 MB |</p>
+<p>| 80 | 高质量 | 1.5 MB |</p>
+<p>| 70 | 良好 | 1 MB |</p>
+<p>| 60 | 一般 | 700 KB |</p>
+<p>| 50 | 明显失真 | 500 KB |</p>
+<p><strong>经验法则</strong>：<strong>Q 80-85 是甜点</strong>（质量/体积平衡）。</p>
+<h3>2. 分辨率</h3>
+<p><strong>Web 常用宽度</strong>：</p>
+<ul>
+<li>全屏背景：1920px</li>
+<li>卡片图片：800px</li>
+<li>缩略图：300px</li>
+</ul>
+<p><strong>经验法则</strong>：<strong>不超过展示尺寸的 2 倍</strong>（避免浪费，Retina 屏已够）。</p>
+<h3>3. 色深</h3>
+<p>| 色深 | 颜色数 | 用途 |</p>
+<p>|---|---|---|</p>
+<p>| 8-bit | 1670 万 | <strong>绝大多数场景</strong> |</p>
+<p>| 16-bit | 280 万亿 | 专业摄影 |</p>
+<p><strong>建议</strong>：默认 8-bit。</p>
+<h3>4. Chroma Subsampling（色度采样）</h3>
+<p>JPEG 参数，影响颜色精度：</p>
+<p>| 设置 | 适用 |</p>
+<p>|---|---|</p>
+<p>| 4:4:4 | <strong>最高质量</strong>（无损颜色） |</p>
+<p>| 4:2:2 | 高质量（颜色略降） |</p>
+<p>| <strong>4:2:0</strong> | <strong>标准（推荐）</strong> |</p>
+<p>简盒默认 4:2:0。</p>
+<h3>5. 元数据</h3>
+<p>| 处理 | 建议 |</p>
+<p>|---|---|</p>
+<p>| EXIF（相机参数）| 摄影保留 / 网页删除 |</p>
+<p>| GPS（位置）| <strong>始终删除</strong>（隐私） |</p>
+<p>| ICC（色彩）| 摄影保留 |</p>
+<p>简盒默认<strong>删除 EXIF</strong>（减少体积 + 隐私），可选保留。</p>
+<hr>
+<h2>🔧 进阶技巧</h2>
+<h3>1. 智能感知压缩</h3>
+<p><strong>原理</strong>：AI 分析图片，<strong>重要区域</strong>（人脸、文字）高画质，<strong>不重要区域</strong>（背景）低画质。</p>
+<p><strong>效果</strong>：相同 Q 值，<strong>文件更小、画质更好</strong>。</p>
+<p><a href="https://www.jianhebox.cn/#/tools/image">简盒图片工具箱</a> 的「智能感知」模式。</p>
+<h3>2. 渐进式 JPEG</h3>
+<p>普通 JPEG：逐行显示（从顶到底）</p>
+<p><strong>渐进式 JPEG</strong>：先模糊再清晰</p>
+<p><strong>优点</strong>：网页加载时用户<strong>先看到模糊图</strong>，体验更好。</p>
+<p><a href="https://www.jianhebox.cn/#/tools/image">简盒图片工具箱</a> 默认输出渐进式 JPEG。</p>
+<h3>3. 批量压缩 1000 张图</h3>
+<p><a href="https://www.jianhebox.cn/#/tools/image">简盒图片工具箱</a> 支持：</p>
+<ol>
+<li>拖入文件夹（一次 1000 张）</li>
+<li>选统一参数</li>
+<li>批量处理</li>
+<li>打包 ZIP 下载</li>
+</ol>
+<p><strong>节省时间</strong>：手动压缩 1000 张 = 5 小时，批量 = 15 分钟。</p>
+<h3>4. CDN 自动压缩</h3>
+<p>如果图片量大，建议用 CDN：</p>
+<ul>
+<li>七牛、又拍、阿里云 OSS</li>
+<li>都支持<strong>自动 WebP 转换</strong></li>
+<li>浏览器支持就返回 WebP，不支持返回 JPEG</li>
+</ul>
+<hr>
+<h2>⚠️ 常见误区</h2>
+<h3>误区 1：压缩后画质一定变差</h3>
+<p><strong>不一定</strong>！</p>
+<ul>
+<li><strong>有损压缩</strong>：质量 < 100 时丢细节</li>
+<li><strong>WebP / AVIF</strong>：相同质量下<strong>比 JPEG 小 30-50%</strong>，画质不丢</li>
+</ul>
+<p><strong>建议</strong>：用 WebP / AVIF 替代 JPEG。</p>
+<h3>误区 2：分辨率越高越好</h3>
+<p><strong>错</strong>！</p>
+<ul>
+<li>4K 显示器看 1080p 图，<strong>像素密度足够</strong></li>
+<li>高分辨率 = 大文件 = <strong>浪费</strong></li>
+<li>拍 4K 留底，<strong>分享用 1080p/720p</strong></li>
+</ul>
+<h3>误区 3：PNG 比 JPEG 小</h3>
+<p><strong>错</strong>！</p>
+<ul>
+<li>PNG 是<strong>无损</strong>格式，<strong>通常比 JPEG 大 3-5 倍</strong></li>
+<li>PNG 适合：<strong>图标、截图、透明图</strong></li>
+<li>JPEG 适合：<strong>照片</strong></li>
+</ul>
+<h3>误区 4：上传在线压缩很安全</h3>
+<p><strong>错</strong>！</p>
+<ul>
+<li>上传的图片可能<strong>永久存储</strong></li>
+<li>可能被<strong>训练 AI</strong></li>
+<li>可能被<strong>第三方访问</strong></li>
+<li><strong>隐私图片</strong>（家庭照片、个人信息）<strong>不要传</strong></li>
+</ul>
+<p><a href="https://www.jianhebox.cn/#/tools/image">简盒图片工具箱</a> <strong>完全本地处理</strong>，文件不上传。</p>
+<h3>误区 5：AVIF 一定比 WebP 好</h3>
+<p><strong>不一定</strong>！</p>
+<ul>
+<li>AVIF 压缩率更高（~50% > WebP ~30%）</li>
+<li>但<strong>编码慢 5-10 倍</strong>（服务端压力大）</li>
+<li><strong>浏览器兼容性</strong> AVIF（80%）< WebP（95%）</li>
+<li><strong>建议</strong>：WebP 优先，AVIF 渐进推进</li>
+</ul>
+<hr>
+<h2>🎓 进阶：图片自动化</h2>
+<h3>自动化工具链</h3>
+<pre><code>图片源
+    ↓
+sharp（Node.js 图片处理库）
+    ↓
+批量压缩（WebP + 多尺寸）
+    ↓
+CDN 缓存
+    ↓
+Lazy load（按需加载）</code></pre>
+<h3>推荐工具</h3>
+<p>| 工具 | 用途 |</p>
+<p>|---|---|</p>
+<p>| <strong>sharp</strong> | Node.js 库，自动生成多尺寸 |</p>
+<p>| <strong>Squoosh CLI</strong> | Google 出品，批量压缩 |</p>
+<p>| <strong>imagemin</strong> | 经典压缩库 |</p>
+<p>| <strong>Cloudflare Images</strong> | CDN 集成图片压缩 |</p>
+<hr>
+<h2>🚀 开始压缩</h2>
+<p><a href="https://www.jianhebox.cn/#/tools/image">👉 打开简盒图片工具箱</a></p>
+<p>特点：</p>
+<ul>
+<li>✅ <strong>完全免费</strong></li>
+<li>✅ <strong>本地处理，不上传</strong></li>
+<li>✅ <strong>5 种格式</strong>（JPEG/PNG/WebP/AVIF/GIF）</li>
+<li>✅ <strong>智能感知压缩</strong>（AI 识别重要区域）</li>
+<li>✅ <strong>批量处理</strong></li>
+<li>✅ <strong>EXIF / GPS 元数据处理</strong></li>
+</ul>
+<hr>
+<h2>📚 相关教程</h2>
+<ul>
+<li><a href="/article-old-photo-restore.html">老照片修复完整教程</a></li>
+<li><a href="/article-ai-image-cutout.html">AI 一键抠图完全指南</a></li>
+<li><a href="/article-fcpxml-guide.html">FCPXML 字幕转换完全教程</a></li>
+</ul>
+<hr>
+<h2>💬 反馈</h2>
+<ul>
+<li>📧 <a href="mailto:hi@jianhebox.cn">hi@jianhebox.cn</a></li>
+</ul>
+<blockquote>本文由 <a href="https://www.jianhebox.cn/">简盒 JianHeBox</a> 编辑整理。</blockquote>
+<!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-image-compress.html&title=%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A%E6%8A%8A%E5%9B%BE%E7%89%87%E5%8E%8B%E5%88%B0%201/10%20%E5%A4%A7%E5%B0%8F%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-image-compress.html&title=%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A%E6%8A%8A%E5%9B%BE%E7%89%87%E5%8E%8B%E5%88%B0%201/10%20%E5%A4%A7%E5%B0%8F%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-image-compress.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-image-compress.html&text=%E5%9B%BE%E7%89%87%E5%8E%8B%E7%BC%A9%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97%EF%BC%9A%E6%8A%8A%E5%9B%BE%E7%89%87%E5%8E%8B%E5%88%B0%201/10%20%E5%A4%A7%E5%B0%8F%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-ai-image-cutout.html" class="related-item"><span>AI 一键抠图完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-old-photo-restore.html" class="related-item"><span>老照片修复完整教程</span><span class="arrow">→</span></a>
+    <a href="/article-free-ai-tools-2026.html" class="related-item"><span>2026 免费 AI 工具清单</span><span class="arrow">→</span></a>
+    <a href="/article-ai-prompt-engineer.html" class="related-item"><span>AI 提示词工程师入门</span><span class="arrow">→</span></a>
+    <a href="/article-pdf-ocr.html" class="related-item"><span>扫描版 PDF 转文字 OCR 指南</span><span class="arrow">→</span></a>
+    </div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body>
+</html>

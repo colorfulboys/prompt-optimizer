@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>玩点有趣的 - 28 个趣味测试 | 简盒</title>
+<meta name="description" content="28 个有趣的在线测试：MBTI、九型人格、塔罗占卜、八字命盘、面相分析、周公解梦、性格色彩、爱情类型等。纯娱乐放松，无登录无广告。">
+<meta name="keywords" content="趣味测试,MBTI,塔罗,八字,面相,解梦,娱乐,占卜">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; overflow-x: hidden; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: white;
+    padding: 20px 16px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .hero { text-align: center; padding: 40px 20px 20px; }
+  .hero h1 { font-size: 42px; margin-bottom: 12px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+  .hero .subtitle { font-size: 16px; opacity: 0.9; margin-bottom: 8px; }
+  .hero .badges { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .hero .badge { padding: 5px 12px; background: rgba(255,255,255,0.15); border-radius: 20px; font-size: 13px; }
+
+  .category-nav {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 24px;
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+  }
+  .category-tabs { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+  .category-tabs::-webkit-scrollbar { display: none; }
+  .cat-tab {
+    flex-shrink: 0;
+    padding: 10px 20px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: white;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .cat-tab:hover { background: rgba(255,255,255,0.2); }
+  .cat-tab.active {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    border-color: #f5576c;
+    font-weight: bold;
+  }
+  .cat-tab .count { margin-left: 6px; opacity: 0.7; font-size: 12px; }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+  .tool-card {
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 24px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #f093fb, #f5576c);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+    border-color: rgba(255,255,255,0.3);
+  }
+  .tool-card:hover::before { opacity: 1; }
+  .tool-card .emoji { font-size: 48px; margin-bottom: 12px; display: block; }
+  .tool-card .name { font-size: 20px; font-weight: bold; margin-bottom: 6px; }
+  .tool-card .desc {
+    font-size: 13px;
+    opacity: 0.85;
+    line-height: 1.5;
+    margin-bottom: 12px;
+    min-height: 40px;
+  }
+  .tool-card .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tool-card .tag {
+    padding: 3px 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 12px;
+    font-size: 11px;
+  }
+  .tool-card .badge-new {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 3px 10px;
+    background: linear-gradient(135deg, #ff6e7f, #bfe9ff);
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: bold;
+  }
+  .tool-card .badge-hot {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 3px 10px;
+    background: linear-gradient(135deg, #ff6e7f, #ffd200);
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: bold;
+  }
+
+  .category-section { display: none; }
+  .category-section.active { display: block; }
+
+  .disclaimer-box {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    text-align: center;
+    font-size: 13px;
+    opacity: 0.8;
+    line-height: 1.7;
+  }
+  .back-link {
+    text-align: center;
+    margin: 30px 0 20px;
+  }
+  .back-link a {
+    color: white;
+    opacity: 0.8;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 20px;
+    display: inline-block;
+  }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 32px; }
+    .tools-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>🪄 玩点有趣的</h1>
+    <p class="subtitle">28 个趣味测试 · 纯娱乐放松</p>
+    <div class="badges">
+      <span class="badge">✨ 无需登录</span>
+      <span class="badge">🎯 海报分享</span>
+      <span class="badge">🔓 完全免费</span>
+    </div>
+  </div>
+
+  <nav class="category-nav">
+    <div class="category-tabs">
+      <button class="cat-tab active" data-cat="all">🎯 全部 <span class="count">31</span></button>
+      <button class="cat-tab" data-cat="personality">🧠 人格心理 <span class="count">7</span></button>
+      <button class="cat-tab" data-cat="mystic">🔮 玄学命理 <span class="count">7</span></button>
+      <button class="cat-tab" data-cat="life">🌟 生活娱乐 <span class="count">12</span></button>
+      <button class="cat-tab" data-cat="relationship">💕 情感关系 <span class="count">5</span></button>
+    </div>
+  </nav>
+
+  <!-- 全部 -->
+  <section class="category-section active" id="cat-all">
+    <div class="tools-grid">
+
+      <a href="/fun/mbti.html" class="tool-card">
+        <span class="badge-hot">🔥 热门</span>
+        <span class="emoji">🧠</span>
+        <div class="name">MBTI 16型人格</div>
+        <div class="desc">60 题专业测试 · 13 维度详尽解读 · 专属配色海报</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">8-12分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/tarot.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">🔮</span>
+        <div class="name">塔罗占卜</div>
+        <div class="desc">22 张大阿尔克那 · 3 张牌阵 · 正逆位解读</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">3分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/fortune.html" class="tool-card">
+        <span class="emoji">🌟</span>
+        <div class="name">今日运势</div>
+        <div class="desc">生肖 / 星座 / 抽签 · 6 维度评分 · 开运指南</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">2分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/ai-face.html" class="tool-card">
+        <span class="emoji">🪄</span>
+        <div class="name">AI 玄学头像</div>
+        <div class="desc">命格 + 五行 + 易经卦象 · 8 维度解读</div>
+        <div class="tags"><span class="tag">摄像头</span><span class="tag">免费</span></div>
+      </a>
+
+      <a href="/fun/enneagram.html" class="tool-card">
+        <span class="emoji">🧭</span>
+        <div class="name">九型人格</div>
+        <div class="desc">36 题精华版 · 9 种核心人格 · 成长方向</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">5-8分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/bazi.html" class="tool-card">
+        <span class="emoji">📿</span>
+        <div class="name">八字命盘</div>
+        <div class="desc">四柱八字 · 五行分析 · 日主解读</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">3分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/face.html" class="tool-card">
+        <span class="emoji">👤</span>
+        <div class="name">面相分析</div>
+        <div class="desc">摄像头拍照 · 12 特征分析 · 虚拟头像分享</div>
+        <div class="tags"><span class="tag">摄像头</span><span class="tag">免费</span></div>
+      </a>
+
+      <a href="/fun/dream.html" class="tool-card">
+        <span class="emoji">💭</span>
+        <div class="name">周公解梦</div>
+        <div class="desc">12 种梦境类型 · 潜意识 + 传统解梦</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">2分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/color.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">🎨</span>
+        <div class="name">性格色彩</div>
+        <div class="desc">红蓝黄绿 4 种性格类型 · 4 维评分</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">5-8分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/age.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">🧠</span>
+        <div class="name">心理年龄</div>
+        <div class="desc">25 题 · 你内心是几岁？</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">4-6分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/love.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">💕</span>
+        <div class="name">爱情类型</div>
+        <div class="desc">6 种爱情风格 · 测你的恋爱类型</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">5-8分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/blood.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">🩸</span>
+        <div class="name">血型性格</div>
+        <div class="desc">A / B / AB / O 4 种血型分析</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">5-8分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/calendar.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">📅</span>
+        <div class="name">老黄历</div>
+        <div class="desc">每日宜忌 · 12 时辰吉凶 · 财位方位</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">2分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/yuanfen.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">💌</span>
+        <div class="name">缘分测试</div>
+        <div class="desc">你和 TA 的缘分指数 · 3 维缘分</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">2分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/peach.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">🌸</span>
+        <div class="name">测桃花运</div>
+        <div class="desc">近期桃花运势 · 6 维评分</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">4-6分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/money.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">💰</span>
+        <div class="name">测财运</div>
+        <div class="desc">近期财富运势 · 6 维财运分析</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">3-5分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/eq.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">💬</span>
+        <div class="name">高情商聊天</div>
+        <div class="desc">20 个真实场景 · 测你的情商</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">4-6分钟</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/truth.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">🎲</span>
+        <div class="name">真心话大冒险</div>
+        <div class="desc">聚会神器 · 150+ 题 · 4 难度</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">聚会</span><span class="tag">游戏</span></div>
+      </a>
+
+      <a href="/fun/star-pair.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">💫</span>
+        <div class="name">星座配对</div>
+        <div class="desc">你和 TA 的星座缘分</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/zodiac-pair.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">🐲</span>
+        <div class="name">生肖配对</div>
+        <div class="desc">12 生肖缘分配对</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/ie.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">🧠</span>
+        <div class="name">内向/外向</div>
+        <div class="desc">测你的能量方向</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/mood.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">💙</span>
+        <div class="name">心情自测 PHQ-9</div>
+        <div class="desc">最近 2 周心情指数</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/anxiety.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">😰</span>
+        <div class="name">焦虑测试 GAD-7</div>
+        <div class="desc">测你的焦虑水平</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/hsp.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">🌸</span>
+        <div class="name">高敏感人格 HSP</div>
+        <div class="desc">你是不是 HSP？</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/reply.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">💬</span>
+        <div class="name">高情商回复</div>
+        <div class="desc">15+ 场景聊天话术</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/quiz.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">🤔</span>
+        <div class="name">趣味问答</div>
+        <div class="desc">脑筋急转弯 / 冷知识</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">聚会</span></div>
+      </a>
+
+      <a href="/fun/marriage.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">💍</span>
+        <div class="name">婚姻测试</div>
+        <div class="desc">婚前必测 · 婚姻幸福指数</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/iq.html" class="tool-card">
+        <span class="badge-new">🆕 新上线</span>
+        <span class="emoji">🧠</span>
+        <div class="name">IQ 智商测试</div>
+        <div class="desc">20 道推理题 · 测你的智商</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- 人格心理 -->
+  <section class="category-section" id="cat-personality">
+    <div class="tools-grid">
+      <a href="/fun/mbti.html" class="tool-card">
+        <span class="badge-hot">🔥 热门</span>
+        <span class="emoji">🧠</span>
+        <div class="name">MBTI 16型人格</div>
+        <div class="desc">60 题 · 13 维度解读</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/bigfive.html" class="tool-card">
+        <span class="badge-new">✨ 新</span>
+        <span class="emoji">🌊</span>
+        <div class="name">大五人格测试</div>
+        <div class="desc">OCEAN 五维度 · 国际权威 · 25 题专业版</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">10分钟</span><span class="tag">心理学</span></div>
+      </a>
+
+      <a href="/fun/stress.html" class="tool-card">
+        <span class="badge-new">✨ 新</span>
+        <span class="emoji">😓</span>
+        <div class="name">压力知觉测试</div>
+        <div class="desc">PSS-10 国际量表 · 测你最近一个月的压力水平</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">3分钟</span><span class="tag">心理健康</span></div>
+      </a>
+
+      <a href="/fun/enneagram.html" class="tool-card">
+        <span class="emoji">🧭</span>
+        <div class="name">九型人格</div>
+        <div class="desc">36 题 · 9 种核心人格</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/color.html" class="tool-card">
+        <span class="emoji">🎨</span>
+        <div class="name">性格色彩</div>
+        <div class="desc">4 色性格分析</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/eq.html" class="tool-card">
+        <span class="emoji">💬</span>
+        <div class="name">高情商聊天</div>
+        <div class="desc">20 个场景测试</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/iq.html" class="tool-card">
+        <span class="emoji">🧠</span>
+        <div class="name">IQ 智商测试</div>
+        <div class="desc">20 道推理题</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 玄学命理 -->
+  <section class="category-section" id="cat-mystic">
+    <div class="tools-grid">
+      <a href="/fun/tarot.html" class="tool-card">
+        <span class="emoji">🔮</span>
+        <div class="name">塔罗占卜</div>
+        <div class="desc">22 张大阿尔克那</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/fortune.html" class="tool-card">
+        <span class="emoji">🌟</span>
+        <div class="name">今日运势</div>
+        <div class="desc">生肖/星座/抽签</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/ai-face.html" class="tool-card">
+        <span class="emoji">🪄</span>
+        <div class="name">AI 玄学头像</div>
+        <div class="desc">命格 + 五行 + 易经</div>
+        <div class="tags"><span class="tag">摄像头</span><span class="tag">免费</span></div>
+      </a>
+      <a href="/fun/bazi.html" class="tool-card">
+        <span class="emoji">📿</span>
+        <div class="name">八字命盘</div>
+        <div class="desc">四柱八字</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/face.html" class="tool-card">
+        <span class="emoji">👤</span>
+        <div class="name">面相分析</div>
+        <div class="desc">摄像头拍照</div>
+        <div class="tags"><span class="tag">摄像头</span><span class="tag">免费</span></div>
+      </a>
+      <a href="/fun/dream.html" class="tool-card">
+        <span class="emoji">💭</span>
+        <div class="name">周公解梦</div>
+        <div class="desc">12 种梦境类型</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/calendar.html" class="tool-card">
+        <span class="emoji">📅</span>
+        <div class="name">老黄历</div>
+        <div class="desc">每日宜忌</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 生活娱乐 -->
+  <section class="category-section" id="cat-life">
+    <div class="tools-grid">
+      <a href="/fun/age.html" class="tool-card">
+        <span class="emoji">🧠</span>
+        <div class="name">心理年龄</div>
+        <div class="desc">25 题 · 你内心是几岁？</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+
+      <a href="/fun/color-blind.html" class="tool-card">
+        <span class="badge-new">✨ 新</span>
+        <span class="emoji">🎨</span>
+        <div class="name">色盲在线测试</div>
+        <div class="desc">Ishihara 国际标准 · 10 张色觉检测图</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">5分钟</span><span class="tag">健康</span></div>
+      </a>
+
+      <a href="/fun/blood.html" class="tool-card">
+        <span class="emoji">🩸</span>
+        <div class="name">血型性格</div>
+        <div class="desc">A / B / AB / O</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/ie.html" class="tool-card">
+        <span class="emoji">🧠</span>
+        <div class="name">内向/外向</div>
+        <div class="desc">20 题 · 能量方向</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/truth.html" class="tool-card">
+        <span class="emoji">🎲</span>
+        <div class="name">真心话大冒险</div>
+        <div class="desc">聚会神器 · 150+ 题</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">聚会</span></div>
+      </a>
+      <a href="/fun/quiz.html" class="tool-card">
+        <span class="emoji">🤔</span>
+        <div class="name">趣味问答</div>
+        <div class="desc">脑筋急转弯 + 冷知识</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">聚会</span></div>
+      </a>
+      <a href="/fun/mood.html" class="tool-card">
+        <span class="emoji">💙</span>
+        <div class="name">心情自测 PHQ-9</div>
+        <div class="desc">最近 2 周心情</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/anxiety.html" class="tool-card">
+        <span class="emoji">😰</span>
+        <div class="name">焦虑测试 GAD-7</div>
+        <div class="desc">测你的焦虑水平</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/hsp.html" class="tool-card">
+        <span class="emoji">🌸</span>
+        <div class="name">高敏感人格 HSP</div>
+        <div class="desc">你是不是 HSP？</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/reply.html" class="tool-card">
+        <span class="emoji">💬</span>
+        <div class="name">高情商回复</div>
+        <div class="desc">15+ 场景聊天话术</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/marriage.html" class="tool-card">
+        <span class="emoji">💍</span>
+        <div class="name">婚姻测试</div>
+        <div class="desc">婚前必测 · 婚姻幸福</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/eq.html" class="tool-card">
+        <span class="emoji">💬</span>
+        <div class="name">高情商聊天</div>
+        <div class="desc">20 个真实场景</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- 情感关系 -->
+  <section class="category-section" id="cat-relationship">
+    <div class="tools-grid">
+      <a href="/fun/love.html" class="tool-card">
+        <span class="emoji">💕</span>
+        <div class="name">爱情类型</div>
+        <div class="desc">6 种恋爱风格</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/yuanfen.html" class="tool-card">
+        <span class="emoji">💌</span>
+        <div class="name">缘分测试</div>
+        <div class="desc">你和 TA 的缘分</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/peach.html" class="tool-card">
+        <span class="emoji">🌸</span>
+        <div class="name">测桃花运</div>
+        <div class="desc">近期桃花运势</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/star-pair.html" class="tool-card">
+        <span class="emoji">💫</span>
+        <div class="name">星座配对</div>
+        <div class="desc">星座缘分测试</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+      <a href="/fun/zodiac-pair.html" class="tool-card">
+        <span class="emoji">🐲</span>
+        <div class="name">生肖配对</div>
+        <div class="desc">12 生肖缘分配对</div>
+        <div class="tags"><span class="tag">免费</span><span class="tag">海报</span></div>
+      </a>
+    </div>
+  </section>
+
+  <div class="disclaimer-box">
+    ⚠️ 所有测试仅供娱乐参考，请勿作为决策依据。<br>
+    真正的好运来自努力与善良。
+  </div>
+
+  <div class="back-link">
+    <a href="/">← 返回简盒主页</a>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.cat-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    const cat = tab.dataset.cat;
+    document.querySelectorAll('.category-section').forEach(section => {
+      section.classList.remove('active');
+    });
+    document.getElementById('cat-' + cat).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>

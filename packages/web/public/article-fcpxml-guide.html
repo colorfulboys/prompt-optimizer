@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FCPXML 字幕转换完全教程：从剪映/PR 到 Final Cut Pro 一次搞定 | 简盒</title>
+<meta name="description" content="FCPXML 字幕转换的完整教程：从剪映字幕、Pr 字幕、Word 听写稿到 FCPX 工程文件互转。">
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }
+  pre code { background: none; color: inherit; padding: 0; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }
+  table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+  th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }
+  th { background: #f0f0f0; font-weight: 600; }
+  tr:nth-child(even) { background: #fafafa; }
+  hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }
+  a { color: #0099ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }
+  .back-home:hover { text-decoration: none; transform: translateY(-1px); }
+
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style>
+<!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-fcpxml-guide.html#article",
+      "headline": "FCPXML 字幕转换完全教程：从剪映/PR 到 Final Cut Pro 一次搞定",
+      "description": "FCPXML 字幕转换的完整教程",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-fcpxml-guide.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["FCPXML 字幕转换的完整教程", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-fcpxml-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "FCPXML 字幕转换完全教程：从剪映/PR 到 Final Cut Pro 一次搞定",
+          "item": "https://www.jianhebox.cn/article-fcpxml-guide.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+<!-- Baidu Tongji (R57.10) -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?deb3c3385c923e6f7cc59e23b4d4d850";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</head>
+<body>
+<!-- R57.9 SEO: 视觉面包屑 -->
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="/">首页</a>
+  <span class="bc-sep">›</span>
+  <a href="/articles.html">教程</a>
+  <span class="bc-sep">›</span>
+  <span>FCPXML 字幕转换完全教程：从剪映/PR 到 Final Cut Pro 一次搞定</span>
+</nav>
+<a href="/" class="back-home">← 简盒首页</a>
+<p><!DOCTYPE html></p>
+<p><html lang="zh-CN"></p>
+<p><head></p>
+<p><meta charset="UTF-8"></p>
+<p><meta name="viewport" content="width=device-width, initial-scale=1.0"></p>
+<p><title>FCPXML 字幕转换完全教程：从剪映/PR 到 Final Cut Pro 一次搞定 | 简盒</title></p>
+<p><meta name="description" content="FCPXML 字幕转换的完整教程：从剪映字幕、Pr 字幕、Word 听写稿到 FCPX 工程文件互转。包含 4 个实战场景、6 类常见问题、FCPXML 格式详解。"></p>
+<p><style></p>
+<p>body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }</p>
+<p>h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }</p>
+<p>h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }</p>
+<p>h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }</p>
+<p>p { margin: 16px 0; }</p>
+<p>ul, ol { margin: 16px 0; padding-left: 32px; }</p>
+<p>li { margin: 8px 0; }</p>
+<p>code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }</p>
+<p>pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }</p>
+<p>pre code { background: none; color: inherit; padding: 0; }</p>
+<p>blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }</p>
+<p>table { width: 100%; border-collapse: collapse; margin: 20px 0; }</p>
+<p>th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }</p>
+<p>th { background: #f0f0f0; font-weight: 600; }</p>
+<p>tr:nth-child(even) { background: #fafafa; }</p>
+<p>hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }</p>
+<p>a { color: #0099ff; text-decoration: none; }</p>
+<p>a:hover { text-decoration: underline; }</p>
+<p>.back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }</p>
+<p>.back-home:hover { text-decoration: none; transform: translateY(-1px); }</p>
+<p>
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style></p>
+<p><!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-fcpxml-guide.html#article",
+      "headline": "FCPXML 字幕转换完全教程：从剪映/PR 到 Final Cut Pro 一次搞定",
+      "description": "FCPXML 字幕转换的完整教程",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-fcpxml-guide.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["FCPXML 字幕转换的完整教程", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-fcpxml-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "FCPXML 字幕转换完全教程：从剪映/PR 到 Final Cut Pro 一次搞定",
+          "item": "https://www.jianhebox.cn/article-fcpxml-guide.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head></p>
+<p><body></p>
+<p><a href="/" class="back-home">← 简盒首页</a></p>
+<p><p><!DOCTYPE html></p></p>
+<p><p><html lang="zh-CN"></p></p>
+<p><p><head></p></p>
+<p><p><meta charset="UTF-8"></p></p>
+<p><p><meta name="viewport" content="width=device-width, initial-scale=1.0"></p></p>
+<p><p><title>FCPXML 字幕转换完全教程：从剪映/PR 到 Final Cut Pro 一次搞定 | 简盒</title></p></p>
+<p><p><meta name="description" content="FCPXML 字幕转换的完整教程：从剪映字幕、Pr 字幕、Word 听写稿到 FCPX 工程文件互转。包含 4 个实战场景、6 类常见问题、FCPXML 格式详解。"></p></p>
+<p><p><style></p></p>
+<p><p>body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }</p></p>
+<p><p>h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }</p></p>
+<p><p>h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }</p></p>
+<p><p>h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }</p></p>
+<p><p>p { margin: 16px 0; }</p></p>
+<p><p>ul, ol { margin: 16px 0; padding-left: 32px; }</p></p>
+<p><p>li { margin: 8px 0; }</p></p>
+<p><p>code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; font-family: "SF Mono", Menlo, monospace; font-size: 90%; color: #d63384; }</p></p>
+<p><p>pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; line-height: 1.6; margin: 16px 0; }</p></p>
+<p><p>pre code { background: none; color: inherit; padding: 0; }</p></p>
+<p><p>blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; color: #555; }</p></p>
+<p><p>table { width: 100%; border-collapse: collapse; margin: 20px 0; }</p></p>
+<p><p>th, td { border: 1px solid #ddd; padding: 10px 14px; text-align: left; }</p></p>
+<p><p>th { background: #f0f0f0; font-weight: 600; }</p></p>
+<p><p>tr:nth-child(even) { background: #fafafa; }</p></p>
+<p><p>hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }</p></p>
+<p><p>a { color: #0099ff; text-decoration: none; }</p></p>
+<p><p>a:hover { text-decoration: underline; }</p></p>
+<p><p>.back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; box-shadow: 0 2px 8px rgba(0,153,255,0.3); z-index: 100; }</p></p>
+<p><p>.back-home:hover { text-decoration: none; transform: translateY(-1px); }</p></p>
+<p><p>
+  /* R57.8 分享栏 */
+  .share-bar { background: linear-gradient(135deg, #f5f9ff 0%, #e8f3ff 100%); border: 1px solid #d0e5ff; border-radius: 12px; padding: 24px; margin: 40px 0; text-align: center; }
+  .share-bar h3 { color: #006699; margin: 0 0 12px; font-size: 18px; }
+  .share-bar p { color: #555; font-size: 14px; margin: 0 0 20px; }
+  .share-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .share-btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all 0.2s; color: white; border: none; cursor: pointer; }
+  .share-btn:hover { transform: translateY(-2px); text-decoration: none; }
+  .share-btn.weixin { background: #07c160; }
+  .share-btn.weibo { background: #e6162d; }
+  .share-btn.qq { background: #12b7f5; }
+  .share-btn.copy { background: #555; }
+  .share-btn.tweet { background: #1da1f2; }
+  .share-btn.lin { background: #0a66c2; }
+
+  /* R57.8 CTA */
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; box-shadow: 0 8px 24px rgba(0,153,255,0.2); }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box p { color: rgba(255,255,255,0.9); font-size: 15px; margin: 0 0 24px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .cta-box .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); text-decoration: none; }
+
+  /* R57.8 相关文章 */
+  .related-articles { margin: 40px 0; padding: 24px; background: #fafafa; border-radius: 12px; }
+  .related-articles h3 { color: #006699; margin: 0 0 16px; font-size: 20px; }
+  .related-list { display: grid; gap: 12px; }
+  .related-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: white; border: 1px solid #eee; border-radius: 8px; text-decoration: none; color: #333; transition: all 0.2s; }
+  .related-item:hover { border-color: #0099ff; transform: translateX(4px); text-decoration: none; box-shadow: 0 2px 8px rgba(0,153,255,0.1); }
+  .related-item .arrow { color: #0099ff; font-weight: bold; }
+
+  .article-footer-meta { text-align: center; color: #888; font-size: 13px; margin-top: 60px; padding-top: 24px; border-top: 1px solid #eee; }
+
+  /* R57.9 面包屑 */
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb a { color: #0099ff; text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+</style></p></p>
+<p><p><!-- R57.9 SEO: Article Schema + BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://www.jianhebox.cn/article-fcpxml-guide.html#article",
+      "headline": "FCPXML 字幕转换完全教程：从剪映/PR 到 Final Cut Pro 一次搞定",
+      "description": "FCPXML 字幕转换的完整教程",
+      "author": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "url": "https://www.jianhebox.cn/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "简盒 JianHeBox",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.jianhebox.cn/favicon.svg"
+        }
+      },
+      "datePublished": "2026-09-12T08:00:00+08:00",
+      "dateModified": "2026-09-12T08:00:00+08:00",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://www.jianhebox.cn/article-fcpxml-guide.html"
+      },
+      "image": "https://www.jianhebox.cn/og-image.png",
+      "articleSection": "AI 工具教程",
+      "keywords": ["FCPXML 字幕转换的完整教程", "简盒", "免费工具", "AI 教程"],
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jianhebox.cn/article-fcpxml-guide.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "首页",
+          "item": "https://www.jianhebox.cn/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "教程",
+          "item": "https://www.jianhebox.cn/articles.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "FCPXML 字幕转换完全教程：从剪映/PR 到 Final Cut Pro 一次搞定",
+          "item": "https://www.jianhebox.cn/article-fcpxml-guide.html"
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head></p></p>
+<p><p><body></p></p>
+<p><p><a href="/" class="back-home">← 简盒首页</a></p></p>
+<p><p><h1>FCPXML 字幕转换完全教程：从剪映/PR 到 Final Cut Pro 一次搞定</h1></p></p>
+<p><p><blockquote>最后更新：2026 年 9 月 · 阅读时长：约 8 分钟 · 适用：所有需要把字幕从 A 软件转到 B 软件的用户</blockquote></p></p>
+<p><p><hr></p></p>
+<p><p><h2>📌 这篇教程解决什么问题？</h2></p></p>
+<p><p><p>如果你做完视频想加字幕，遇到这些问题这篇教程就是为你写的：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li>🎬 <strong>剪映做好的字幕</strong>，想转到 <strong>Final Cut Pro / FCPX</strong> 里继续精调 — <strong>不丢样式</strong></li></p></p>
+<p><p><li>🎬 <strong>Premiere Pro (Pr) 导出的字幕</strong>，想转到 <strong>FCPX</strong> — <strong>不用重新对时间轴</strong></li></p></p>
+<p><p><li>🎬 <strong>SRT 字幕文件</strong>，想转成 <strong>FCPXML</strong> — <strong>保持时间码精度</strong></li></p></p>
+<p><p><li>🎬 <strong>Word/Excel 听写稿</strong>，想批量转成 <strong>FCPXML</strong> — <strong>自动对齐时间码</strong></li></p></p>
+<p><p><li>🎬 <strong>做完的中文字幕</strong>，想换成 <strong>英文字幕</strong>（AI 一键翻译 + 转换）</li></p></p>
+<p><p></ul></p></p>
+<p><p><p><strong>一个浏览器网页，全部搞定</strong>：<a href="https://www.jianhebox.cn/#/tools/fcpxml">简盒 JianHeBox → FCPXML 字幕转换</a></p></p></p>
+<p><p><hr></p></p>
+<p><p><h2>🚀 快速通道（30 秒上手）</h2></p></p>
+<p><p><p>如果你是熟练用户，跳过原理直接上手：</p></p></p>
+<p><p><ol></p></p>
+<p><p><li><strong>打开</strong> <a href="https://www.jianhebox.cn/">jianhebox.cn</a></li></p></p>
+<p><p><li><strong>点击</strong> 顶部「FCPXML 字幕转换」</li></p></p>
+<p><p><li><strong>拖入</strong> 你的字幕文件（SRT / VTT / FCPXML / DOCX / TXT / MD 都行）</li></p></p>
+<p><p><li><strong>选</strong> 输入格式 + 输出格式</li></p></p>
+<p><p><li><strong>点</strong>「开始转换」→ 下载文件 → 拖进 FCPX</li></p></p>
+<p><p></ol></p></p>
+<p><p><blockquote>✅ <strong>完全免费</strong> · ✅ <strong>文件不上传服务器</strong> · ✅ <strong>纯浏览器本地处理</strong> · ✅ <strong>支持 FCPX 12 最新格式</strong></blockquote></p></p>
+<p><p><hr></p></p>
+<p><p><h2>📖 基础概念：什么是 FCPXML？</h2></p></p>
+<p><p><h3>简单理解</h3></p></p>
+<p><p><p><code>FCPXML</code> = <strong>Final Cut Pro XML</strong> = Apple 官方字幕/时间线交换格式</p></p></p>
+<p><p><ul></p></p>
+<p><p><li><strong>不是视频文件</strong>，是 <strong>XML 文本文件</strong>（可以用记事本打开看）</li></p></p>
+<p><p><li>包含：时间码、文字内容、样式、轨道信息</li></p></p>
+<p><p><li><strong>跨软件互通</strong>：Pr / 达芬奇 / 剪映专业版 都能识别</li></p></p>
+<p><p><li><strong>无损</strong>：来回转换不丢帧、不丢字幕</li></p></p>
+<p><p></ul></p></p>
+<p><p><h3>FCPXML 长啥样？</h3></p></p>
+<p><p><pre><code><?xml version="1.0" encoding="UTF-8"?></p></p>
+<p><p><fcpxml version="1.11"></p></p>
+<p><p><resources></p></p>
+<p><p><format id="r1" name="FFVideoFormat1080p25"/></p></p>
+<p><p></resources></p></p>
+<p><p><library></p></p>
+<p><p><event name="我的视频"></p></p>
+<p><p><project name="项目1"></p></p>
+<p><p><spine></p></p>
+<p><p><title name="字幕轨道" lane="1"></p></p>
+<p><p><text></p></p>
+<p><p><text-style ref="ts1">你好，欢迎来到简盒</text-style></p></p>
+<p><p><text-style ref="ts1">这是一个测试字幕</text-style></p></p>
+<p><p></text></p></p>
+<p><p></title></p></p>
+<p><p></spine></p></p>
+<p><p></project></p></p>
+<p><p></event></p></p>
+<p><p></library></p></p>
+<p><p></fcpxml></code></pre></p></p>
+<p><p><p><strong>看不懂也没关系</strong> — 简盒工具会自动生成，你不用手写。</p></p></p>
+<p><p><hr></p></p>
+<p><p><h2>🎯 常见场景详细操作</h2></p></p>
+<p><p><h3>场景 1：剪映字幕 → FCPXML</h3></p></p>
+<p><p><h3>背景</h3></p></p>
+<p><p><p>很多 Vlogger 在剪映里做字幕，因为：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li>剪映的<strong>自动字幕识别</strong>比 Pr/FCPX 准（特别是中文）</li></p></p>
+<p><p><li>剪映的<strong>花字样式</strong>多（气泡、抖动、彩虹字）</li></p></p>
+<p><p></ul></p></p>
+<p><p><p>但<strong>剪映的字幕不能直接用在 FCPX</strong>（格式不兼容）。</p></p></p>
+<p><p><h3>解决步骤</h3></p></p>
+<p><p><p><strong>Step 1：从剪映导出字幕</strong></p></p></p>
+<p><p><ol></p></p>
+<p><p><li>剪映 → 选中视频 → 顶部「文本」→「识别字幕」</li></p></p>
+<p><p><li>识别完成后 → 点字幕轨道右上角「···」→「导出字幕」</li></p></p>
+<p><p><li>选 <strong>SRT 格式</strong> → 保存到本地</li></p></p>
+<p><p></ol></p></p>
+<p><p><blockquote>💡 <strong>不要</strong>导出剪映的工程文件，剪映工程文件 (.draft) 不能转 FCPXML</blockquote></p></p>
+<p><p><p><strong>Step 2：用简盒转换</strong></p></p></p>
+<p><p><ol></p></p>
+<p><p><li>打开 <a href="https://www.jianhebox.cn/#/tools/fcpxml">jianhebox.cn/fcpxml</a></li></p></p>
+<p><p><li>拖入导出的 SRT 文件</li></p></p>
+<p><p><li><strong>输入格式</strong>：SRT · <strong>输出格式</strong>：FCPXML</li></p></p>
+<p><p><li>点击「开始转换」</li></p></p>
+<p><p><li>下载 <code>output.fcpxml</code> 文件</li></p></p>
+<p><p></ol></p></p>
+<p><p><p><strong>Step 3：导入 FCPX</strong></p></p></p>
+<p><p><ol></p></p>
+<p><p><li>打开 Final Cut Pro</li></p></p>
+<p><p><li><strong>File → Import → XML</strong>（或快捷键 ⌘⌥I）</li></p></p>
+<p><p><li>选择下载的 .fcpxml 文件</li></p></p>
+<p><p><li>字幕会自动出现在时间线上，<strong>时间码完全对齐</strong></li></p></p>
+<p><p></ol></p></p>
+<p><p><hr></p></p>
+<p><p><h3>场景 2：Pr 字幕 → FCPXML</h3></p></p>
+<p><p><h3>背景</h3></p></p>
+<p><p><p>Premiere Pro 用户想换到 FCPX，但 Pr 的字幕格式（.prtl 或 .mogrt）和 FCPXML 不兼容。</p></p></p>
+<p><p><h3>解决步骤</h3></p></p>
+<p><p><p><strong>Step 1：从 Pr 导出 SRT</strong></p></p></p>
+<p><p><ol></p></p>
+<p><p><li>Pr → 字幕面板 → 全选字幕</li></p></p>
+<p><p><li><strong>字幕 → 导出字幕 → SRT</strong></li></p></p>
+<p><p><li>保存</li></p></p>
+<p><p></ol></p></p>
+<p><p><p><strong>Step 2-3：同场景 1 的 Step 2-3</strong></p></p></p>
+<p><p><hr></p></p>
+<p><p><h3>场景 3：Word/Excel 听写稿 → FCPXML</h3></p></p>
+<p><p><h3>背景</h3></p></p>
+<p><p><p>你是会议记录员、采访记者、播客剪辑师，原始稿子在 Word/Excel 里，需要做成视频字幕。</p></p></p>
+<p><p><h3>解决步骤</h3></p></p>
+<p><p><p><strong>Step 1：准备 Word 文档</strong></p></p></p>
+<p><p><p>每行一句话，例如：</p></p></p>
+<p><p><pre><code>你好，欢迎来到简盒</p></p>
+<p><p>今天我们讲 FCPXML 转换</code></pre></p></p>
+<p><p><p><strong>Step 2：用简盒自动加时间码</strong></p></p></p>
+<p><p><ol></p></p>
+<p><p><li>打开简盒 → 「FCPXML 字幕转换」</li></p></p>
+<p><p><li>选 <strong>输入格式：DOCX/TXT</strong> · <strong>输出格式：FCPXML</strong></li></p></p>
+<p><p><li>上传 Word 文件</li></p></p>
+<p><p><li>设置每句字幕<strong>显示时长</strong>（默认 3 秒）</li></p></p>
+<p><p><li>点转换 → 下载</li></p></p>
+<p><p></ol></p></p>
+<p><p><hr></p></p>
+<p><p><h3>场景 4：批量翻译字幕（中 → 英）</h3></p></p>
+<p><p><h3>背景</h3></p></p>
+<p><p><p>你做完中文字幕，想快速出英文字幕版本。</p></p></p>
+<p><p><h3>解决步骤</h3></p></p>
+<p><p><ol></p></p>
+<p><p><li>简盒 → <strong>AI 提示词优化器</strong>（提示词：[translate-zh-en-subtitle]）</li></p></p>
+<p><p><li>粘贴中文字幕 → AI 翻译 → 输出英文字幕</li></p></p>
+<p><p><li>用简盒「FCPXML 字幕转换」生成英文版 FCPXML</li></p></p>
+<p><p><li>导入 FCPX → 替换原字幕轨道</li></p></p>
+<p><p></ol></p></p>
+<p><p><blockquote>💡 推荐用 <strong>DeepSeek</strong>（中文翻译质量最高）+ <strong>GPT-4</strong>（地道表达）</blockquote></p></p>
+<p><p><hr></p></p>
+<p><p><h2>🔧 高级功能</h2></p></p>
+<p><p><h3>1. 时间码微调</h3></p></p>
+<p><p><p>转换后字幕时间有 ±0.5 秒偏差？简盒支持：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li><strong>整体偏移</strong>：所有字幕往前/后挪 N 秒</li></p></p>
+<p><p><li><strong>批量延展</strong>：每条字幕显示时长 +N 秒（适合听障字幕）</li></p></p>
+<p><p><li><strong>单条编辑</strong>：在简盒编辑器里直接拖动时间条</li></p></p>
+<p><p></ul></p></p>
+<p><p><h3>2. 样式自定义</h3></p></p>
+<p><p><p>FCPXML 支持自定义字体/颜色/大小/位置：</p></p></p>
+<p><p><pre><code><text-style font="PingFang SC" fontSize="42" fontColor="1 1 1 1" baseline="0" shadow="1">测试</text-style></code></pre></p></p>
+<p><p><p>简盒提供 4 种预设样式：<strong>经典白字</strong>、<strong>黑色描边</strong>、<strong>底部居中</strong>、<strong>顶部字幕条</strong>。</p></p></p>
+<p><p><h3>3. 多语言字幕同时输出</h3></p></p>
+<p><p><p>一次转换输出多个 FCPXML：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li><code>video.zh-CN.fcpxml</code>（中文）</li></p></p>
+<p><p><li><code>video.en.fcpxml</code>（英文）</li></p></p>
+<p><p><li><code>video.ja.fcpxml</code>（日文）</li></p></p>
+<p><p></ul></p></p>
+<p><p><p>适合多语言 YouTube 频道。</p></p></p>
+<p><p><hr></p></p>
+<p><p><h2>⚠️ 常见问题</h2></p></p>
+<p><p><h3>Q1：转换后字幕乱码？</h3></p></p>
+<p><p><p><strong>原因</strong>：原文件编码不是 UTF-8（常见于 Windows 导出的 SRT）</p></p></p>
+<p><p><p><strong>解决</strong>：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li>简盒默认 UTF-8 编码，导入时<strong>自动转码</strong></li></p></p>
+<p><p><li>如果还是乱码 → 用记事本打开原文件 → 「另存为」→ 编码选 <strong>UTF-8</strong></li></p></p>
+<p><p></ul></p></p>
+<p><p><h3>Q2：FCPX 导入后字幕位置不对？</h3></p></p>
+<p><p><p><strong>原因</strong>：FCPXML 的 <code>lane</code> 属性指定轨道位置</p></p></p>
+<p><p><p><strong>解决</strong>：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li>简盒默认 <code>lane="1"</code>（主字幕轨）</li></p></p>
+<p><p><li>想让字幕<strong>在视频上方</strong>改成 <code>lane="-1"</code></li></p></p>
+<p><p><li>想让字幕<strong>双行显示</strong>改 <code>lane="2"</code></li></p></p>
+<p><p></ul></p></p>
+<p><p><h3>Q3：转换速度慢？</h3></p></p>
+<p><p><p><strong>原因</strong>：字幕超过 5000 条</p></p></p>
+<p><p><p><strong>解决</strong>：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li>简盒纯浏览器处理，<strong>长字幕文件建议分批</strong></li></p></p>
+<p><p><li>一次最多 3000 条（2 小时视频）转换稳定</li></p></p>
+<p><p></ul></p></p>
+<p><p><h3>Q4：转换后字幕样式丢失？</h3></p></p>
+<p><p><p><strong>原因</strong>：原文件不含样式信息（如 SRT 格式）</p></p></p>
+<p><p><p><strong>解决</strong>：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li>简盒提供 4 种预设样式，<strong>应用后样式统一</strong></li></p></p>
+<p><p><li>想保留原样式 → 用剪映/Pr 的 <strong>「带样式导出」</strong> 选项</li></p></p>
+<p><p></ul></p></p>
+<p><p><hr></p></p>
+<p><p><h2>🎓 FCPXML 进阶知识</h2></p></p>
+<p><p><h3>FCPXML 版本对照表</h3></p></p>
+<p><p><p>| FCPX 版本 | FCPXML 版本 | 备注 |</p></p></p>
+<p><p><p>|---|---|---|</p></p></p>
+<p><p><p>| FCPX 10.4 | 1.7 | 老版本 |</p></p></p>
+<p><p><p>| FCPX 10.5 | 1.9 | 加入 Object 标签 |</p></p></p>
+<p><p><p>| FCPX 10.6 | 1.10 | 加入 Roles |</p></p></p>
+<p><p><p>| FCPX 11 | 1.11 | 加入 Caption 标签 |</p></p></p>
+<p><p><p>| <strong>FCPX 12</strong> | <strong>1.12</strong> | <strong>最新</strong>，简盒支持 |</p></p></p>
+<p><p><h3>字幕文件 vs FCPXML</h3></p></p>
+<p><p><p>| 特性 | SRT | VTT | FCPXML |</p></p></p>
+<p><p><p>|---|---|---|---|</p></p></p>
+<p><p><p>| 文字 | ✅ | ✅ | ✅ |</p></p></p>
+<p><p><p>| 时间码 | ✅ | ✅ | ✅ |</p></p></p>
+<p><p><p>| 字体样式 | ❌ | 部分 | ✅ |</p></p></p>
+<p><p><p>| 位置控制 | ❌ | 部分 | ✅ |</p></p></p>
+<p><p><p>| 多轨 | ❌ | ❌ | ✅ |</p></p></p>
+<p><p><p>| FCPX 原生 | ❌ | ❌ | ✅ |</p></p></p>
+<p><p><p><strong>结论</strong>：要在 FCPX 里用，<strong>FCPXML 是唯一选择</strong>。</p></p></p>
+<p><p><hr></p></p>
+<p><p><h2>🚀 开始转换</h2></p></p>
+<p><p><p><a href="https://www.jianhebox.cn/#/tools/fcpxml">👉 立即打开简盒 FCPXML 字幕转换工具</a></p></p></p>
+<p><p><p>特点：</p></p></p>
+<p><p><ul></p></p>
+<p><p><li>✅ <strong>完全免费</strong>（不限次数）</li></p></p>
+<p><p><li>✅ <strong>文件不上传</strong>（纯浏览器本地处理，隐私安全）</li></p></p>
+<p><p><li>✅ <strong>支持 FCPX 12 最新格式</strong></li></p></p>
+<p><p><li>✅ <strong>批量转换</strong>（一次最多 3000 条字幕）</li></p></p>
+<p><p><li>✅ <strong>多语言</strong>（中英日韩 + 80+ 语言）</li></p></p>
+<p><p></ul></p></p>
+<p><p><hr></p></p>
+<p><p><h2>📚 相关教程</h2></p></p>
+<p><p><ul></p></p>
+<p><p><li><a href="/#/article/ai-prompt-engineer">AI 提示词工程师入门：从一句话到专业输出</a></li></p></p>
+<p><p><li><a href="/#/article/free-ai-tools-2026">2026 年最值得收藏的 10 个免费 AI 工具</a></li></p></p>
+<p><p><li><a href="/#/article/quickstart">简盒使用指南：30 秒完成第一次转换</a></li></p></p>
+<p><p></ul></p></p>
+<p><p><hr></p></p>
+<p><p><h2>💬 反馈</h2></p></p>
+<p><p><p>遇到问题或有建议？</p></p></p>
+<p><p><ul></p></p>
+<p><p><li>🐛 <a href="https://github.com/jianhebox/jianhebox/issues">提 Bug</a></li></p></p>
+<p><p><li>💡 <a href="https://github.com/jianhebox/jianhebox/discussions">提需求</a></li></p></p>
+<p><p><li>📧 <a href="mailto:hi@jianhebox.cn">邮件联系</a></li></p></p>
+<p><p></ul></p></p>
+<p><p><blockquote>本文由 <a href="https://www.jianhebox.cn/">简盒 JianHeBox</a> 编辑整理，FCPXML 转换工具免费使用。</blockquote></p></p>
+<p><p><!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-fcpxml-guide.html&title=FCPXML%20%E5%AD%97%E5%B9%95%E8%BD%AC%E6%8D%A2%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%89%AA%E6%98%A0/PR%20%E5%88%B0%20Final%20Cut%20Pro%20%E4%B8%80%E6%AC%A1%E6%90%9E%E5%AE%9A%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-fcpxml-guide.html&title=FCPXML%20%E5%AD%97%E5%B9%95%E8%BD%AC%E6%8D%A2%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%89%AA%E6%98%A0/PR%20%E5%88%B0%20Final%20Cut%20Pro%20%E4%B8%80%E6%AC%A1%E6%90%9E%E5%AE%9A%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-fcpxml-guide.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-fcpxml-guide.html&text=FCPXML%20%E5%AD%97%E5%B9%95%E8%BD%AC%E6%8D%A2%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%89%AA%E6%98%A0/PR%20%E5%88%B0%20Final%20Cut%20Pro%20%E4%B8%80%E6%AC%A1%E6%90%9E%E5%AE%9A%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-video-compress.html" class="related-item"><span>视频压缩完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-mp4-to-gif.html" class="related-item"><span>MP4 转 GIF 完整教程</span><span class="arrow">→</span></a>
+    <a href="/article-video-watermark-removal.html" class="related-item"><span>视频去水印 5 种方法</span><span class="arrow">→</span></a>
+    <a href="/article-ai-prompt-engineer.html" class="related-item"><span>AI 提示词工程师入门</span><span class="arrow">→</span></a>
+    <a href="/article-free-ai-tools-2026.html" class="related-item"><span>2026 免费 AI 工具清单</span><span class="arrow">→</span></a>
+    </div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body></p></p>
+<p><p></html></p></p>
+<p><!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-fcpxml-guide.html&title=FCPXML%20%E5%AD%97%E5%B9%95%E8%BD%AC%E6%8D%A2%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%89%AA%E6%98%A0/PR%20%E5%88%B0%20Final%20Cut%20Pro%20%E4%B8%80%E6%AC%A1%E6%90%9E%E5%AE%9A%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-fcpxml-guide.html&title=FCPXML%20%E5%AD%97%E5%B9%95%E8%BD%AC%E6%8D%A2%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%89%AA%E6%98%A0/PR%20%E5%88%B0%20Final%20Cut%20Pro%20%E4%B8%80%E6%AC%A1%E6%90%9E%E5%AE%9A%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-fcpxml-guide.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-fcpxml-guide.html&text=FCPXML%20%E5%AD%97%E5%B9%95%E8%BD%AC%E6%8D%A2%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%89%AA%E6%98%A0/PR%20%E5%88%B0%20Final%20Cut%20Pro%20%E4%B8%80%E6%AC%A1%E6%90%9E%E5%AE%9A%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-mp4-to-gif.html" class="related-item"><span>MP4 转 GIF 完整教程</span><span class="arrow">→</span></a>
+    <a href="/article-video-compress.html" class="related-item"><span>视频压缩完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-ai-prompt-engineer.html" class="related-item"><span>AI 提示词工程师入门</span><span class="arrow">→</span></a></div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body></p>
+<p></html></p>
+<!-- R57.8 分享栏 -->
+<div class="share-bar">
+  <h3>📤 觉得有用？分享给朋友</h3>
+  <p>让更多创作者发现这个免费工具 · 转发即贡献</p>
+  <div class="share-buttons">
+    <a class="share-btn weixin" onclick="shareWeixin()" title="复制链接，发给微信好友">💬 微信</a>
+    <a class="share-btn weibo" href="https://service.weibo.com/share/share.php?url=https%3A//www.jianhebox.cn/article-fcpxml-guide.html&title=FCPXML%20%E5%AD%97%E5%B9%95%E8%BD%AC%E6%8D%A2%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%89%AA%E6%98%A0/PR%20%E5%88%B0%20Final%20Cut%20Pro%20%E4%B8%80%E6%AC%A1%E6%90%9E%E5%AE%9A%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">📱 微博</a>
+    <a class="share-btn qq" href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A//www.jianhebox.cn/article-fcpxml-guide.html&title=FCPXML%20%E5%AD%97%E5%B9%95%E8%BD%AC%E6%8D%A2%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%89%AA%E6%98%A0/PR%20%E5%88%B0%20Final%20Cut%20Pro%20%E4%B8%80%E6%AC%A1%E6%90%9E%E5%AE%9A%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">💙 QQ</a>
+    <a class="share-btn lin" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A//www.jianhebox.cn/article-fcpxml-guide.html" target="_blank" rel="noopener">💼 LinkedIn</a>
+    <a class="share-btn tweet" href="https://twitter.com/intent/tweet?url=https%3A//www.jianhebox.cn/article-fcpxml-guide.html&text=FCPXML%20%E5%AD%97%E5%B9%95%E8%BD%AC%E6%8D%A2%E5%AE%8C%E5%85%A8%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E5%89%AA%E6%98%A0/PR%20%E5%88%B0%20Final%20Cut%20Pro%20%E4%B8%80%E6%AC%A1%E6%90%9E%E5%AE%9A%20%7C%20%E7%AE%80%E7%9B%92" target="_blank" rel="noopener">🐦 Twitter</a>
+    <a class="share-btn copy" onclick="copyLink()" title="复制链接">📋 复制链接</a>
+  </div>
+</div>
+
+<div class="related-articles">
+  <h3>📚 相关教程</h3>
+<div class="related-list"><a href="/article-mp4-to-gif.html" class="related-item"><span>MP4 转 GIF 完整教程</span><span class="arrow">→</span></a>
+    <a href="/article-video-compress.html" class="related-item"><span>视频压缩完全指南</span><span class="arrow">→</span></a>
+    <a href="/article-ai-prompt-engineer.html" class="related-item"><span>AI 提示词工程师入门</span><span class="arrow">→</span></a></div>
+</div>
+
+<!-- R57.8 CTA -->
+<div class="cta-box">
+  <h3>🛠 现在就试试简盒</h3>
+  <p>所有工具完全免费 · 浏览器本地处理 · 隐私安全</p>
+  <a href="/" class="btn-primary">打开简盒 JianHeBox →</a>
+</div>
+
+<div class="article-footer-meta">
+  本文由 <a href="https://www.jianhebox.cn">简盒 JianHeBox</a> 编辑整理 · 永久免费 · 京ICP备2026058075号
+</div>
+
+<script>
+function copyLink() {
+  var url = window.location.href;
+  navigator.clipboard.writeText(url).then(function() {
+    alert('✅ 链接已复制！\n\n' + url + '\n\n可以粘贴到微信/微博/小红书分享给朋友～');
+  }).catch(function() {
+    prompt('复制这个链接:', url);
+  });
+}
+
+function shareWeixin() {
+  copyLink();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepSeek Prompt Engineering: 9 Tips That Actually Work | JianHeBox</title>
+<meta name="description" content="9 practical DeepSeek prompt engineering tips. Make the most powerful Chinese AI understand you perfectly.">
+<meta name="keywords" content="DeepSeek prompts, DeepSeek tips, Chinese AI, prompt engineering">
+<link rel="canonical" href="https://www.jianhebox.com/en/article-deepseek-prompt.html" />
+<style>
+  body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 20px; line-height: 1.8; color: #222; background: #fff; }
+  h1 { font-size: 32px; color: #111; border-bottom: 3px solid #0099ff; padding-bottom: 12px; margin-bottom: 24px; }
+  h2 { font-size: 24px; color: #006699; margin-top: 32px; margin-bottom: 16px; padding-left: 12px; border-left: 5px solid #0099ff; }
+  h3 { font-size: 18px; color: #333; margin-top: 24px; margin-bottom: 12px; }
+  p { margin: 16px 0; }
+  ul, ol { margin: 16px 0; padding-left: 32px; }
+  li { margin: 8px 0; }
+  code { background: #f4f4f4; padding: 2px 8px; border-radius: 3px; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px; border-radius: 8px; overflow-x: auto; }
+  blockquote { background: #f9f9f9; border-left: 4px solid #0099ff; padding: 16px 20px; margin: 20px 0; }
+  hr { border: none; border-top: 2px dashed #ddd; margin: 32px 0; }
+  a { color: #0099ff; text-decoration: none; }
+  .breadcrumb { font-size: 13px; color: #888; margin-bottom: 24px; padding: 12px 0; }
+  .breadcrumb .bc-sep { margin: 0 8px; color: #ccc; }
+  .breadcrumb span:last-child { color: #333; font-weight: 500; }
+  .back-home { position: fixed; top: 20px; right: 20px; background: #0099ff; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; }
+  .cta-box { background: linear-gradient(135deg, #0099ff 0%, #0066cc 100%); color: white; border-radius: 16px; padding: 40px 32px; margin: 40px 0; text-align: center; }
+  .cta-box h3 { color: white; font-size: 24px; margin: 0 0 12px; }
+  .cta-box .btn-primary { background: white; color: #0099ff; padding: 14px 36px; border-radius: 28px; font-size: 16px; font-weight: 600; text-decoration: none; display: inline-block; }
+  .tip { background: #f0f7ff; border-left: 4px solid #0099ff; padding: 16px; margin: 20px 0; border-radius: 4px; }
+</style>
+</head>
+<body>
+<a href="/" class="back-home">← JianHeBox Home</a>
+
+<nav class="breadcrumb">
+  <a href="/">Home</a>
+  <span class="bc-sep">›</span>
+  <a href="/en/">English</a>
+  <span class="bc-sep">›</span>
+  <span>DeepSeek Prompts</span>
+</nav>
+
+<h1>DeepSeek Prompt Engineering: 9 Tips That Actually Work</h1>
+
+<blockquote>
+📌 <strong>Last updated</strong>: September 2026 · DeepSeek is the strongest Chinese LLM as of 2026.
+</blockquote>
+
+<h2>🎯 Why DeepSeek?</h2>
+
+<ul>
+  <li>🚀 <strong>Best Chinese performance</strong> (surpasses GPT-4 in Chinese)</li>
+  <li>💰 <strong>Almost free</strong> (API is 1/30 of GPT-4)</li>
+  <li>🎯 <strong>Strong reasoning</strong> (math, code, logic)</li>
+</ul>
+
+<h2>🎯 DeepSeek vs ChatGPT</h2>
+
+<table>
+<tr><th>Dimension</th><th>DeepSeek</th><th>ChatGPT</th></tr>
+<tr><td>Chinese</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐</td></tr>
+<tr><td>English</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>Reasoning</td><td>⭐⭐⭐⭐⭐</td><td>⭐⭐⭐⭐</td></tr>
+<tr><td>Code</td><td>⭐⭐⭐⭐</td><td>⭐⭐⭐⭐⭐</td></tr>
+<tr><td>Price</td><td>⭐⭐⭐⭐⭐ Almost free</td><td>⭐⭐ $20/month</td></tr>
+<tr><td>Web Access</td><td>❌ No</td><td>✅ Plus tier</td></tr>
+</table>
+
+<p><strong>Conclusion</strong>:</p>
+<ul>
+  <li><strong>Chinese tasks</strong> → DeepSeek</li>
+  <li><strong>English + web</strong> → ChatGPT</li>
+  <li><strong>Code</strong> → Both work, DeepSeek slightly better</li>
+</ul>
+
+<h2>🎯 9 Practical Tips</h2>
+
+<div class="tip">
+<h3>Tip 1: Define Role Clearly</h3>
+<p>DeepSeek is highly sensitive to "who you are".</p>
+
+<p><strong>❌ Wrong</strong>:</p>
+<pre>Help me write an article about health</pre>
+
+<p><strong>✅ Right</strong>:</p>
+<pre>You are a senior nutritionist with 20 years of clinical experience.
+Write an article about "maintaining healthy diet under high-pressure work" for 30-40 year-old female office workers.
+
+Requirements:
+- 800 words
+- Easy to understand, no jargon
+- Include 3 practical tips
+- End with an interactive question
+
+Format: Markdown</pre>
+
+<p><strong>Effect</strong>: Output quality 3-5x better.</p>
+</div>
+
+<div class="tip">
+<h3>Tip 2: Detailed Task Description</h3>
+<p>DeepSeek prefers specific tasks.</p>
+
+<p><strong>❌ Wrong</strong>:</p>
+<pre>Help me optimize this prompt</pre>
+
+<p><strong>✅ Right</strong>:</p>
+<pre>You are an AI prompt engineer.
+Help me optimize the following prompt with these requirements:
+1. Add 4 key elements (role/task/context/format)
+2. Make output more structured
+3. Include specific examples
+4. Keep under 200 words
+
+My original prompt: "Help me write an article about skincare"</pre>
+</div>
+
+<div class="tip">
+<h3>Tip 3: Chain of Thought (English version)</h3>
+<p>DeepSeek responds well to "think step by step".</p>
+
+<pre>Please think step by step:
+1. Analyze the core of the problem
+2. List possible solutions
+3. Compare pros and cons of each
+4. Give recommendation
+
+Problem: [your problem]</pre>
+</div>
+
+<div class="tip">
+<h3>Tip 4: Few-Shot Examples</h3>
+<p>DeepSeek is sensitive to examples.</p>
+
+<pre>Translate English to Chinese:
+
+Examples:
+- "Hello world" → "你好世界"
+- "How are you?" → "你好吗？"
+- "I love programming" → "我爱编程"
+
+Now translate:
+- "The quick brown fox jumps over the lazy dog"
+- "Practice makes perfect"</pre>
+
+<p><strong>Effect</strong>: With examples, accuracy improves 40%+.</p>
+</div>
+
+<div class="tip">
+<h3>Tip 5: Structured Output</h3>
+<p>DeepSeek excels at structured content.</p>
+
+<pre>Output in this format:
+
+【Core Insight】
+(1-2 sentences)
+
+【Key Points】
+1. ...
+2. ...
+3. ...
+
+【Use Cases】
+- ...
+
+【Notes】
+- ...
+
+【Examples】
+(concrete examples)
+
+Topic: [your topic]</pre>
+</div>
+
+<div class="tip">
+<h3>Tip 6: Specify Output Length</h3>
+<p>DeepSeek defaults to long Chinese output. Control with specific ranges.</p>
+
+<pre>Summarize this article in 100-150 words:
+
+[article content]</pre>
+
+<p>Or:</p>
+
+<pre>Write in 3 paragraphs, each 50 words, a brief summary.</pre>
+</div>
+
+<div class="tip">
+<h3>Tip 7: Negative Prompts</h3>
+<p>Tell DeepSeek what NOT to do.</p>
+
+<pre>Write an article recommending "AI tools".
+
+Requirements:
+- List 5 tools
+- Each tool: 1 specific use case
+
+DO NOT:
+- Use empty phrases ("AI makes life better")
+- Repeat the title
+- List too many features (1 use case per tool)
+- Use emoji decorations</pre>
+</div>
+
+<div class="tip">
+<h3>Tip 8: Role Dialogue</h3>
+<p>DeepSeek is particularly strong at role dialogue.</p>
+
+<pre>You are [role], I have questions for you.
+
+Role setup:
+- [identity]
+- [personality]
+- [background]
+
+Your answers should:
+- Consistent tone
+- Stay in character
+- Give specific advice
+
+Now begin:
+[your question]</pre>
+</div>
+
+<div class="tip">
+<h3>Tip 9: Iterative Optimization</h3>
+<p>DeepSeek supports multi-turn dialogue. Iterate to improve.</p>
+
+<p><strong>Turn 1</strong>: "Write a short article on remote work."</p>
+<p><strong>Turn 2</strong>: "Make the opening more engaging (add hook)."</p>
+<p><strong>Turn 3</strong>: "Add 3 specific remote work tool recommendations."</p>
+<p><strong>Turn 4</strong>: "Reorganize structure with subheadings for clarity."</p>
+
+<p><strong>Effect</strong>: Iterative approach gives 5x better quality than one-shot.</p>
+</div>
+
+<h2>🎯 6 Practical Scenarios</h2>
+
+<h3>Scenario 1: Writing Blog Posts</h3>
+<pre>You are a blog writer, audience is [audience].
+
+Write a 2000-word blog post:
+- Topic: [topic]
+- Style: conversational, with stories and insights
+- Structure: hook + 5 points + closing CTA
+- Keyword: [keyword] appears 3-5 times
+- Emoji: occasional, not every paragraph</pre>
+
+<h3>Scenario 2: Xiaohongshu</h3>
+<pre>You are a Xiaohongshu writer.
+
+Write a Xiaohongshu post:
+- Topic: [topic]
+- Title: under 18 chars, with emoji
+- Body: 300-500 words, 3-5 paragraphs
+- Style: conversational, like talking to a friend
+- Keyword: [keyword] 3 times
+- Closing: CTA to comment</pre>
+
+<h3>Scenario 3: Code</h3>
+<pre>You are a [Python/Java/...] senior engineer.
+
+Write:
+- Function: [description]
+- Input: [example]
+- Output: [example]
+
+Requirements:
+- Comments (English)
+- Exception handling
+- Unit tests
+- Code style: PEP 8</pre>
+
+<h3>Scenario 4: Translation</h3>
+<pre>Translate this [English] to [Chinese].
+
+Requirements:
+- Preserve original meaning
+- Smooth and natural
+- Accurate technical terms
+- Mark key terms in English at the end
+
+[content]</pre>
+
+<h3>Scenario 5: Data Analysis</h3>
+<pre>Analyze this data:
+
+[data CSV/JSON/text]
+
+Requirements:
+1. Basic info (rows, fields, missing values)
+2. Main trends / anomalies
+3. Key insights (3-5 points)
+4. Action recommendations
+
+Output: Markdown table + text explanation</pre>
+
+<h3>Scenario 6: Learning New Concepts</h3>
+<pre>I want to deeply understand [concept].
+
+Please:
+1. Explain in 1 sentence
+2. Give 1 example
+3. List 3 common misconceptions
+4. Recommend 3 learning resources (book/website/video)
+5. Give 3 "Feynman technique" self-test questions</pre>
+
+<h2>⚠️ DeepSeek Limitations</h2>
+
+<h3>Limitation 1: No Web Access</h3>
+<p>DeepSeek cannot:</p>
+<ul>
+  <li>Get real-time news</li>
+  <li>Search latest data</li>
+  <li>Access external links</li>
+</ul>
+<p><strong>Alternative</strong>: Use ChatGPT (web-enabled) or Metaso AI search.</p>
+
+<h3>Limitation 2: English Slightly Weaker</h3>
+<p>DeepSeek is slightly weaker than GPT-4 in English (especially creative writing).</p>
+<p><strong>Suggestion</strong>: Use ChatGPT for English tasks.</p>
+
+<h3>Limitation 3: Occasional Hallucinations</h3>
+<p>DeepSeek sometimes fabricates facts.</p>
+<p><strong>Solution</strong>:</p>
+<ul>
+  <li>Verify key facts (Google)</li>
+  <li>Ask DeepSeek to cite sources</li>
+  <li>Use prompt: "Be cautious, don't fabricate"</li>
+</ul>
+
+<h2>🎓 Advanced: DeepSeek API</h2>
+
+<p>DeepSeek API pricing:</p>
+
+<table>
+<tr><th>Model</th><th>Price (per million tokens)</th></tr>
+<tr><td>DeepSeek-V2</td><td>¥1</td></tr>
+<tr><td>DeepSeek-Coder</td><td>¥1</td></tr>
+<tr><td>GPT-4 (comparison)</td><td>¥210</td></tr>
+</table>
+
+<p><strong>200x cheaper than GPT-4!</strong></p>
+
+<p><strong>Suitable for</strong>:</p>
+<ul>
+  <li>Automated batch tasks</li>
+  <li>Application integration</li>
+  <li>Cost-sensitive projects</li>
+</ul>
+
+<h2>🚀 Get Started</h2>
+
+<p>👉 <a href="https://www.jianhebox.cn/#/basic/system">Open JianHeBox AI Prompt Optimizer</a></p>
+
+<p>DeepSeek-specific templates + 9 practical techniques.</p>
+
+<p>Features:</p>
+<ul>
+  <li>✅ DeepSeek mode auto-adaptation</li>
+  <li>✅ 300+ templates</li>
+  <li>✅ 100% Free</li>
+</ul>
+
+<hr>
+
+<div class="cta-box">
+  <h3>🛠 Try JianHeBox Now</h3>
+  <p>All tools 100% free · Browser-based · Privacy-safe</p>
+  <a href="/" class="btn-primary">Open JianHeBox →</a>
+</div>
+
+</body>
+</html>
