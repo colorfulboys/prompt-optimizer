@@ -101,22 +101,28 @@ export async function onRequest(context) {
       const site = body.site;
       if (!site) throw new Error("site 必填");
       const siteEnc = encodeURIComponent(site);
-      const results = [];
-      for (const u of (body.urls || []).slice(0, 50)) {
+      // 🚨 2026-11-22: 串行检查 5 个要 75 秒 -> 改成并行, 5 个只要 ~8 秒
+      //    urlInspection API 本身要 7.5 秒/页, 串行必然超时
+      const urls = (body.urls || []).slice(0, 25);
+      const results = await Promise.all(urls.map(async (u) => {
         try {
+          const ctl = new AbortController();
+          const timer = setTimeout(() => ctl.abort(), 25000);
           const r = await fetch(
             "https://searchconsole.googleapis.com/v1/urlInspection/index:inspect",
             {
               method: "POST",
               headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
               body: JSON.stringify({ siteUrl: site, inspectionUrl: u, languageCode: body.languageCode || "en-US" }),
+              signal: ctl.signal,
             }
           );
-          results.push({ url: u, status: r.status, data: await r.json() });
+          clearTimeout(timer);
+          return { url: u, status: r.status, data: await r.json() };
         } catch (e) {
-          results.push({ url: u, status: 0, error: e.message });
+          return { url: u, status: 0, error: String(e.message || e).slice(0, 80) };
         }
-      }
+      }));
       return new Response(JSON.stringify({ ok: true, results }), {
         headers: { "Content-Type": "application/json", ...corsHeaders },
       });
